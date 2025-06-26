@@ -19,7 +19,7 @@ import { ref } from 'vue';
 
 const route = useRoute();
 
-const apiKey = 'c26f810519284b71b437f8cd921b3d86';
+const apiKey = '';
 const canShowContent = ref(false);
 const model = 'page';
 
