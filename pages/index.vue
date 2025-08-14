@@ -5,11 +5,7 @@
       :model="model" 
       :content="content"
     />
-    <template>
-      <div>
-        <CustomFooter api-key='test'/>
-      </div>
-    </template>
+   
   </div>
 </template>
 
@@ -19,7 +15,7 @@ import { ref } from 'vue';
 
 const route = useRoute();
 
-const apiKey = '';
+const apiKey = '2221ab9020b44cdd9cbb4a4793414e46';
 const canShowContent = ref(false);
 const model = 'page';
 

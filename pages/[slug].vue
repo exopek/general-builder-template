@@ -7,11 +7,7 @@
       :model="model" 
       :content="content"
        />
-       <template>
-        <div>
-          <CustomFooter api-key='test'/>
-        </div>
-       </template>
+       
         
     
      
@@ -23,7 +19,7 @@
   
   const route = useRoute();
   
-  const apiKey = 'c26f810519284b71b437f8cd921b3d86';
+  const apiKey = '2221ab9020b44cdd9cbb4a4793414e46';
   const canShowContent = ref(false);
   const model = 'page';
   
