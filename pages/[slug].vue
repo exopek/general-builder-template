@@ -30,7 +30,9 @@
       userAttributes: {
         urlPath: route.path,
         pageType: 'content-page'
-      }
+      },
+      cachebust: true,
+      preview: true
     })
   );
   

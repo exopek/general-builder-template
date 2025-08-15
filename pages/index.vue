@@ -26,7 +26,9 @@ const { data: content } = await useAsyncData('builderData', () =>
     userAttributes: {
       urlPath: '/',
       pageType: 'home-page'
-    }
+    },
+    cachebust: true,
+    preview: true
   })
 );
 

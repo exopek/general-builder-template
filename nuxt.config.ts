@@ -21,13 +21,31 @@ export default defineNuxtConfig({
   
   nitro: {
     preset: 'cloudflare-pages',
-    prerender: {
-      crawlLinks: true,
-      routes: ['/']
-    },
-    compressPublicAssets: {
-      gzip: true,
-      brotli: true
+    routeRules: {
+      // STATISCHE Teile (werden zur Build-Zeit generiert)
+      '/': { 
+        prerender: true, // Statischer HTML-Shell
+        experimentalNoScripts: false // JS für dynamischen Content
+      },
+      
+      // DYNAMISCHE API (läuft auf Cloudflare Workers)
+      '/api/**': { 
+        cors: true,
+        headers: { 
+          'cache-control': 'max-age=60' // Kurzer Cache
+        }
+      },
+      
+      // Andere Pages - auch hybrid
+      '/kurse': { prerender: true },
+      '/preise': { prerender: true },
+      '/team': { prerender: true },
+      
+      // Catch-all für Builder.io Pages
+      '/**': { 
+        ssr: true, // Server-side rendering, aber nicht prerendered
+        headers: { 'cache-control': 's-maxage=300' }
+      }
     }
   },
   
@@ -43,21 +61,6 @@ export default defineNuxtConfig({
     head: {
       viewport: 'width=device-width, initial-scale=1',
       charset: 'utf-8',
-      
-      // Critical Resource Hints
-      link: [
-        // Hero Image - höchste Priorität
-        { 
-          rel: 'preload', 
-          href: '/hero-image.webp', 
-          as: 'image',
-          type: 'image/webp',
-          fetchpriority: 'high'
-        },
-        
-        // Builder API - später laden
-        { rel: 'dns-prefetch', href: 'https://cdn.builder.io' }
-      ],
       
       // Hydration Debug (development only)
       script: process.env.NODE_ENV === 'development' ? [
