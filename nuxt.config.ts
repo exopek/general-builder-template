@@ -24,8 +24,13 @@ export default defineNuxtConfig({
     routeRules: {
       // STATISCHE Teile (werden zur Build-Zeit generiert)
       '/': { 
-        prerender: true, // Statischer HTML-Shell
-        experimentalNoScripts: false // JS für dynamischen Content
+        ssr: true, // Server-side rendering
+        // prerender: true, // Prerendered für bessere LCP
+        headers: { 
+          'cache-control': 's-maxage=60, stale-while-revalidate=300', // Kurzer Cache
+          'x-builder-content': 'true'
+        },
+        // experimentalNoScripts: false // JS für dynamischen Content
       },
       
       // DYNAMISCHE API (läuft auf Cloudflare Workers)
