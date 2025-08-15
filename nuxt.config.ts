@@ -44,7 +44,10 @@ export default defineNuxtConfig({
       // Catch-all für Builder.io Pages
       '/**': { 
         ssr: true, // Server-side rendering, aber nicht prerendered
-        headers: { 'cache-control': 's-maxage=300' }
+        headers: { 
+          'cache-control': 's-maxage=60, stale-while-revalidate=300',
+          'x-builder-content': 'true'
+        }
       }
     }
   },
