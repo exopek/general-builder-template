@@ -13,7 +13,7 @@ import type {
  */
 export const useDesignTokens = () => {
   const config = useRuntimeConfig()
-  const apiKey = config.public.BUILDER_API_KEY as string
+  const apiKey = config.public.builderApiKey as string
 
   // State
   const state = ref<DesignTokenState>({
