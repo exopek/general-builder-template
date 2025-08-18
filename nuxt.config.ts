@@ -8,10 +8,6 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
   ],
-
-  imports: {
-    autoImport: true
-  },
   
   // SSR Settings für Hydration Fix
   ssr: true,
@@ -25,6 +21,9 @@ export default defineNuxtConfig({
   
   nitro: {
     preset: 'cloudflare-pages',
+    prerender: {
+      routes: ['/kurse', '/preise', '/team']
+    },
     routeRules: {
       // STATISCHE Teile (werden zur Build-Zeit generiert)
       '/': { 
@@ -45,7 +44,7 @@ export default defineNuxtConfig({
         }
       },
       
-      // Andere Pages - auch hybrid
+      // Dynamic pages über [slug].vue - werden prerendered
       '/kurse': { prerender: true },
       '/preise': { prerender: true },
       '/team': { prerender: true },

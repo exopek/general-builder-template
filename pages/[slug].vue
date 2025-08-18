@@ -7,7 +7,7 @@
       :model="model" 
       :content="content"
       :customComponents="registeredComponents"
-      :data="designTokensData"
+      :data="designTokensData.designTokens"
        />
      
     </div>
@@ -25,6 +25,8 @@
   const model = 'page';
 
   const { designTokensData } = useDesignTokens()
+
+  console.log('Design Tokens Data End:', designTokensData)
   
   const { data: content } = await useAsyncData('builderData', () =>
     fetchOneEntry({

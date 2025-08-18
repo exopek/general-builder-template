@@ -256,13 +256,6 @@ export interface ColorScale {
   
   export interface BuilderIODesignTokens {
     tokens: Partial<DesignTokens>
-    metadata?: {
-      version: string
-      lastUpdated: string
-      theme: string
-      author?: string
-      description?: string
-    }
   }
   
   export interface DesignTokenOverride {
