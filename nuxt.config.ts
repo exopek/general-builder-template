@@ -4,8 +4,14 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   
   modules: [
-    '@builder.io/sdk-vue/nuxt'
+    '@builder.io/sdk-vue/nuxt',
+    '@nuxtjs/tailwindcss',
+    '@pinia/nuxt',
   ],
+
+  imports: {
+    autoImport: true
+  },
   
   // SSR Settings für Hydration Fix
   ssr: true,

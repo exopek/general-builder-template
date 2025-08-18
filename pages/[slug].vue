@@ -7,6 +7,7 @@
       :model="model" 
       :content="content"
       :customComponents="registeredComponents"
+      :data="designTokensData"
        />
      
     </div>
@@ -22,6 +23,8 @@
   const apiKey = config.public.builderApiKey;
   const canShowContent = ref(false);
   const model = 'page';
+
+  const { designTokensData } = useDesignTokens()
   
   const { data: content } = await useAsyncData('builderData', () =>
     fetchOneEntry({
