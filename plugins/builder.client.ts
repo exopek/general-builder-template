@@ -1,7 +1,9 @@
 import { register } from '@builder.io/sdk-vue'
 
-register("editor.settings", {
+export default defineNuxtPlugin(() => {
+  // Only register in browser to avoid SSR serialization issues
   
+    register("editor.settings", {
       designTokens: {
         colors: [
           {
@@ -58,27 +60,27 @@ register("editor.settings", {
         padding: [
           {
             name: 'Extra Small',
-            value: 'var(--padding-xs, 4px)'
+            value: 'var(--spacing-xs, 4px)'
           },
           {
             name: 'Small',
-            value: 'var(--padding-sm, 8px)'
+            value: 'var(--spacing-sm, 8px)'
           },
           {
             name: 'Medium',
-            value: 'var(--padding-md, 16px)'
+            value: 'var(--spacing-md, 16px)'
           },
           {
             name: 'Large',
-            value: 'var(--padding-lg, 24px)'
+            value: 'var(--spacing-lg, 24px)'
           },
           {
             name: 'Extra Large',
-            value: 'var(--padding-xl, 32px)'
+            value: 'var(--spacing-xl, 32px)'
           },
           {
             name: '2XL',
-            value: 'var(--padding-2xl, 48px)'
+            value: 'var(--spacing-2xl, 48px)'
           }
         ],
         borderRadius: [
@@ -127,6 +129,6 @@ register("editor.settings", {
         ],
         allowOverridingTokens: true
       }
-    
+    })
   
 })

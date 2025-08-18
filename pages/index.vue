@@ -4,6 +4,7 @@
       :api-key="apiKey" 
       :model="model" 
       :content="content"
+      :customComponents="registeredComponents"
     />
    
   </div>
@@ -12,10 +13,12 @@
 <script setup>
 import { Content, fetchOneEntry, isPreviewing } from '@builder.io/sdk-vue';
 import { ref } from 'vue';
+import { registeredComponents } from '~/plugins/custom-components';
 
 const route = useRoute();
+const config = useRuntimeConfig();
 
-const apiKey = '2221ab9020b44cdd9cbb4a4793414e46';
+const apiKey = config.public.builderApiKey;
 const canShowContent = ref(false);
 const model = 'page';
 

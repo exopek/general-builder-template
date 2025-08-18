@@ -231,10 +231,10 @@
     "@babel/helper-string-parser" "^7.27.1"
     "@babel/helper-validator-identifier" "^7.27.1"
 
-"@builder.io/sdk-vue@^4.2.1":
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/@builder.io/sdk-vue/-/sdk-vue-4.2.1.tgz#5085b760ef5a4de9f283913836163c3d93e310c4"
-  integrity sha512-xzpF+AdrtEZ1YFlZ9BRG8Myczcc21nSys1XYCFc3Df40nJQ77X1PdmddZOxAKjPbBOoJC1xyT2n9ELH3bkcSSA==
+"@builder.io/sdk-vue@^4.2.3":
+  version "4.2.3"
+  resolved "https://registry.yarnpkg.com/@builder.io/sdk-vue/-/sdk-vue-4.2.3.tgz#981c78dc140aaca73879a9dfdc91c46827701ef1"
+  integrity sha512-O979zbbVC3C2Q+VAcJeeBXxivzGDi6LgijI8V5cfEwXu85f8dpPSbBG73HGDD/zJbpbC696RrNcEPUIRPRhsoQ==
   dependencies:
     isolated-vm "^5.0.0"
 
