@@ -1,7 +1,9 @@
-import { ref } from 'vue'
+import { ref, computed, watch, onMounted, nextTick } from 'vue'
 import { useRuntimeConfig } from '#app'
+import { fetchOneEntry } from '@builder.io/sdk-vue'
 import type { 
   DesignTokens, 
+  BuilderIODesignTokens, 
   DesignTokenState
 } from '~/types/design-tokens'
 
@@ -336,8 +338,444 @@ export const useDesignTokens = () => {
     }
   }
 
+  /**
+   * Design Tokens von Builder.io laden
+   */
+  async function loadBuilderTokens(model: string = 'design-tokens'): Promise<void> {
+    if (!apiKey) {
+      console.warn('Builder.io API Key nicht gefunden')
+      return
+    }
+
+    state.value.isLoading = true
+    state.value.error = null
+
+    try {
+      console.log('Loading design tokens from Builder.io...', { model, apiKey })
+
+      const content = await fetchOneEntry({
+        model,
+        apiKey,
+        options: {
+          includeRefs: true,
+          cachebust: true
+        }
+      })
+
+      if (content?.data) {
+        const builderTokens = content.data as BuilderIODesignTokens
+        state.value.builderTokens = builderTokens.tokens || {}
+        state.value.lastUpdated = new Date()
+        
+        console.log('🚀 Design tokens loaded successfully:', {
+          rawData: content.data,
+          extractedTokens: builderTokens.tokens,
+          hasColors: !!(builderTokens.tokens?.colors),
+          primaryColors: builderTokens.tokens?.colors?.primary
+        })
+        
+        // CSS Custom Properties aktualisieren
+        applyTokensToCSS()
+      } else {
+        console.log('❌ No design tokens found in Builder.io - content:', content)
+      }
+    } catch (error) {
+      console.error('Error loading design tokens from Builder.io:', error)
+      state.value.error = `Failed to load design tokens: ${error}`
+    } finally {
+      state.value.isLoading = false
+    }
+  }
+
+  /**
+   * Design Tokens auf CSS Custom Properties anwenden
+   */
+  function applyTokensToCSS(): void {
+    const mergedTokens = getCurrentTokens()
+    const root = document.documentElement
+
+    console.log('🎨 Applying design tokens to CSS:', {
+      hasBuilderTokens: !!state.value.builderTokens,
+      mergedTokens: mergedTokens,
+      builderTokens: state.value.builderTokens
+    })
+
+    // Colors
+    if (mergedTokens.colors) {
+      console.log('Applying colors:', mergedTokens.colors)
+      applyColorTokens(root, mergedTokens.colors)
+    }
+
+    // Typography
+    if (mergedTokens.typography) {
+      console.log('Applying typography:', mergedTokens.typography)
+      applyTypographyTokens(root, mergedTokens.typography)
+    }
+
+    // Spacing
+    if (mergedTokens.spacing) {
+      applySpacingTokens(root, mergedTokens.spacing, 'space')
+    }
+
+    // Sizing
+    if (mergedTokens.sizing) {
+      applySpacingTokens(root, mergedTokens.sizing, 'size')
+    }
+
+    // Border Radius
+    if (mergedTokens.borderRadius) {
+      applyBorderRadiusTokens(root, mergedTokens.borderRadius)
+    }
+
+    // Shadows
+    if (mergedTokens.shadows) {
+      applyShadowTokens(root, mergedTokens.shadows)
+    }
+
+    // Z-Index
+    if (mergedTokens.zIndex) {
+      applyZIndexTokens(root, mergedTokens.zIndex)
+    }
+
+    // Transitions
+    if (mergedTokens.transitions) {
+      applyTransitionTokens(root, mergedTokens.transitions)
+    }
+
+    // Components
+    if (mergedTokens.components) {
+      applyComponentTokens(root, mergedTokens.components)
+    }
+
+    // Debug: Log was tatsächlich auf das DOM angewendet wurde
+    const appliedValues = {
+      primary500: root.style.getPropertyValue('--color-primary-500'),
+      background: root.style.getPropertyValue('--color-background-primary'),
+      textPrimary: root.style.getPropertyValue('--color-text-primary')
+    }
+    console.log('✅ Applied CSS values:', appliedValues)
+    console.log('Design tokens applied to CSS custom properties')
+  }
+
+  /**
+   * Color Tokens anwenden
+   */
+  function applyColorTokens(root: HTMLElement, colors: any): void {
+    console.log('🎨 applyColorTokens called with:', colors)
+    
+    // Primary Colors
+    if (colors.primary) {
+      console.log('Setting primary colors:', colors.primary)
+      Object.entries(colors.primary).forEach(([key, value]) => {
+        if (value !== null && value !== undefined) {
+          const cssProperty = `--color-primary-${key}`
+          console.log(`Setting ${cssProperty} = ${value}`)
+          root.style.setProperty(cssProperty, value as string)
+        }
+      })
+    }
+
+    // Secondary Colors
+    if (colors.secondary) {
+      Object.entries(colors.secondary).forEach(([key, value]) => {
+        if (value !== null && value !== undefined) {
+          root.style.setProperty(`--color-secondary-${key}`, value as string)
+        }
+      })
+    }
+
+    // Neutral Colors
+    if (colors.neutral) {
+      Object.entries(colors.neutral).forEach(([key, value]) => {
+        if (value !== null && value !== undefined) {
+          root.style.setProperty(`--color-neutral-${key}`, value as string)
+        }
+      })
+    }
+
+    // Semantic Colors
+    const semanticColors = ['success', 'warning', 'error', 'info']
+    semanticColors.forEach(colorName => {
+      const colorGroup = colors[colorName as keyof typeof colors]
+      if (colorGroup && typeof colorGroup === 'object') {
+        Object.entries(colorGroup).forEach(([key, value]) => {
+          if (value !== null && value !== undefined) {
+            root.style.setProperty(`--color-${colorName}-${key}`, value as string)
+          }
+        })
+      }
+    })
+
+    // Background Colors
+    if (colors.background) {
+      Object.entries(colors.background).forEach(([key, value]) => {
+        if (value !== null && value !== undefined) {
+          root.style.setProperty(`--color-background-${key}`, value as string)
+        }
+      })
+    }
+
+    // Text Colors
+    if (colors.text) {
+      Object.entries(colors.text).forEach(([key, value]) => {
+        if (value !== null && value !== undefined) {
+          const cssKey = key === 'linkHover' ? 'link-hover' : key
+          root.style.setProperty(`--color-text-${cssKey}`, value as string)
+        }
+      })
+    }
+
+    // Border Colors
+    if (colors.border) {
+      Object.entries(colors.border).forEach(([key, value]) => {
+        if (value !== null && value !== undefined) {
+          root.style.setProperty(`--color-border-${key}`, value as string)
+        }
+      })
+    }
+  }
+
+  /**
+   * Typography Tokens anwenden
+   */
+  function applyTypographyTokens(root: HTMLElement, typography: any): void {
+    if (typography.fontFamily) {
+      Object.entries(typography.fontFamily).forEach(([key, value]) => {
+        if (value !== null && value !== undefined) {
+          root.style.setProperty(`--font-family-${key}`, value as string)
+        }
+      })
+    }
+
+    if (typography.fontSize) {
+      Object.entries(typography.fontSize).forEach(([key, value]) => {
+        if (value !== null && value !== undefined) {
+          root.style.setProperty(`--font-size-${key}`, value as string)
+        }
+      })
+    }
+
+    if (typography.fontWeight) {
+      Object.entries(typography.fontWeight).forEach(([key, value]) => {
+        if (value !== null && value !== undefined) {
+          root.style.setProperty(`--font-weight-${key}`, value as string)
+        }
+      })
+    }
+
+    if (typography.lineHeight) {
+      Object.entries(typography.lineHeight).forEach(([key, value]) => {
+        if (value !== null && value !== undefined) {
+          root.style.setProperty(`--line-height-${key}`, value as string)
+        }
+      })
+    }
+
+    if (typography.letterSpacing) {
+      Object.entries(typography.letterSpacing).forEach(([key, value]) => {
+        if (value !== null && value !== undefined) {
+          root.style.setProperty(`--letter-spacing-${key}`, value as string)
+        }
+      })
+    }
+  }
+
+  /**
+   * Spacing/Sizing Tokens anwenden
+   */
+  function applySpacingTokens(root: HTMLElement, spacing: any, prefix: string): void {
+    if (spacing && typeof spacing === 'object') {
+      Object.entries(spacing).forEach(([key, value]) => {
+        if (value !== null && value !== undefined) {
+          root.style.setProperty(`--${prefix}-${key}`, value as string)
+        }
+      })
+    }
+  }
+
+  /**
+   * Border Radius Tokens anwenden
+   */
+  function applyBorderRadiusTokens(root: HTMLElement, borderRadius: any): void {
+    if (borderRadius && typeof borderRadius === 'object') {
+      Object.entries(borderRadius).forEach(([key, value]) => {
+        if (value !== null && value !== undefined) {
+          root.style.setProperty(`--border-radius-${key}`, value as string)
+        }
+      })
+    }
+  }
+
+  /**
+   * Shadow Tokens anwenden
+   */
+  function applyShadowTokens(root: HTMLElement, shadows: any): void {
+    if (shadows && typeof shadows === 'object') {
+      Object.entries(shadows).forEach(([key, value]) => {
+        if (value !== null && value !== undefined) {
+          root.style.setProperty(`--shadow-${key}`, value as string)
+        }
+      })
+    }
+  }
+
+  /**
+   * Z-Index Tokens anwenden
+   */
+  function applyZIndexTokens(root: HTMLElement, zIndex: any): void {
+    if (zIndex && typeof zIndex === 'object') {
+      Object.entries(zIndex).forEach(([key, value]) => {
+        if (value !== null && value !== undefined) {
+          root.style.setProperty(`--z-index-${key}`, value as string)
+        }
+      })
+    }
+  }
+
+  /**
+   * Transition Tokens anwenden
+   */
+  function applyTransitionTokens(root: HTMLElement, transitions: any): void {
+    if (transitions && typeof transitions === 'object') {
+      if (transitions.duration && typeof transitions.duration === 'object') {
+        Object.entries(transitions.duration).forEach(([key, value]) => {
+          if (value !== null && value !== undefined) {
+            root.style.setProperty(`--transition-duration-${key}`, value as string)
+          }
+        })
+      }
+
+      if (transitions.timing && typeof transitions.timing === 'object') {
+        Object.entries(transitions.timing).forEach(([key, value]) => {
+          if (value !== null && value !== undefined) {
+            const cssKey = key === 'inOut' ? 'in-out' : key
+            root.style.setProperty(`--transition-timing-${cssKey}`, value as string)
+          }
+        })
+      }
+    }
+  }
+
+  /**
+   * Component Tokens anwenden
+   */
+  function applyComponentTokens(root: HTMLElement, components: any): void {
+    if (components && typeof components === 'object') {
+      Object.entries(components).forEach(([componentName, componentTokens]) => {
+        if (componentTokens && typeof componentTokens === 'object') {
+          Object.entries(componentTokens as any).forEach(([tokenKey, tokenValue]) => {
+            if (tokenValue !== null && tokenValue !== undefined) {
+              if (typeof tokenValue === 'object') {
+                Object.entries(tokenValue).forEach(([subKey, subValue]) => {
+                  if (subValue !== null && subValue !== undefined) {
+                    root.style.setProperty(`--${componentName}-${tokenKey}-${subKey}`, subValue as string)
+                  }
+                })
+              } else {
+                const cssKey = tokenKey === 'paddingX' ? 'padding-x' : 
+                              tokenKey === 'borderWidth' ? 'border-width' : tokenKey
+                root.style.setProperty(`--${componentName}-${cssKey}`, tokenValue as string)
+              }
+            }
+          })
+        }
+      })
+    }
+  }
+
+  /**
+   * Aktuelle Design Tokens (Default + Builder.io Overrides)
+   */
+  function getCurrentTokens(): DesignTokens {
+    const defaultTokens = state.value.defaultTokens
+    const builderTokens = state.value.builderTokens
+
+    console.log('🔄 getCurrentTokens called:', {
+      hasDefaultTokens: !!defaultTokens,
+      hasBuilderTokens: !!builderTokens,
+      builderTokensKeys: builderTokens ? Object.keys(builderTokens) : [],
+      builderColors: builderTokens?.colors
+    })
+
+    if (!builderTokens) {
+      console.log('⚠️ No builder tokens, returning defaults')
+      return defaultTokens
+    }
+
+    // Deep merge der Tokens
+    const merged = mergeDeep(defaultTokens, builderTokens) as DesignTokens
+    console.log('🔀 Merged tokens result:', {
+      hasColors: !!merged.colors,
+      primaryColors: merged.colors?.primary,
+      mergedPrimary500: merged.colors?.primary?.[500]
+    })
+    
+    return merged
+  }
+
+  /**
+   * Deep merge von Objekten
+   */
+  function mergeDeep(target: any, source: any): any {
+    const result = { ...target }
+    
+    for (const key in source) {
+      if (source[key] !== null && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+        result[key] = mergeDeep(result[key] || {}, source[key])
+      } else {
+        result[key] = source[key]
+      }
+    }
+    
+    return result
+  }
+
+  /**
+   * Design Tokens für Builder.io Data Context
+   */
+  const designTokensData = computed(() => ({
+    designTokens: getCurrentTokens(),
+    isLoading: state.value.isLoading,
+    error: state.value.error,
+    lastUpdated: state.value.lastUpdated,
+    currentTheme: state.value.currentTheme
+  }))
+
+  // CSS anwenden wenn Tokens sich ändern
+  watch(() => state.value.builderTokens, async () => {
+    if (typeof window !== 'undefined') {
+      await nextTick()
+      applyTokensToCSS()
+    }
+  }, { deep: true })
+
+  // Initial load
+  onMounted(() => {
+    if (typeof window !== 'undefined') {
+      // Immer zuerst die Default Tokens anwenden
+      applyTokensToCSS()
+      
+      // Dann versuchen Builder.io Tokens zu laden
+      loadBuilderTokens()
+    }
+  })
+
   return {
     // State
     state: readonly(state),
+    
+    // Computed
+    currentTokens: computed(() => getCurrentTokens()),
+    designTokensData,
+    
+    // Methods
+    loadBuilderTokens,
+    applyTokensToCSS,
+    
+    // Utilities
+    getTokenValue: (path: string) => {
+      const tokens = getCurrentTokens()
+      return path.split('.').reduce((obj: any, key: string) => obj?.[key], tokens)
+    }
   }
 }

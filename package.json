@@ -3,9 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "nuxt build",
+    "build": "npm run generate:css-vars && nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
+    "generate:css-vars": "node scripts/generate-css-vars.js",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
