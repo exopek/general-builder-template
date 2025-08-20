@@ -367,13 +367,6 @@ export const useDesignTokens = () => {
         state.value.builderTokens = builderTokens.tokens || {}
         state.value.lastUpdated = new Date()
         
-        console.log('🚀 Design tokens loaded successfully:', {
-          rawData: content.data,
-          extractedTokens: builderTokens.tokens,
-          hasColors: !!(builderTokens.tokens?.colors),
-          primaryColors: builderTokens.tokens?.colors?.primary
-        })
-        
         // CSS Custom Properties aktualisieren
         applyTokensToCSS()
       } else {
@@ -393,12 +386,6 @@ export const useDesignTokens = () => {
   function applyTokensToCSS(): void {
     const mergedTokens = getCurrentTokens()
     const root = document.documentElement
-
-    console.log('🎨 Applying design tokens to CSS:', {
-      hasBuilderTokens: !!state.value.builderTokens,
-      mergedTokens: mergedTokens,
-      builderTokens: state.value.builderTokens
-    })
 
     // Colors
     if (mergedTokens.colors) {
@@ -446,30 +433,18 @@ export const useDesignTokens = () => {
     if (mergedTokens.components) {
       applyComponentTokens(root, mergedTokens.components)
     }
-
-    // Debug: Log was tatsächlich auf das DOM angewendet wurde
-    const appliedValues = {
-      primary500: root.style.getPropertyValue('--color-primary-500'),
-      background: root.style.getPropertyValue('--color-background-primary'),
-      textPrimary: root.style.getPropertyValue('--color-text-primary')
-    }
-    console.log('✅ Applied CSS values:', appliedValues)
-    console.log('Design tokens applied to CSS custom properties')
   }
 
   /**
    * Color Tokens anwenden
    */
   function applyColorTokens(root: HTMLElement, colors: any): void {
-    console.log('🎨 applyColorTokens called with:', colors)
     
     // Primary Colors
     if (colors.primary) {
-      console.log('Setting primary colors:', colors.primary)
       Object.entries(colors.primary).forEach(([key, value]) => {
         if (value !== null && value !== undefined) {
           const cssProperty = `--color-primary-${key}`
-          console.log(`Setting ${cssProperty} = ${value}`)
           root.style.setProperty(cssProperty, value as string)
         }
       })
@@ -690,26 +665,16 @@ export const useDesignTokens = () => {
     const defaultTokens = state.value.defaultTokens
     const builderTokens = state.value.builderTokens
 
-    console.log('🔄 getCurrentTokens called:', {
-      hasDefaultTokens: !!defaultTokens,
-      hasBuilderTokens: !!builderTokens,
-      builderTokensKeys: builderTokens ? Object.keys(builderTokens) : [],
-      builderColors: builderTokens?.colors
-    })
-
     if (!builderTokens) {
       console.log('⚠️ No builder tokens, returning defaults')
       return defaultTokens
     }
 
     // Deep merge der Tokens
+    console.log('Default tokens:', defaultTokens)
+    console.log('Builder tokens:', builderTokens)
     const merged = mergeDeep(defaultTokens, builderTokens) as DesignTokens
-    console.log('🔀 Merged tokens result:', {
-      hasColors: !!merged.colors,
-      primaryColors: merged.colors?.primary,
-      mergedPrimary500: merged.colors?.primary?.[500]
-    })
-    
+
     return merged
   }
 
@@ -718,15 +683,23 @@ export const useDesignTokens = () => {
    */
   function mergeDeep(target: any, source: any): any {
     const result = { ...target }
-    
+    const sourceCopy = { ...source }
+    console.log('Copy Source:', sourceCopy)
+    console.log('keys in source', Object.keys(source))
     for (const key in source) {
       if (source[key] !== null && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+        console.log(`Merging key: ${key}`, source[key])
         result[key] = mergeDeep(result[key] || {}, source[key])
-      } else {
+      } else if (source[key] !== null && source[key] !== undefined) {
+        console.log(`Setting key: ${key} = ${source[key]}`)
         result[key] = source[key]
+        console.log(`Result after setting ${key}:`, result[key])
+      } else {
+        console.log(`Skipping null/undefined key: ${key}`)
       }
     }
-    
+    // Debug: Zeige das Ergebnis des Merges
+    console.log('🔀 Final merged tokens:', result)
     return result
   }
 

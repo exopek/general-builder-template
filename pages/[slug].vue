@@ -26,7 +26,7 @@
 
   const { designTokensData } = useDesignTokens()
 
-  console.log('Design Tokens Data End:', designTokensData)
+  console.log('Design Tokens Data End:', designTokensData.value)
   
   const { data: content } = await useAsyncData('builderData', () =>
     fetchOneEntry({
