@@ -30,8 +30,8 @@ const { data: content } = await useAsyncData('builderData', () =>
       urlPath: '/',
       pageType: 'home-page'
     },
-    cachebust: true,
-    preview: true
+    cachebust: process.env.NODE_ENV === 'development',
+    preview: process.env.NODE_ENV === 'development'
   })
 );
 
