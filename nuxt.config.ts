@@ -8,6 +8,8 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
   ],
+
+  css: ['~/assets/css/global.css'],
   
   // SSR Settings für Hydration Fix
   ssr: true,

@@ -22,6 +22,9 @@ const apiKey = config.public.builderApiKey;
 const canShowContent = ref(false);
 const model = 'page';
 
+const hasCache = process.env.NODE_ENV === 'development';
+const hasPreview = process.env.NODE_ENV === 'development';
+
 const { data: content } = await useAsyncData('builderData', () =>
   fetchOneEntry({
     model,
@@ -30,8 +33,8 @@ const { data: content } = await useAsyncData('builderData', () =>
       urlPath: '/',
       pageType: 'home-page'
     },
-    cachebust: process.env.NODE_ENV === 'development',
-    preview: process.env.NODE_ENV === 'development'
+    cachebust: hasCache,
+    preview: hasPreview
   })
 );
 

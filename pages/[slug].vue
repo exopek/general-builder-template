@@ -7,7 +7,6 @@
       :model="model" 
       :content="content"
       :customComponents="registeredComponents"
-      :data="designTokensData.designTokens"
        />
      
     </div>
@@ -24,9 +23,12 @@
   const canShowContent = ref(false);
   const model = 'page';
 
-  const { designTokensData } = useDesignTokens()
+  const hasCache = process.env.NODE_ENV === 'development';
+  const hasPreview = process.env.NODE_ENV === 'development';
 
-  console.log('Design Tokens Data End:', designTokensData.value)
+  /* const { designTokensData } = useDesignTokens()
+
+  console.log('Design Tokens Data End:', designTokensData.value) */
   
   const { data: content } = await useAsyncData('builderData', () =>
     fetchOneEntry({
@@ -36,8 +38,8 @@
         urlPath: route.path,
         pageType: 'content-page'
       },
-      cachebust: process.env.NODE_ENV === 'development',
-      preview: process.env.NODE_ENV === 'development'
+      cachebust: hasCache,
+      preview: hasPreview
     })
   );
   
