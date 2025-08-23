@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     '@builder.io/sdk-vue/nuxt',
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
+    '@vueuse/nuxt',
   ],
 
   css: ['~/assets/css/global.css'],
