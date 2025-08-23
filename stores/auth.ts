@@ -56,7 +56,6 @@ export const useAuthStore = defineStore('auth', {
       try {
         this.isLoading = true
         
-        const { $fetch } = useNuxtApp()
         const response = await $fetch<AuthResponse>(API_ENDPOINTS.AUTH.LOGIN, {
           method: 'POST',
           body: credentials
@@ -88,7 +87,6 @@ export const useAuthStore = defineStore('auth', {
       try {
         this.isLoading = true
         
-        const { $fetch } = useNuxtApp()
         const response = await $fetch<AuthResponse>(API_ENDPOINTS.AUTH.REGISTER, {
           method: 'POST',
           body: userData
@@ -120,7 +118,6 @@ export const useAuthStore = defineStore('auth', {
       try {
         // Call logout endpoint if needed
         if (this.token) {
-          const { $fetch } = useNuxtApp()
           await $fetch(API_ENDPOINTS.AUTH.LOGOUT, {
             method: 'POST',
             headers: {
@@ -152,7 +149,6 @@ export const useAuthStore = defineStore('auth', {
       if (!this.token) return
 
       try {
-        const { $fetch } = useNuxtApp()
         const user = await $fetch<User>(API_ENDPOINTS.AUTH.ME, {
           headers: {
             Authorization: `Bearer ${this.token}`

@@ -19,8 +19,11 @@
         <div class="p-6">
           <!-- Loading State -->
           <div v-if="isLoadingBookings" class="text-center py-8">
-            <div class="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-indigo-600 mb-2"></div>
-            <p class="text-sm text-gray-500">Buchungen werden geladen...</p>
+            <LoadingSpinner 
+              size="md" 
+              text="Buchungen werden geladen..." 
+              center 
+            />
           </div>
 
           <!-- Empty State -->

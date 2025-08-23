@@ -137,7 +137,6 @@ export const useCoursesStore = defineStore('courses', {
           headers.Authorization = `Bearer ${authStore.token}`
         }
 
-        const { $fetch } = useNuxtApp()
         const courses = await $fetch<Course[]>(API_ENDPOINTS.COURSES.LIST, {
           headers
         })
@@ -151,7 +150,7 @@ export const useCoursesStore = defineStore('courses', {
         this.error = error?.data?.message || ERROR_MESSAGES.NETWORK_ERROR
         return { 
           success: false, 
-          error: this.error 
+          error: this.error || undefined 
         }
       } finally {
         this.isLoading = false
@@ -170,7 +169,6 @@ export const useCoursesStore = defineStore('courses', {
           headers.Authorization = `Bearer ${authStore.token}`
         }
 
-        const { $fetch } = useNuxtApp()
         const course = await $fetch<Course>(API_ENDPOINTS.COURSES.DETAIL(id), {
           headers
         })
@@ -189,7 +187,7 @@ export const useCoursesStore = defineStore('courses', {
         this.error = error?.data?.message || ERROR_MESSAGES.NETWORK_ERROR
         return { 
           success: false, 
-          error: this.error 
+          error: this.error || undefined 
         }
       } finally {
         this.isLoading = false
@@ -206,7 +204,6 @@ export const useCoursesStore = defineStore('courses', {
           return { success: false, error: ERROR_MESSAGES.UNAUTHORIZED }
         }
 
-        const { $fetch } = useNuxtApp()
         const course = await $fetch<Course>(API_ENDPOINTS.COURSES.CREATE, {
           method: 'POST',
           headers: {
@@ -224,7 +221,7 @@ export const useCoursesStore = defineStore('courses', {
         this.error = error?.data?.message || ERROR_MESSAGES.NETWORK_ERROR
         return { 
           success: false, 
-          error: this.error 
+          error: this.error || undefined 
         }
       } finally {
         this.isLoading = false
@@ -241,7 +238,6 @@ export const useCoursesStore = defineStore('courses', {
           return { success: false, error: ERROR_MESSAGES.UNAUTHORIZED }
         }
 
-        const { $fetch } = useNuxtApp()
         const course = await $fetch<Course>(API_ENDPOINTS.COURSES.UPDATE(id), {
           method: 'PUT',
           headers: {
@@ -267,7 +263,7 @@ export const useCoursesStore = defineStore('courses', {
         this.error = error?.data?.message || ERROR_MESSAGES.NETWORK_ERROR
         return { 
           success: false, 
-          error: this.error 
+          error: this.error || undefined 
         }
       } finally {
         this.isLoading = false
@@ -284,7 +280,6 @@ export const useCoursesStore = defineStore('courses', {
           return { success: false, error: ERROR_MESSAGES.UNAUTHORIZED }
         }
 
-        const { $fetch } = useNuxtApp()
         await $fetch(API_ENDPOINTS.COURSES.DELETE(id), {
           method: 'DELETE',
           headers: {
@@ -306,7 +301,7 @@ export const useCoursesStore = defineStore('courses', {
         this.error = error?.data?.message || ERROR_MESSAGES.NETWORK_ERROR
         return { 
           success: false, 
-          error: this.error 
+          error: this.error || undefined 
         }
       } finally {
         this.isLoading = false

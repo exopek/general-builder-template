@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import { API_ENDPOINTS, ERROR_MESSAGES } from '~/utils/constants'
-import type { Course } from './courses'
 import type { Booking } from './bookings'
 
 export interface DashboardStats {
@@ -132,7 +131,7 @@ export const useAdminStore = defineStore('admin', {
         this.error = error?.data?.message || ERROR_MESSAGES.NETWORK_ERROR
         return { 
           success: false, 
-          error: this.error 
+          error: this.error || undefined 
         }
       } finally {
         this.isLoading = false
@@ -149,7 +148,6 @@ export const useAdminStore = defineStore('admin', {
           return { success: false, error: ERROR_MESSAGES.UNAUTHORIZED }
         }
 
-        const { $fetch } = useNuxtApp()
         const participants = await $fetch<CourseParticipant[]>(
           API_ENDPOINTS.COURSES.BOOKINGS(courseId),
           {
@@ -167,7 +165,7 @@ export const useAdminStore = defineStore('admin', {
         this.error = error?.data?.message || ERROR_MESSAGES.NETWORK_ERROR
         return { 
           success: false, 
-          error: this.error 
+          error: this.error || undefined 
         }
       } finally {
         this.isLoading = false
@@ -186,7 +184,6 @@ export const useAdminStore = defineStore('admin', {
 
         // In a real app, this would be an admin-specific endpoint
         // For now, we'll use the regular bookings endpoint and assume admin sees all
-        const { $fetch } = useNuxtApp()
         const bookings = await $fetch<BookingOverview[]>(API_ENDPOINTS.BOOKINGS.LIST + '/admin', {
           headers: {
             Authorization: `Bearer ${authStore.token}`
@@ -201,7 +198,7 @@ export const useAdminStore = defineStore('admin', {
         this.error = error?.data?.message || ERROR_MESSAGES.NETWORK_ERROR
         return { 
           success: false, 
-          error: this.error 
+          error: this.error || undefined 
         }
       } finally {
         this.isLoading = false
@@ -242,7 +239,7 @@ export const useAdminStore = defineStore('admin', {
         this.error = error?.data?.message || ERROR_MESSAGES.NETWORK_ERROR
         return { 
           success: false, 
-          error: this.error 
+          error: this.error || undefined 
         }
       } finally {
         this.isLoading = false
@@ -276,7 +273,6 @@ export const useAdminStore = defineStore('admin', {
           return { success: false, error: ERROR_MESSAGES.UNAUTHORIZED }
         }
 
-        const { $fetch } = useNuxtApp()
         await $fetch(`/api/admin/bookings/${bookingId}`, {
           method: 'PATCH',
           headers: {
@@ -297,7 +293,7 @@ export const useAdminStore = defineStore('admin', {
         this.error = error?.data?.message || ERROR_MESSAGES.NETWORK_ERROR
         return { 
           success: false, 
-          error: this.error 
+          error: this.error || undefined 
         }
       } finally {
         this.isLoading = false

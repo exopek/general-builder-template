@@ -100,7 +100,6 @@ export const useBookingsStore = defineStore('bookings', {
           return { success: false, error: ERROR_MESSAGES.UNAUTHORIZED }
         }
 
-        const { $fetch } = useNuxtApp()
         const bookings = await $fetch<Booking[]>(API_ENDPOINTS.BOOKINGS.LIST, {
           headers: {
             Authorization: `Bearer ${authStore.token}`
@@ -115,7 +114,7 @@ export const useBookingsStore = defineStore('bookings', {
         this.error = error?.data?.message || ERROR_MESSAGES.NETWORK_ERROR
         return { 
           success: false, 
-          error: this.error 
+          error: this.error || undefined 
         }
       } finally {
         this.isLoading = false
@@ -185,7 +184,6 @@ export const useBookingsStore = defineStore('bookings', {
           return { success: false, error: validation.errors.join(', ') }
         }
 
-        const { $fetch } = useNuxtApp()
         const booking = await $fetch<Booking>(API_ENDPOINTS.BOOKINGS.CREATE, {
           method: 'POST',
           headers: {
@@ -209,7 +207,7 @@ export const useBookingsStore = defineStore('bookings', {
         this.error = error?.data?.message || ERROR_MESSAGES.NETWORK_ERROR
         return { 
           success: false, 
-          error: this.error 
+          error: this.error || undefined 
         }
       } finally {
         this.isLoading = false
@@ -248,7 +246,6 @@ export const useBookingsStore = defineStore('bookings', {
           }
         }
 
-        const { $fetch } = useNuxtApp()
         await $fetch(API_ENDPOINTS.BOOKINGS.DELETE(bookingId), {
           method: 'DELETE',
           headers: {
@@ -272,7 +269,7 @@ export const useBookingsStore = defineStore('bookings', {
         this.error = error?.data?.message || ERROR_MESSAGES.NETWORK_ERROR
         return { 
           success: false, 
-          error: this.error 
+          error: this.error || undefined 
         }
       } finally {
         this.isLoading = false
