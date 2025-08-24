@@ -178,12 +178,3 @@ export function useAuth() {
   }
 }
 
-// Plugin to initialize auth state
-export default defineNuxtPlugin(() => {
-  const { initAuth } = useAuth()
-  
-  // Initialize auth state on client-side
-  if (process.client) {
-    initAuth()
-  }
-})

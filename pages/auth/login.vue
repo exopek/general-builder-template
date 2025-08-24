@@ -115,7 +115,7 @@ definePageMeta({
 
 const { login, isLoading } = useAuth()
 
-const form = reactive({
+const form = ref({
   email: '',
   password: ''
 })
@@ -123,7 +123,7 @@ const form = reactive({
 const error = ref<string | null>(null)
 
 const isFormValid = computed(() => {
-  return form.email.trim() !== '' && form.password.trim() !== ''
+  return form.value.email.trim() !== '' && form.value.password.trim() !== ''
 })
 
 const handleLogin = async () => {
@@ -132,8 +132,8 @@ const handleLogin = async () => {
   error.value = null
   
   const result = await login({
-    email: form.email.trim(),
-    password: form.password
+    email: form.value.email.trim(),
+    password: form.value.password
   })
   
   if (!result.success) {
@@ -142,7 +142,7 @@ const handleLogin = async () => {
 }
 
 // Clear error when form changes
-watch([() => form.email, () => form.password], () => {
+watch([() => form.value.email, () => form.value.password], () => {
   if (error.value) {
     error.value = null
   }
