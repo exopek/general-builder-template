@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { API_ENDPOINTS, ERROR_MESSAGES } from '~/utils/constants'
+import { mockCourses, delay, type MockCourse } from '~/utils/mockData'
 
 export interface Course {
   id: string
@@ -130,16 +131,31 @@ export const useCoursesStore = defineStore('courses', {
         this.isLoading = true
         this.error = null
 
-        const authStore = useAuthStore()
-        const headers: Record<string, string> = {}
-        
-        if (authStore.token) {
-          headers.Authorization = `Bearer ${authStore.token}`
-        }
+        // Simulate API delay
+        await delay(600)
 
-        const courses = await $fetch<Course[]>(API_ENDPOINTS.COURSES.LIST, {
-          headers
-        })
+        // Map mock courses to store format
+        const courses: Course[] = mockCourses.map(mockCourse => ({
+          id: mockCourse.id,
+          title: mockCourse.title,
+          description: mockCourse.description,
+          instructor: mockCourse.instructor,
+          date: mockCourse.startTime.split('T')[0], // Extract date part
+          startTime: mockCourse.startTime,
+          endTime: mockCourse.endTime,
+          duration: mockCourse.duration,
+          maxParticipants: mockCourse.maxParticipants,
+          currentParticipants: mockCourse.currentParticipants,
+          price: mockCourse.price,
+          category: mockCourse.category,
+          level: mockCourse.difficulty as 'beginner' | 'intermediate' | 'advanced',
+          location: mockCourse.location,
+          equipment: mockCourse.requirements,
+          image: mockCourse.image,
+          isActive: mockCourse.isActive,
+          createdAt: '2024-01-01T00:00:00Z',
+          updatedAt: '2024-01-01T00:00:00Z'
+        }))
 
         this.courses = courses
         this.cache.lastFetch = new Date()
@@ -147,7 +163,7 @@ export const useCoursesStore = defineStore('courses', {
         return { success: true }
       } catch (error: any) {
         console.error('Fetch courses error:', error)
-        this.error = error?.data?.message || ERROR_MESSAGES.NETWORK_ERROR
+        this.error = error?.message || ERROR_MESSAGES.NETWORK_ERROR
         return { 
           success: false, 
           error: this.error || undefined 
@@ -162,16 +178,36 @@ export const useCoursesStore = defineStore('courses', {
         this.isLoading = true
         this.error = null
 
-        const authStore = useAuthStore()
-        const headers: Record<string, string> = {}
-        
-        if (authStore.token) {
-          headers.Authorization = `Bearer ${authStore.token}`
+        await delay(400)
+
+        // Find mock course by ID
+        const mockCourse = mockCourses.find(c => c.id === id)
+        if (!mockCourse) {
+          return { success: false, error: 'Kurs nicht gefunden' }
         }
 
-        const course = await $fetch<Course>(API_ENDPOINTS.COURSES.DETAIL(id), {
-          headers
-        })
+        // Map to store format
+        const course: Course = {
+          id: mockCourse.id,
+          title: mockCourse.title,
+          description: mockCourse.description,
+          instructor: mockCourse.instructor,
+          date: mockCourse.startTime.split('T')[0],
+          startTime: mockCourse.startTime,
+          endTime: mockCourse.endTime,
+          duration: mockCourse.duration,
+          maxParticipants: mockCourse.maxParticipants,
+          currentParticipants: mockCourse.currentParticipants,
+          price: mockCourse.price,
+          category: mockCourse.category,
+          level: mockCourse.difficulty as 'beginner' | 'intermediate' | 'advanced',
+          location: mockCourse.location,
+          equipment: mockCourse.requirements,
+          image: mockCourse.image,
+          isActive: mockCourse.isActive,
+          createdAt: '2024-01-01T00:00:00Z',
+          updatedAt: '2024-01-01T00:00:00Z'
+        }
 
         this.currentCourse = course
 
@@ -184,7 +220,7 @@ export const useCoursesStore = defineStore('courses', {
         return { success: true }
       } catch (error: any) {
         console.error('Fetch course error:', error)
-        this.error = error?.data?.message || ERROR_MESSAGES.NETWORK_ERROR
+        this.error = error?.message || ERROR_MESSAGES.NETWORK_ERROR
         return { 
           success: false, 
           error: this.error || undefined 

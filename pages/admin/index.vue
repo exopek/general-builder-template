@@ -332,7 +332,10 @@ const handleLogout = async () => {
   }
 }
 
-const formatPrice = (price: number) => {
+const formatPrice = (price: number): string => {
+  if (typeof price !== 'number' || isNaN(price)) {
+    return '0,00'
+  }
   return new Intl.NumberFormat('de-DE', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
@@ -344,12 +347,17 @@ onMounted(async () => {
   await loadDashboardData()
 })
 
-// Auto-refresh every 5 minutes
-const refreshInterval = setInterval(() => {
-  if (!isLoading.value && !isRefreshing.value) {
-    loadDashboardData()
-  }
-}, 5 * 60 * 1000)
+// Auto-refresh every 5 minutes (client-side only)
+let refreshInterval: NodeJS.Timeout | null = null
+
+onMounted(() => {
+  // Only set interval on client-side
+  refreshInterval = setInterval(() => {
+    if (!isLoading.value && !isRefreshing.value) {
+      loadDashboardData()
+    }
+  }, 5 * 60 * 1000)
+})
 
 onUnmounted(() => {
   if (refreshInterval) {

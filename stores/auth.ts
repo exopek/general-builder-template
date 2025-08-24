@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { jwtDecode } from 'jwt-decode'
 import { API_ENDPOINTS, USER_ROLES, STORAGE_KEYS, ERROR_MESSAGES } from '~/utils/constants'
+import { findUser, delay } from '~/utils/mockData'
 
 export interface User {
   id: string
@@ -56,19 +57,39 @@ export const useAuthStore = defineStore('auth', {
       try {
         this.isLoading = true
         
-        const response = await $fetch<AuthResponse>(API_ENDPOINTS.AUTH.LOGIN, {
-          method: 'POST',
-          body: credentials
-        })
+        // Use mock data instead of API call
+        await delay(800) // Simulate network delay
+        
+        const mockUser = findUser(credentials.email, credentials.password)
+        if (!mockUser) {
+          return { 
+            success: false, 
+            error: 'Ungültige Anmeldedaten' 
+          }
+        }
 
-        this.token = response.token
-        this.user = response.user
+        // Create a mock JWT token
+        const mockToken = `mock-jwt-token-${mockUser.id}-${Date.now()}`
+        
+        // Map mock user to store user format
+        const user: User = {
+          id: mockUser.id,
+          email: mockUser.email,
+          firstName: mockUser.firstName,
+          lastName: mockUser.lastName,
+          role: mockUser.role,
+          createdAt: mockUser.memberSince,
+          updatedAt: mockUser.memberSince
+        }
+
+        this.token = mockToken
+        this.user = user
         this.isAuthenticated = true
 
         // Store in localStorage for persistence
         if (process.client) {
-          localStorage.setItem(STORAGE_KEYS.TOKEN, response.token)
-          localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(response.user))
+          localStorage.setItem(STORAGE_KEYS.TOKEN, mockToken)
+          localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(user))
         }
 
         return { success: true }
@@ -76,7 +97,7 @@ export const useAuthStore = defineStore('auth', {
         console.error('Login error:', error)
         return { 
           success: false, 
-          error: error?.data?.message || ERROR_MESSAGES.NETWORK_ERROR 
+          error: error?.message || ERROR_MESSAGES.NETWORK_ERROR 
         }
       } finally {
         this.isLoading = false
@@ -116,18 +137,10 @@ export const useAuthStore = defineStore('auth', {
 
     async logout(): Promise<void> {
       try {
-        // Call logout endpoint if needed
-        if (this.token) {
-          await $fetch(API_ENDPOINTS.AUTH.LOGOUT, {
-            method: 'POST',
-            headers: {
-              Authorization: `Bearer ${this.token}`
-            }
-          })
-        }
+        // Simulate API call delay
+        await delay(300)
       } catch (error) {
-        console.error('Logout API error:', error)
-        // Continue with local logout even if API call fails
+        console.error('Logout error:', error)
       } finally {
         // Clear state
         this.user = null
@@ -176,15 +189,22 @@ export const useAuthStore = defineStore('auth', {
 
       if (token && userData) {
         try {
-          // Check if token is expired
-          const decoded = jwtDecode<JwtPayload>(token)
-          if (decoded.exp * 1000 > Date.now()) {
+          // For mock tokens, just check if they exist
+          if (token.startsWith('mock-jwt-token-')) {
             this.token = token
             this.user = JSON.parse(userData)
             this.isAuthenticated = true
           } else {
-            // Token expired, clear storage
-            this.clearAuthState()
+            // For real JWT tokens, check expiration
+            const decoded = jwtDecode<JwtPayload>(token)
+            if (decoded.exp * 1000 > Date.now()) {
+              this.token = token
+              this.user = JSON.parse(userData)
+              this.isAuthenticated = true
+            } else {
+              // Token expired, clear storage
+              this.clearAuthState()
+            }
           }
         } catch (error) {
           console.error('Token decode error:', error)

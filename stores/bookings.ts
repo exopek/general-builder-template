@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { API_ENDPOINTS, ERROR_MESSAGES } from '~/utils/constants'
 import type { Course } from './courses'
+import { mockBookings, mockCourses, mockUsers, getUserBookings, delay, type MockBooking } from '~/utils/mockData'
 
 export interface Booking {
   id: string
@@ -100,18 +101,58 @@ export const useBookingsStore = defineStore('bookings', {
           return { success: false, error: ERROR_MESSAGES.UNAUTHORIZED }
         }
 
-        const bookings = await $fetch<Booking[]>(API_ENDPOINTS.BOOKINGS.LIST, {
-          headers: {
-            Authorization: `Bearer ${authStore.token}`
+        await delay(500)
+
+        // Get bookings with course and user details
+        const bookingsWithDetails: Booking[] = mockBookings.map(booking => {
+          const course = mockCourses.find(c => c.id === booking.courseId)
+          const user = mockUsers.find(u => u.id === booking.userId)
+
+          return {
+            id: booking.id,
+            userId: booking.userId,
+            courseId: booking.courseId,
+            bookingDate: booking.bookingDate,
+            status: booking.status,
+            notes: booking.notes,
+            createdAt: booking.bookingDate,
+            updatedAt: booking.bookingDate,
+            course: course ? {
+              id: course.id,
+              title: course.title,
+              description: course.description,
+              instructor: course.instructor,
+              date: course.startTime.split('T')[0],
+              startTime: course.startTime,
+              endTime: course.endTime,
+              duration: course.duration,
+              maxParticipants: course.maxParticipants,
+              currentParticipants: course.currentParticipants,
+              price: course.price,
+              category: course.category,
+              level: course.difficulty as 'beginner' | 'intermediate' | 'advanced',
+              location: course.location,
+              equipment: course.requirements,
+              image: course.image,
+              isActive: course.isActive,
+              createdAt: '2024-01-01T00:00:00Z',
+              updatedAt: '2024-01-01T00:00:00Z'
+            } : undefined,
+            user: user ? {
+              id: user.id,
+              firstName: user.firstName,
+              lastName: user.lastName,
+              email: user.email
+            } : undefined
           }
         })
 
-        this.bookings = bookings
+        this.bookings = bookingsWithDetails
 
         return { success: true }
       } catch (error: any) {
         console.error('Fetch bookings error:', error)
-        this.error = error?.data?.message || ERROR_MESSAGES.NETWORK_ERROR
+        this.error = error?.message || ERROR_MESSAGES.NETWORK_ERROR
         return { 
           success: false, 
           error: this.error || undefined 
@@ -174,7 +215,7 @@ export const useBookingsStore = defineStore('bookings', {
         this.error = null
 
         const authStore = useAuthStore()
-        if (!authStore.token) {
+        if (!authStore.token || !authStore.user) {
           return { success: false, error: ERROR_MESSAGES.UNAUTHORIZED }
         }
 
@@ -184,27 +225,79 @@ export const useBookingsStore = defineStore('bookings', {
           return { success: false, error: validation.errors.join(', ') }
         }
 
-        const booking = await $fetch<Booking>(API_ENDPOINTS.BOOKINGS.CREATE, {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${authStore.token}`
-          },
-          body: bookingData
-        })
+        await delay(700)
 
-        this.bookings.push(booking)
-
-        // Update course participant count in courses store
-        const coursesStore = useCoursesStore()
-        const course = coursesStore.courses.find(c => c.id === bookingData.courseId)
-        if (course) {
-          course.currentParticipants += 1
+        // Create new booking
+        const course = mockCourses.find(c => c.id === bookingData.courseId)
+        if (!course) {
+          return { success: false, error: 'Kurs nicht gefunden' }
         }
 
-        return { success: true, booking }
+        const newBooking: Booking = {
+          id: `booking-${Date.now()}`,
+          userId: authStore.user.id,
+          courseId: bookingData.courseId,
+          bookingDate: new Date().toISOString(),
+          status: 'confirmed',
+          notes: bookingData.notes,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+          course: {
+            id: course.id,
+            title: course.title,
+            description: course.description,
+            instructor: course.instructor,
+            date: course.startTime.split('T')[0],
+            startTime: course.startTime,
+            endTime: course.endTime,
+            duration: course.duration,
+            maxParticipants: course.maxParticipants,
+            currentParticipants: course.currentParticipants,
+            price: course.price,
+            category: course.category,
+            level: course.difficulty as 'beginner' | 'intermediate' | 'advanced',
+            location: course.location,
+            equipment: course.requirements,
+            image: course.image,
+            isActive: course.isActive,
+            createdAt: '2024-01-01T00:00:00Z',
+            updatedAt: '2024-01-01T00:00:00Z'
+          },
+          user: {
+            id: authStore.user.id,
+            firstName: authStore.user.firstName,
+            lastName: authStore.user.lastName,
+            email: authStore.user.email
+          }
+        }
+
+        // Add to mock data and state
+        const mockBookingData: MockBooking = {
+          id: newBooking.id,
+          userId: newBooking.userId,
+          courseId: newBooking.courseId,
+          status: newBooking.status,
+          bookingDate: newBooking.bookingDate,
+          notes: newBooking.notes
+        }
+        mockBookings.push(mockBookingData)
+        
+        this.bookings.push(newBooking)
+
+        // Update course participant count
+        const coursesStore = useCoursesStore()
+        const storesCourse = coursesStore.courses.find(c => c.id === bookingData.courseId)
+        if (storesCourse) {
+          storesCourse.currentParticipants += 1
+        }
+        
+        // Update mock course as well
+        course.currentParticipants += 1
+
+        return { success: true, booking: newBooking }
       } catch (error: any) {
         console.error('Create booking error:', error)
-        this.error = error?.data?.message || ERROR_MESSAGES.NETWORK_ERROR
+        this.error = error?.message || ERROR_MESSAGES.NETWORK_ERROR
         return { 
           success: false, 
           error: this.error || undefined 

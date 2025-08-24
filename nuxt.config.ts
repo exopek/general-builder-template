@@ -50,16 +50,7 @@ export default defineNuxtConfig({
       // Dynamic pages über [slug].vue - werden prerendered
       '/kurse': { prerender: true },
       '/preise': { prerender: true },
-      '/team': { prerender: true },
-      
-      // Catch-all für Builder.io Pages
-      '/**': { 
-        ssr: true, // Server-side rendering, aber nicht prerendered
-        headers: { 
-          'cache-control': 's-maxage=60, stale-while-revalidate=300',
-          'x-builder-content': 'true'
-        }
-      }
+      '/team': { prerender: true }
     }
   },
   
