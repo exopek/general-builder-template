@@ -104,11 +104,13 @@
         </div>
       </div>
 
-      <!-- Price and Action -->
+      <!-- Membership Info and Action -->
       <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-        <div class="flex items-center">
-          <span class="text-2xl font-bold text-gray-900">{{ formatPrice(course.price) }}</span>
-          <span class="text-sm text-gray-500 ml-1">€</span>
+        <div class="flex items-center text-green-600">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span class="text-sm font-semibold">Im Abo enthalten</span>
         </div>
         
         <!-- Action Button -->
@@ -165,6 +167,7 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits<Emits>()
 
 const { isAuthenticated } = useAuth()
+const authStore = useAuthStore()
 const bookingsStore = useBookingsStore()
 
 const isBooking = ref(false)
@@ -193,6 +196,7 @@ const isAlreadyBooked = computed(() => {
 
 const canBook = computed(() => {
   return isAuthenticated.value && 
+         authStore.hasActiveMembership &&
          isAvailable.value && 
          !isAlreadyBooked.value &&
          props.course.isActive
@@ -241,6 +245,9 @@ const bookingButtonText = computed(() => {
   }
   if (!isAuthenticated.value) {
     return 'Anmelden zum Buchen'
+  }
+  if (isAuthenticated.value && !authStore.hasActiveMembership) {
+    return 'Mitgliedschaft erforderlich'
   }
   if (!isAvailable.value) {
     return 'Ausgebucht'

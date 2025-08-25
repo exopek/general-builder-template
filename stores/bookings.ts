@@ -172,6 +172,11 @@ export const useBookingsStore = defineStore('bookings', {
         errors.push('Sie müssen angemeldet sein, um einen Kurs zu buchen.')
       }
 
+      // Check if user has active membership
+      if (authStore.isAuthenticated && !authStore.hasActiveMembership) {
+        errors.push('Sie benötigen ein aktives Mitgliedsabonnement, um Kurse zu buchen.')
+      }
+
       // Find the course
       const course = coursesStore.courses.find(c => c.id === courseId)
       if (!course) {

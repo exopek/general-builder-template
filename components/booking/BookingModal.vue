@@ -51,9 +51,8 @@
                 </svg>
                 {{ course.location }}
               </div>
-              <div class="flex items-center justify-between pt-2 border-t border-gray-200">
-                <span class="font-semibold">Preis:</span>
-                <span class="text-lg font-bold text-indigo-600">{{ formatPrice(course.price) }}€</span>
+              <div class="pt-2 border-t border-gray-200 text-center">
+                <span class="text-sm text-green-600 font-semibold">✓ Im Mitgliedsabonnement enthalten</span>
               </div>
             </div>
           </div>
@@ -123,7 +122,7 @@
                   <a href="#" class="text-indigo-600 hover:text-indigo-500">Stornierungsbedingungen</a>
                 </label>
                 <p class="text-gray-500 mt-1">
-                  Stornierung bis 4 Stunden vor Kursbeginn kostenfrei möglich
+                  Stornierung bis 4 Stunden vor Kursbeginn möglich • Kostenfrei für Mitglieder
                 </p>
               </div>
             </div>
@@ -156,7 +155,7 @@
               <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
               <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
             </svg>
-            {{ isBooking ? 'Buchung läuft...' : `Jetzt buchen (${formatPrice(course?.price || 0)}€)` }}
+            {{ isBooking ? 'Buchung läuft...' : 'Jetzt buchen' }}
           </button>
           <button
             type="button"

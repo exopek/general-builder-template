@@ -9,6 +9,7 @@ export interface User {
   firstName: string
   lastName: string
   role: 'user' | 'admin'
+  isActive: boolean
   createdAt: string
   updatedAt: string
 }
@@ -49,7 +50,8 @@ export const useAuthStore = defineStore('auth', {
   getters: {
     isAdmin: (state) => state.user?.role === USER_ROLES.ADMIN,
     isUser: (state) => state.user?.role === USER_ROLES.USER,
-    fullName: (state) => state.user ? `${state.user.firstName} ${state.user.lastName}` : ''
+    fullName: (state) => state.user ? `${state.user.firstName} ${state.user.lastName}` : '',
+    hasActiveMembership: (state) => state.user?.isActive === true
   },
 
   actions: {
@@ -78,6 +80,7 @@ export const useAuthStore = defineStore('auth', {
           firstName: mockUser.firstName,
           lastName: mockUser.lastName,
           role: mockUser.role,
+          isActive: mockUser.isActive,
           createdAt: mockUser.memberSince,
           updatedAt: mockUser.memberSince
         }
