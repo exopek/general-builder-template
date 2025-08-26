@@ -44,102 +44,98 @@
       </div>
 
       <!-- Dashboard Content -->
-      <div v-else>
-        <!-- Quick Stats -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <!-- Upcoming Bookings -->
-          <div class="bg-white overflow-hidden shadow rounded-lg">
-            <div class="p-5">
-              <div class="flex items-center">
-                <div class="flex-shrink-0">
-                  <svg class="h-6 w-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                </div>
-                <div class="ml-5 w-0 flex-1">
-                  <dl>
-                    <dt class="text-sm font-medium text-gray-500 truncate">
-                      Kommende Kurse
-                    </dt>
-                    <dd class="text-lg font-medium text-gray-900">
-                      {{ upcomingBookings.length }}
-                    </dd>
-                  </dl>
-                </div>
-              </div>
-            </div>
-            <div class="bg-gray-50 px-5 py-3">
-              <div class="text-sm">
-                <NuxtLink to="/user/my-courses" class="font-medium text-indigo-600 hover:text-indigo-500">
-                  Alle anzeigen
-                </NuxtLink>
-              </div>
-            </div>
-          </div>
+      <div v-else class="space-y-8">
+        <!-- Next Course Section -->
+        <div v-if="nextRegisteredCourse" class="space-y-4">
+          <h2 class="text-2xl font-bold text-gray-900">Nächster Kurs</h2>
+          <CourseCard 
+            :course="nextRegisteredCourse" 
+            :showBookingButton="false"
+            class="max-w-md"
+          />
+        </div>
 
-          <!-- Total Bookings -->
-          <div class="bg-white overflow-hidden shadow rounded-lg">
-            <div class="p-5">
-              <div class="flex items-center">
-                <div class="flex-shrink-0">
-                  <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                  </svg>
-                </div>
-                <div class="ml-5 w-0 flex-1">
-                  <dl>
-                    <dt class="text-sm font-medium text-gray-500 truncate">
-                      Gebuchte Kurse gesamt
-                    </dt>
-                    <dd class="text-lg font-medium text-gray-900">
-                      {{ userBookings.length }}
-                    </dd>
-                  </dl>
-                </div>
-              </div>
-            </div>
-            <div class="bg-gray-50 px-5 py-3">
-              <div class="text-sm">
-                <NuxtLink to="/user/bookings" class="font-medium text-green-600 hover:text-green-500">
-                  Historie anzeigen
-                </NuxtLink>
-              </div>
-            </div>
-          </div>
-
-          <!-- Profile Completion -->
-          <div class="bg-white overflow-hidden shadow rounded-lg">
-            <div class="p-5">
-              <div class="flex items-center">
-                <div class="flex-shrink-0">
-                  <svg class="h-6 w-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                </div>
-                <div class="ml-5 w-0 flex-1">
-                  <dl>
-                    <dt class="text-sm font-medium text-gray-500 truncate">
-                      Profil
-                    </dt>
-                    <dd class="text-lg font-medium text-gray-900">
-                      Vollständig
-                    </dd>
-                  </dl>
-                </div>
-              </div>
-            </div>
-            <div class="bg-gray-50 px-5 py-3">
-              <div class="text-sm">
-                <NuxtLink to="/user/profile" class="font-medium text-yellow-600 hover:text-yellow-500">
-                  Profil bearbeiten
-                </NuxtLink>
-              </div>
-            </div>
+        <!-- No Courses Placeholder -->
+        <div v-else class="bg-white shadow rounded-lg p-8 text-center">
+          <div class="max-w-md mx-auto">
+            <svg class="mx-auto h-16 w-16 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+            </svg>
+            <h3 class="text-xl font-medium text-gray-900 mb-2">
+              Noch keine Kurse gebucht
+            </h3>
+            <p class="text-gray-500 mb-6">
+              Entdecken Sie unser vielfältiges Kursangebot und buchen Sie Ihren ersten Kurs!
+            </p>
+            <NuxtLink
+              to="/courses"
+              class="inline-flex items-center px-6 py-3 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 transition-colors"
+            >
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              Kurse entdecken
+            </NuxtLink>
           </div>
         </div>
 
-        <!-- Main Dashboard Component -->
-        <UserDashboard />
+        <!-- Quick Access Actions -->
+        <div class="bg-white shadow rounded-lg">
+          <div class="px-6 py-4 border-b border-gray-200">
+            <h2 class="text-lg font-medium text-gray-900">Schnellaktionen</h2>
+          </div>
+          <div class="p-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <NuxtLink
+                to="/courses"
+                class="flex items-center p-4 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition-colors group"
+              >
+                <div class="flex-shrink-0">
+                  <svg class="w-8 h-8 text-indigo-600 group-hover:text-indigo-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                  </svg>
+                </div>
+                <div class="ml-4">
+                  <p class="text-sm font-medium text-indigo-600 group-hover:text-indigo-700">
+                    Kurse anzeigen
+                  </p>
+                </div>
+              </NuxtLink>
+
+              <NuxtLink
+                to="/user/my-courses"
+                class="flex items-center p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors group"
+              >
+                <div class="flex-shrink-0">
+                  <svg class="w-8 h-8 text-green-600 group-hover:text-green-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <div class="ml-4">
+                  <p class="text-sm font-medium text-green-600 group-hover:text-green-700">
+                    Meine Kurse
+                  </p>
+                </div>
+              </NuxtLink>
+
+              <NuxtLink
+                to="/user/profile"
+                class="flex items-center p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors group"
+              >
+                <div class="flex-shrink-0">
+                  <svg class="w-8 h-8 text-purple-600 group-hover:text-purple-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                </div>
+                <div class="ml-4">
+                  <p class="text-sm font-medium text-purple-600 group-hover:text-purple-700">
+                    Profil bearbeiten
+                  </p>
+                </div>
+              </NuxtLink>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -154,26 +150,32 @@ definePageMeta({
 
 // Stores and composables
 const { user, logout } = useAuth()
-const bookingsStore = useBookingsStore()
 const coursesStore = useCoursesStore()
+const bookingsStore = useBookingsStore()
 
 // State
 const isLoading = ref(true)
 
 // Computed
-const userBookings = computed(() => bookingsStore.userBookings)
-const upcomingBookings = computed(() => bookingsStore.upcomingBookings)
+const nextRegisteredCourse = computed(() => {
+  const userBookings = bookingsStore.userBookings
+  if (!userBookings.length) return null
+
+  const now = new Date()
+  const upcomingBookings = userBookings
+    .filter(booking => new Date(booking.course.date) > now)
+    .sort((a, b) => new Date(a.course.date).getTime() - new Date(b.course.date).getTime())
+  
+  return upcomingBookings.length > 0 ? upcomingBookings[0].course : null
+})
 
 // Methods
 const loadDashboardData = async () => {
   isLoading.value = true
   
   try {
-    // Load user's bookings and courses in parallel
-    await Promise.all([
-      bookingsStore.fetchBookings(),
-      coursesStore.fetchCourses()
-    ])
+    await coursesStore.fetchCourses()
+    await bookingsStore.fetchUserBookings()
   } catch (error) {
     console.error('Error loading dashboard data:', error)
   } finally {
@@ -193,5 +195,5 @@ onMounted(async () => {
 })
 
 // Dynamic imports
-const UserDashboard = defineAsyncComponent(() => import('~/components/user/UserDashboard.vue'))
+const CourseCard = defineAsyncComponent(() => import('~/components/booking/CourseCard.vue'))
 </script>

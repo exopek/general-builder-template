@@ -195,14 +195,7 @@
         <!-- Sidebar -->
         <div class="lg:col-span-1">
           <div class="bg-white rounded-xl shadow-sm p-6 sticky top-8">
-            <!-- Price -->
-            <div class="text-center mb-6">
-              <div class="text-3xl font-bold text-gray-900">
-                {{ formatPrice(course.price) }}€
-              </div>
-              <div class="text-sm text-gray-500">pro Person</div>
-            </div>
-
+           
             <!-- Booking Status -->
             <div class="mb-6">
               <div 
@@ -236,7 +229,7 @@
 
               <NuxtLink
                 to="/courses"
-                class="w-full bg-gray-100 text-gray-700 py-3 px-4 rounded-lg font-medium hover:bg-gray-200 transition-colors text-center block"
+                class="w-full bg-gray-100 text-gray-400 py-3 px-4 rounded-lg font-medium hover:bg-gray-200 transition-colors text-center block"
               >
                 Weitere Kurse ansehen
               </NuxtLink>
@@ -248,15 +241,15 @@
               <div class="space-y-2 text-sm">
                 <div class="flex justify-between">
                   <span class="text-gray-500">Level:</span>
-                  <span class="font-medium">{{ levelLabels[course.level] }}</span>
+                  <span class="font-medium text-gray-500">{{ levelLabels[course.level] }}</span>
                 </div>
                 <div class="flex justify-between">
                   <span class="text-gray-500">Kategorie:</span>
-                  <span class="font-medium">{{ course.category }}</span>
+                  <span class="font-medium text-gray-500">{{ course.category }}</span>
                 </div>
                 <div class="flex justify-between">
                   <span class="text-gray-500">Verfügbare Plätze:</span>
-                  <span class="font-medium">{{ course.maxParticipants - course.currentParticipants }}</span>
+                  <span class="font-medium text-gray-500">{{ availableCourseSlots }}</span>
                 </div>
               </div>
             </div>
@@ -306,6 +299,10 @@ const levelLabels = {
 }
 
 // Computed properties
+const availableCourseSlots = computed(() => {
+  return course.value ? course.value.maxParticipants - course.value.currentParticipants : 0
+})
+
 const isAvailable = computed(() => {
   return course.value ? course.value.currentParticipants < course.value.maxParticipants : false
 })
@@ -424,13 +421,6 @@ const formatDate = (dateString: string) => {
     month: 'long',
     year: 'numeric'
   })
-}
-
-const formatPrice = (price: number) => {
-  return new Intl.NumberFormat('de-DE', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  }).format(price)
 }
 
 const handleBooking = async () => {

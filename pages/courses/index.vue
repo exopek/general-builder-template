@@ -14,73 +14,45 @@
       </div>
     </div>
 
-    <!-- Filters Section -->
+    <!-- Week Navigation -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div class="bg-white rounded-xl shadow-sm p-6 mb-8">
-        <h2 class="text-lg font-semibold text-gray-900 mb-4">Filter</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <!-- Category Filter -->
+        <div class="flex items-center justify-between">
           <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Kategorie</label>
-            <select
-              v-model="selectedCategory"
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+            <h2 class="text-lg font-semibold text-gray-900">Kursübersicht</h2>
+            <p class="text-sm text-gray-600 mt-1">{{ currentWeekDisplayText }}</p>
+          </div>
+          
+          <!-- Week Navigation Controls -->
+          <div class="flex items-center space-x-4">
+            <button
+              @click="previousWeek"
+              :disabled="currentWeekIndex === 0"
+              class="p-2 rounded-full border border-gray-300 text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
-              <option value="">Alle Kategorien</option>
-              <option v-for="category in availableCategories" :key="category" :value="category">
-                {{ category }}
-              </option>
-            </select>
-          </div>
-
-          <!-- Level Filter -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Level</label>
-            <select
-              v-model="selectedLevel"
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            
+            <span class="text-sm text-gray-600 min-w-[200px] text-center font-medium">
+              {{ formatWeekRange(currentWeekStart, currentWeekEnd) }}
+            </span>
+            
+            <button
+              @click="nextWeek"
+              :disabled="currentWeekIndex >= maxWeekIndex"
+              class="p-2 rounded-full border border-gray-300 text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
-              <option value="">Alle Level</option>
-              <option value="beginner">Anfänger</option>
-              <option value="intermediate">Fortgeschritten</option>
-              <option value="advanced">Experte</option>
-            </select>
-          </div>
-
-          <!-- Date Filter -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Datum</label>
-            <input
-              v-model="selectedDate"
-              type="date"
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-            />
-          </div>
-
-          <!-- Availability Filter -->
-          <div class="flex items-end">
-            <label class="flex items-center">
-              <input
-                v-model="showOnlyAvailable"
-                type="checkbox"
-                class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
-              />
-              <span class="ml-2 text-sm text-gray-700">Nur verfügbare Kurse</span>
-            </label>
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
           </div>
         </div>
-
-        <!-- Clear Filters -->
-        <div class="mt-4 flex justify-between items-center">
-          <button
-            @click="clearFilters"
-            class="text-sm text-indigo-600 hover:text-indigo-500"
-          >
-            Filter zurücksetzen
-          </button>
-          <div class="text-sm text-gray-600">
-            {{ filteredCourses.length }} von {{ totalCourses }} Kursen
-          </div>
+        
+        <div class="mt-4 text-sm text-gray-600">
+          {{ currentWeekCourses.length }} {{ currentWeekCourses.length === 1 ? 'Kurs' : 'Kurse' }} verfügbar
         </div>
       </div>
 
@@ -110,24 +82,34 @@
       </div>
 
       <!-- Empty State -->
-      <div v-else-if="filteredCourses.length === 0" class="text-center py-12">
+      <div v-else-if="currentWeekCourses.length === 0" class="text-center py-12">
         <svg class="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
         </svg>
-        <h3 class="text-lg font-medium text-gray-900 mb-2">Keine Kurse gefunden</h3>
-        <p class="text-gray-600 mb-4">Mit den aktuellen Filtern wurden keine Kurse gefunden.</p>
-        <button
-          @click="clearFilters"
-          class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition-colors"
-        >
-          Filter zurücksetzen
-        </button>
+        <h3 class="text-lg font-medium text-gray-900 mb-2">Keine Kurse diese Woche</h3>
+        <p class="text-gray-600 mb-4">Für diese Woche sind keine Kurse verfügbar.</p>
+        <div class="space-x-2">
+          <button
+            v-if="currentWeekIndex < maxWeekIndex"
+            @click="nextWeek"
+            class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition-colors"
+          >
+            Nächste Woche
+          </button>
+          <button
+            v-if="currentWeekIndex > 0"
+            @click="previousWeek"
+            class="bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700 transition-colors"
+          >
+            Vorherige Woche
+          </button>
+        </div>
       </div>
 
       <!-- Courses Grid -->
       <div v-else class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         <CourseCard
-          v-for="course in filteredCourses"
+          v-for="course in currentWeekCourses"
           :key="course.id"
           :course="course"
           @book-course="handleBookCourse"
@@ -181,26 +163,51 @@ const bookingsStore = useBookingsStore()
 const { isAuthenticated } = useAuth()
 
 // State
-const selectedCategory = ref('')
-const selectedLevel = ref('')
-const selectedDate = ref('')
-const showOnlyAvailable = ref(false)
+const currentWeekIndex = ref(0)
 const showBookingModal = ref(false)
 const selectedCourseId = ref<string | null>(null)
 const isLoadingMore = ref(false)
 
 // Computed
-const filteredCourses = computed(() => {
-  return coursesStore.filteredCourses
+const today = computed(() => new Date())
+
+const currentWeekStart = computed(() => {
+  const start = new Date(today.value)
+  const day = start.getDay()
+  const diff = start.getDate() - day + (day === 0 ? -6 : 1) // Monday as first day
+  start.setDate(diff)
+  start.setDate(start.getDate() + (currentWeekIndex.value * 7))
+  return start
 })
 
-const totalCourses = computed(() => {
-  return coursesStore.courses.length
+const currentWeekEnd = computed(() => {
+  const end = new Date(currentWeekStart.value)
+  end.setDate(end.getDate() + 6)
+  return end
 })
 
-const availableCategories = computed(() => {
-  const categories = new Set(coursesStore.courses.map(course => course.category))
-  return Array.from(categories).sort()
+const currentWeekCourses = computed(() => {
+  const startDate = currentWeekStart.value.toISOString().split('T')[0]
+  const endDate = currentWeekEnd.value.toISOString().split('T')[0]
+  
+  return coursesStore.courses.filter(course => {
+    return course.date >= startDate && course.date <= endDate
+  })
+})
+
+const currentWeekDisplayText = computed(() => {
+  if (currentWeekIndex.value === 0) {
+    return 'Aktuelle Woche'
+  } else if (currentWeekIndex.value === 1) {
+    return 'Nächste Woche'
+  } else {
+    return `Woche ${currentWeekIndex.value + 1}`
+  }
+})
+
+const maxWeekIndex = computed(() => {
+  // Allow navigation up to 4 weeks ahead
+  return 3
 })
 
 const hasMoreCourses = computed(() => {
@@ -216,12 +223,25 @@ const loadCourses = async () => {
   }
 }
 
-const clearFilters = () => {
-  selectedCategory.value = ''
-  selectedLevel.value = ''
-  selectedDate.value = ''
-  showOnlyAvailable.value = false
-  coursesStore.clearFilters()
+const formatWeekRange = (startDate: Date, endDate: Date) => {
+  const formatOptions: Intl.DateTimeFormatOptions = {
+    day: '2-digit',
+    month: '2-digit'
+  }
+  
+  return `${startDate.toLocaleDateString('de-DE', formatOptions)} - ${endDate.toLocaleDateString('de-DE', formatOptions)}`
+}
+
+const previousWeek = () => {
+  if (currentWeekIndex.value > 0) {
+    currentWeekIndex.value--
+  }
+}
+
+const nextWeek = () => {
+  if (currentWeekIndex.value < maxWeekIndex.value) {
+    currentWeekIndex.value++
+  }
 }
 
 const loadMore = async () => {
@@ -256,14 +276,9 @@ const handleBookingSuccess = () => {
   loadCourses()
 }
 
-// Watch filters and update store
-watch([selectedCategory, selectedLevel, selectedDate, showOnlyAvailable], () => {
-  coursesStore.setFilters({
-    category: selectedCategory.value || undefined,
-    level: selectedLevel.value || undefined,
-    date: selectedDate.value || undefined,
-    available: showOnlyAvailable.value || undefined
-  })
+// Reset week index when courses change
+watch(() => coursesStore.courses, () => {
+  currentWeekIndex.value = 0
 })
 
 // Load courses on mount

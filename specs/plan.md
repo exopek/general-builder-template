@@ -325,7 +325,41 @@
 - Smart Membership Validation mit visuellen Indikatoren und klaren Fehlermeldungen
 - Intuitive UI Updates mit "Im Abo enthalten" Badges und Membership Status
 
-### Phase 5: Future Enhancements (Optional)
+### Phase 5: User Dashboard & Course Management Restructure ✅ COMPLETED
+- [x] **User Dashboard Simplification**
+  - [x] Removed booking-specific functionality from UserDashboard component
+  - [x] Streamlined quick actions to focus on core course browsing and profile management
+  - [x] Updated dashboard to show unified "My Courses" section instead of separate upcoming/completed bookings
+  - [x] Removed booking history from dashboard (simplified to focus on core functionality)
+  
+- [x] **Course Display Component Refactoring**
+  - [x] Completely refactored MyCoursesList.vue to display courses instead of bookings
+  - [x] Removed booking-specific status badges and actions (cancel booking, booking notes)
+  - [x] Replaced booking timeline with clean course information display
+  - [x] Updated component to show available course slots and direct course details
+  - [x] Simplified UI to focus on course information and availability
+  
+- [x] **Page Structure Optimization**
+  - [x] Deleted components/user/BookingHistory.vue (removed booking-centric functionality)
+  - [x] Deleted pages/user/bookings.vue (consolidated functionality into my-courses)
+  - [x] Added MyCompletedCourses.vue and MyUpcomingCourses.vue for better course organization
+  - [x] Updated user area navigation to focus on course participation rather than booking management
+  
+- [x] **Data Layer Improvements**
+  - [x] Updated stores/courses.ts to better support user course management
+  - [x] Enhanced utils/mockData.ts with additional course data for better testing
+  - [x] Improved course-centric data flow throughout user components
+
+**🎯 Key Changes Implemented:**
+- **Booking → Course Transition**: Shifted from booking-centric to course-centric user experience
+- **Simplified User Flow**: Users now view and manage their courses directly rather than through booking abstractions
+- **Cleaner Component Architecture**: Removed complex booking status management in favor of straightforward course participation
+- **Enhanced Course Information**: Better display of course details, availability, and instructor information
+- **Streamlined Navigation**: Focused user dashboard on essential actions and course management
+- **Improved Mobile UX**: Simplified layouts work better on mobile devices without booking complexity
+- **Future-Ready Structure**: Course-centric approach better supports future features like attendance tracking
+
+### Phase 6: Future Enhancements (Optional)
 - [ ] **Builder.io Integration**
   - [ ] Setup Builder.io Content-Bereiche
   - [ ] Erstelle Custom Components für Builder

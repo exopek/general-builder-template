@@ -72,7 +72,7 @@ export interface MockCourse {
   startTime: string
   endTime: string
   location: string
-  difficulty: 'beginner' | 'intermediate' | 'advanced'
+  level: 'beginner' | 'intermediate' | 'advanced'
   image?: string
   isActive: boolean
   requirements?: string[]
@@ -90,10 +90,10 @@ export const mockCourses: MockCourse[] = [
     maxParticipants: 12,
     currentParticipants: 8,
     price: 25,
-    startTime: '2024-08-25T09:00:00Z',
-    endTime: '2024-08-25T09:45:00Z',
+    startTime: '2025-08-25T09:00:00Z',
+    endTime: '2025-08-25T09:45:00Z',
     location: 'Studio A',
-    difficulty: 'intermediate',
+    level: 'intermediate',
     image: '/images/hiit.jpg',
     isActive: true,
     requirements: ['Grundfitness erforderlich', 'Handtuch mitbringen']
@@ -108,10 +108,10 @@ export const mockCourses: MockCourse[] = [
     maxParticipants: 15,
     currentParticipants: 12,
     price: 20,
-    startTime: '2024-08-25T18:00:00Z',
-    endTime: '2024-08-25T19:00:00Z',
+    startTime: '2025-08-25T18:00:00Z',
+    endTime: '2025-08-25T19:00:00Z',
     location: 'Studio B',
-    difficulty: 'beginner',
+    level: 'beginner',
     image: '/images/yoga.jpg',
     isActive: true,
     requirements: ['Yogamatte mitbringen', 'Bequeme Kleidung']
@@ -126,10 +126,10 @@ export const mockCourses: MockCourse[] = [
     maxParticipants: 20,
     currentParticipants: 15,
     price: 22,
-    startTime: '2024-08-26T07:00:00Z',
-    endTime: '2024-08-26T07:50:00Z',
+    startTime: '2025-08-26T07:00:00Z',
+    endTime: '2025-08-26T07:50:00Z',
     location: 'Spinning-Raum',
-    difficulty: 'intermediate',
+    level: 'intermediate',
     image: '/images/spinning.jpg',
     isActive: true,
     requirements: ['Handtuch und Wasserflasche mitbringen']
@@ -144,10 +144,10 @@ export const mockCourses: MockCourse[] = [
     maxParticipants: 8,
     currentParticipants: 5,
     price: 35,
-    startTime: '2024-08-26T16:00:00Z',
-    endTime: '2024-08-26T17:30:00Z',
+    startTime: '2025-08-26T16:00:00Z',
+    endTime: '2025-08-26T17:30:00Z',
     location: 'Kraftraum',
-    difficulty: 'beginner',
+    level: 'beginner',
     image: '/images/strength.jpg',
     isActive: true,
     requirements: ['Sportkleidung', 'Keine Vorkenntnisse nötig']
@@ -162,10 +162,10 @@ export const mockCourses: MockCourse[] = [
     maxParticipants: 10,
     currentParticipants: 7,
     price: 23,
-    startTime: '2024-08-27T10:30:00Z',
-    endTime: '2024-08-27T11:25:00Z',
+    startTime: '2025-08-27T10:30:00Z',
+    endTime: '2025-08-27T11:25:00Z',
     location: 'Studio A',
-    difficulty: 'beginner',
+    level: 'beginner',
     image: '/images/pilates.jpg',
     isActive: true,
     requirements: ['Yogamatte', 'Bequeme Sportkleidung']
@@ -180,10 +180,10 @@ export const mockCourses: MockCourse[] = [
     maxParticipants: 14,
     currentParticipants: 10,
     price: 30,
-    startTime: '2024-08-27T19:00:00Z',
-    endTime: '2024-08-27T20:00:00Z',
+    startTime: '2025-08-27T19:00:00Z',
+    endTime: '2025-08-27T20:00:00Z',
     location: 'CrossFit Box',
-    difficulty: 'advanced',
+    level: 'advanced',
     image: '/images/crossfit.jpg',
     isActive: true,
     requirements: ['Hohe Grundfitness erforderlich', 'Handtuch und Wasserflasche']
