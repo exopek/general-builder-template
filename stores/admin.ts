@@ -172,7 +172,16 @@ export const useAdminStore = defineStore('admin', {
       }
     },
 
-    async fetchAllBookings(): Promise<{ success: boolean; error?: string }> {
+    async fetchAllBookings(queryParams?: {
+      status?: string
+      quickFilter?: string
+      courseName?: string
+      dateFrom?: string
+      dateTo?: string
+      search?: string
+      limit?: number
+      offset?: number
+    }): Promise<{ success: boolean; error?: string }> {
       try {
         this.isLoading = true
         this.error = null
@@ -182,9 +191,20 @@ export const useAdminStore = defineStore('admin', {
           return { success: false, error: ERROR_MESSAGES.UNAUTHORIZED }
         }
 
-        // In a real app, this would be an admin-specific endpoint
-        // For now, we'll use the regular bookings endpoint and assume admin sees all
-        const bookings = await $fetch<BookingOverview[]>(API_ENDPOINTS.BOOKINGS.LIST + '/admin', {
+        // Build query string from parameters
+        const searchParams = new URLSearchParams()
+        if (queryParams) {
+          Object.entries(queryParams).forEach(([key, value]) => {
+            if (value !== undefined && value !== null && value !== '') {
+              searchParams.append(key, String(value))
+            }
+          })
+        }
+        
+        const queryString = searchParams.toString()
+        const url = API_ENDPOINTS.BOOKINGS.LIST + '/admin' + (queryString ? `?${queryString}` : '')
+
+        const bookings = await $fetch<BookingOverview[]>(url, {
           headers: {
             Authorization: `Bearer ${authStore.token}`
           }

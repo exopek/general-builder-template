@@ -1,77 +1,91 @@
 <template>
   <div class="space-y-6">
-    <!-- Statistics Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-      <div class="bg-white overflow-hidden shadow rounded-lg">
-        <div class="p-5">
-          <div class="flex items-center">
-            <div class="flex-shrink-0">
-              <svg class="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-            </div>
-            <div class="ml-5 w-0 flex-1">
-              <dl>
-                <dt class="text-sm font-medium text-gray-500 truncate">Gesamt Buchungen</dt>
-                <dd class="text-lg font-medium text-gray-900">{{ bookingStats.total }}</dd>
-              </dl>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-white overflow-hidden shadow rounded-lg">
-        <div class="p-5">
-          <div class="flex items-center">
-            <div class="flex-shrink-0">
-              <svg class="h-6 w-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            <div class="ml-5 w-0 flex-1">
-              <dl>
-                <dt class="text-sm font-medium text-gray-500 truncate">Bestätigt</dt>
-                <dd class="text-lg font-medium text-gray-900">{{ bookingStats.confirmed }}</dd>
-              </dl>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-white overflow-hidden shadow rounded-lg">
-        <div class="p-5">
-          <div class="flex items-center">
-            <div class="flex-shrink-0">
-              <svg class="h-6 w-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <div class="ml-5 w-0 flex-1">
-              <dl>
-                <dt class="text-sm font-medium text-gray-500 truncate">Ausstehend</dt>
-                <dd class="text-lg font-medium text-gray-900">{{ bookingStats.pending }}</dd>
-              </dl>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-white overflow-hidden shadow rounded-lg">
-        <div class="p-5">
-          <div class="flex items-center">
-            <div class="flex-shrink-0">
-              <svg class="h-6 w-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </div>
-            <div class="ml-5 w-0 flex-1">
-              <dl>
-                <dt class="text-sm font-medium text-gray-500 truncate">Storniert</dt>
-                <dd class="text-lg font-medium text-gray-900">{{ bookingStats.cancelled }}</dd>
-              </dl>
-            </div>
-          </div>
-        </div>
+    
+    <!-- Quick Action Filters -->
+    <div class="bg-white shadow rounded-lg p-4">
+      <div class="flex flex-wrap gap-2">
+        <button
+          @click="setQuickFilter('needsAttention')"
+          :class="[
+            'px-4 py-2 rounded-lg text-sm font-medium transition-colors',
+            quickFilter === 'needsAttention'
+              ? 'bg-orange-100 text-orange-800 border border-orange-200'
+              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+          ]"
+        >
+          <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+          </svg>
+          Benötigt Aufmerksamkeit
+          <span v-if="bookingStats.pending > 0" class="ml-1 inline-flex items-center px-2 py-1 rounded-full text-xs bg-orange-200 text-orange-800">
+            {{ bookingStats.pending }}
+          </span>
+        </button>
+        
+        <button
+          @click="setQuickFilter('todaysCourses')"
+          :class="[
+            'px-4 py-2 rounded-lg text-sm font-medium transition-colors',
+            quickFilter === 'todaysCourses'
+              ? 'bg-blue-100 text-blue-800 border border-blue-200'
+              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+          ]"
+        >
+          <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+          </svg>
+          Heutige Kurse
+          <span v-if="todaysCoursesCount > 0" class="ml-1 inline-flex items-center px-2 py-1 rounded-full text-xs bg-blue-200 text-blue-800">
+            {{ todaysCoursesCount }}
+          </span>
+        </button>
+        
+        <button
+          @click="setQuickFilter('cancellations')"
+          :class="[
+            'px-4 py-2 rounded-lg text-sm font-medium transition-colors',
+            quickFilter === 'cancellations'
+              ? 'bg-red-100 text-red-800 border border-red-200'
+              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+          ]"
+        >
+          <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+          Stornierungen
+          <span v-if="bookingStats.cancelled > 0" class="ml-1 inline-flex items-center px-2 py-1 rounded-full text-xs bg-red-200 text-red-800">
+            {{ bookingStats.cancelled }}
+          </span>
+        </button>
+        
+        <button
+          @click="setQuickFilter('recent')"
+          :class="[
+            'px-4 py-2 rounded-lg text-sm font-medium transition-colors',
+            quickFilter === 'recent'
+              ? 'bg-green-100 text-green-800 border border-green-200'
+              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+          ]"
+        >
+          <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+          </svg>
+          Letzte 24h
+          <span v-if="recentBookingsCount > 0" class="ml-1 inline-flex items-center px-2 py-1 rounded-full text-xs bg-green-200 text-green-800">
+            {{ recentBookingsCount }}
+          </span>
+        </button>
+        
+        <button
+          v-if="quickFilter"
+          @click="clearAllFilters()"
+          class="px-4 py-2 rounded-lg text-sm font-medium bg-gray-200 text-gray-600 hover:bg-gray-300 transition-colors"
+        >
+          <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+          Alle Filter löschen
+        </button>
       </div>
     </div>
 
@@ -79,34 +93,28 @@
     <div class="bg-white shadow rounded-lg">
       <div class="px-6 py-4 border-b border-gray-200">
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
-          <div class="flex-1 min-w-0">
-            <input
-              v-model="searchQuery"
-              type="text"
-              placeholder="Nach Kurs, Kunde oder E-Mail suchen..."
-              class="block w-full px-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
-            />
-          </div>
+          
           <div class="flex space-x-3">
+            <!-- Course Filter -->
             <select
-              v-model="statusFilter"
+              v-model="selectedCourse"
               class="block px-3 py-2 border border-gray-300 rounded-md leading-5 bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
             >
-              <option value="">Alle Status</option>
-              <option value="confirmed">Bestätigt</option>
-              <option value="pending">Ausstehend</option>
-              <option value="cancelled">Storniert</option>
+              <option value="">Alle Kurse</option>
+              <option v-for="course in uniqueCourses" :key="course" :value="course">
+                {{ course }}
+              </option>
             </select>
-            <select
-              v-model="dateFilter"
-              class="block px-3 py-2 border border-gray-300 rounded-md leading-5 bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
-            >
-              <option value="">Alle Termine</option>
-              <option value="today">Heute</option>
-              <option value="tomorrow">Morgen</option>
-              <option value="week">Diese Woche</option>
-              <option value="month">Dieser Monat</option>
-            </select>
+            
+            <!-- Date Picker -->
+            <VueDatePicker
+              v-model="selectedDate"
+              :placeholder="'Datum wählen'"
+              :enable-time-picker="false"
+              range
+              auto-apply
+              class="min-w-[200px]"
+            />
           </div>
         </div>
       </div>
@@ -131,8 +139,8 @@
         <svg class="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
         </svg>
-        <p class="text-gray-500 text-lg">{{ searchQuery || statusFilter || dateFilter ? 'Keine passenden Buchungen gefunden' : 'Noch keine Buchungen vorhanden' }}</p>
-        <p v-if="searchQuery || statusFilter || dateFilter" class="text-sm text-gray-400 mt-1">
+        <p class="text-gray-500 text-lg">{{ searchQuery || selectedCourse || selectedDate ? 'Keine passenden Buchungen gefunden' : 'Noch keine Buchungen vorhanden' }}</p>
+        <p v-if="searchQuery || selectedCourse || selectedDate" class="text-sm text-gray-400 mt-1">
           Versuchen Sie andere Filterkriterien
         </p>
       </div>
@@ -305,19 +313,23 @@
 </template>
 
 <script setup lang="ts">
-import type { AdminBooking } from '~/stores/admin'
+import type { BookingOverview } from '~/stores/admin'
+import VueDatePicker from '@vuepic/vue-datepicker'
+import '@vuepic/vue-datepicker/dist/main.css'
 
 // Stores
 const adminStore = useAdminStore()
+const coursesStore = useCoursesStore()
 
 // State
 const isLoading = ref(false)
 const isUpdating = ref(false)
 const searchQuery = ref('')
-const statusFilter = ref('')
-const dateFilter = ref('')
+const selectedCourse = ref('')
+const selectedDate = ref<[Date, Date] | null>(null)
+const quickFilter = ref('')
 const currentPage = ref(1)
-const itemsPerPage = 10
+const itemsPerPage = 100
 
 // Computed
 const bookings = computed(() => adminStore.allBookings)
@@ -330,7 +342,7 @@ const bookingStats = computed(() => {
     cancelled: 0
   }
 
-  bookings.value.forEach(booking => {
+  bookings.value.forEach((booking: BookingOverview) => {
     switch (booking.status) {
       case 'confirmed':
         stats.confirmed++
@@ -347,59 +359,59 @@ const bookingStats = computed(() => {
   return stats
 })
 
-const filteredBookings = computed(() => {
-  let filtered = bookings.value
-
-  // Search filter
-  if (searchQuery.value) {
-    const query = searchQuery.value.toLowerCase()
-    filtered = filtered.filter(booking => 
-      booking.courseName?.toLowerCase().includes(query) ||
-      booking.userName.toLowerCase().includes(query) ||
-      booking.userEmail?.toLowerCase().includes(query)
-    )
-  }
-
-  // Status filter
-  if (statusFilter.value) {
-    filtered = filtered.filter(booking => booking.status === statusFilter.value)
-  }
-
-  // Date filter
-  if (dateFilter.value) {
-    const now = new Date()
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-    
-    filtered = filtered.filter(booking => {
-      if (!booking.courseDate) return false
-      
-      const courseDate = new Date(booking.courseDate)
-      
-      switch (dateFilter.value) {
-        case 'today':
-          return courseDate.toDateString() === today.toDateString()
-        case 'tomorrow':
-          const tomorrow = new Date(today)
-          tomorrow.setDate(tomorrow.getDate() + 1)
-          return courseDate.toDateString() === tomorrow.toDateString()
-        case 'week':
-          const weekEnd = new Date(today)
-          weekEnd.setDate(weekEnd.getDate() + 7)
-          return courseDate >= today && courseDate <= weekEnd
-        case 'month':
-          const monthEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0)
-          return courseDate >= today && courseDate <= monthEnd
-        default:
-          return true
-      }
-    })
-  }
-
-  // Sort by creation date (newest first)
-  return filtered.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+const todaysCoursesCount = computed(() => {
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const tomorrow = new Date(today)
+  tomorrow.setDate(tomorrow.getDate() + 1)
+  
+  return bookings.value.filter((booking: BookingOverview) => {
+    if (!booking.courseDate) return false
+    const courseDate = new Date(booking.courseDate)
+    courseDate.setHours(0, 0, 0, 0)
+    return courseDate.getTime() === today.getTime()
+  }).length
 })
 
+const recentBookingsCount = computed(() => {
+  const yesterday = new Date()
+  yesterday.setDate(yesterday.getDate() - 1)
+  
+  return bookings.value.filter((booking: BookingOverview) => {
+    const createdAt = new Date(booking.createdAt)
+    return createdAt >= yesterday
+  }).length
+})
+
+const filteredBookings = computed(() => bookings.value)
+
 const totalPages = computed(() => Math.ceil(filteredBookings.value.length / itemsPerPage))
+
+const queryParams = computed(() => {
+  const params: any = {}
+  
+  if (quickFilter.value) {
+    params.quickFilter = quickFilter.value
+  }
+  
+  if (searchQuery.value) {
+    params.search = searchQuery.value
+  }
+  
+  if (selectedCourse.value) {
+    params.courseName = selectedCourse.value
+  }
+  
+  if (selectedDate.value && selectedDate.value.length === 2) {
+    params.dateFrom = selectedDate.value[0].toISOString().split('T')[0]
+    params.dateTo = selectedDate.value[1].toISOString().split('T')[0]
+  }
+  
+  params.limit = itemsPerPage
+  params.offset = (currentPage.value - 1) * itemsPerPage
+  
+  return params
+})
 
 const paginatedBookings = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage
@@ -494,25 +506,61 @@ const updateBookingStatus = async (bookingId: string, status: 'confirmed' | 'can
   }
 }
 
-const viewBookingDetails = (booking: AdminBooking) => {
+const setQuickFilter = (filterType: string) => {
+  // Clear other filters when using quick filter
+  selectedCourse.value = ''
+  selectedDate.value = null
+  quickFilter.value = quickFilter.value === filterType ? '' : filterType
+  currentPage.value = 1
+}
+
+const clearAllFilters = () => {
+  searchQuery.value = ''
+  selectedCourse.value = ''
+  selectedDate.value = null
+  quickFilter.value = ''
+  currentPage.value = 1
+}
+
+const viewBookingDetails = (booking: BookingOverview) => {
   // TODO: Implement booking details modal or navigation
   console.log('View booking details:', booking)
 }
 
-// Reset pagination when filters change
-watch([searchQuery, statusFilter, dateFilter], () => {
-  currentPage.value = 1
-})
-
-// Load bookings on mount
-onMounted(async () => {
+const fetchBookingsWithFilters = async () => {
   isLoading.value = true
   try {
-    await adminStore.fetchAllBookings()
+    await adminStore.fetchAllBookings(queryParams.value)
   } catch (error) {
     console.error('Error loading bookings:', error)
   } finally {
     isLoading.value = false
   }
+}
+
+// Reset pagination and fetch when filters change
+watch([searchQuery, selectedCourse, selectedDate, quickFilter], () => {
+  currentPage.value = 1
+  fetchBookingsWithFilters()
+}, { deep: true })
+
+// Fetch when pagination changes
+watch(currentPage, () => {
+  fetchBookingsWithFilters()
 })
+
+// Load data on mount
+onMounted(async () => {
+  // Load courses for dropdown
+  await coursesStore.fetchCourses()
+  // Load bookings
+  fetchBookingsWithFilters()
+})
+const uniqueCourses = computed(() => {
+  return coursesStore.courses
+    .filter(course => course.isActive)
+    .map(course => course.title)
+    .sort()
+})
+
 </script>

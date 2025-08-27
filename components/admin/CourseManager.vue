@@ -1,67 +1,6 @@
 <template>
   <div>
-    <!-- Filters and Search -->
-    <div class="bg-white shadow rounded-lg mb-6">
-      <div class="p-6">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
-          <!-- Search -->
-          <div>
-            <input
-              v-model="searchTerm"
-              type="text"
-              placeholder="Kurse suchen..."
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-          </div>
-          
-          <!-- Category Filter -->
-          <div>
-            <select
-              v-model="selectedCategory"
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            >
-              <option value="">Alle Kategorien</option>
-              <option v-for="category in availableCategories" :key="category" :value="category">
-                {{ category }}
-              </option>
-            </select>
-          </div>
-
-          <!-- Status Filter -->
-          <div>
-            <select
-              v-model="selectedStatus"
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            >
-              <option value="">Alle Status</option>
-              <option value="active">Aktiv</option>
-              <option value="inactive">Inaktiv</option>
-            </select>
-          </div>
-
-          <!-- Date Filter -->
-          <div>
-            <input
-              v-model="selectedDate"
-              type="date"
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            />
-          </div>
-        </div>
-
-        <div class="flex items-center justify-between">
-          <button
-            @click="clearFilters"
-            class="text-sm text-indigo-600 hover:text-indigo-500"
-          >
-            Filter zurücksetzen
-          </button>
-          <p class="text-sm text-gray-600">
-            {{ filteredCourses.length }} von {{ courses.length }} Kursen
-          </p>
-        </div>
-      </div>
-    </div>
+    
 
     <!-- Loading State -->
     <div v-if="coursesStore.isLoading" class="text-center py-12">
@@ -100,9 +39,7 @@
               <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Status
               </th>
-              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Preis
-              </th>
+               
               <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Aktionen
               </th>
@@ -112,7 +49,7 @@
             <tr
               v-for="course in paginatedCourses"
               :key="course.id"
-              class="hover:bg-gray-50"
+              class="hover:bg-neutral-200"
             >
               <!-- Course Info -->
               <td class="px-6 py-4">
@@ -162,11 +99,6 @@
                 </span>
               </td>
 
-              <!-- Price -->
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                {{ formatPrice(course.price) }}€
-              </td>
-
               <!-- Actions -->
               <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                 <div class="flex items-center justify-end space-x-2">
@@ -188,18 +120,7 @@
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                     </svg>
                   </button>
-                  <button
-                    @click="toggleCourseStatus(course)"
-                    :class="course.isActive ? 'text-red-600 hover:text-red-900' : 'text-green-600 hover:text-green-900'"
-                    :title="course.isActive ? 'Deaktivieren' : 'Aktivieren'"
-                  >
-                    <svg v-if="course.isActive" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728L5.636 5.636m12.728 12.728L18.364 5.636M5.636 18.364l12.728-12.728" />
-                    </svg>
-                    <svg v-else class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                    </svg>
-                  </button>
+                 
                   <button
                     @click="deleteCourse(course)"
                     class="text-red-600 hover:text-red-900"
