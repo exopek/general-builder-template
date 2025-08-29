@@ -114,7 +114,7 @@
                   </svg>
                   <div>
                     <div class="text-sm text-gray-500">Zeit</div>
-                    <div class="font-medium">{{ course.startTime }} - {{ course.endTime }}</div>
+                    <div class="font-medium">{{ formatTime(course.date) }}</div>
                   </div>
                 </div>
 
@@ -262,6 +262,7 @@
     <BookingModal
       v-if="showBookingModal"
       :course-id="courseId"
+      :course-settings-id="courseSettingsId"
       @close="closeBookingModal"
       @success="handleBookingSuccess"
     />
@@ -272,6 +273,7 @@
 // Page params
 const route = useRoute()
 const courseId = route.params.id as string
+const courseSettingsId = route.query.courseSettingsId as string | undefined
 
 // Stores and composables
 const coursesStore = useCoursesStore()
@@ -308,7 +310,8 @@ const isAvailable = computed(() => {
 })
 
 const isAlreadyBooked = computed(() => {
-  return course.value ? bookingsStore.hasBookingForCourse(course.value.id) : false
+  console.log('Checking if already booked for courseId:', course.value?.bookable)
+  return course.value ? !course.value.bookable : true
 })
 
 const canBook = computed(() => {
@@ -408,7 +411,7 @@ const progressBarColor = computed(() => {
 
 // Methods
 const loadCourse = async () => {
-  await coursesStore.fetchCourse(courseId)
+  await coursesStore.fetchCourse(courseId, courseSettingsId || '')
   if (isAuthenticated.value) {
     await bookingsStore.fetchBookings()
   }
@@ -420,6 +423,14 @@ const formatDate = (dateString: string) => {
     day: '2-digit',
     month: 'long',
     year: 'numeric'
+  })
+}
+
+const formatTime = (dateString: string) => {
+  console.log(`formatting time for dateString: ${dateString}`)
+  return new Date(dateString).toLocaleTimeString('de-DE', {
+    hour: '2-digit',
+    minute: '2-digit'
   })
 }
 

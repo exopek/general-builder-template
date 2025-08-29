@@ -10,12 +10,21 @@ export interface User {
   lastName: string
   role: 'user' | 'admin'
   isActive: boolean
-  createdAt: string
-  updatedAt: string
+}
+
+export interface UserReadDto {
+  id: string
+  email: string
+  firstName: string
+  lastName: string
+  userName: string
+  phoneNumber?: string
+  password: string
+  role: 'user' | 'admin'
 }
 
 interface LoginCredentials {
-  email: string
+  userName: string
   password: string
 }
 
@@ -28,7 +37,6 @@ interface RegisterData {
 
 interface AuthResponse {
   token: string
-  user: User
 }
 
 interface JwtPayload {
@@ -59,39 +67,53 @@ export const useAuthStore = defineStore('auth', {
       try {
         this.isLoading = true
         
-        // Use mock data instead of API call
-        await delay(800) // Simulate network delay
+        const tokenResult = await $fetch<AuthResponse>(`${API_BASE_URL}${API_ENDPOINTS.AUTH.LOGIN}`, {
+          method: 'POST',
+          body: credentials
+        })
+
+        console.log('Login token result:', tokenResult.token)
         
-        const mockUser = findUser(credentials.email, credentials.password)
-        if (!mockUser) {
+        
+        if (!tokenResult) {
           return { 
             success: false, 
             error: 'Ungültige Anmeldedaten' 
           }
         }
 
-        // Create a mock JWT token
-        const mockToken = `mock-jwt-token-${mockUser.id}-${Date.now()}`
+        const userResult = await $fetch<UserReadDto>(`${API_BASE_URL}${API_ENDPOINTS.AUTH.ME}`, {
+          headers: {
+            Authorization: `Bearer ${tokenResult.token}`
+          }
+        })
+
+        console.log('Fetched user data:', userResult)
+
+        if (!userResult) {
+          return { 
+            success: false, 
+            error: 'Fehler beim Abrufen der Benutzerdaten' 
+          }
+        }
         
-        // Map mock user to store user format
+        // Map user to store user format
         const user: User = {
-          id: mockUser.id,
-          email: mockUser.email,
-          firstName: mockUser.firstName,
-          lastName: mockUser.lastName,
-          role: mockUser.role,
-          isActive: mockUser.isActive,
-          createdAt: mockUser.memberSince,
-          updatedAt: mockUser.memberSince
+          id: userResult.id,
+          email: userResult.email,
+          firstName: userResult.firstName,
+          lastName: userResult.lastName,
+          role: 'user',
+          isActive: true,
         }
 
-        this.token = mockToken
+        this.token = tokenResult.token
         this.user = user
         this.isAuthenticated = true
 
         // Store in localStorage for persistence
         if (process.client) {
-          localStorage.setItem(STORAGE_KEYS.TOKEN, mockToken)
+          localStorage.setItem(STORAGE_KEYS.TOKEN, tokenResult.token)
           localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(user))
         }
 
@@ -117,13 +139,13 @@ export const useAuthStore = defineStore('auth', {
         })
 
         this.token = response.token
-        this.user = response.user
+        
         this.isAuthenticated = true
 
         // Store in localStorage for persistence
         if (process.client) {
           localStorage.setItem(STORAGE_KEYS.TOKEN, response.token)
-          localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(response.user))
+          localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(null))
         }
 
         return { success: true }

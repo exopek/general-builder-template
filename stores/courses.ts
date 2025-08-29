@@ -13,15 +13,32 @@ export interface Course {
   duration: number // in minutes
   maxParticipants: number
   currentParticipants: number
-  price: number
   category: string
   level: 'beginner' | 'intermediate' | 'advanced'
   location: string
   equipment?: string[]
   image?: string
   isActive: boolean
-  createdAt: string
-  updatedAt: string
+  courseSettingsId?: string
+  bookable: boolean
+}
+
+export interface CourseReadDto {
+  id: string
+  title: string
+  description: string
+  imageUrl: string
+  difficulty: number
+  bookingsCount: number
+  courseSettings: CourseSettingsReadDto[]
+  bookable: boolean
+}
+
+export interface CourseSettingsReadDto {
+  id: string
+  scheduledAt: string
+  maxParticipants: number
+  courseId: string
 }
 
 export interface CourseFilters {
@@ -30,6 +47,11 @@ export interface CourseFilters {
   instructor?: string
   date?: string
   available?: boolean
+}
+
+export interface CourseQuery {
+  startDate?: string
+  endDate?: string
 }
 
 export interface CreateCourseData {
@@ -58,7 +80,8 @@ export const useCoursesStore = defineStore('courses', {
     cache: {
       lastFetch: null as Date | null,
       ttl: 5 * 60 * 1000 // 5 minutes
-    }
+    },
+    query: {} as CourseQuery
   }),
 
   getters: {
@@ -131,31 +154,36 @@ export const useCoursesStore = defineStore('courses', {
         this.isLoading = true
         this.error = null
 
-        // Simulate API delay
-        await delay(600)
+        const result = await $fetch<CourseReadDto[]>(`${API_BASE_URL}${API_ENDPOINTS.COURSES.LIST}`, {
+          method: 'GET',
+          query: this.query
+        })
 
-        // Map mock courses to store format
-        const courses: Course[] = mockCourses.map(mockCourse => ({
-          id: mockCourse.id,
-          title: mockCourse.title,
-          description: mockCourse.description,
-          instructor: mockCourse.instructor,
-          date: mockCourse.startTime.split('T')[0], // Extract date part
-          startTime: mockCourse.startTime,
-          endTime: mockCourse.endTime,
-          duration: mockCourse.duration,
-          maxParticipants: mockCourse.maxParticipants,
-          currentParticipants: mockCourse.currentParticipants,
-          price: mockCourse.price,
-          category: mockCourse.category,
-          level: mockCourse.level as 'beginner' | 'intermediate' | 'advanced',
-          location: mockCourse.location,
-          equipment: mockCourse.requirements,
-          image: mockCourse.image,
-          isActive: mockCourse.isActive,
-          createdAt: '2024-01-01T00:00:00Z',
-          updatedAt: '2024-01-01T00:00:00Z'
-        }))
+        const courses: Course[] = result.flatMap(readDto => 
+          readDto.courseSettings.map(setting => ({
+            id: readDto.id,
+            title: readDto.title,
+            description: readDto.description,
+            image: readDto.imageUrl,
+            instructor: 'Unbekannt',
+            date: setting.scheduledAt,
+            startTime: setting.scheduledAt,
+            endTime: setting.scheduledAt,
+            duration: 60,
+            maxParticipants: 20,
+            currentParticipants: 0, 
+            price: 0,
+            category: 'Allgemein',
+            level: 'beginner',
+            location: 'EXOPEK GYM',
+            equipment: [],
+            isActive: true,
+            createdAt: '2024-01-01T00:00:00Z',
+            updatedAt: '2024-01-01T00:00:00Z',
+            courseSettingsId: setting.id,
+            bookable: true})
+          )
+        )
 
         this.courses = courses
         this.cache.lastFetch = new Date()
@@ -173,49 +201,51 @@ export const useCoursesStore = defineStore('courses', {
       }
     },
 
-    async fetchCourse(id: string): Promise<{ success: boolean; error?: string }> {
+    async fetchCourse(id: string, courseSettingsId: string): Promise<{ success: boolean; error?: string }> {
       try {
         this.isLoading = true
         this.error = null
 
-        await delay(400)
-
-        // Find mock course by ID
-        const mockCourse = mockCourses.find(c => c.id === id)
-        if (!mockCourse) {
+        const result = await $fetch<CourseReadDto>(`${API_BASE_URL}${API_ENDPOINTS.COURSES.DETAIL(id)}`, {
+          method: 'GET',
+          query: { courseSettingsId: courseSettingsId, userId: '5b768b67-ebca-44fe-a877-623bcf4815b0' }
+        })
+        // Find course by ID
+        const hasCourse = result.id === id
+        if (!hasCourse) {
           return { success: false, error: 'Kurs nicht gefunden' }
         }
 
+        console.log('Fetched course detail:', result.bookable)
+
         // Map to store format
         const course: Course = {
-          id: mockCourse.id,
-          title: mockCourse.title,
-          description: mockCourse.description,
-          instructor: mockCourse.instructor,
-          date: mockCourse.startTime.split('T')[0],
-          startTime: mockCourse.startTime,
-          endTime: mockCourse.endTime,
-          duration: mockCourse.duration,
-          maxParticipants: mockCourse.maxParticipants,
-          currentParticipants: mockCourse.currentParticipants,
-          price: mockCourse.price,
-          category: mockCourse.category,
-          level: mockCourse.level as 'beginner' | 'intermediate' | 'advanced',
-          location: mockCourse.location,
-          equipment: mockCourse.requirements,
-          image: mockCourse.image,
-          isActive: mockCourse.isActive,
-          createdAt: '2024-01-01T00:00:00Z',
-          updatedAt: '2024-01-01T00:00:00Z'
+          id: result.id,
+          title: result.title,
+          description: result.description,
+          instructor: 'Unbekannt',
+          date: result.courseSettings[0].scheduledAt,
+          startTime: result.courseSettings[0].scheduledAt,
+          endTime: result.courseSettings[0].scheduledAt,
+          duration: 60,
+          maxParticipants: result.courseSettings[0].maxParticipants,
+          currentParticipants: result.bookingsCount,
+          category: 'Allgemein',
+          level:  'beginner',
+          location: 'EXOPEK GYM',
+          equipment: [],
+          image: result.imageUrl,
+          isActive:   true,
+          bookable: result.bookable,
         }
 
         this.currentCourse = course
 
         // Update course in the courses array if it exists
-        const index = this.courses.findIndex(c => c.id === id)
+        /* const index = this.courses.findIndex(c => c.id === id)
         if (index !== -1) {
           this.courses[index] = course
-        }
+        } */
 
         return { success: true }
       } catch (error: any) {
@@ -363,6 +393,10 @@ export const useCoursesStore = defineStore('courses', {
 
     clearCache(): void {
       this.cache.lastFetch = null
+    },
+
+    setQuery(query: CourseQuery): void {
+      this.query = { ...query }
     }
   }
 })

@@ -1,25 +1,26 @@
 export const API_BASE_URL = process.env.NODE_ENV === 'production' 
-  ? 'https://your-api-domain.com/api' 
-  : '/api'
+  ? 'http://localhost:5000/api' 
+  : 'http://localhost:5000/api'
 
 export const API_ENDPOINTS = {
   AUTH: {
-    LOGIN: '/auth/login',
-    REGISTER: '/auth/register', 
-    LOGOUT: '/auth/logout',
-    ME: '/auth/me'
+    LOGIN: '/users/login',
+    REGISTER: '/users/register', 
+    LOGOUT: '/users/logout',
+    ME: '/users'
   },
   COURSES: {
-    LIST: '/courses',
-    DETAIL: (id: string) => `/courses/${id}`,
-    CREATE: '/courses',
-    UPDATE: (id: string) => `/courses/${id}`,
-    DELETE: (id: string) => `/courses/${id}`,
+    LIST: '/v1/courses',
+    DETAIL: (id: string) => `/v1/courses/${id}`,
+    CREATE: '/v1/courses',
+    UPDATE: (id: string) => `/v1/courses/${id}`,
+    DELETE: (id: string) => `/v1/courses/${id}`,
     BOOKINGS: (id: string) => `/courses/${id}/bookings`
   },
   BOOKINGS: {
+    ME: '/v1/bookings/me',
     LIST: '/bookings',
-    CREATE: '/bookings',
+    CREATE: '/v1/bookings',
     DELETE: (id: string) => `/bookings/${id}`
   }
 } as const

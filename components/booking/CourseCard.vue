@@ -53,7 +53,7 @@
           <svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
           </svg>
-          {{ formatDate(course.date) }} • {{ course.startTime }} - {{ course.endTime }}
+          {{ formatDate(course.date) }} um {{ formatTime(course.date) }}
         </div>
         
         <!-- Instructor -->
@@ -265,6 +265,14 @@ const formatDate = (dateString: string) => {
     day: '2-digit',
     month: '2-digit',
     year: 'numeric'
+  })
+}
+
+const formatTime = (dateString: string) => {
+  console.log(`formatting time for dateString: ${dateString}`)
+  return new Date(dateString).toLocaleTimeString('de-DE', {
+    hour: '2-digit',
+    minute: '2-digit'
   })
 }
 

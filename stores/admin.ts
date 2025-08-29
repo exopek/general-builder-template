@@ -42,14 +42,14 @@ export const useAdminStore = defineStore('admin', {
       return state.courseParticipants[courseId] || []
     },
 
-    recentBookings: (state) => {
+    /* recentBookings: (state) => {
       return state.allBookings
         .filter(booking => booking.status === 'confirmed')
         .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
         .slice(0, 10)
-    },
+    }, */
 
-    bookingsByStatus: (state) => {
+    /* bookingsByStatus: (state) => {
       const stats = {
         confirmed: 0,
         cancelled: 0,
@@ -61,9 +61,9 @@ export const useAdminStore = defineStore('admin', {
       })
 
       return stats
-    },
+    }, */
 
-    monthlyRevenue: (state) => {
+    /* monthlyRevenue: (state) => {
       const currentMonth = new Date().getMonth()
       const currentYear = new Date().getFullYear()
 
@@ -76,9 +76,9 @@ export const useAdminStore = defineStore('admin', {
         })
         .reduce((total, booking) => {
           // Assuming we need to get price from course data
-          return total + (booking.course?.price || 0)
+          return total + (0 || 0)
         }, 0)
-    }
+    } */
   },
 
   actions: {
@@ -102,10 +102,10 @@ export const useAdminStore = defineStore('admin', {
         await bookingsStore.fetchBookings()
 
         const totalCourses = coursesStore.courses.filter(c => c.isActive).length
-        const totalBookings = bookingsStore.bookings.filter(b => b.status === 'confirmed').length
+        const totalBookings = bookingsStore.bookings.filter(b => b.status === 0).length
         const totalRevenue = bookingsStore.bookings
-          .filter(b => b.status === 'confirmed')
-          .reduce((sum, booking) => sum + (booking.course?.price || 0), 0)
+          .filter(b => b.status === 0)
+          .reduce((sum, booking) => sum + (0 || 0), 0)
 
         const now = new Date()
         const upcomingCourses = coursesStore.courses.filter(course => {
@@ -283,7 +283,7 @@ export const useAdminStore = defineStore('admin', {
       return csvContent
     },
 
-    async updateBookingStatus(bookingId: string, status: 'confirmed' | 'cancelled'): Promise<{ success: boolean; error?: string }> {
+    async updateBookingStatus(bookingId: string, status: 0 | 2): Promise<{ success: boolean; error?: string }> {
       try {
         this.isLoading = true
         this.error = null

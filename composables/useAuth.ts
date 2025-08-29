@@ -13,7 +13,8 @@ export function useAuth() {
   const isLoading = computed(() => authStore.isLoading)
 
   // Authentication methods
-  const login = async (credentials: { email: string; password: string }) => {
+  const login = async (credentials: { userName: string; password: string }) => {
+    console.log('Attempting login with credentials:', credentials)
     const result = await authStore.login(credentials)
     
     if (result.success && authStore.user) {

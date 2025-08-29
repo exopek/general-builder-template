@@ -3,7 +3,7 @@
     <!-- Desktop Header -->
     <div class="flex md:hidden self-stretch py-2 px-2 justify-between items-center overflow-hidden">
       <div class="h-16 flex justify-start items-center gap-3">
-        <div class="justify-start text-primary text-5xl font-semibold leading-10">EXOPEK GYM</div>
+        <div class="justify-start text-primary text-5xl font-semibold leading-10"></div>
       </div>
       <div class="p-4 rounded-full flex justify-start items-start gap-3">
         <div class="px-6 py-2 bg-white btn-primary rounded-full flex justify-center items-center gap-2.5 overflow-hidden">

@@ -132,7 +132,7 @@ const handleLogin = async () => {
   error.value = null
   
   const result = await login({
-    email: form.value.email.trim(),
+    userName: form.value.email.trim(),
     password: form.value.password
   })
   

@@ -186,6 +186,7 @@
 import type { Course } from '~/stores/courses'
 
 interface Props {
+  courseSettingsId: string | undefined,
   courseId: string
 }
 
@@ -212,7 +213,7 @@ const form = reactive({
 
 // Get course data
 const course = computed(() => {
-  return coursesStore.courses.find(c => c.id === props.courseId) || 
+  return coursesStore.courses.find(c => c.id === props.courseSettingsId) || 
          (coursesStore.currentCourse?.id === props.courseId ? coursesStore.currentCourse : null)
 })
 
@@ -256,15 +257,18 @@ const loadCourse = async () => {
 }
 
 const handleBooking = async () => {
+  console.log('Handle booking called')
   if (!canBook.value) return
   
   isBooking.value = true
   error.value = null
   
   try {
+    console.log('Booking course:', props.courseSettingsId)
+
     const result = await bookingsStore.createBooking({
-      courseId: props.courseId,
-      notes: form.notes.trim() || undefined
+      courseSettingId: props.courseSettingsId as string,
+      userId: '5b768b67-ebca-44fe-a877-623bcf4815b0', // Assume current user
     })
     
     if (result.success) {

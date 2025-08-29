@@ -113,6 +113,7 @@ definePageMeta({
 
 // Stores
 const coursesStore = useCoursesStore()
+const bookingsStore = useBookingsStore()
 
 // Reactive state
 const activeTab = ref('upcoming')
@@ -349,7 +350,7 @@ const enrolledCourses = ref<Course[]>([
 
 // Computed
 const upcomingCourses = computed(() => 
-  enrolledCourses.value.filter(course => course.status === 'upcoming')
+  bookingsStore.bookings.map(booking => booking.course)
 )
 
 const completedCourses = computed(() => 
@@ -358,7 +359,7 @@ const completedCourses = computed(() =>
 
 // Methods
 const loadCourses = async () => {
-  await coursesStore.fetchCourses()
+  await bookingsStore.fetchMyBookings()
 }
 
 // Lifecycle
