@@ -1,43 +1,14 @@
 import { defineStore } from 'pinia'
 import { jwtDecode } from 'jwt-decode'
 import { API_ENDPOINTS, USER_ROLES, STORAGE_KEYS, ERROR_MESSAGES } from '~/utils/constants'
-import { findUser, delay } from '~/utils/mockData'
-
-export interface User {
-  id: string
-  email: string
-  firstName: string
-  lastName: string
-  role: 'user' | 'admin'
-  isActive: boolean
-}
-
-export interface UserReadDto {
-  id: string
-  email: string
-  firstName: string
-  lastName: string
-  userName: string
-  phoneNumber?: string
-  password: string
-  role: 'user' | 'admin'
-}
-
-interface LoginCredentials {
-  userName: string
-  password: string
-}
-
-interface RegisterData {
-  email: string
-  password: string
-  firstName: string
-  lastName: string
-}
-
-interface AuthResponse {
-  token: string
-}
+import { 
+  UserMapperUtils,
+  type User,
+  type UserReadDto,
+  type LoginCredentials,
+  type RegisterData,
+  type AuthResponse
+} from '~/utils/mappers/userMapper'
 
 interface JwtPayload {
   sub: string
@@ -97,15 +68,8 @@ export const useAuthStore = defineStore('auth', {
           }
         }
         
-        // Map user to store user format
-        const user: User = {
-          id: userResult.id,
-          email: userResult.email,
-          firstName: userResult.firstName,
-          lastName: userResult.lastName,
-          role: 'user',
-          isActive: true,
-        }
+        // Map user to store user format using mapper
+        const user = UserMapperUtils.mapUser(userResult)
 
         this.token = tokenResult.token
         this.user = user

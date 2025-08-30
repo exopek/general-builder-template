@@ -114,7 +114,7 @@
                   </svg>
                   <div>
                     <div class="text-sm text-gray-500">Zeit</div>
-                    <div class="font-medium">{{ formatTime(course.date) }}</div>
+                    <div class="font-medium">{{ formatTime(course.startTime) }}</div>
                   </div>
                 </div>
 

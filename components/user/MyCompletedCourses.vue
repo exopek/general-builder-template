@@ -112,7 +112,7 @@
                 <!-- Course Info -->
                 <div class="flex items-center justify-between text-sm text-gray-500">
                   <span class="text-green-600 font-medium">✓ Teilgenommen</span>
-                  <span class="font-medium text-gray-900">{{ formatPrice(course.price) }}€</span>
+                  
                 </div>
               </div>
 
@@ -126,13 +126,7 @@
                   >
                     Bewerten
                   </button>
-                  <!-- View Certificate -->
-                  <button
-                    @click="viewCertificate(course)"
-                    class="text-sm text-green-600 hover:text-green-500 font-medium"
-                  >
-                    Zertifikat ansehen
-                  </button>
+                  
                 </div>
               </div>
             </div>
@@ -287,10 +281,5 @@ const formatPrice = (price: number) => {
 const rateCourse = (course: Course) => {
   // Implement course rating functionality
   console.log('Rate course:', course.title)
-}
-
-const viewCertificate = (course: Course) => {
-  // Implement certificate viewing functionality
-  console.log('View certificate for:', course.title)
 }
 </script>

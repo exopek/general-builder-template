@@ -1,57 +1,29 @@
 import { defineStore } from 'pinia'
 import { API_ENDPOINTS, ERROR_MESSAGES } from '~/utils/constants'
-import type { Course } from './courses'
-import { mockBookings, mockCourses, mockUsers, getUserBookings, delay, type MockBooking } from '~/utils/mockData'
-
-export interface Booking {
-  id: string
-  userId: string
-  courseId: string
-  bookingDate: string
-  status: number // 0=booked, 1=cancelled, 2=attended, 3=noShow
-  notes?: string
-  createdAt: string
-  updatedAt: string
-  course?: Course
-  user?: {
-    id: string
-    firstName: string
-    lastName: string
-    email: string
-  }
-}
-
-export interface BoookingReadDto {
-  id: string
-  courseSettingId: string
-  bookedAt: string
-  status: number
-  statusAsString: string
-  createdAt: string
-  courseSetting: CourseSettingsReadDto
-  course: CourseReadDto
-}
-
-export interface BookingRequest {
-  courseId: string
-  notes?: string
-}
-
-export interface BookingCreateDto {
-  userId: string
-  courseSettingId: string
-}
+import { BookingMapperUtils } from '~/utils/mappers/bookingMapper'
+import type { 
+  Booking,
+  BookingReadDto, 
+  BookingCreateDto,
+  BookingUser
+} from '~/types'
+import { BookingStatusUtils } from '~/types'
 
 export interface BookingValidation {
   isValid: boolean
   errors: string[]
 }
 
+export interface BookingQuery {
+  status?: string
+}
+
 export const useBookingsStore = defineStore('bookings', {
   state: () => ({
     bookings: [] as Booking[],
     isLoading: false,
-    error: null as string | null
+    error: null as string | null,
+    query: {} as BookingQuery
   }),
 
   getters: {
@@ -116,7 +88,7 @@ export const useBookingsStore = defineStore('bookings', {
           return { success: false, error: ERROR_MESSAGES.UNAUTHORIZED }
         }
 
-        const result = await $fetch<BoookingReadDto[]>(`${API_ENDPOINTS.BOOKINGS.LIST}`, {
+        const result = await $fetch<BookingReadDto[]>(`${API_ENDPOINTS.BOOKINGS.LIST}`, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${authStore.token}`
@@ -129,50 +101,16 @@ export const useBookingsStore = defineStore('bookings', {
           return { success: false, error: 'Fehler beim Abrufen der Buchungen' }
         }
 
-        // Get bookings with course and user details
-        const bookingsWithDetails: Booking[] = result.map(booking => {
-          const course = mockCourses.find(c => c.id === booking.courseSetting.courseId)
-          const user = authStore.user
+        // Create user info for mapping
+        const user: BookingUser | undefined = authStore.user ? {
+          id: authStore.user.id,
+          firstName: authStore.user.firstName,
+          lastName: authStore.user.lastName,
+          email: authStore.user.email
+        } : undefined
 
-          return {
-            id: booking.id,
-            userId: user?.id || '',
-            courseId: booking.courseSetting.courseId,
-            bookingDate: booking.bookedAt,
-            status: booking.status,
-            notes: '',
-            createdAt: '',
-            updatedAt: '',
-            course: course ? {
-              id: course.id,
-              title: course.title,
-              description: course.description,
-              instructor: course.instructor,
-              date: course.startTime.split('T')[0],
-              startTime: course.startTime,
-              endTime: course.endTime,
-              duration: course.duration,
-              maxParticipants: course.maxParticipants,
-              currentParticipants: course.currentParticipants,
-              price: course.price,
-              category: course.category,
-              level: 'advanced',
-              location: course.location,
-              equipment: course.requirements,
-              image: course.image,
-              isActive: course.isActive,
-              createdAt: '2024-01-01T00:00:00Z',
-              updatedAt: '2024-01-01T00:00:00Z',
-              bookable: true
-            } : undefined,
-            user: user ? {
-              id: user.id,
-              firstName: user.firstName,
-              lastName: user.lastName,
-              email: user.email
-            } : undefined
-          }
-        })
+        // Map bookings using mapper
+        const bookingsWithDetails = BookingMapperUtils.mapBookings(result, user)
 
         this.bookings = bookingsWithDetails
 
@@ -201,11 +139,12 @@ export const useBookingsStore = defineStore('bookings', {
 
         console.log('Fetching bookings for user:', authStore.token)
 
-        const result = await $fetch<BoookingReadDto[]>(`${API_BASE_URL}${API_ENDPOINTS.BOOKINGS.ME}`, {
+        const result = await $fetch<BookingReadDto[]>(`${API_BASE_URL}${API_ENDPOINTS.BOOKINGS.ME}`, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${authStore.token}`
-          }
+          },
+          query: this.query
         })
 
         console.log('Fetch bookings result:', result)
@@ -214,47 +153,16 @@ export const useBookingsStore = defineStore('bookings', {
           return { success: false, error: 'Fehler beim Abrufen der Buchungen' }
         }
 
-        // Get bookings with course and user details
-        const bookingsWithDetails: Booking[] = result.map(booking => {
-          const course = booking.course
-          const user = authStore.user
+        // Create user info for mapping
+        const user: BookingUser | undefined = authStore.user ? {
+          id: authStore.user.id,
+          firstName: authStore.user.firstName,
+          lastName: authStore.user.lastName,
+          email: authStore.user.email
+        } : undefined
 
-          return {
-            id: booking.id,
-            userId: user?.id || '',
-            courseId: booking.courseSetting.courseId,
-            bookingDate: booking.bookedAt,
-            status: booking.status,
-            notes: '',
-            createdAt: '',
-            updatedAt: '',
-            course: course ? {
-              id: course.id,
-              title: course.title,
-              description: course.description,
-              instructor: 'Unbekannt',
-              date: booking.courseSetting.scheduledAt.split('T')[0],
-              startTime: booking.courseSetting.scheduledAt.split('T')[1],
-              endTime: booking.courseSetting.scheduledAt.split('T')[1] + ':55',
-              duration: 55,
-              maxParticipants: booking.courseSetting.maxParticipants,
-              currentParticipants: 0,
-              category: '',
-              level: 'advanced',
-              location: 'EXOPEK Gym',
-              equipment: [],
-              image: course.imageUrl,
-              isActive: true,
-              bookable: false
-            } : undefined,
-            user: user ? {
-              id: user.id,
-              firstName: user.firstName,
-              lastName: user.lastName,
-              email: user.email
-            } : undefined
-          }
-        })
+        // Map bookings using mapper
+        const bookingsWithDetails = BookingMapperUtils.mapBookings(result, user)
 
         this.bookings = bookingsWithDetails
 
@@ -328,85 +236,15 @@ export const useBookingsStore = defineStore('bookings', {
         this.isLoading = true
         this.error = null
 
-        /* const authStore = useAuthStore()
-        if (!authStore.token || !authStore.user) {
-          return { success: false, error: ERROR_MESSAGES.UNAUTHORIZED }
-        } */
-
         const result = await $fetch(`${API_BASE_URL}${API_ENDPOINTS.BOOKINGS.CREATE}`, {
           method: 'POST',
           body: bookingData
         })
 
-        
-        /* // Create new booking
-        const course = mockCourses.find(c => c.id === bookingData.courseId)
-        if (!course) {
-          return { success: false, error: 'Kurs nicht gefunden' }
-        }
+        // Refresh bookings after creation
+        await this.fetchMyBookings()
 
-        const newBooking: Booking = {
-          id: `booking-${Date.now()}`,
-          userId: authStore.user.id,
-          courseId: bookingData.courseId,
-          bookingDate: new Date().toISOString(),
-          status: 'confirmed',
-          notes: bookingData.notes,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-          course: {
-            id: course.id,
-            title: course.title,
-            description: course.description,
-            instructor: course.instructor,
-            date: course.startTime.split('T')[0],
-            startTime: course.startTime,
-            endTime: course.endTime,
-            duration: course.duration,
-            maxParticipants: course.maxParticipants,
-            currentParticipants: course.currentParticipants,
-            price: course.price,
-            category: course.category,
-            level: course.difficulty as 'beginner' | 'intermediate' | 'advanced',
-            location: course.location,
-            equipment: course.requirements,
-            image: course.image,
-            isActive: course.isActive,
-            createdAt: '2024-01-01T00:00:00Z',
-            updatedAt: '2024-01-01T00:00:00Z'
-          },
-          user: {
-            id: authStore.user.id,
-            firstName: authStore.user.firstName,
-            lastName: authStore.user.lastName,
-            email: authStore.user.email
-          }
-        }
-
-        // Add to mock data and state
-        const mockBookingData: MockBooking = {
-          id: newBooking.id,
-          userId: newBooking.userId,
-          courseId: newBooking.courseId,
-          status: newBooking.status,
-          bookingDate: newBooking.bookingDate,
-          notes: newBooking.notes
-        }
-        mockBookings.push(mockBookingData)
-        
-        this.bookings.push(newBooking)
-
-        // Update course participant count
-        const coursesStore = useCoursesStore()
-        const storesCourse = coursesStore.courses.find(c => c.id === bookingData.courseId)
-        if (storesCourse) {
-          storesCourse.currentParticipants += 1
-        }
-        
-        // Update mock course as well
-        course.currentParticipants += 1 */
-
-        return { success: true, booking: undefined }
+        return { success: true }
       } catch (error: any) {
         console.error('Create booking error:', error)
         this.error = error?.message || ERROR_MESSAGES.NETWORK_ERROR
@@ -486,7 +324,7 @@ export const useBookingsStore = defineStore('bookings', {
         return { canCancel: false, reason: 'Kursinformationen nicht verfügbar.' }
       }
 
-      if (booking.status !== 0) {
+      if (!BookingStatusUtils.canCancel(booking.status)) {
         return { canCancel: false, reason: 'Nur bestätigte Buchungen können storniert werden.' }
       }
 

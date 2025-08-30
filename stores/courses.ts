@@ -1,45 +1,10 @@
 import { defineStore } from 'pinia'
 import { API_ENDPOINTS, ERROR_MESSAGES } from '~/utils/constants'
-import { mockCourses, delay, type MockCourse } from '~/utils/mockData'
-
-export interface Course {
-  id: string
-  title: string
-  description: string
-  instructor: string
-  date: string
-  startTime: string
-  endTime: string
-  duration: number // in minutes
-  maxParticipants: number
-  currentParticipants: number
-  category: string
-  level: 'beginner' | 'intermediate' | 'advanced'
-  location: string
-  equipment?: string[]
-  image?: string
-  isActive: boolean
-  courseSettingsId?: string
-  bookable: boolean
-}
-
-export interface CourseReadDto {
-  id: string
-  title: string
-  description: string
-  imageUrl: string
-  difficulty: number
-  bookingsCount: number
-  courseSettings: CourseSettingsReadDto[]
-  bookable: boolean
-}
-
-export interface CourseSettingsReadDto {
-  id: string
-  scheduledAt: string
-  maxParticipants: number
-  courseId: string
-}
+import { 
+  CourseMapperUtils, 
+  type Course, 
+  type CourseReadDto 
+} from '~/utils/mappers/courseMapper'
 
 export interface CourseFilters {
   category?: string
@@ -159,31 +124,9 @@ export const useCoursesStore = defineStore('courses', {
           query: this.query
         })
 
-        const courses: Course[] = result.flatMap(readDto => 
-          readDto.courseSettings.map(setting => ({
-            id: readDto.id,
-            title: readDto.title,
-            description: readDto.description,
-            image: readDto.imageUrl,
-            instructor: 'Unbekannt',
-            date: setting.scheduledAt,
-            startTime: setting.scheduledAt,
-            endTime: setting.scheduledAt,
-            duration: 60,
-            maxParticipants: 20,
-            currentParticipants: 0, 
-            price: 0,
-            category: 'Allgemein',
-            level: 'beginner',
-            location: 'EXOPEK GYM',
-            equipment: [],
-            isActive: true,
-            createdAt: '2024-01-01T00:00:00Z',
-            updatedAt: '2024-01-01T00:00:00Z',
-            courseSettingsId: setting.id,
-            bookable: true})
-          )
-        )
+        const courses: Course[] = CourseMapperUtils.mapCourses(result)
+
+        console.log('Fetched courses:', courses)
 
         this.courses = courses
         this.cache.lastFetch = new Date()
@@ -210,34 +153,24 @@ export const useCoursesStore = defineStore('courses', {
           method: 'GET',
           query: { courseSettingsId: courseSettingsId, userId: '5b768b67-ebca-44fe-a877-623bcf4815b0' }
         })
-        // Find course by ID
-        const hasCourse = result.id === id
-        if (!hasCourse) {
+        
+        if (!result || result.id !== id) {
           return { success: false, error: 'Kurs nicht gefunden' }
         }
 
         console.log('Fetched course detail:', result.bookable)
 
-        // Map to store format
-        const course: Course = {
-          id: result.id,
-          title: result.title,
-          description: result.description,
-          instructor: 'Unbekannt',
-          date: result.courseSettings[0].scheduledAt,
-          startTime: result.courseSettings[0].scheduledAt,
-          endTime: result.courseSettings[0].scheduledAt,
-          duration: 60,
-          maxParticipants: result.courseSettings[0].maxParticipants,
-          currentParticipants: result.bookingsCount,
-          category: 'Allgemein',
-          level:  'beginner',
-          location: 'EXOPEK GYM',
-          equipment: [],
-          image: result.imageUrl,
-          isActive:   true,
-          bookable: result.bookable,
+        // Map to store format using mapper
+        const courses = CourseMapperUtils.mapCourse(result)
+        const course = CourseMapperUtils.findByCourseSettingsId(courses, courseSettingsId)
+        
+        if (!course) {
+          return { success: false, error: 'Kurs-Einstellung nicht gefunden' }
         }
+
+        // Update bookable status from API
+        course.bookable = result.bookable
+        course.currentParticipants = result.bookingsCount
 
         this.currentCourse = course
 

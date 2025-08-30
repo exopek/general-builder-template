@@ -320,17 +320,6 @@ export const useAdminStore = defineStore('admin', {
       }
     },
 
-    getBookingsForCourse(courseId: string): BookingOverview[] {
-      return this.allBookings.filter(booking => booking.courseId === courseId)
-    },
-
-    getBookingsForTimeRange(startDate: Date, endDate: Date): BookingOverview[] {
-      return this.allBookings.filter(booking => {
-        const bookingDate = new Date(booking.createdAt)
-        return bookingDate >= startDate && bookingDate <= endDate
-      })
-    },
-
     clearError(): void {
       this.error = null
     },

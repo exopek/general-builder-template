@@ -53,7 +53,7 @@
           <svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
           </svg>
-          {{ formatDate(course.date) }} um {{ formatTime(course.date) }}
+          {{ getCourseFullDateTime(course) }}
         </div>
         
         <!-- Instructor -->
@@ -258,23 +258,8 @@ const bookingButtonText = computed(() => {
   return 'Buchen'
 })
 
-// Methods
-const formatDate = (dateString: string) => {
-  return new Date(dateString).toLocaleDateString('de-DE', {
-    weekday: 'short',
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric'
-  })
-}
-
-const formatTime = (dateString: string) => {
-  console.log(`formatting time for dateString: ${dateString}`)
-  return new Date(dateString).toLocaleTimeString('de-DE', {
-    hour: '2-digit',
-    minute: '2-digit'
-  })
-}
+// Formatters
+const { formatDate, formatTime, formatCourseLevel, formatCourseCategory, formatCourseAvailability, getCourseFullDateTime } = useFormatters()
 
 const formatPrice = (price: number) => {
   return new Intl.NumberFormat('de-DE', {
