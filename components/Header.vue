@@ -1,41 +1,49 @@
 <template>
-  <header class="self-stretch py-2 px-4 sticky top-0 z-50 bg-tarnsparent backdrop-blur-lg flex flex-col justify-center items-center gap-4">
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-lg border-b border-gray-100">
     <!-- Desktop Header -->
-    <div class="flex md:hidden self-stretch py-2 px-2 justify-between items-center overflow-hidden">
-      <div class="h-16 flex justify-start items-center gap-3">
-        <div class="justify-start text-primary text-5xl font-semibold leading-10"></div>
-      </div>
-      <div class="p-4 rounded-full flex justify-start items-start gap-3">
-        <div class="px-6 py-2 bg-white btn-primary rounded-full flex justify-center items-center gap-2.5 overflow-hidden">
-          <img class="w-6 h-6 opacity-30" src="https://placehold.co/24x24" />
-          <div class="text-center justify-start text-black text-base font-normal leading-normal">HOME</div>
-        </div>
-        <div class="px-4 py-2 bg-white btn-primary rounded-full flex justify-center items-center gap-2.5 overflow-hidden">
-          <div class="text-center justify-start text-black text-base font-normal leading-normal">OUR VALUE</div>
-        </div>
-        <div class="px-4 py-2 bg-white btn-primary rounded-full flex justify-center items-center gap-2.5 overflow-hidden">
-          <div class="text-center justify-start text-black text-base font-normal leading-normal">CLASS</div>
-        </div>
-        <div class="px-4 py-2 bg-white btn-primary rounded-full flex justify-center items-center gap-2.5 overflow-hidden">
-          <div class="text-center justify-start text-black text-base font-normal leading-normal">JOIN NOW</div>
-        </div>
-      </div>
-      <div class="flex justify-end items-start gap-8">
-        <div class="px-4 py-2 bg-white btn-primary rounded-full flex justify-center items-center gap-2.5 overflow-hidden">
-          <div class="text-center justify-start text-black text-base font-normal leading-normal">JOIN NOW</div>
-        </div>
-      </div>
+    <div class="hidden md:flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">
+      <!-- Logo -->
+      <NuxtLink to="/" class="flex items-center">
+        <div class="text-2xl font-bold text-gray-900">EXOPEK GYM</div>
+      </NuxtLink>
+
+      <!-- Navigation -->
+      <nav class="flex items-center space-x-8">
+        <NuxtLink to="/kurse" class="text-gray-700 hover:text-gray-900 font-medium transition-colors">
+          Kurse
+        </NuxtLink>
+        <NuxtLink to="/preise" class="text-gray-700 hover:text-gray-900 font-medium transition-colors">
+          Preise
+        </NuxtLink>
+        <NuxtLink to="/angebot" class="text-gray-700 hover:text-gray-900 font-medium transition-colors">
+          Angebot
+        </NuxtLink>
+        <NuxtLink to="/kontakt" class="text-gray-700 hover:text-gray-900 font-medium transition-colors">
+          Kontakt
+        </NuxtLink>
+        <NuxtLink to="/faq" class="text-gray-700 hover:text-gray-900 font-medium transition-colors">
+          FAQ
+        </NuxtLink>
+      </nav>
+
+      <!-- CTA Button -->
+      <NuxtLink to="/probiertraining" 
+        class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-full font-medium transition-colors">
+        Probiertraining
+      </NuxtLink>
     </div>
 
     <!-- Mobile Header -->
-    <div class="hidden md:flex justify-between items-center overflow-hidden w-full px-4">
-      <div class="h-16 flex justify-start items-center gap-3">
-        <div class="justify-start text-stone-800 text-2xl font-semibold leading-6">EXOPEK GYM</div>
-      </div>
+    <div class="flex md:hidden items-center justify-between px-4 py-4">
+      <!-- Logo -->
+      <NuxtLink to="/" class="flex items-center">
+        <div class="text-xl font-bold text-gray-900">EXOPEK GYM</div>
+      </NuxtLink>
 
       <!-- Mobile Menu Button -->
-      <button @click="toggleMobileMenu" class="p-2 rounded-[90px] bg-zinc-100">
-        <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <button @click="toggleMobileMenu" 
+        class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors">
+        <svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path v-if="!isMobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
           <path v-else stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
         </svg>
@@ -43,40 +51,74 @@
     </div>
 
     <!-- Mobile Sidebar -->
-    <div v-if="isMobileMenuOpen" class="fixed inset-0 z-50 lg:hidden">
-      <!-- Backdrop -->
-      <div @click="toggleMobileMenu" class="fixed inset-0 bg-black bg-opacity-50"></div>
-      
-      <!-- Sidebar -->
-      <div class="fixed right-0 top-0 h-full w-80 shadow-xl transform transition-transform duration-300 ease-in-out bg-white">
-        <!-- Sidebar Header -->
-        <div class="flex justify-between items-center p-6 border-b border-gray-200">
-          <div class="text-2xl font-semibold text-stone-800">EXOPEK GYM</div>
-          <button @click="toggleMobileMenu" class="p-2 rounded-[90px] bg-zinc-100">
-            <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
+    <Transition
+      enter-active-class="transition-all duration-300 ease-out"
+      enter-from-class="opacity-0"
+      enter-to-class="opacity-100"
+      leave-active-class="transition-all duration-300 ease-in"
+      leave-from-class="opacity-100"
+      leave-to-class="opacity-0"
+    >
+      <div v-if="isMobileMenuOpen" class="fixed inset-0 z-50 md:hidden">
+        <!-- Backdrop -->
+        <div @click="toggleMobileMenu" class="fixed inset-0 bg-black/50"></div>
         
-        <!-- Sidebar Navigation -->
-        <div class="flex flex-col gap-4 p-6">
-          <div class="px-4 py-3 rounded-[90px] flex justify-center items-center gap-2.5 overflow-hidden bg-zinc-100">
-            <img class="w-6 h-6 opacity-30" src="https://placehold.co/24x24" />
-            <div class="text-center justify-start text-black text-base font-normal font-['Plus_Jakarta_Sans'] leading-normal">HOME</div>
+        <!-- Sidebar -->
+        <Transition
+          enter-active-class="transition-transform duration-300 ease-out"
+          enter-from-class="translate-x-full"
+          enter-to-class="translate-x-0"
+          leave-active-class="transition-transform duration-300 ease-in"
+          leave-from-class="translate-x-0"
+          leave-to-class="translate-x-full"
+        >
+          <div class="fixed right-0 top-0 h-full w-80 max-w-[85vw] bg-white shadow-xl">
+            <!-- Sidebar Header -->
+            <div class="flex items-center justify-between p-6 border-b border-gray-200">
+              <div class="text-xl font-bold text-gray-900">EXOPEK GYM</div>
+              <button @click="toggleMobileMenu" 
+                class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors">
+                <svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            
+            <!-- Sidebar Navigation -->
+            <nav class="flex flex-col p-6 space-y-4">
+              <NuxtLink @click="toggleMobileMenu" to="/kurse" 
+                class="block py-3 px-4 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-lg font-medium transition-colors">
+                Kurse
+              </NuxtLink>
+              <NuxtLink @click="toggleMobileMenu" to="/preise" 
+                class="block py-3 px-4 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-lg font-medium transition-colors">
+                Preise
+              </NuxtLink>
+              <NuxtLink @click="toggleMobileMenu" to="/angebot" 
+                class="block py-3 px-4 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-lg font-medium transition-colors">
+                Angebot
+              </NuxtLink>
+              <NuxtLink @click="toggleMobileMenu" to="/kontakt" 
+                class="block py-3 px-4 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-lg font-medium transition-colors">
+                Kontakt
+              </NuxtLink>
+              <NuxtLink @click="toggleMobileMenu" to="/faq" 
+                class="block py-3 px-4 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-lg font-medium transition-colors">
+                FAQ
+              </NuxtLink>
+              
+              <!-- Mobile CTA Button -->
+              <div class="pt-4 border-t border-gray-200">
+                <NuxtLink @click="toggleMobileMenu" to="/probiertraining" 
+                  class="block w-full bg-red-500 hover:bg-red-600 text-white text-center py-3 px-4 rounded-lg font-medium transition-colors">
+                  Probiertraining
+                </NuxtLink>
+              </div>
+            </nav>
           </div>
-          <div class="px-4 py-3 rounded-[90px] flex justify-center items-center gap-2.5 overflow-hidden bg-zinc-100">
-            <div class="text-center justify-start text-black text-base font-normal font-['Plus_Jakarta_Sans'] leading-normal">OUR VALUE</div>
-          </div>
-          <div class="px-4 py-3 rounded-[90px] flex justify-center items-center gap-2.5 overflow-hidden bg-zinc-100">
-            <div class="text-center justify-start text-black text-base font-normal font-['Plus_Jakarta_Sans'] leading-normal">CLASS</div>
-          </div>
-          <div class="px-4 py-3 border-2 rounded-[90px] flex justify-center items-center gap-2.5 overflow-hidden bg-white border-zinc-200">
-            <div class="text-center justify-start text-black text-base font-normal font-['Plus_Jakarta_Sans'] leading-normal">JOIN NOW</div>
-          </div>
-        </div>
+        </Transition>
       </div>
-    </div>
+    </Transition>
   </header>
 </template>
 
@@ -86,4 +128,32 @@ const isMobileMenuOpen = ref(false)
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value
 }
+
+// Close menu on escape key
+const handleKeydown = (event: KeyboardEvent) => {
+  if (event.key === 'Escape' && isMobileMenuOpen.value) {
+    isMobileMenuOpen.value = false
+  }
+}
+
+// Prevent body scroll when mobile menu is open
+watch(isMobileMenuOpen, (isOpen) => {
+  if (typeof document !== 'undefined') {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+      document.addEventListener('keydown', handleKeydown)
+    } else {
+      document.body.style.overflow = ''
+      document.removeEventListener('keydown', handleKeydown)
+    }
+  }
+})
+
+// Cleanup on unmount
+onUnmounted(() => {
+  if (typeof document !== 'undefined') {
+    document.body.style.overflow = ''
+    document.removeEventListener('keydown', handleKeydown)
+  }
+})
 </script>
