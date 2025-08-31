@@ -1,7 +1,7 @@
 <template>
   <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-lg border-b border-gray-100">
     <!-- Desktop Header -->
-    <div class="hidden md:flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">
+    <div class="desktop-header flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">
       <!-- Logo -->
       <NuxtLink to="/" class="flex items-center">
         <div class="text-2xl font-bold text-gray-900">EXOPEK GYM</div>
@@ -34,7 +34,7 @@
     </div>
 
     <!-- Mobile Header -->
-    <div class="flex md:hidden items-center justify-between px-4 py-4">
+    <div class="mobile-header flex items-center justify-between px-4 py-4">
       <!-- Logo -->
       <NuxtLink to="/" class="flex items-center">
         <div class="text-xl font-bold text-gray-900">EXOPEK GYM</div>
@@ -157,3 +157,25 @@ onUnmounted(() => {
   }
 })
 </script>
+
+<style scoped>
+/* Mobile-First: Mobile Header sichtbar, Desktop Header versteckt */
+.mobile-header {
+  display: flex;
+}
+
+.desktop-header {
+  display: none;
+}
+
+/* Desktop: Ab 768px - Desktop Header sichtbar, Mobile Header versteckt */
+@media (min-width: 768px) {
+  .mobile-header {
+    display: none;
+  }
+  
+  .desktop-header {
+    display: flex;
+  }
+}
+</style>
