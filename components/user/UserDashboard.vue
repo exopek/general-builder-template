@@ -25,15 +25,18 @@
 
           <NuxtLink
             to="/user/my-courses"
-            class="flex items-center p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors group"
+            class="flex items-center p-4 rounded-lg transition-all duration-200 group"
+            style="background: linear-gradient(-90deg, rgba(252, 209, 34, 0.1) 0%, rgba(252, 124, 34, 0.1) 35%, rgba(252, 85, 32, 0.1) 70%, rgba(251, 60, 54, 0.1) 100%)"
           >
             <div class="flex-shrink-0">
-              <svg class="w-8 h-8 text-green-600 group-hover:text-green-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-8 h-8 group-hover:opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                   style="color: rgb(252, 124, 34)">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
             </div>
             <div class="ml-4">
-              <p class="text-sm font-medium text-green-600 group-hover:text-green-700">
+              <p class="text-sm font-medium group-hover:opacity-80"
+                 style="color: rgb(252, 124, 34)">
                 Meine Kurse
               </p>
             </div>
@@ -60,12 +63,13 @@
 
     <!-- My Courses Section -->
     <div class="bg-white shadow rounded-lg">
-      <div class="px-6 py-4 border-b border-gray-200">
+      <div class="px-6 py-4 border-b border-gray-200" style="background: linear-gradient(-90deg, rgba(252, 209, 34, 0.1) 0%, rgba(252, 124, 34, 0.1) 35%, rgba(252, 85, 32, 0.1) 70%, rgba(251, 60, 54, 0.1) 100%)">
         <div class="flex items-center justify-between">
-          <h2 class="text-lg font-medium text-gray-900">Meine Kurse</h2>
+          <h2 class="text-lg font-medium" style="background: linear-gradient(-90deg, rgb(252, 209, 34) 0%, rgb(252, 124, 34) 35%, rgb(252, 85, 32) 70%, rgb(251, 60, 54) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Meine Kurse</h2>
           <NuxtLink
             to="/user/my-courses"
-            class="text-sm text-indigo-600 hover:text-indigo-500"
+            class="text-sm hover:opacity-80 transition-opacity"
+            style="color: rgb(252, 124, 34)"
           >
             Alle anzeigen
           </NuxtLink>
@@ -75,7 +79,7 @@
       <div class="p-6">
         <!-- Loading State -->
         <div v-if="coursesStore.isLoading" class="text-center py-8">
-          <div class="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-indigo-600 mb-2"></div>
+          <div class="inline-block animate-spin rounded-full h-6 w-6 border-b-2 mb-2" style="border-bottom-color: rgb(252, 124, 34)"></div>
           <p class="text-sm text-gray-500">Kurse werden geladen...</p>
         </div>
 
@@ -87,7 +91,8 @@
           <p class="text-sm text-gray-500 mb-4">Sie haben noch keine Kurse</p>
           <NuxtLink
             to="/courses"
-            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white hover:opacity-90 transition-opacity"
+            style="background: linear-gradient(-90deg, rgb(252, 209, 34) 0%, rgb(252, 124, 34) 35%, rgb(252, 85, 32) 70%, rgb(251, 60, 54) 100%)"
           >
             Kurse entdecken
           </NuxtLink>
@@ -118,7 +123,8 @@
               </div>
             </div>
             <div class="text-right">
-              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium text-white"
+                    style="background: linear-gradient(-90deg, rgba(252, 209, 34, 0.8) 0%, rgba(252, 124, 34, 0.8) 35%, rgba(252, 85, 32, 0.8) 70%, rgba(251, 60, 54, 0.8) 100%)">
                 {{ course.category }}
               </span>
             </div>
@@ -127,7 +133,8 @@
           <div v-if="userCourses.length > 3" class="text-center pt-4 border-t border-gray-200">
             <NuxtLink
               to="/user/my-courses"
-              class="text-sm text-indigo-600 hover:text-indigo-500"
+              class="text-sm hover:opacity-80 transition-opacity"
+            style="color: rgb(252, 124, 34)"
             >
               {{ userCourses.length - 3 }} weitere Kurse anzeigen
             </NuxtLink>

@@ -33,7 +33,7 @@
     <div v-else>
       <div class="flex items-start justify-between flex-wrap gap-4 mb-6">
         <div>
-          <h2 class="text-xl font-semibold text-white-900">Wochenübersicht</h2>
+          <h2 class="text-xl font-semibold" style="background: linear-gradient(-90deg, rgb(252, 209, 34) 0%, rgb(252, 124, 34) 35%, rgb(252, 85, 32) 70%, rgb(251, 60, 54) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Wochenübersicht</h2>
         </div>
         
         <!-- Desktop Week Navigation -->
@@ -97,8 +97,8 @@
         class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden"
       >
         <!-- Week Header -->
-        <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
-          <h3 class="text-lg font-medium text-white-900">
+        <div class="bg-gray-50 px-6 py-4 border-b border-gray-200" style="background: linear-gradient(-90deg, rgba(252, 209, 34, 0.1) 0%, rgba(252, 124, 34, 0.1) 35%, rgba(252, 85, 32, 0.1) 70%, rgba(251, 60, 54, 0.1) 100%)">
+          <h3 class="text-lg font-medium" style="background: linear-gradient(-90deg, rgb(252, 209, 34) 0%, rgb(252, 124, 34) 35%, rgb(252, 85, 32) 70%, rgb(251, 60, 54) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
             {{ formatWeekRange(currentWeek.weekStart, currentWeek.weekEnd) }}
           </h3>
           <p class="text-sm text-gray-600">
