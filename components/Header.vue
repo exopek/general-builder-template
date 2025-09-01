@@ -48,7 +48,7 @@
       <NuxtLink to="/probiertraining" 
         class="text-white px-6 py-2 rounded-lg font-medium transition-colors"
         style="background: linear-gradient(-90deg, rgb(252, 209, 34) 0%, rgb(252, 124, 34) 35%, rgb(252, 85, 32) 70%, rgb(251, 60, 54) 100%)">
-        Probiertraining
+        Probetraining
       </NuxtLink>
     </div>
 
@@ -128,7 +128,7 @@
                 <NuxtLink @click="toggleMobileMenu" to="/probiertraining" 
                   class="block w-full text-white text-center py-3 px-4 rounded-lg font-medium transition-colors"
                   style="background: linear-gradient(-90deg, rgb(252, 209, 34) 0%, rgb(252, 124, 34) 35%, rgb(252, 85, 32) 70%, rgb(251, 60, 54) 100%)">
-                  Probiertraining
+                  Probetraining
                 </NuxtLink>
               </div>
             </nav>
