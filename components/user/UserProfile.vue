@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-6">
     <!-- Profile Information Card -->
-    <div class="bg-white shadow rounded-lg">
+    <!-- <div class="bg-white shadow rounded-lg">
       <div class="px-6 py-4 border-b border-gray-200">
         <h3 class="text-lg font-medium text-gray-900">Persönliche Informationen</h3>
         <p class="mt-1 text-sm text-gray-500">
@@ -11,7 +11,7 @@
       
       <form @submit.prevent="handleUpdateProfile" class="p-6">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <!-- First Name -->
+          
           <div>
             <label for="firstName" class="block text-sm font-medium text-gray-700">
               Vorname *
@@ -26,7 +26,7 @@
             />
           </div>
 
-          <!-- Last Name -->
+          
           <div>
             <label for="lastName" class="block text-sm font-medium text-gray-700">
               Nachname *
@@ -41,7 +41,7 @@
             />
           </div>
 
-          <!-- Email -->
+          
           <div class="sm:col-span-2">
             <label for="email" class="block text-sm font-medium text-gray-700">
               E-Mail-Adresse *
@@ -60,21 +60,21 @@
           </div>
         </div>
 
-        <!-- Error Message -->
+        
         <div v-if="error" class="mt-6 p-4 bg-red-50 border border-red-200 rounded-md">
           <div class="text-red-600 text-sm">
             {{ error }}
           </div>
         </div>
 
-        <!-- Success Message -->
+       
         <div v-if="successMessage" class="mt-6 p-4 bg-green-50 border border-green-200 rounded-md">
           <div class="text-green-600 text-sm">
             {{ successMessage }}
           </div>
         </div>
 
-        <!-- Save Button -->
+        
         <div class="mt-6 flex justify-end">
           <button
             type="submit"
@@ -94,7 +94,7 @@
           </button>
         </div>
       </form>
-    </div>
+    </div> -->
 
     <!-- Account Settings Card -->
     <div class="bg-white shadow rounded-lg">
@@ -117,7 +117,7 @@
               v-model="passwordForm.currentPassword"
               type="password"
               required
-              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              class="mt-1 block w-full px-3 py-2 border text-black border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               :disabled="isChangingPassword"
             />
           </div>
@@ -132,7 +132,7 @@
               type="password"
               required
               minlength="8"
-              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              class="mt-1 block w-full px-3 py-2 border text-black border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               :disabled="isChangingPassword"
             />
             <p class="mt-1 text-xs text-gray-500">Mindestens 8 Zeichen</p>
@@ -147,7 +147,7 @@
               v-model="passwordForm.confirmPassword"
               type="password"
               required
-              class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              class="mt-1 block w-full px-3 py-2 border text-black border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
               :disabled="isChangingPassword"
             />
           </div>
@@ -224,7 +224,7 @@
     </div>
 
     <!-- Danger Zone -->
-    <div class="bg-white shadow rounded-lg border-l-4 border-red-500">
+   <!--  <div class="bg-white shadow rounded-lg border-l-4 border-red-500">
       <div class="px-6 py-4 border-b border-gray-200">
         <h3 class="text-lg font-medium text-red-600">Gefahrenbereich</h3>
         <p class="mt-1 text-sm text-gray-500">
@@ -248,7 +248,7 @@
           </button>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
