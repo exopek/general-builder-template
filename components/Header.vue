@@ -9,14 +9,14 @@
 
       <!-- Navigation -->
       <nav class="flex items-center space-x-8">
-        <NuxtLink to="/kurse" class="text-gray-700 hover:text-gray-900 font-medium transition-colors">
+        <NuxtLink to="/kurse" class="nav-link">
           Kurse
         </NuxtLink>
-        <NuxtLink to="/preise" class="text-gray-700 hover:text-gray-900 font-medium transition-colors">
+        <NuxtLink to="/preise" class="nav-link">
           Preise
         </NuxtLink>
-        <div class="relative" @mouseenter="showAngebotMenu = true" @mouseleave="showAngebotMenu = false">
-          <button class="text-gray-700 hover:text-gray-900 font-medium transition-colors flex items-center">
+        <div class="relative" @mouseenter="handleShowAngebotMenu" @mouseleave="handleHideAngebotMenu">
+          <button class="nav-link flex items-center">
             Angebot
             <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -25,28 +25,28 @@
           
           <!-- Mega Menu -->
           <div v-if="showAngebotMenu" 
-            class="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg py-2 z-50">
+            class="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg py-2 z-50" @mouseenter="handleShowAngebotMenu" @mouseleave="handleHideAngebotMenu">
             <NuxtLink to="/mitgliedschaften" 
-              class="block px-4 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-colors">
+              class="block py-2 px-4 text-gray-700 nav-link">
               Mitgliedschaften
             </NuxtLink>
             <NuxtLink to="/fragebogen" 
-              class="block px-4 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-colors">
+              class="block py-2 px-4 text-gray-700 nav-link">
               Fragebogen
             </NuxtLink>
           </div>
         </div>
-        <NuxtLink to="/kontakt" class="text-gray-700 hover:text-gray-900 font-medium transition-colors">
+        <NuxtLink to="/kontakt" class="nav-link">
           Kontakt
         </NuxtLink>
-        <NuxtLink to="/faq" class="text-gray-700 hover:text-gray-900 font-medium transition-colors">
+        <NuxtLink to="/faq" class="nav-link">
           FAQ
         </NuxtLink>
       </nav>
 
       <!-- CTA Button -->
       <NuxtLink to="/probiertraining" 
-        class="text-white px-6 py-2 rounded-full font-medium transition-colors"
+        class="text-white px-6 py-2 rounded-lg font-medium transition-colors"
         style="background: linear-gradient(-90deg, rgb(252, 209, 34) 0%, rgb(252, 124, 34) 35%, rgb(252, 85, 32) 70%, rgb(251, 60, 54) 100%)">
         Probiertraining
       </NuxtLink>
@@ -147,6 +147,22 @@ const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value
 }
 
+let hideMenuTimeout: NodeJS.Timeout | null = null
+
+const handleShowAngebotMenu = () => {
+  showAngebotMenu.value = true
+  if (hideMenuTimeout) {
+    clearTimeout(hideMenuTimeout)
+    hideMenuTimeout = null
+  }
+}
+
+const handleHideAngebotMenu = () => {
+  hideMenuTimeout = setTimeout(() => {
+    showAngebotMenu.value = false
+  }, 200)
+}
+
 // Close menu on escape key
 const handleKeydown = (event: KeyboardEvent) => {
   if (event.key === 'Escape' && isMobileMenuOpen.value) {
@@ -196,4 +212,24 @@ onUnmounted(() => {
     display: flex;
   }
 }
+
+/* Navigation Links with Gradient Hover */
+.nav-link {
+  color: rgb(55, 65, 81);
+  font-weight: 500;
+  transition: all 0.15s ease-in-out;
+  text-decoration: none;
+  background: linear-gradient(-90deg, rgb(252, 209, 34) 0%, rgb(252, 124, 34) 35%, rgb(252, 85, 32) 70%, rgb(251, 60, 54) 100%);
+  background-size: 0% 100%;
+  background-repeat: no-repeat;
+  background-position: left;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: rgb(55, 65, 81);
+}
+
+.nav-link:hover {
+  background-size: 100% 100%;
+  -webkit-text-fill-color: transparent;
+}
+
 </style>
