@@ -1,10 +1,10 @@
 <template>
-  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-lg border-b border-gray-100">
+  <header class="sticky top-0 z-50 bg-white/70 backdrop-blur-lg border-b border-gray-100">
     <!-- Desktop Header -->
     <div class="desktop-header flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">
       <!-- Logo -->
       <NuxtLink to="/" class="flex items-center">
-        <div class="text-2xl font-bold text-gray-900">EXOPEK GYM</div>
+        <img src="https://cdn.builder.io/api/v1/image/assets%2F2221ab9020b44cdd9cbb4a4793414e46%2F698b3f14d8e54640a0e15fce4eb0c6a3" alt="Gym Logo" class="h-8 w-auto">
       </NuxtLink>
 
       <!-- Navigation -->
@@ -15,9 +15,27 @@
         <NuxtLink to="/preise" class="text-gray-700 hover:text-gray-900 font-medium transition-colors">
           Preise
         </NuxtLink>
-        <NuxtLink to="/angebot" class="text-gray-700 hover:text-gray-900 font-medium transition-colors">
-          Angebot
-        </NuxtLink>
+        <div class="relative" @mouseenter="showAngebotMenu = true" @mouseleave="showAngebotMenu = false">
+          <button class="text-gray-700 hover:text-gray-900 font-medium transition-colors flex items-center">
+            Angebot
+            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          
+          <!-- Mega Menu -->
+          <div v-if="showAngebotMenu" 
+            class="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg py-2 z-50">
+            <NuxtLink to="/mitgliedschaften" 
+              class="block px-4 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-colors">
+              Mitgliedschaften
+            </NuxtLink>
+            <NuxtLink to="/fragebogen" 
+              class="block px-4 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-colors">
+              Fragebogen
+            </NuxtLink>
+          </div>
+        </div>
         <NuxtLink to="/kontakt" class="text-gray-700 hover:text-gray-900 font-medium transition-colors">
           Kontakt
         </NuxtLink>
@@ -28,7 +46,8 @@
 
       <!-- CTA Button -->
       <NuxtLink to="/probiertraining" 
-        class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-full font-medium transition-colors">
+        class="text-white px-6 py-2 rounded-full font-medium transition-colors"
+        style="background: linear-gradient(-90deg, rgb(252, 209, 34) 0%, rgb(252, 124, 34) 35%, rgb(252, 85, 32) 70%, rgb(251, 60, 54) 100%)">
         Probiertraining
       </NuxtLink>
     </div>
@@ -37,12 +56,12 @@
     <div class="mobile-header flex items-center justify-between px-4 py-4">
       <!-- Logo -->
       <NuxtLink to="/" class="flex items-center">
-        <div class="text-xl font-bold text-gray-900">EXOPEK GYM</div>
+        <img src="https://cdn.builder.io/api/v1/image/assets%2F2221ab9020b44cdd9cbb4a4793414e46%2F698b3f14d8e54640a0e15fce4eb0c6a3" alt="Gym Logo" class="h-7 w-auto">
       </NuxtLink>
 
       <!-- Mobile Menu Button -->
       <button @click="toggleMobileMenu" 
-        class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors">
+        >
         <svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path v-if="!isMobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
           <path v-else stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -53,11 +72,9 @@
     <!-- Mobile Sidebar -->
     <Transition
       enter-active-class="transition-all duration-300 ease-out"
-      enter-from-class="opacity-0"
-      enter-to-class="opacity-100"
+      
       leave-active-class="transition-all duration-300 ease-in"
-      leave-from-class="opacity-100"
-      leave-to-class="opacity-0"
+      
     >
       <div v-if="isMobileMenuOpen" class="fixed inset-0 z-50 md:hidden">
         <!-- Backdrop -->
@@ -72,12 +89,11 @@
           leave-from-class="translate-x-0"
           leave-to-class="translate-x-full"
         >
-          <div class="fixed right-0 top-0 h-full w-80 max-w-[85vw] bg-white shadow-xl">
+          <div class="fixed right-0 top-0 h-full w-80 max-w-[85vw] bg-white/70 shadow-xl">
             <!-- Sidebar Header -->
-            <div class="flex items-center justify-between p-6 border-b border-gray-200">
-              <div class="text-xl font-bold text-gray-900">EXOPEK GYM</div>
-              <button @click="toggleMobileMenu" 
-                class="p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors">
+            <div class="flex items-center justify-between px-4 py-4">
+              <img src="https://cdn.builder.io/api/v1/image/assets%2F2221ab9020b44cdd9cbb4a4793414e46%2F698b3f14d8e54640a0e15fce4eb0c6a3" alt="Gym Logo" class="h-7 w-auto">
+              <button @click="toggleMobileMenu">
                 <svg class="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
@@ -85,7 +101,7 @@
             </div>
             
             <!-- Sidebar Navigation -->
-            <nav class="flex flex-col p-6 space-y-4">
+            <nav class="flex flex-col px-4 pt-0 pb-6 space-y-4 bg-white/70">
               <NuxtLink @click="toggleMobileMenu" to="/kurse" 
                 class="block py-3 px-4 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-lg font-medium transition-colors">
                 Kurse
@@ -110,7 +126,8 @@
               <!-- Mobile CTA Button -->
               <div class="pt-4 border-t border-gray-200">
                 <NuxtLink @click="toggleMobileMenu" to="/probiertraining" 
-                  class="block w-full bg-red-500 hover:bg-red-600 text-white text-center py-3 px-4 rounded-lg font-medium transition-colors">
+                  class="block w-full text-white text-center py-3 px-4 rounded-lg font-medium transition-colors"
+                  style="background: linear-gradient(-90deg, rgb(252, 209, 34) 0%, rgb(252, 124, 34) 35%, rgb(252, 85, 32) 70%, rgb(251, 60, 54) 100%)">
                   Probiertraining
                 </NuxtLink>
               </div>
@@ -124,6 +141,7 @@
 
 <script setup lang="ts">
 const isMobileMenuOpen = ref(false)
+const showAngebotMenu = ref(false)
 
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value
@@ -137,7 +155,7 @@ const handleKeydown = (event: KeyboardEvent) => {
 }
 
 // Prevent body scroll when mobile menu is open
-watch(isMobileMenuOpen, (isOpen) => {
+watch(isMobileMenuOpen, (isOpen: boolean) => {
   if (typeof document !== 'undefined') {
     if (isOpen) {
       document.body.style.overflow = 'hidden'
