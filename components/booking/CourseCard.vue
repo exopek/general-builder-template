@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+  <div class="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300">
     <!-- Course Image -->
-    <div class="relative h-48 bg-gradient-to-br from-blue-500 to-purple-600">
+    <div class="relative h-48" style="background: linear-gradient(-90deg, rgb(252, 209, 34) 0%, rgb(252, 124, 34) 35%, rgb(252, 85, 32) 70%, rgb(251, 60, 54) 100%);">
       <img
         v-if="course.image"
         :src="course.image"
@@ -118,7 +118,8 @@
           <!-- Details Button -->
           <button
             @click="$emit('view-details', course.id)"
-            class="px-4 py-2 text-sm font-medium text-white-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors sm:flex-1"
+            class="px-4 py-2 text-sm font-medium text-white rounded-lg transition-colors sm:flex-1"
+            style="background: linear-gradient(-90deg, rgb(252, 209, 34) 0%, rgb(252, 124, 34) 35%, rgb(252, 85, 32) 70%, rgb(251, 60, 54) 100%);"
           >
             Buchen
           </button>
@@ -233,7 +234,7 @@ const bookingButtonClass = computed(() => {
   if (!canBook.value) {
     return 'bg-gray-300 text-gray-500 cursor-not-allowed'
   }
-  return 'bg-indigo-600 text-white hover:bg-indigo-700'
+  return 'text-white transition-colors'
 })
 
 const bookingButtonText = computed(() => {

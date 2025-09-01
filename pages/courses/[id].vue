@@ -3,7 +3,7 @@
     <!-- Loading State -->
     <div v-if="coursesStore.isLoading" class="flex items-center justify-center min-h-screen">
       <div class="text-center">
-        <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mb-4"></div>
+        <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 mb-4" style="border-color: rgb(252, 85, 32);"></div>
         <p class="text-gray-600">Kurs wird geladen...</p>
       </div>
     </div>
@@ -43,7 +43,7 @@
       <div class="mb-6">
         <NuxtLink
           to="/courses"
-          class="inline-flex items-center text-indigo-600 hover:text-indigo-500"
+          class="inline-flex items-center" style="color: rgb(252, 85, 32);"
         >
           <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -58,7 +58,7 @@
           <!-- Course Header -->
           <div class="bg-white rounded-xl shadow-sm overflow-hidden">
             <!-- Course Image -->
-            <div class="relative h-64 sm:h-80 bg-gradient-to-br from-blue-500 to-purple-600">
+            <div class="relative h-64 sm:h-80" style="background: linear-gradient(-90deg, rgb(252, 209, 34) 0%, rgb(252, 124, 34) 35%, rgb(252, 85, 32) 70%, rgb(251, 60, 54) 100%);">
               <img
                 v-if="course.image"
                 :src="course.image"
@@ -167,7 +167,7 @@
                   <span 
                     v-for="item in course.equipment" 
                     :key="item"
-                    class="inline-flex items-center px-3 py-1 bg-indigo-100 text-indigo-800 rounded-full text-sm font-medium"
+                    class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium" style="background-color: rgba(252, 85, 32, 0.1); color: rgb(252, 85, 32);"
                   >
                     {{ item }}
                   </span>
@@ -214,6 +214,7 @@
                 :disabled="!canBook || isBooking"
                 class="w-full py-3 px-4 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 :class="bookingButtonClass"
+                :style="canBook ? 'background: linear-gradient(-90deg, rgb(252, 209, 34) 0%, rgb(252, 124, 34) 35%, rgb(252, 85, 32) 70%, rgb(251, 60, 54) 100%);' : ''"
               >
                 <svg 
                   v-if="isBooking" 
@@ -410,7 +411,7 @@ const bookingButtonClass = computed(() => {
   if (!canBook.value) {
     return 'bg-gray-300 text-gray-500 cursor-not-allowed'
   }
-  return 'bg-indigo-600 text-white hover:bg-indigo-700'
+  return 'text-white transition-colors'
 })
 
 const bookingButtonText = computed(() => {

@@ -16,7 +16,8 @@
             <div class="flex items-center space-x-4">
               <NuxtLink
                 to="/courses"
-                class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors"
+                class="text-white px-4 py-2 rounded-md transition-colors"
+                style="background: linear-gradient(-90deg, rgb(252, 209, 34) 0%, rgb(252, 124, 34) 35%, rgb(252, 85, 32) 70%, rgb(251, 60, 54) 100%);"
               >
                 Neue Kurse entdecken
               </NuxtLink>
@@ -39,7 +40,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <!-- Loading State -->
       <div v-if="isLoading" class="text-center py-12">
-        <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mb-4"></div>
+        <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 mb-4" style="border-color: rgb(252, 85, 32);"></div>
         <p class="text-gray-600">Dashboard wird geladen...</p>
       </div>
 
@@ -69,7 +70,8 @@
             </p>
             <NuxtLink
               to="/courses"
-              class="inline-flex items-center px-6 py-3 bg-indigo-600 text-white font-medium rounded-md hover:bg-indigo-700 transition-colors"
+              class="inline-flex items-center px-6 py-3 text-white font-medium rounded-md transition-colors"
+              style="background: linear-gradient(-90deg, rgb(252, 209, 34) 0%, rgb(252, 124, 34) 35%, rgb(252, 85, 32) 70%, rgb(251, 60, 54) 100%);"
             >
               <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -88,15 +90,16 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <NuxtLink
                 to="/courses"
-                class="flex items-center p-4 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition-colors group"
+                class="flex items-center p-4 rounded-lg hover:opacity-90 transition-colors group"
+                style="background: rgba(252, 85, 32, 0.1);"
               >
                 <div class="flex-shrink-0">
-                  <svg class="w-8 h-8 text-indigo-600 group-hover:text-indigo-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg class="w-8 h-8 group-hover:opacity-80" style="color: rgb(252, 85, 32);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                   </svg>
                 </div>
                 <div class="ml-4">
-                  <p class="text-sm font-medium text-indigo-600 group-hover:text-indigo-700">
+                  <p class="text-sm font-medium group-hover:opacity-80" style="color: rgb(252, 85, 32);">
                     Kurse anzeigen
                   </p>
                 </div>
@@ -104,15 +107,16 @@
 
               <NuxtLink
                 to="/user/my-courses"
-                class="flex items-center p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors group"
+                class="flex items-center p-4 rounded-lg hover:opacity-90 transition-colors group"
+                style="background: rgba(34, 197, 94, 0.1);"
               >
                 <div class="flex-shrink-0">
-                  <svg class="w-8 h-8 text-green-600 group-hover:text-green-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg class="w-8 h-8 group-hover:opacity-80" style="color: rgb(34, 197, 94);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                 </div>
                 <div class="ml-4">
-                  <p class="text-sm font-medium text-green-600 group-hover:text-green-700">
+                  <p class="text-sm font-medium group-hover:opacity-80" style="color: rgb(34, 197, 94);">
                     Meine Kurse
                   </p>
                 </div>
@@ -120,15 +124,16 @@
 
               <NuxtLink
                 to="/user/profile"
-                class="flex items-center p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors group"
+                class="flex items-center p-4 rounded-lg hover:opacity-90 transition-colors group"
+                style="background: rgba(252, 85, 32, 0.1);"
               >
                 <div class="flex-shrink-0">
-                  <svg class="w-8 h-8 text-purple-600 group-hover:text-purple-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg class="w-8 h-8 group-hover:opacity-80" style="color: rgb(252, 85, 32);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
                 </div>
                 <div class="ml-4">
-                  <p class="text-sm font-medium text-purple-600 group-hover:text-purple-700">
+                  <p class="text-sm font-medium group-hover:opacity-80" style="color: rgb(252, 85, 32);">
                     Profil bearbeiten
                   </p>
                 </div>

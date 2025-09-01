@@ -1,13 +1,13 @@
 <template>
   <div class="min-h-screen bg-gray-50 pt-24">
     <!-- Hero Section -->
-    <div class="bg-gradient-to-r from-indigo-600 to-purple-600">
+    <div style="background: linear-gradient(-90deg, rgb(252, 209, 34) 0%, rgb(252, 124, 34) 35%, rgb(252, 85, 32) 70%, rgb(251, 60, 54) 100%)">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div class="text-center">
           <h1 class="text-4xl font-bold text-white mb-4">
             Unsere Kurse
           </h1>
-          <p class="text-xl text-indigo-100 max-w-2xl mx-auto">
+          <p class="text-xl text-orange-100 max-w-2xl mx-auto">
             Entdecken Sie unser vielfältiges Kursangebot und finden Sie das perfekte Training für Ihre Ziele
           </p>
         </div>
@@ -21,7 +21,7 @@
     <div class="mb-6">
         <NuxtLink
           to="/user"
-          class="inline-flex items-center text-indigo-600 hover:text-indigo-500"
+          class="inline-flex items-center" style="color: rgb(252, 85, 32);"
         >
           <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -30,49 +30,85 @@
         </NuxtLink>
       </div>
 
-      <div class="bg-white rounded-xl shadow-sm p-6 mb-8">
-        <div class="flex items-center justify-between">
-          <div>
-            <h2 class="text-lg font-semibold text-gray-900">Kursübersicht</h2>
-            <p class="text-sm text-gray-600 mt-1">{{ currentWeekDisplayText }}</p>
+      <div class="bg-gradient-to-r from-white to-gray-50/50 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-100/50 p-8 mb-8">
+        <div class="flex flex-col gap-6">
+          <!-- Header Section -->
+          <div class="flex items-start justify-between flex-wrap gap-4">
+            <div>
+              <h2 class="text-2xl font-bold text-gray-900 mb-2">Kursübersicht</h2>
+              <p class="text-gray-600">{{ currentWeekDisplayText }}</p>
+            </div>
+            
+            <!-- Desktop Week Navigation Controls -->
+            <div class="hidden sm:flex items-center bg-white/60 backdrop-blur-sm rounded-full p-1 shadow-sm border border-gray-200/50">
+              <button
+                @click="previousWeek"
+                :disabled="currentWeekIndex === 0"
+                class="p-3 rounded-full text-gray-600 hover:text-gray-900 hover:bg-white/80 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+              >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              
+              <span class="text-sm text-gray-700 min-w-[220px] text-center font-semibold px-4">
+                {{ formatWeekRange(currentWeekStart, currentWeekEnd) }}
+              </span>
+              
+              <button
+                @click="nextWeek"
+                :disabled="currentWeekIndex >= maxWeekIndex"
+                class="p-3 rounded-full text-gray-600 hover:text-gray-900 hover:bg-white/80 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+              >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
           </div>
-          
-          <!-- Week Navigation Controls -->
-          <div class="flex items-center space-x-4">
+
+          <!-- Course Count -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <div class="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
+              <span class="text-gray-700 font-medium">
+                {{ currentWeekCourses.length }} {{ currentWeekCourses.length === 1 ? 'Kurs' : 'Kurse' }} verfügbar
+              </span>
+            </div>
+          </div>
+
+          <!-- Mobile Week Navigation -->
+          <div class="flex sm:hidden items-center justify-center bg-white/60 backdrop-blur-sm rounded-2xl p-4 shadow-sm border border-gray-200/50">
             <button
               @click="previousWeek"
               :disabled="currentWeekIndex === 0"
-              class="p-2 rounded-full border border-gray-300 text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              class="p-3 rounded-full text-gray-600 hover:text-gray-900 hover:bg-white/80 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
             >
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
               </svg>
             </button>
             
-            <span class="text-sm text-gray-600 min-w-[200px] text-center font-medium">
+            <span class="text-sm text-gray-700 flex-1 text-center font-semibold px-4">
               {{ formatWeekRange(currentWeekStart, currentWeekEnd) }}
             </span>
             
             <button
               @click="nextWeek"
               :disabled="currentWeekIndex >= maxWeekIndex"
-              class="p-2 rounded-full border border-gray-300 text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              class="p-3 rounded-full text-gray-600 hover:text-gray-900 hover:bg-white/80 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
             >
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
               </svg>
             </button>
           </div>
         </div>
-        
-        <div class="mt-4 text-sm text-gray-600">
-          {{ currentWeekCourses.length }} {{ currentWeekCourses.length === 1 ? 'Kurs' : 'Kurse' }} verfügbar
-        </div>
       </div>
 
       <!-- Loading State -->
       <div v-if="coursesStore.isLoading" class="text-center py-12">
-        <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+        <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2" style="border-color: rgb(252, 85, 32);"></div>
         <p class="mt-2 text-gray-600">Kurse werden geladen...</p>
       </div>
 
@@ -106,7 +142,7 @@
           <button
             v-if="currentWeekIndex < maxWeekIndex"
             @click="nextWeek"
-            class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition-colors"
+            class="text-white py-2 px-4 rounded-md transition-colors" style="background: linear-gradient(-90deg, rgb(252, 209, 34) 0%, rgb(252, 124, 34) 35%, rgb(252, 85, 32) 70%, rgb(251, 60, 54) 100%);"
           >
             Nächste Woche
           </button>
