@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
+  <div class="min-h-screen bg-gray-50 pt-24">
     <!-- Loading State -->
     <div v-if="coursesStore.isLoading" class="flex items-center justify-center min-h-screen">
       <div class="text-center">
@@ -68,7 +68,7 @@
               <div class="absolute inset-0 bg-black bg-opacity-20" />
               
               <!-- Level and Category Badges -->
-              <div class="absolute top-4 left-4 flex gap-2">
+              <!-- <div class="absolute top-4 left-4 flex gap-2">
                 <span 
                   class="px-3 py-1 rounded-full text-xs font-semibold text-white"
                   :class="levelColors[course.level]"
@@ -78,7 +78,7 @@
                 <span class="px-3 py-1 bg-white bg-opacity-20 text-white rounded-full text-xs font-semibold">
                   {{ course.category }}
                 </span>
-              </div>
+              </div> -->
               
               <!-- Availability Badge -->
               <div class="absolute top-4 right-4">

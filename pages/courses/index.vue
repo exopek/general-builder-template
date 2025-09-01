@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
+  <div class="min-h-screen bg-gray-50 pt-24">
     <!-- Hero Section -->
     <div class="bg-gradient-to-r from-indigo-600 to-purple-600">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
@@ -133,12 +133,12 @@
     </div>
 
     <!-- BookingModal -->
-    <BookingModal
+   <!--  <BookingModal
       v-if="showBookingModal"
       :course-id="selectedCourseId"
       @close="closeBookingModal"
       @success="handleBookingSuccess"
-    />
+    /> -->
   </div>
 </template>
 

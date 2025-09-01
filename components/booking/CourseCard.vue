@@ -11,14 +11,14 @@
       <div class="absolute inset-0 bg-black bg-opacity-20" />
       
       <!-- Level Badge -->
-      <div class="absolute top-4 left-4">
+      <!-- <div class="absolute top-4 left-4">
         <span 
           class="px-3 py-1 rounded-full text-xs font-semibold text-white"
           :class="levelColors[course.level]"
         >
           {{ levelLabels[course.level] }}
         </span>
-      </div>
+      </div> -->
       
       <!-- Availability Badge -->
       <div class="absolute top-4 right-4">
@@ -82,12 +82,12 @@
         </div>
 
         <!-- Participants -->
-        <div class="flex items-center">
+        <!-- <div class="flex items-center">
           <svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
           </svg>
           {{ course.currentParticipants }} / {{ course.maxParticipants }} Teilnehmer
-        </div>
+        </div> -->
       </div>
 
       <!-- Equipment (if any) -->
@@ -118,13 +118,13 @@
           <!-- Details Button -->
           <button
             @click="$emit('view-details', course.id)"
-            class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors sm:flex-1"
+            class="px-4 py-2 text-sm font-medium text-white-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors sm:flex-1"
           >
-            Details
+            Buchen
           </button>
           
           <!-- Book Button -->
-          <button
+          <!-- <button
             v-if="showBookingButton"
             @click="handleBooking"
             :disabled="!canBook || isBooking"
@@ -140,7 +140,7 @@
               />
               {{ bookingButtonText }}
             </div>
-          </button>
+          </button> -->
         </div>
       </div>
     </div>

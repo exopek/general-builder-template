@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
+  <div class="min-h-screen bg-gray-50 pt-24">
     <!-- Header -->
     <div class="bg-white shadow">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -46,17 +46,17 @@
       <!-- Dashboard Content -->
       <div v-else class="space-y-8">
         <!-- Next Course Section -->
-        <div v-if="nextRegisteredCourse" class="space-y-4">
+        <!-- <div v-if="nextRegisteredCourse" class="space-y-4">
           <h2 class="text-2xl font-bold text-gray-900">Nächster Kurs</h2>
           <CourseCard 
             :course="nextRegisteredCourse" 
             :showBookingButton="false"
             class="max-w-md"
           />
-        </div>
+        </div> -->
 
         <!-- No Courses Placeholder -->
-        <div v-else class="bg-white shadow rounded-lg p-8 text-center">
+       <!--  <div v-else class="bg-white shadow rounded-lg p-8 text-center">
           <div class="max-w-md mx-auto">
             <svg class="mx-auto h-16 w-16 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
@@ -77,7 +77,7 @@
               Kurse entdecken
             </NuxtLink>
           </div>
-        </div>
+        </div> -->
 
         <!-- Quick Access Actions -->
         <div class="bg-white shadow rounded-lg">

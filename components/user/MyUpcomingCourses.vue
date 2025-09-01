@@ -32,7 +32,7 @@
     <!-- Weekly Slider -->
     <div v-else>
       <div class="flex items-center justify-between mb-6">
-        <h2 class="text-xl font-semibold text-gray-900">Wochenübersicht</h2>
+        <h2 class="text-xl font-semibold text-white-900">Wochenübersicht</h2>
         
         <!-- Week Navigation -->
         <div class="flex items-center space-x-4">
@@ -47,7 +47,7 @@
             </svg>
           </button>
           
-          <span class="text-sm text-gray-600 min-w-[200px] text-center">
+          <span class="text-sm text-white-600 min-w-[200px] text-center">
             {{ formatWeekRange(currentWeek.weekStart, currentWeek.weekEnd) }}
           </span>
           
@@ -71,7 +71,7 @@
       >
         <!-- Week Header -->
         <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
-          <h3 class="text-lg font-medium text-gray-900">
+          <h3 class="text-lg font-medium text-white-900">
             {{ formatWeekRange(currentWeek.weekStart, currentWeek.weekEnd) }}
           </h3>
           <p class="text-sm text-gray-600">
@@ -102,8 +102,8 @@
                 <div
                   v-for="course in day.courses"
                   :key="course.id"
-                  class="bg-indigo-50 border border-indigo-200 rounded-md p-3 hover:bg-indigo-100 transition-colors cursor-pointer"
-                  @click="viewCourseDetails(course)"
+                  class="bg-indigo-50 border border-indigo-200 rounded-md p-3 transition-colors"
+                  
                 >
                   <div class="text-sm font-medium text-indigo-900 mb-1">
                     {{ course.title }}

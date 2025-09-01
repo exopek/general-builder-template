@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
+  <div class="min-h-screen bg-gray-50 pt-24">
     <!-- Header -->
     <div class="bg-white shadow">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -8,7 +8,7 @@
             <div>
               <h1 class="text-3xl font-bold text-gray-900">Meine Kurse</h1>
               <p class="mt-1 text-sm text-gray-500">
-                Ihre angemeldeten und abgeschlossenen Kurse
+                Ihre angemeldeten Kurse
               </p>
             </div>
             <NuxtLink
@@ -72,7 +72,7 @@
             >
               Kommende Kurse
             </button>
-            <button
+            <!-- <button
               @click="setActiveTab('attended')"
               :class="[
                 'py-2 px-1 border-b-2 font-medium text-sm',
@@ -82,7 +82,7 @@
               ]"
             >
               Abgeschlossene Kurse
-            </button>
+            </button> -->
           </nav>
         </div>
 

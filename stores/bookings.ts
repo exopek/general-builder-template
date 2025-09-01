@@ -279,7 +279,7 @@ export const useBookingsStore = defineStore('bookings', {
         }
 
         // Check cancellation deadline
-        if (booking.course) {
+        /* if (booking.course) {
           const courseDateTime = new Date(`${booking.course.date}T${booking.course.startTime}`)
           const cancellationDeadline = new Date(courseDateTime.getTime() - 4 * 60 * 60 * 1000) // 4 hours before
           const now = new Date()
@@ -287,7 +287,7 @@ export const useBookingsStore = defineStore('bookings', {
           if (now > cancellationDeadline) {
             return { success: false, error: ERROR_MESSAGES.CANCELLATION_DEADLINE }
           }
-        }
+        } */
 
         await $fetch(API_ENDPOINTS.BOOKINGS.DELETE(bookingId), {
           method: 'DELETE',
@@ -296,7 +296,7 @@ export const useBookingsStore = defineStore('bookings', {
           }
         })
 
-        // Remove booking from state
+       /*  // Remove booking from state
         this.bookings = this.bookings.filter(b => b.id !== bookingId)
 
         // Update course participant count in courses store
@@ -304,7 +304,7 @@ export const useBookingsStore = defineStore('bookings', {
         const course = coursesStore.courses.find(c => c.id === booking.courseId)
         if (course) {
           course.currentParticipants = Math.max(0, course.currentParticipants - 1)
-        }
+        } */
 
         return { success: true }
       } catch (error: any) {
