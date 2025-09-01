@@ -201,6 +201,7 @@ const emit = defineEmits<Emits>()
 // Stores
 const coursesStore = useCoursesStore()
 const bookingsStore = useBookingsStore()
+const authStore = useAuthStore()
 
 // State
 const isLoading = ref(false)
@@ -266,9 +267,13 @@ const handleBooking = async () => {
   try {
     console.log('Booking course:', props.courseSettingsId)
 
+    if (authStore.$state.user?.id === undefined) {
+      throw new Error('Benutzer nicht authentifiziert')
+    }
+
     const result = await bookingsStore.createBooking({
       courseSettingId: props.courseSettingsId as string,
-      userId: '5b768b67-ebca-44fe-a877-623bcf4815b0', // Assume current user
+      userId: authStore.$state.user?.id, // Assume current user
     })
     
     if (result.success) {
