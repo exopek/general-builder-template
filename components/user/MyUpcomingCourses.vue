@@ -31,37 +31,64 @@
 
     <!-- Weekly Slider -->
     <div v-else>
-      <div class="flex items-center justify-between mb-6">
-        <h2 class="text-xl font-semibold text-white-900">Wochenübersicht</h2>
+      <div class="flex items-start justify-between flex-wrap gap-4 mb-6">
+        <div>
+          <h2 class="text-xl font-semibold text-white-900">Wochenübersicht</h2>
+        </div>
         
-        <!-- Week Navigation -->
-        <div class="flex items-center space-x-4">
+        <!-- Desktop Week Navigation -->
+        <div class="hidden sm:flex items-center bg-white/60 backdrop-blur-sm rounded-full p-1 shadow-sm border border-gray-200/50">
           <button
             @click="previousWeek"
             :disabled="currentWeekIndex === 0"
-            class="p-2 rounded-full border border-gray-300 text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            :class="{ 'hover:bg-gray-50': currentWeekIndex > 0 }"
+            class="p-3 rounded-full text-gray-600 hover:text-gray-900 hover:bg-white/80 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
             </svg>
           </button>
           
-          <span class="text-sm text-white-600 min-w-[200px] text-center">
+          <span class="text-sm text-gray-700 min-w-[220px] text-center font-semibold px-4">
             {{ formatWeekRange(currentWeek.weekStart, currentWeek.weekEnd) }}
           </span>
           
           <button
             @click="nextWeek"
             :disabled="currentWeekIndex >= weeklySchedule.length - 1"
-            class="p-2 rounded-full border border-gray-300 text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            :class="{ 'hover:bg-gray-50': currentWeekIndex < weeklySchedule.length - 1 }"
+            class="p-3 rounded-full text-gray-600 hover:text-gray-900 hover:bg-white/80 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
             </svg>
           </button>
         </div>
+      </div>
+
+      <!-- Mobile Week Navigation -->
+      <div class="flex sm:hidden items-center justify-center bg-white/60 backdrop-blur-sm rounded-2xl p-4 shadow-sm border border-gray-200/50 mb-6">
+        <button
+          @click="previousWeek"
+          :disabled="currentWeekIndex === 0"
+          class="p-3 rounded-full text-gray-600 hover:text-gray-900 hover:bg-white/80 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        
+        <span class="text-sm text-gray-700 flex-1 text-center font-semibold px-4">
+          {{ formatWeekRange(currentWeek.weekStart, currentWeek.weekEnd) }}
+        </span>
+        
+        <button
+          @click="nextWeek"
+          :disabled="currentWeekIndex >= weeklySchedule.length - 1"
+          class="p-3 rounded-full text-gray-600 hover:text-gray-900 hover:bg-white/80 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
       </div>
       
       <!-- Current Week Display -->
