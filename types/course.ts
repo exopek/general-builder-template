@@ -44,4 +44,5 @@ export interface CourseSettingsDto {
   maxParticipants: number
   courseId: string
   bookingsCount: number
+  trainerName: string
 }

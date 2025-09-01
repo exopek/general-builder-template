@@ -53,6 +53,7 @@ export interface CourseSettingsDto {
   scheduledAt: string
   maxParticipants: number
   courseId: string
+  trainerName: string
 }
 
 export interface CourseDto {

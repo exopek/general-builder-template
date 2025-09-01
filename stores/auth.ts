@@ -222,6 +222,40 @@ export const useAuthStore = defineStore('auth', {
       
       // For 'user' role, both 'user' and 'admin' are allowed
       return this.user.role === 'user' || this.user.role === 'admin'
+    },
+
+    async changePassword(currentPassword: string, newPassword: string): Promise<{ success: boolean; error?: string }> {
+      if (!this.isAuthenticated || !this.token) {
+        return { 
+          success: false, 
+          error: 'Sie müssen angemeldet sein, um das Passwort zu ändern' 
+        }
+      }
+
+      try {
+        this.isLoading = true
+        
+        await $fetch(`${API_BASE_URL}${API_ENDPOINTS.AUTH.CHANGE_PASSWORD}`, {
+          method: 'PUT',
+          headers: {
+            Authorization: `Bearer ${this.token}`
+          },
+          body: {
+            currentPassword,
+            newPassword
+          }
+        })
+
+        return { success: true }
+      } catch (error: any) {
+        console.error('Change password error:', error)
+        return { 
+          success: false, 
+          error: error?.data?.message || 'Fehler beim Ändern des Passworts' 
+        }
+      } finally {
+        this.isLoading = false
+      }
     }
   }
 })

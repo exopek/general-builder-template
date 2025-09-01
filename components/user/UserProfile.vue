@@ -343,20 +343,26 @@ const handleChangePassword = async () => {
   passwordError.value = null
 
   try {
-    // Simulate API call - in real app this would change password
-    await new Promise(resolve => setTimeout(resolve, 1500))
+    const result = await authStore.changePassword(
+      passwordForm.currentPassword,
+      passwordForm.newPassword
+    )
     
-    // Reset form
-    passwordForm.currentPassword = ''
-    passwordForm.newPassword = ''
-    passwordForm.confirmPassword = ''
-    
-    successMessage.value = 'Passwort erfolgreich geändert'
-    
-    // Clear success message after 5 seconds
-    setTimeout(() => {
-      successMessage.value = null
-    }, 5000)
+    if (result.success) {
+      // Reset form
+      passwordForm.currentPassword = ''
+      passwordForm.newPassword = ''
+      passwordForm.confirmPassword = ''
+      
+      successMessage.value = 'Passwort erfolgreich geändert'
+      
+      // Clear success message after 5 seconds
+      setTimeout(() => {
+        successMessage.value = null
+      }, 5000)
+    } else {
+      passwordError.value = result.error || 'Fehler beim Ändern des Passworts'
+    }
     
   } catch (err: any) {
     passwordError.value = err.message || 'Fehler beim Ändern des Passworts'

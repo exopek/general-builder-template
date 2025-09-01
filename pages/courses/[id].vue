@@ -227,6 +227,25 @@
                 {{ bookingButtonText }}
               </button>
 
+              <!-- Cancel Booking Button -->
+              <button
+                v-if="isAlreadyBooked"
+                @click="handleCancelBooking"
+                :disabled="isCanceling"
+                class="w-full py-3 px-4 rounded-lg font-medium transition-colors bg-red-600 text-white hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <svg 
+                  v-if="isCanceling" 
+                  class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline" 
+                  fill="none" 
+                  viewBox="0 0 24 24"
+                >
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                </svg>
+                {{ isCanceling ? 'Stornierung läuft...' : 'Buchung stornieren' }}
+              </button>
+
               <NuxtLink
                 to="/courses"
                 class="w-full bg-gray-100 text-gray-400 py-3 px-4 rounded-lg font-medium hover:bg-gray-200 transition-colors text-center block"
@@ -283,6 +302,7 @@ const { isAuthenticated } = useAuth()
 // State
 const showBookingModal = ref(false)
 const isBooking = ref(false)
+const isCanceling = ref(false)
 
 // Get course data
 const course = computed(() => coursesStore.currentCourse)
@@ -312,6 +332,18 @@ const isAvailable = computed(() => {
 const isAlreadyBooked = computed(() => {
   console.log('Checking if already booked for courseId:', course.value?.bookable)
   return course.value ? !course.value.bookable : true
+})
+
+const userBookingForCourse = computed(() => {
+  return bookingsStore.bookings.find(booking => 
+    booking.courseId === courseId && 
+    booking.userId === useAuthStore().user?.id
+  )
+})
+
+const canCancelBooking = computed(() => {
+  if (!userBookingForCourse.value) return false
+  return bookingsStore.canCancelBooking(userBookingForCourse.value).canCancel
 })
 
 const canBook = computed(() => {
@@ -438,7 +470,7 @@ const handleBooking = async () => {
   if (!canBook.value) return
   
   if (!isAuthenticated.value) {
-    await navigateTo(`/auth/login?redirect=${encodeURIComponent($route.fullPath)}`)
+    await navigateTo(`/auth/login?redirect=${encodeURIComponent(route.fullPath)}`)
     return
   }
   
@@ -453,6 +485,30 @@ const handleBookingSuccess = () => {
   closeBookingModal()
   // Refresh course data
   loadCourse()
+}
+
+const handleCancelBooking = async () => {
+  console.log('Attempting to cancel booking for courseId:', userBookingForCourse.value)
+  if (!userBookingForCourse.value) return
+  
+  isCanceling.value = true
+  
+  try {
+    console.log('Attempting to cancel booking with ID:', userBookingForCourse.value.id)
+    const result = await bookingsStore.cancelBooking(userBookingForCourse.value.id)
+    
+    if (result.success) {
+      // Refresh bookings and course data
+      await loadCourse()
+    } else {
+      console.error('Cancel booking failed:', result.error)
+      // You might want to show an error toast here
+    }
+  } catch (error) {
+    console.error('Cancel booking error:', error)
+  } finally {
+    isCanceling.value = false
+  }
 }
 
 // Meta and SEO

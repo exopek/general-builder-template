@@ -109,7 +109,7 @@
                     {{ course.title }}
                   </div>
                   <div class="text-xs text-indigo-700 mb-1">
-                    {{ course.startTime }} - {{ course.endTime }}
+                    {{ formatTime(course.startTime) }} - {{ formatTime(course.endTime) }}
                   </div>
                   <div class="text-xs text-indigo-600">
                     {{ course.instructor }}
@@ -254,6 +254,14 @@ const formatDate = (dateStr: string) => {
   return date.toLocaleDateString('de-DE', {
     day: '2-digit',
     month: '2-digit'
+  })
+}
+
+const formatTime = (timeStr: string) => {
+  const date = new Date(timeStr)
+  return date.toLocaleTimeString('de-DE', {
+    hour: '2-digit',
+    minute: '2-digit'
   })
 }
 

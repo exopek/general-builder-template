@@ -38,7 +38,7 @@ class BookingMapperImpl extends BaseMapper<BookingReadDto, Booking> {
       id: dto.course.id,
       title: dto.course.title,
       description: dto.course.description,
-      instructor: 'Trainer', // Default
+      instructor: dto.courseSetting.trainerName, // Default
       date: this.parseDate(dto.courseSetting.scheduledAt),
       startTime: dto.courseSetting.scheduledAt,
       endTime: this.calculateEndTime(scheduledDate, 60), // Default 60min
