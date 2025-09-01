@@ -14,8 +14,7 @@
       <!-- Builder.io Footer -->
      
       
-      <!-- Fallback Footer wenn Builder.io Content nicht verfügbar -->
-      <Footer/>
+      
       
       <!-- Global Toast Container -->
       <ToastContainer />
