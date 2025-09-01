@@ -1,10 +1,10 @@
 <template>
-  <header class="sticky top-0 z-50 bg-white/70 backdrop-blur-lg border-b border-gray-100">
+  <header class="sticky top-0 z-50 bg-white/10 backdrop-blur-lg border-b border-gray-100">
     <!-- Desktop Header -->
     <div class="desktop-header flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">
       <!-- Logo -->
       <NuxtLink to="/" class="flex items-center">
-        <img src="https://cdn.builder.io/api/v1/image/assets%2F2221ab9020b44cdd9cbb4a4793414e46%2F698b3f14d8e54640a0e15fce4eb0c6a3" alt="Gym Logo" class="h-8 w-auto">
+        <img src="https://cdn.builder.io/api/v1/image/assets%2F2221ab9020b44cdd9cbb4a4793414e46%2F698b3f14d8e54640a0e15fce4eb0c6a3" alt="Gym Logo" class="h-18 w-auto">
       </NuxtLink>
 
       <!-- Navigation -->
