@@ -62,20 +62,40 @@
                 <div
                   v-for="course in day.courses"
                   :key="course.id"
-                  @click="handleCourseClick(course)"
-                  class="bg-gradient-to-r from-orange-50 to-red-50 border border-orange-200 rounded-lg p-3 cursor-pointer transition-all duration-200 hover:shadow-md hover:from-orange-100 hover:to-red-100 hover:border-orange-300 transform hover:scale-[1.02]"
+                  @click="!isCourseInPast(course) ? handleCourseClick(course) : null"
+                  :class="[
+                    'rounded-lg p-3 transition-all duration-200',
+                    isCourseInPast(course) 
+                      ? 'bg-gray-100 border border-gray-200 opacity-60 cursor-not-allowed'
+                      : 'bg-gradient-to-r from-orange-50 to-red-50 border border-orange-200 cursor-pointer hover:shadow-md hover:from-orange-100 hover:to-red-100 hover:border-orange-300 transform hover:scale-[1.02]'
+                  ]"
                 >
-                  <div class="text-sm font-semibold text-gray-900 mb-1 line-clamp-2">
+                  <div :class="[
+                    'text-sm font-semibold mb-1 line-clamp-2',
+                    isCourseInPast(course) ? 'text-gray-500' : 'text-gray-900'
+                  ]">
                     {{ course.title }}
                   </div>
-                  <div class="text-xs mb-1" style="color: rgb(252, 85, 32);">
+                  <div :class="[
+                    'text-xs mb-1',
+                    isCourseInPast(course) ? 'text-gray-400' : ''
+                  ]" :style="isCourseInPast(course) ? '' : 'color: rgb(252, 85, 32);'">
                     {{ formatTime(course.startTime) }} - {{ formatTime(course.endTime) }}
                   </div>
-                  <div class="text-xs text-gray-600 mb-1">
+                  <div :class="[
+                    'text-xs mb-1',
+                    isCourseInPast(course) ? 'text-gray-400' : 'text-gray-600'
+                  ]">
                     {{ course.instructor }}
                   </div>
-                  <div class="text-xs text-gray-500">
+                  <div :class="[
+                    'text-xs',
+                    isCourseInPast(course) ? 'text-gray-400' : 'text-gray-500'
+                  ]">
                     {{ course.location }}
+                  </div>
+                  <div v-if="isCourseInPast(course)" class="text-xs text-gray-400 font-medium mt-2">
+                    Kurs beendet
                   </div>
                   <!-- <div class="mt-2 flex items-center justify-between">
                     <span class="text-xs font-medium text-green-600">
@@ -201,8 +221,43 @@ const formatTime = (timeStr: string) => {
   return timeStr
 }
 
+const isCourseInPast = (course: Course) => {
+  const now = new Date()
+  const courseDate = new Date(course.date)
+  
+  // If the course date is before today, it's in the past
+  if (courseDate.toDateString() !== now.toDateString()) {
+    return courseDate < now
+  }
+  
+  // If it's today, check if the course end time has passed
+  const courseEndTime = course.endTime
+  if (courseEndTime) {
+    // Parse end time
+    let endDateTime: Date
+    
+    if (courseEndTime.includes('T')) {
+      // ISO datetime string
+      endDateTime = new Date(courseEndTime)
+    } else if (courseEndTime.includes(':')) {
+      // Simple time string like "10:30"
+      endDateTime = new Date(courseDate)
+      const [hours, minutes] = courseEndTime.split(':').map(Number)
+      endDateTime.setHours(hours, minutes)
+    } else {
+      return false
+    }
+    
+    return endDateTime < now
+  }
+  
+  return false
+}
+
 const handleCourseClick = (course: Course) => {
-  emit('courseClick', course)
+  if (!isCourseInPast(course)) {
+    emit('courseClick', course)
+  }
 }
 </script>
 
