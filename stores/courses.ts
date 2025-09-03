@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { API_ENDPOINTS, ERROR_MESSAGES } from '~/utils/constants'
+import { API_BASE_URL, API_ENDPOINTS, ERROR_MESSAGES } from '~/utils/constants'
 import { 
   CourseMapperUtils, 
   type Course, 
@@ -112,6 +112,7 @@ export const useCoursesStore = defineStore('courses', {
     async fetchCourses(force = false): Promise<{ success: boolean; error?: string }> {
       // Use cache if valid and not forced
       if (!force && this.isCacheValid && this.courses.length > 0) {
+        console.log('Using cached courses')
         return { success: true }
       }
 
@@ -119,14 +120,22 @@ export const useCoursesStore = defineStore('courses', {
         this.isLoading = true
         this.error = null
 
-        const result = await $fetch<CourseReadDto[]>(`${API_BASE_URL}${API_ENDPOINTS.COURSES.LIST}`, {
+        console.log('Fetching courses with query:', this.query)
+        const url = `${API_BASE_URL}${API_ENDPOINTS.COURSES.LIST}`
+        console.log('API URL:', url)
+
+        const result = await $fetch<CourseReadDto[]>(url, {
           method: 'GET',
           query: this.query
         })
 
+        console.log('API response:', result)
+        console.log('Number of course DTOs returned:', result.length)
+
         const courses: Course[] = CourseMapperUtils.mapCourses(result)
 
-        console.log('Fetched courses:', courses)
+        console.log('Mapped courses:', courses)
+        console.log('Number of mapped courses:', courses.length)
 
         this.courses = courses
         this.cache.lastFetch = new Date()

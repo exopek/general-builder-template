@@ -157,7 +157,13 @@
       </div>
 
       <!-- Courses Grid -->
-      <div v-else class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+       <div v-else>
+        <WeeklyCoursesGrid 
+          :courses="currentWeekCourses" 
+          @course-click="handleCourseClick"
+        />
+       </div>
+      <!-- <div v-else class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         <CourseCard
           v-for="course in currentWeekCourses"
           :key="course.id"
@@ -165,7 +171,7 @@
           @book-course="handleBookCourse"
           @view-details="handleViewDetails(course.id, course.courseSettingsId)"
         />
-      </div>
+      </div> -->
     </div>
 
     <!-- BookingModal -->
@@ -207,12 +213,16 @@ const currentWeekStart = computed(() => {
   const diff = start.getDate() - day + (day === 0 ? -6 : 1) // Monday as first day
   start.setDate(diff)
   start.setDate(start.getDate() + (currentWeekIndex.value * 7))
+  // Set to beginning of day
+  start.setHours(0, 0, 0, 0)
   return start
 })
 
 const currentWeekEnd = computed(() => {
   const end = new Date(currentWeekStart.value)
   end.setDate(end.getDate() + 6)
+  // Set to end of day
+  end.setHours(23, 59, 59, 999)
   return end
 })
 
@@ -220,12 +230,22 @@ const currentWeekCourses = computed(() => {
   const startDate = currentWeekStart.value.toISOString().split('T')[0]
   const endDate = currentWeekEnd.value.toISOString().split('T')[0]
   
-  console.log(`image url of first course: ${coursesStore.courses.length > 0 ? coursesStore.courses[0].image : 'no courses'}`)
+  console.log(`Total courses in store: ${coursesStore.courses.length}`)
+  console.log(`Date range: ${startDate} to ${endDate}`)
+  
+  if (coursesStore.courses.length > 0) {
+    console.log('First course:', coursesStore.courses[0])
+    console.log('All course dates:', coursesStore.courses.map(c => ({ title: c.title, date: c.date })))
+  }
 
-  return coursesStore.courses.filter(course => {
-    return course.date >= startDate && course.date <= endDate
+  const filtered = coursesStore.courses.filter(course => {
+    const isInRange = course.date >= startDate && course.date <= endDate
+    console.log(`Course "${course.title}" on ${course.date}: ${isInRange ? 'INCLUDED' : 'EXCLUDED'}`)
+    return isInRange
   })
   
+  console.log(`Filtered courses: ${filtered.length}`)
+  return filtered
 })
 
 const currentWeekDisplayText = computed(() => {
@@ -245,11 +265,21 @@ const maxWeekIndex = computed(() => {
 
 // Methods
 const loadCourses = async () => {
-  coursesStore.setQuery({
-    startDate: currentWeekStart.value.toUTCString(),
-    endDate: currentWeekEnd.value.toUTCString()
+  console.log('loadCourses called')
+  console.log('Setting query with dates:', {
+    startDate: currentWeekStart.value.toISOString(),
+    endDate: currentWeekEnd.value.toISOString()
   })
-  await coursesStore.fetchCourses()
+  
+  coursesStore.setQuery({
+    startDate: currentWeekStart.value.toISOString(),
+    endDate: currentWeekEnd.value.toISOString()
+  })
+  
+  console.log('Calling fetchCourses...')
+  const result = await coursesStore.fetchCourses()
+  console.log('fetchCourses result:', result)
+  
   /* if (isAuthenticated.value) {
     await bookingsStore.fetchBookings()
   } */
@@ -281,6 +311,10 @@ const loadMore = async () => {
   // Simulate loading more courses
   await new Promise(resolve => setTimeout(resolve, 1000))
   isLoadingMore.value = false
+}
+
+const handleCourseClick = (course: any) => {
+  handleViewDetails(course.id, course.courseSettingsId)
 }
 
 const handleBookCourse = (courseId: string) => {
@@ -324,9 +358,16 @@ watch([currentWeekStart, currentWeekEnd], async () => {
 
 // Load courses on mount
 onMounted(async () => {
-  await loadCourses()
+  console.log('onMounted called!')
+  try {
+    await loadCourses()
+    console.log('onMounted loadCourses completed')
+  } catch (error) {
+    console.error('onMounted loadCourses error:', error)
+  }
 })
 
 // Dynamic imports for components used conditionally
 const BookingModal = defineAsyncComponent(() => import('~/components/booking/BookingModal.vue'))
+const WeeklyCoursesGrid = defineAsyncComponent(() => import('~/components/booking/WeeklyCoursesGrid.vue'))
 </script>

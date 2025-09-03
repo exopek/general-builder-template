@@ -50,7 +50,7 @@ class CourseMapperImpl extends BaseMapper<CourseWithSettingsDto, Course> {
       title: this.mapField(courseDto.title, 'Unbekannter Kurs'),
       description: this.mapField(courseDto.description, ''),
       instructor: this.mapField(settingsDto.trainerName, 'Trainer'), // Default - could be extended in DTO
-      date: scheduledDate.toISOString(), // Keep full ISO string for internal use
+      date: scheduledDate.toISOString().split('T')[0], // Extract YYYY-MM-DD for date comparison
       startTime: scheduledDate.toISOString(),
       endTime: this.calculateEndTime(scheduledDate, 60), // Default 60min duration
       duration: 55, // Default duration - could be in DTO
