@@ -57,18 +57,6 @@
 
     <!-- Weekly Grid -->
     <div v-else>
-      <!-- Week Header with Course Count -->
-      <div class="mb-6">
-        <div class="bg-gradient-to-r from-white to-gray-50/50 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-100/50 p-6">
-          <h2 class="text-xl font-semibold mb-2" style="background: linear-gradient(-90deg, rgb(252, 209, 34) 0%, rgb(252, 124, 34) 35%, rgb(252, 85, 32) 70%, rgb(251, 60, 54) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
-            Aktuelle Woche
-          </h2>
-          <p class="text-sm text-gray-600">
-            {{ courses.length }} {{ courses.length === 1 ? 'Kurs' : 'Kurse' }} verfügbar
-          </p>
-        </div>
-      </div>
-
       <!-- Weekly Course Grid -->
       <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
         <!-- Week Days Grid -->
@@ -84,9 +72,7 @@
                 <div class="text-sm font-semibold text-gray-900">
                   {{ formatDayName(day.date) }}
                 </div>
-                <div class="text-xs text-gray-500">
-                  {{ formatDate(day.date) }}
-                </div>
+                
               </div>
 
               <!-- Day Courses -->
@@ -94,41 +80,35 @@
                 <div
                   v-for="course in day.courses"
                   :key="course.id"
-                  @click="!isCourseInPast(course) ? handleCourseClick(course) : null"
                   :class="[
                     'rounded-lg p-3 transition-all duration-200',
-                    isCourseInPast(course) 
-                      ? 'bg-gray-100 border border-gray-200 opacity-60 cursor-not-allowed'
-                      : 'bg-gradient-to-r from-orange-50 to-red-50 border border-orange-200 cursor-pointer hover:shadow-md hover:from-orange-100 hover:to-red-100 hover:border-orange-300 transform hover:scale-[1.02]'
+                    'bg-gradient-to-r from-orange-50 to-red-50 border border-orange-200 cursor-pointer hover:shadow-md hover:from-orange-100 hover:to-red-100 hover:border-orange-300 transform hover:scale-[1.02]'
                   ]"
                 >
                   <div :class="[
                     'text-sm font-semibold mb-1 line-clamp-2',
-                    isCourseInPast(course) ? 'text-gray-500' : 'text-gray-900'
+                    'text-gray-900'
                   ]">
                     {{ course.title }}
                   </div>
                   <div :class="[
-                    'text-xs mb-1',
-                    isCourseInPast(course) ? 'text-gray-400' : ''
-                  ]" :style="isCourseInPast(course) ? '' : 'color: rgb(252, 85, 32);'">
+                    'text-xs mb-1'
+                  ]" :style="'color: rgb(252, 85, 32);'">
                     {{ formatTime(course.startTime) }} - {{ formatTime(course.endTime) }}
                   </div>
                   <div :class="[
                     'text-xs mb-1',
-                    isCourseInPast(course) ? 'text-gray-400' : 'text-gray-600'
+                    'text-gray-600'
                   ]">
                     {{ course.instructor }}
                   </div>
                   <div :class="[
                     'text-xs',
-                    isCourseInPast(course) ? 'text-gray-400' : 'text-gray-500'
+                    'text-gray-500'
                   ]">
                     {{ course.location }}
                   </div>
-                  <div v-if="isCourseInPast(course)" class="text-xs text-gray-400 font-medium mt-2">
-                    Kurs beendet
-                  </div>
+                  
                 </div>
               </div>
 
@@ -197,10 +177,10 @@ const today = computed(() => new Date())
 const currentWeekStart = computed(() => {
   const start = new Date(today.value)
   const day = start.getDay()
-  // Convert Sunday (0) to 7 for easier Monday-first calculation
-  const mondayBasedDay = day === 0 ? 7 : day
-  const diff = start.getDate() - mondayBasedDay + 1 // Monday as first day
-  start.setDate(diff)
+  // Calculate days to subtract to get to Monday (1)
+  // Sunday is 0, Monday is 1, etc.
+  const daysToSubtract = day === 0 ? 6 : day - 1
+  start.setDate(start.getDate() - daysToSubtract)
   start.setHours(0, 0, 0, 0)
   return start
 })
@@ -278,7 +258,11 @@ const refreshCourses = async () => {
 
 const formatDayName = (dateStr: string) => {
   const date = new Date(dateStr)
-  return date.toLocaleDateString('de-DE', { weekday: 'long' })
+  const dayNames = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag']
+  const dayIndex = date.getDay()
+  // Convert Sunday (0) to index 6, and Monday (1) to index 0
+  const adjustedIndex = dayIndex === 0 ? 6 : dayIndex - 1
+  return dayNames[adjustedIndex]
 }
 
 const formatDate = (dateStr: string) => {
@@ -306,47 +290,6 @@ const formatTime = (timeStr: string) => {
   }
   
   return timeStr
-}
-
-const isCourseInPast = (course: Course) => {
-  const now = new Date()
-  const courseDate = new Date(course.date)
-  
-  // If the course date is before today, it's in the past
-  if (courseDate.toDateString() !== now.toDateString()) {
-    return courseDate < now
-  }
-  
-  // If it's today, check if the course end time has passed
-  const courseEndTime = course.endTime
-  if (courseEndTime) {
-    // Parse end time
-    let endDateTime: Date
-    
-    if (courseEndTime.includes('T')) {
-      // ISO datetime string
-      endDateTime = new Date(courseEndTime)
-    } else if (courseEndTime.includes(':')) {
-      // Simple time string like "10:30"
-      endDateTime = new Date(courseDate)
-      const [hours, minutes] = courseEndTime.split(':').map(Number)
-      endDateTime.setHours(hours, minutes)
-    } else {
-      return false
-    }
-    
-    return endDateTime < now
-  }
-  
-  return false
-}
-
-const handleCourseClick = (course: Course) => {
-  if (!isCourseInPast(course)) {
-    // You can emit an event or navigate to course details
-    console.log('Course clicked:', course)
-    // Could emit: emit('courseClick', course)
-  }
 }
 
 // Load courses on mount
