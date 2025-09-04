@@ -1,5 +1,6 @@
 import { register } from '@builder.io/sdk-vue';
 import GymOfferCard from '~/components/GymOfferCard.vue';
+import CurrentWeekCoursesGrid from '~/components/CurrentWeekCoursesGrid.vue';
 
 type ComponentInput = {
     name: string;
@@ -24,6 +25,15 @@ export const registeredComponents: RegisteredComponent[] = [
             { name: 'featured', type: 'boolean', defaultValue: false },
             { name: 'ctaText', type: 'string', defaultValue: 'Jetzt anmelden' },
             { name: 'disclaimer', type: 'string', defaultValue: '' }
+        ]
+    },
+    {
+        component: CurrentWeekCoursesGrid,
+        name: 'CurrentWeekCoursesGrid',
+        inputs: [
+            { name: 'showHeader', type: 'boolean', defaultValue: true },
+            { name: 'headerTitle', type: 'string', defaultValue: 'Aktuelle Woche' },
+            { name: 'headerSubtitle', type: 'string', defaultValue: '' }
         ]
     }
 ];

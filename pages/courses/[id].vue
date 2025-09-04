@@ -409,9 +409,9 @@ const bookingButtonClass = computed(() => {
     return 'bg-gray-400 text-white cursor-not-allowed'
   }
   if (!canBook.value) {
-    return 'bg-gray-300 text-gray-500 cursor-not-allowed'
+    return 'bg-gray-300 text-gray-500 cursor-not-allowed';
   }
-  return 'text-white transition-colors'
+  return 'text-white transition-colors';
 })
 
 const bookingButtonText = computed(() => {
