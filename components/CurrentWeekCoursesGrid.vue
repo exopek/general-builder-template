@@ -181,7 +181,7 @@ const currentWeekStart = computed(() => {
   // Sunday is 0, Monday is 1, etc.
   const daysToSubtract = day === 0 ? 6 : day - 1
   start.setDate(start.getDate() - daysToSubtract)
-  start.setHours(0, 0, 0, 0)
+  start.setHours(3, 0, 0, 0)
   return start
 })
 
