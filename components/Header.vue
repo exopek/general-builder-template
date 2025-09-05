@@ -9,12 +9,12 @@
 
       <!-- Navigation -->
       <nav class="flex items-center space-x-8">
-        <NuxtLink to="/kurse" class="nav-link">
+        <a href="/kurse" class="nav-link">
           Kurse
-        </NuxtLink>
-        <NuxtLink to="/preise" class="nav-link">
+        </a>
+        <a href="/preise" class="nav-link">
           Preise
-        </NuxtLink>
+        </a>
         <div class="relative" @mouseenter="handleShowAngebotMenu" @mouseleave="handleHideAngebotMenu">
           <button class="nav-link flex items-center">
             Angebot
@@ -26,30 +26,30 @@
           <!-- Mega Menu -->
           <div v-if="showAngebotMenu" 
             class="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg py-2 z-50" @mouseenter="handleShowAngebotMenu" @mouseleave="handleHideAngebotMenu">
-            <NuxtLink to="/mitgliedschaften" 
+            <a href="/mitgliedschaften" 
               class="block py-2 px-4 text-gray-700 nav-link">
               Mitgliedschaften
-            </NuxtLink>
-            <NuxtLink to="/fragebogen" 
+            </a>
+            <a href="/fragebogen" 
               class="block py-2 px-4 text-gray-700 nav-link">
               Fragebogen
-            </NuxtLink>
+            </a>
           </div>
         </div>
-        <NuxtLink to="/kontakt" class="nav-link">
+        <a href="/kontakt" class="nav-link">
           Kontakt
-        </NuxtLink>
-        <NuxtLink to="/faq" class="nav-link">
+        </a>
+        <a href="/faq" class="nav-link">
           FAQ
-        </NuxtLink>
+        </a>
       </nav>
 
       <!-- CTA Button -->
-      <NuxtLink to="/probiertraining" 
+      <a href="/probiertraining" 
         class="text-white px-6 py-2 rounded-lg font-medium transition-colors"
         style="background: linear-gradient(-90deg, rgb(252, 209, 34) 0%, rgb(252, 124, 34) 35%, rgb(252, 85, 32) 70%, rgb(251, 60, 54) 100%)">
         Probetraining
-      </NuxtLink>
+      </a>
     </div>
 
     <!-- Mobile Header -->
@@ -102,34 +102,34 @@
             
             <!-- Sidebar Navigation -->
             <nav class="flex flex-col px-4 pt-0 pb-6 space-y-4 bg-white/70">
-              <NuxtLink @click="toggleMobileMenu" to="/kurse" 
+              <a @click="toggleMobileMenu" href="/kurse" 
                 class="block py-3 px-4 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-lg font-medium transition-colors">
                 Kurse
-              </NuxtLink>
-              <NuxtLink @click="toggleMobileMenu" to="/preise" 
+              </a>
+              <a @click="toggleMobileMenu" href="/preise" 
                 class="block py-3 px-4 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-lg font-medium transition-colors">
                 Preise
-              </NuxtLink>
-              <NuxtLink @click="toggleMobileMenu" to="/angebot" 
+              </a>
+              <a @click="toggleMobileMenu" href="/angebot" 
                 class="block py-3 px-4 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-lg font-medium transition-colors">
                 Angebot
-              </NuxtLink>
-              <NuxtLink @click="toggleMobileMenu" to="/kontakt" 
+              </a>
+              <a @click="toggleMobileMenu" href="/kontakt" 
                 class="block py-3 px-4 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-lg font-medium transition-colors">
                 Kontakt
-              </NuxtLink>
-              <NuxtLink @click="toggleMobileMenu" to="/faq" 
+              </a>
+              <a @click="toggleMobileMenu" href="/faq" 
                 class="block py-3 px-4 text-gray-700 hover:text-gray-900 hover:bg-gray-50 rounded-lg font-medium transition-colors">
                 FAQ
-              </NuxtLink>
+              </a>
               
               <!-- Mobile CTA Button -->
               <div class="pt-4 border-t border-gray-200">
-                <NuxtLink @click="toggleMobileMenu" to="/probiertraining" 
+                <a @click="toggleMobileMenu" href="/probiertraining" 
                   class="block w-full text-white text-center py-3 px-4 rounded-lg font-medium transition-colors"
                   style="background: linear-gradient(-90deg, rgb(252, 209, 34) 0%, rgb(252, 124, 34) 35%, rgb(252, 85, 32) 70%, rgb(251, 60, 54) 100%)">
                   Probetraining
-                </NuxtLink>
+                </a>
               </div>
             </nav>
           </div>

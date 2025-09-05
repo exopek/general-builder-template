@@ -258,14 +258,12 @@ const loadCourse = async () => {
 }
 
 const handleBooking = async () => {
-  console.log('Handle booking called')
   if (!canBook.value) return
   
   isBooking.value = true
   error.value = null
   
   try {
-    console.log('Booking course:', props.courseSettingsId)
 
     if (authStore.$state.user?.id === undefined) {
       throw new Error('Benutzer nicht authentifiziert')
@@ -301,13 +299,6 @@ const formatDate = (dateString: string) => {
     month: '2-digit',
     year: 'numeric'
   })
-}
-
-const formatPrice = (price: number) => {
-  return new Intl.NumberFormat('de-DE', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-  }).format(price)
 }
 
 // Handle Escape key
