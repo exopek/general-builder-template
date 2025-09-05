@@ -1,8 +1,8 @@
 // 'https://exopekdemo-araxgmg9gqf6eyds.germanywestcentral-01.azurewebsites.net/api'
 
 export const API_BASE_URL = process.env.NODE_ENV === 'production' 
-  ? 'https://api.exopek.de/api' 
-  : 'https://api.exopek.de/api'
+  ? 'http://localhost:5000/api' 
+  : 'http://localhost:5000/api'
 
 export const API_ENDPOINTS = {
   AUTH: {
@@ -29,8 +29,9 @@ export const API_ENDPOINTS = {
 } as const
 
 export const USER_ROLES = {
-  USER: 'user',
-  ADMIN: 'admin'
+  USER: 'User',
+  ADMIN: 'Admin',
+  TRAINER: 'Trainer'
 } as const
 
 export const STORAGE_KEYS = {

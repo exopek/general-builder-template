@@ -52,7 +52,7 @@ export function useAuth() {
     if (redirectTo) {
       // Redirect to intended page
       await navigateTo(redirectTo)
-    } else if (user.role === USER_ROLES.ADMIN) {
+    } else if (user.roles.includes(USER_ROLES.ADMIN) || user.roles.includes(USER_ROLES.TRAINER)) {
       // Admin goes to admin dashboard
       await navigateTo('/admin')
     } else {
@@ -62,7 +62,7 @@ export function useAuth() {
   }
 
   // Permission checking
-  const hasRole = (role: 'user' | 'admin'): boolean => {
+  const hasRole = (role: string): boolean => {
     return authStore.checkPermission(role)
   }
 
@@ -76,14 +76,14 @@ export function useAuth() {
     return true
   }
 
-  const requireRole = (role: 'user' | 'admin', redirectTo?: string) => {
+  const requireRole = (role: string, redirectTo?: string) => {
     if (!requireAuth(redirectTo)) {
       return false
     }
 
     if (!hasRole(role)) {
       // Redirect to appropriate dashboard based on current role
-      if (authStore.user?.role === USER_ROLES.ADMIN) {
+      if (authStore.user?.roles.includes(USER_ROLES.ADMIN) || authStore.user?.roles.includes(USER_ROLES.TRAINER)) {
         navigateTo('/admin')
       } else {
         navigateTo('/user')
@@ -95,11 +95,11 @@ export function useAuth() {
   }
 
   const requireAdmin = (redirectTo?: string) => {
-    return requireRole('admin', redirectTo)
+    return requireRole(USER_ROLES.ADMIN, redirectTo)
   }
 
   const requireUser = (redirectTo?: string) => {
-    return requireRole('user', redirectTo)
+    return requireRole(USER_ROLES.USER, redirectTo)
   }
 
   // Initialize auth state on app startup
@@ -113,27 +113,27 @@ export function useAuth() {
   }
 
   // Route protection utilities
-  const canAccess = (requiredRole?: 'user' | 'admin'): boolean => {
+  const canAccess = (requiredRole?: string): boolean => {
     if (!isAuthenticated.value) return false
     if (!requiredRole) return true
     return hasRole(requiredRole)
   }
 
-  const shouldRedirect = (requiredRole?: 'user' | 'admin'): string | null => {
+  const shouldRedirect = (requiredRole?: string): string | null => {
     if (!isAuthenticated.value) {
       return '/auth/login'
     }
     
     if (requiredRole && !hasRole(requiredRole)) {
       // Redirect to appropriate dashboard
-      return authStore.user?.role === USER_ROLES.ADMIN ? '/admin' : '/user'
+      return authStore.user?.roles.includes(USER_ROLES.ADMIN) || authStore.user?.roles.includes(USER_ROLES.TRAINER) ? '/admin' : '/user'
     }
     
     return null
   }
 
   // Navigation guards
-  const protectRoute = (requiredRole?: 'user' | 'admin') => {
+  const protectRoute = (requiredRole?: string) => {
     const redirect = shouldRedirect(requiredRole)
     if (redirect) {
       const currentRoute = router.currentRoute.value.fullPath

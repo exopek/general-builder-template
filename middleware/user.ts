@@ -6,8 +6,9 @@ export default defineNuxtRouteMiddleware((to, from) => {
     return navigateTo(`/auth/login?redirect=${encodeURIComponent(to.fullPath)}`)
   }
   
+  console.log('User roles:', user.value?.roles)
   // Check if user has the required role (user or admin)
-  const hasValidRole = user.value && (user.value.role === 'user' || user.value.role === 'admin')
+  const hasValidRole = user.value && (user.value.roles.includes(USER_ROLES.USER) || user.value.roles.includes(USER_ROLES.ADMIN) || user.value.roles.includes(USER_ROLES.TRAINER))
   
   if (!hasValidRole) {
     throw createError({

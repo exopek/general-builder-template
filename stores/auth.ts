@@ -27,8 +27,9 @@ export const useAuthStore = defineStore('auth', {
   }),
 
   getters: {
-    isAdmin: (state) => state.user?.role === USER_ROLES.ADMIN,
-    isUser: (state) => state.user?.role === USER_ROLES.USER,
+    isAdmin: (state) => state.user?.roles.includes(USER_ROLES.ADMIN) === true,
+    isUser: (state) => state.user?.roles.includes(USER_ROLES.USER) === true,
+    isTrainer: (state) => state.user?.roles.includes(USER_ROLES.TRAINER) === true,
     fullName: (state) => state.user ? `${state.user.firstName} ${state.user.lastName}` : '',
     hasActiveMembership: (state) => state.user?.isActive === true
   },
@@ -213,15 +214,19 @@ export const useAuthStore = defineStore('auth', {
       }
     },
 
-    checkPermission(requiredRole: 'user' | 'admin'): boolean {
+    checkPermission(requiredRole: string): boolean {
       if (!this.isAuthenticated || !this.user) return false
       
-      if (requiredRole === 'admin') {
-        return this.user.role === 'admin'
+      if (requiredRole === USER_ROLES.ADMIN) {
+        return true
+      }
+
+      if (requiredRole === USER_ROLES.TRAINER) {
+        return this.user.roles.includes(USER_ROLES.TRAINER) || this.user.roles.includes(USER_ROLES.ADMIN)
       }
       
       // For 'user' role, both 'user' and 'admin' are allowed
-      return this.user.role === 'user' || this.user.role === 'admin'
+      return this.user.roles.includes(USER_ROLES.ADMIN) || this.user.roles.includes(USER_ROLES.USER) || this.user.roles.includes(USER_ROLES.TRAINER)
     },
 
     async changePassword(currentPassword: string, newPassword: string): Promise<{ success: boolean; error?: string }> {

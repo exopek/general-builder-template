@@ -6,7 +6,7 @@ export interface User {
   email: string
   firstName: string
   lastName: string
-  role: 'user' | 'admin'
+  roles: string[] 
   isActive: boolean
 }
 
@@ -21,7 +21,7 @@ export interface UserReadDto {
   userName: string
   phoneNumber?: string
   password: string
-  role: 'user' | 'admin'
+  roles: string[]
 }
 
 export interface AuthResponse {

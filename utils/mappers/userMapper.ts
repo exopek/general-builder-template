@@ -17,7 +17,7 @@ class UserMapperImpl extends BaseMapper<UserReadDto, User> {
       email: this.mapField(dto.email, ''),
       firstName: this.mapField(dto.firstName, ''),
       lastName: this.mapField(dto.lastName, ''),
-      role: this.mapField(dto.role, 'user'),
+      roles: this.mapField(dto.roles, []),
       isActive: true // Assume active if returned from API
     }
   }
@@ -103,7 +103,7 @@ export const UserMapperUtils = {
    * Check if user has admin role
    */
   isAdmin: (user: User): boolean => {
-    return user.role === 'admin'
+    return user.roles.includes('admin')
   },
 
   /**

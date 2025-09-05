@@ -265,6 +265,8 @@ const handleBooking = async () => {
   
   try {
 
+    console.log('Attempting to book course with ID:', props.courseId, 'and settings ID:', props.courseSettingsId)
+    console.log('Current user ID:', authStore.$state.user?.id)
     if (authStore.$state.user?.id === undefined) {
       throw new Error('Benutzer nicht authentifiziert')
     }

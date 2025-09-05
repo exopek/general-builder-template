@@ -236,6 +236,7 @@ export const useBookingsStore = defineStore('bookings', {
         this.isLoading = true
         this.error = null
 
+        console.log('Creating booking with data:', bookingData)
         const result = await $fetch(`${API_BASE_URL}${API_ENDPOINTS.BOOKINGS.CREATE}`, {
           method: 'POST',
           body: bookingData
