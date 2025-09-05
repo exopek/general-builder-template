@@ -23,7 +23,7 @@
       </p>
       <NuxtLink
         to="/courses"
-        class="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition-colors"
+        class="bg-orange-600 text-white py-2 px-4 rounded-md hover:bg-orange-700 transition-colors"
       >
         Kurse entdecken
       </NuxtLink>
@@ -129,19 +129,19 @@
                 <div
                   v-for="course in day.courses"
                   :key="course.id"
-                  class="bg-indigo-50 border border-indigo-200 rounded-md p-3 transition-colors"
+                  class="bg-gradient-to-r from-orange-50 to-red-50 border border-orange-200 rounded-md p-3 transition-colors"
                   
                 >
-                  <div class="text-sm font-medium text-indigo-900 mb-1">
+                  <div class="text-sm font-semibold text-gray-900 mb-1 line-clamp-2">
                     {{ course.title }}
                   </div>
-                  <div class="text-xs text-indigo-700 mb-1">
+                  <div class="text-xs text-orange-700 mb-1">
                     {{ formatTime(course.startTime) }} - {{ formatTime(course.endTime) }}
                   </div>
-                  <div class="text-xs text-indigo-600">
+                  <div class="text-xs mb-1 text-gray-600">
                     {{ course.instructor }}
                   </div>
-                  <div class="text-xs text-indigo-600">
+                  <div class="text-xs text-gray-500">
                     {{ course.location }}
                   </div>
                 </div>

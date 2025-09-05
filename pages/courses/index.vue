@@ -70,7 +70,7 @@
           <!-- Course Count -->
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
-              <div class="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
+              <div class="w-2 h-2 bg-gradient-to-r from-orange-500 to-orange-500 rounded-full"></div>
               <span class="text-gray-700 font-medium">
                 {{ currentWeekCourses.length }} {{ currentWeekCourses.length === 1 ? 'Kurs' : 'Kurse' }} verfügbar
               </span>

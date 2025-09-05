@@ -25,17 +25,7 @@
 
     <!-- Weekly Grid -->
     <div v-else>
-      <!-- Week Header with Course Count -->
-      <div class="mb-6">
-        <div class="bg-gradient-to-r from-white to-gray-50/50 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-100/50 p-6">
-          <h2 class="text-xl font-semibold mb-2" style="background: linear-gradient(-90deg, rgb(252, 209, 34) 0%, rgb(252, 124, 34) 35%, rgb(252, 85, 32) 70%, rgb(251, 60, 54) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
-            Wochenübersicht
-          </h2>
-          <p class="text-sm text-gray-600">
-            {{ courses.length }} {{ courses.length === 1 ? 'Kurs' : 'Kurse' }} verfügbar
-          </p>
-        </div>
-      </div>
+     
 
       <!-- Weekly Course Grid -->
       <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">

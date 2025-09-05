@@ -13,7 +13,7 @@
             </div>
             <NuxtLink
               to="/courses"
-              class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors"
+              class="bg-orange-600 text-white px-4 py-2 rounded-md hover:bg-orange-700 transition-colors"
             >
               Neue Kurse entdecken
             </NuxtLink>
@@ -29,7 +29,7 @@
     <div class="mb-6">
         <NuxtLink
           to="/user"
-          class="inline-flex items-center text-indigo-600 hover:text-indigo-500"
+          class="inline-flex items-center text-orange-600 hover:text-orange-500"
         >
           <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -39,7 +39,7 @@
       </div>
       <!-- Loading State -->
       <div v-if="bookingsStore.isLoading" class="text-center py-12">
-        <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mb-4"></div>
+        <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600 mb-4"></div>
         <p class="text-gray-600">Kurse werden geladen...</p>
       </div>
 
@@ -66,7 +66,7 @@
               :class="[
                 'py-2 px-1 border-b-2 font-medium text-sm',
                 activeTab === 'upcoming'
-                  ? 'border-indigo-500 text-indigo-600'
+                  ? 'border-orange-500 text-orange-600'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
               ]"
             >
