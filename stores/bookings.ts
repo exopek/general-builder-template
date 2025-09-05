@@ -88,7 +88,7 @@ export const useBookingsStore = defineStore('bookings', {
           return { success: false, error: ERROR_MESSAGES.UNAUTHORIZED }
         }
 
-        const result = await $fetch<BookingReadDto[]>(`${API_ENDPOINTS.BOOKINGS.LIST}`, {
+        const result = await $fetch<BookingReadDto[]>(`${API_BASE_URL}${API_ENDPOINTS.BOOKINGS.LIST}`, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${authStore.token}`

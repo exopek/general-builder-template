@@ -22,6 +22,7 @@ export interface UserReadDto {
   phoneNumber?: string
   password: string
   roles: string[]
+  isActive?: boolean
 }
 
 export interface AuthResponse {

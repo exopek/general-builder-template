@@ -120,22 +120,14 @@ export const useCoursesStore = defineStore('courses', {
         this.isLoading = true
         this.error = null
 
-        console.log('Fetching courses with query:', this.query)
         const url = `${API_BASE_URL}${API_ENDPOINTS.COURSES.LIST}`
-        console.log('API URL:', url)
 
         const result = await $fetch<CourseReadDto[]>(url, {
           method: 'GET',
           query: this.query
         })
 
-        console.log('API response:', result)
-        console.log('Number of course DTOs returned:', result.length)
-
         const courses: Course[] = CourseMapperUtils.mapCourses(result)
-
-        console.log('Mapped courses:', courses)
-        console.log('Number of mapped courses:', courses.length)
 
         this.courses = courses
         this.cache.lastFetch = new Date()
@@ -160,7 +152,7 @@ export const useCoursesStore = defineStore('courses', {
 
         const result = await $fetch<CourseReadDto>(`${API_BASE_URL}${API_ENDPOINTS.COURSES.DETAIL(id)}`, {
           method: 'GET',
-          query: { courseSettingsId: courseSettingsId, userId: '5b768b67-ebca-44fe-a877-623bcf4815b0' }
+          query: { courseSettingsId: courseSettingsId }
         })
         
         if (!result || result.id !== id) {

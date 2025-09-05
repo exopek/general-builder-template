@@ -48,14 +48,17 @@ export function useAuth() {
   // Role-based redirects
   const redirectAfterLogin = async (user: User) => {
     const redirectTo = router.currentRoute.value.query.redirect as string
-    
+    console.log('user roles on login:', user.roles)
     if (redirectTo) {
+      console.log('Navigating to redirect URL:', redirectTo)
       // Redirect to intended page
       await navigateTo(redirectTo)
     } else if (user.roles.includes(USER_ROLES.ADMIN) || user.roles.includes(USER_ROLES.TRAINER)) {
+      console.log('User is admin or trainer, redirecting to /admin')
       // Admin goes to admin dashboard
       await navigateTo('/admin')
     } else {
+      console.log('User is regular user, redirecting to /user')
       // Regular user goes to user dashboard
       await navigateTo('/user')
     }

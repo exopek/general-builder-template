@@ -12,13 +12,14 @@ class UserMapperImpl extends BaseMapper<UserReadDto, User> {
    * Maps UserReadDto to User domain model
    */
   toModel(dto: UserReadDto): User {
+    console.log('Mapping UserReadDto to User model:', dto)
     return {
       id: dto.id,
       email: this.mapField(dto.email, ''),
       firstName: this.mapField(dto.firstName, ''),
       lastName: this.mapField(dto.lastName, ''),
       roles: this.mapField(dto.roles, []),
-      isActive: true // Assume active if returned from API
+      isActive: this.mapField(dto.isActive, true) // Use from DTO or default to true
     }
   }
 

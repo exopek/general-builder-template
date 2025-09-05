@@ -1,14 +1,33 @@
-export default defineNuxtRouteMiddleware((to, from) => {
-  const { isAuthenticated, user } = useAuth()
+export default defineNuxtRouteMiddleware(async (to) => {
+  const authStore = useAuthStore()
   
-  // Protect user routes - requires authentication with user or admin role
-  if (!isAuthenticated.value) {
+  // Initialize auth state if not already done
+  if (process.client) {
+    authStore.initializeAuth()
+  }
+  
+  // Check authentication
+  if (!authStore.isAuthenticated) {
     return navigateTo(`/auth/login?redirect=${encodeURIComponent(to.fullPath)}`)
   }
   
-  console.log('User roles:', user.value?.roles)
+  // If user data is not loaded but we have a token, fetch user data
+  if (authStore.isAuthenticated && !authStore.user && authStore.token) {
+    await authStore.fetchCurrentUser()
+  }
+  
+  // Final check - if still no user data, redirect to login
+  if (!authStore.user) {
+    authStore.clearAuthState()
+    return navigateTo(`/auth/login?redirect=${encodeURIComponent(to.fullPath)}`)
+  }
+  
   // Check if user has the required role (user or admin)
-  const hasValidRole = user.value && (user.value.roles.includes(USER_ROLES.USER) || user.value.roles.includes(USER_ROLES.ADMIN) || user.value.roles.includes(USER_ROLES.TRAINER))
+  const hasValidRole = authStore.user && (
+    authStore.user.roles.includes(USER_ROLES.USER) || 
+    authStore.user.roles.includes(USER_ROLES.ADMIN) || 
+    authStore.user.roles.includes(USER_ROLES.TRAINER)
+  )
   
   if (!hasValidRole) {
     throw createError({

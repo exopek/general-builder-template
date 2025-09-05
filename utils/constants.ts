@@ -22,7 +22,7 @@ export const API_ENDPOINTS = {
   },
   BOOKINGS: {
     ME: '/v1/bookings/me',
-    LIST: '/bookings',
+    LIST: '/v1/bookings',
     CREATE: '/v1/bookings',
     DELETE: (id: string) => `/v1/bookings/${id}`
   }

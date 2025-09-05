@@ -72,6 +72,8 @@ export const useAuthStore = defineStore('auth', {
         // Map user to store user format using mapper
         const user = UserMapperUtils.mapUser(userResult)
 
+        console.log('Mapped user data:', user)
+
         this.token = tokenResult.token
         this.user = user
         this.isAuthenticated = true
@@ -152,11 +154,14 @@ export const useAuthStore = defineStore('auth', {
       if (!this.token) return
 
       try {
-        const user = await $fetch<User>(API_ENDPOINTS.AUTH.ME, {
+        const userResult = await $fetch<UserReadDto>(`${API_BASE_URL}${API_ENDPOINTS.AUTH.ME}`, {
           headers: {
             Authorization: `Bearer ${this.token}`
           }
         })
+
+        // Map user to store user format using mapper
+        const user = UserMapperUtils.mapUser(userResult)
 
         this.user = user
         this.isAuthenticated = true
