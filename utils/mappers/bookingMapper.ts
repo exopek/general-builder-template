@@ -22,10 +22,20 @@ class BookingMapperImpl extends BaseMapper<BookingReadDto, Booking> {
       status: dto.status,
       notes: '', // Could be extended in DTO
       createdAt: dto.createdAt,
-      updatedAt: dto.createdAt, // Use createdAt as default
+      updatedAt: dto.createdAt, // Usre createdAt as default
       course: this.mapCourse(dto),
       user: user
     }
+  }
+
+  toModelWithUserFromDto(dto: BookingReadDto): Booking {
+    const user: BookingUser = {
+      id: dto.user.id,
+      firstName: dto.user.firstName,
+      lastName: dto.user.lastName,
+      email: dto.user.email
+    }
+    return this.toModel(dto, user)
   }
 
   /**
@@ -83,6 +93,10 @@ class BookingMapperImpl extends BaseMapper<BookingReadDto, Booking> {
   toModelArray(dtos: BookingReadDto[], user?: BookingUser): Booking[] {
     return dtos.map(dto => this.toModel(dto, user))
   }
+
+  toModelArrayWithUsersFromDto(dtos: BookingReadDto[]): Booking[] {
+    return dtos.map(dto => this.toModelWithUserFromDto(dto))
+  }
 }
 
 /**
@@ -106,6 +120,10 @@ export const BookingMapperUtils = {
    */
   mapBookings: (dtos: BookingReadDto[], user?: BookingUser): Booking[] => {
     return bookingMapper.toModelArray(dtos, user)
+  },
+
+  mapBookingsWithUsersFromDto: (dtos: BookingReadDto[]): Booking[] => {
+    return bookingMapper.toModelArrayWithUsersFromDto(dtos)
   },
 
   /**

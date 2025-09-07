@@ -78,6 +78,50 @@ export const useBookingsStore = defineStore('bookings', {
   },
 
   actions: {
+    async fetchBookingsByCourseSettingId(courseSettingId: string): Promise<{ success: boolean; error?: string }> {
+      try {
+        this.isLoading = true
+        this.error = null
+
+        const authStore = useAuthStore()
+        if (!authStore.token) {
+          return { success: false, error: ERROR_MESSAGES.UNAUTHORIZED }
+        }
+
+        const result = await $fetch<BookingReadDto[]>(`${API_BASE_URL}${API_ENDPOINTS.BOOKINGS.LIST}`, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${authStore.token}`
+          },
+          query: { courseSettingId }
+        })
+
+        console.log('Fetch bookings by course setting result:', result)
+
+        if (!result) {
+          return { success: false, error: 'Fehler beim Abrufen der Buchungen' }
+        }
+
+        // Create user info for mapping - we need all users, not just the auth user
+        const bookingsWithDetails = BookingMapperUtils.mapBookingsWithUsersFromDto(result)
+
+        console.log('Mapped bookings with details:', bookingsWithDetails)
+
+        this.bookings = bookingsWithDetails
+
+        return { success: true }
+      } catch (error: any) {
+        console.error('Fetch bookings by course setting error:', error)
+        this.error = error?.message || ERROR_MESSAGES.NETWORK_ERROR
+        return { 
+          success: false, 
+          error: this.error || undefined 
+        }
+      } finally {
+        this.isLoading = false
+      }
+    },
+
     async fetchBookings(): Promise<{ success: boolean; error?: string }> {
       try {
         this.isLoading = true

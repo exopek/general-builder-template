@@ -1,4 +1,5 @@
 import type { Course } from './course'
+import type { UserReadDto } from './user'
 
 /**
  * Booking domain model (for frontend)
@@ -38,6 +39,7 @@ export interface BookingReadDto {
   createdAt: string
   courseSetting: CourseSettingsDto
   course: CourseDto
+  user: UserReadDto
 }
 
 export interface BookingCreateDto {
