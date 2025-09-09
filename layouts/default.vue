@@ -7,7 +7,7 @@
       <Header/>
       
       <!-- Page Content -->
-      <main class="-mt-24 relative z-10">
+      <main class="relative z-10">
         <slot/>
       </main>
       
