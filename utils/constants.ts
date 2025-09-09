@@ -2,7 +2,7 @@
 
 export const API_BASE_URL = process.env.NODE_ENV === 'production' 
   ? 'https://api.exopek.de/api' 
-  : 'http://api.exopek.de/api'
+  : 'https://api.exopek.de/api'
 
 export const API_ENDPOINTS = {
   AUTH: {
