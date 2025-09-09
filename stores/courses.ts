@@ -150,10 +150,24 @@ export const useCoursesStore = defineStore('courses', {
         this.isLoading = true
         this.error = null
 
+        const authStore = useAuthStore()
+        if (!authStore.token) {
+          console.error('Unauthorized: No token or not admin')
+          return { success: false, error: ERROR_MESSAGES.UNAUTHORIZED }
+        }
+
+        console.log('Fetching course with ID:', id, 'and CourseSettingsId:', courseSettingsId)
+
         const result = await $fetch<CourseReadDto>(`${API_BASE_URL}${API_ENDPOINTS.COURSES.DETAIL(id)}`, {
           method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${authStore.token}`
+          },
           query: { courseSettingsId: courseSettingsId }
         })
+
+        console.log('Fetched course detail response:', result)
         
         if (!result || result.id !== id) {
           return { success: false, error: 'Kurs nicht gefunden' }

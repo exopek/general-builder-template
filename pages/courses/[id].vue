@@ -337,8 +337,7 @@ const isAlreadyBooked = computed(() => {
 
 const userBookingForCourse = computed(() => {
   return bookingsStore.bookings.find(booking => 
-    booking.courseId === courseId && 
-    booking.userId === useAuthStore().user?.id
+    booking.user?.id === useAuthStore().user?.id
   )
 })
 
@@ -445,8 +444,8 @@ const progressBarColor = computed(() => {
 // Methods
 const loadCourse = async () => {
   await coursesStore.fetchCourse(courseId, courseSettingsId || '')
-  if (isAuthenticated.value) {
-    await bookingsStore.fetchBookings()
+  if (isAuthenticated.value && courseSettingsId) {
+    await bookingsStore.fetchBookingsByCourseSettingId(courseSettingsId)
   }
 }
 

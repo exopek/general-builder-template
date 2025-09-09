@@ -335,7 +335,7 @@ export const useBookingsStore = defineStore('bookings', {
         } */
 
           console.log('Cancelling booking with ID:', bookingId)
-        await $fetch(API_ENDPOINTS.BOOKINGS.DELETE(bookingId), {
+        await $fetch(`${API_BASE_URL}${API_ENDPOINTS.BOOKINGS.DELETE(bookingId)}`, {
           method: 'DELETE',
           headers: {
             Authorization: `Bearer ${authStore.token}`
