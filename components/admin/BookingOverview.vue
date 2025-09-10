@@ -38,7 +38,7 @@
             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             <option value="">-- Kurs wählen --</option>
-            <option v-for="course in availableCourses" :key="course.id" :value="course.id">
+            <option v-for="course in availableCourses" :key="course.courseSettingsId" :value="course.courseSettingsId">
               {{ course.title }}
             </option>
           </select>
@@ -183,7 +183,7 @@ const availableCourses = computed(() =>
 )
 
 const selectedCourse = computed(() => 
-  availableCourses.value.find(c => c.id === selectedCourseId.value)
+  availableCourses.value.find(c => c.courseSettingsId === selectedCourseId.value)
 )
 
 
@@ -214,6 +214,7 @@ const onDateRangeChange = async () => {
 
 const onCourseChange = () => {
   // Since each course already has a courseSettingsId, auto-select it
+  console.log('Selected course ID:', selectedCourse.value?.courseSettingsId)
   if (selectedCourse.value?.courseSettingsId) {
     selectCourseSetting(selectedCourse.value.courseSettingsId)
   } else {
