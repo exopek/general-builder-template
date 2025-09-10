@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-50 pt-24">
+  <div class="min-h-screen bg-gray-50">
     <!-- Hero Section -->
     <div style="background: linear-gradient(-90deg, rgb(252, 209, 34) 0%, rgb(252, 124, 34) 35%, rgb(252, 85, 32) 70%, rgb(251, 60, 54) 100%)">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
