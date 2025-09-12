@@ -12,8 +12,8 @@
             </div>
             <div class="ml-5 w-0 flex-1">
               <dl>
-                <dt class="text-sm font-medium text-gray-500 truncate">Gesamt Teilnehmer</dt>
-                <dd class="text-lg font-medium text-gray-900">{{ participantStats.total }}</dd>
+                <dt class="text-sm font-medium text-gray-500 truncate">Gesamt Klienten</dt>
+                <dd class="text-lg font-medium text-gray-900">{{ clientStats.total }}</dd>
               </dl>
             </div>
           </div>
@@ -30,8 +30,8 @@
             </div>
             <div class="ml-5 w-0 flex-1">
               <dl>
-                <dt class="text-sm font-medium text-gray-500 truncate">Aktive Mitglieder</dt>
-                <dd class="text-lg font-medium text-gray-900">{{ participantStats.active }}</dd>
+                <dt class="text-sm font-medium text-gray-500 truncate">Aktive Klienten</dt>
+                <dd class="text-lg font-medium text-gray-900">{{ clientStats.active }}</dd>
               </dl>
             </div>
           </div>
@@ -48,8 +48,8 @@
             </div>
             <div class="ml-5 w-0 flex-1">
               <dl>
-                <dt class="text-sm font-medium text-gray-500 truncate">Neue diese Woche</dt>
-                <dd class="text-lg font-medium text-gray-900">{{ participantStats.newThisWeek }}</dd>
+                <dt class="text-sm font-medium text-gray-500 truncate">Inaktive Klienten</dt>
+                <dd class="text-lg font-medium text-gray-900">{{ clientStats.inactive }}</dd>
               </dl>
             </div>
           </div>
@@ -74,12 +74,12 @@
               v-model="statusFilter"
               class="block px-3 py-2 border border-gray-300 rounded-md leading-5 bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
             >
-              <option value="">Alle Teilnehmer</option>
+              <option value="">Alle Klienten</option>
               <option value="active">Aktive</option>
               <option value="inactive">Inaktive</option>
             </select>
             <button
-              @click="exportParticipants"
+              @click="exportClients"
               class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors text-sm"
             >
               Export CSV
@@ -93,22 +93,22 @@
     <div class="bg-white shadow rounded-lg overflow-hidden">
       <div class="px-6 py-4 border-b border-gray-200">
         <h3 class="text-lg font-medium text-gray-900">
-          Teilnehmer ({{ filteredParticipants.length }})
+          Klienten ({{ filteredClients.length }})
         </h3>
       </div>
       
       <!-- Loading State -->
       <div v-if="isLoading" class="text-center py-12">
         <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mb-4"></div>
-        <p class="text-gray-500">Teilnehmer werden geladen...</p>
+        <p class="text-gray-500">Klienten werden geladen...</p>
       </div>
 
       <!-- Empty State -->
-      <div v-else-if="filteredParticipants.length === 0" class="text-center py-12">
+      <div v-else-if="filteredClients.length === 0" class="text-center py-12">
         <svg class="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
         </svg>
-        <p class="text-gray-500 text-lg">{{ searchQuery || statusFilter ? 'Keine passenden Teilnehmer gefunden' : 'Noch keine Teilnehmer registriert' }}</p>
+        <p class="text-gray-500 text-lg">{{ searchQuery || statusFilter ? 'Keine passenden Klienten gefunden' : 'Noch keine Klienten registriert' }}</p>
         <p v-if="searchQuery || statusFilter" class="text-sm text-gray-400 mt-1">
           Versuchen Sie andere Filterkriterien
         </p>
@@ -120,19 +120,19 @@
           <thead class="bg-gray-50">
             <tr>
               <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Teilnehmer
+                Klient
               </th>
               <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Registrierung
+                Rollen
               </th>
               <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Buchungen
+                E-Mail
               </th>
               <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Status
               </th>
               <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Letzte Aktivität
+                ID
               </th>
               <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Aktionen
@@ -141,8 +141,8 @@
           </thead>
           <tbody class="bg-white divide-y divide-gray-200">
             <tr
-              v-for="participant in paginatedParticipants"
-              :key="participant.id"
+              v-for="client in paginatedClients"
+              :key="client.id"
               class="hover:bg-gray-50"
             >
               <td class="px-6 py-4 whitespace-nowrap">
@@ -150,55 +150,50 @@
                   <div class="h-10 w-10 flex-shrink-0">
                     <div class="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
                       <span class="text-sm font-medium text-indigo-600">
-                        {{ getInitials(participant.name) }}
+                        {{ getInitials(`${client.firstName} ${client.lastName}`) }}
                       </span>
                     </div>
                   </div>
                   <div class="ml-4">
-                    <div class="text-sm font-medium text-gray-900">{{ participant.name }}</div>
-                    <div class="text-sm text-gray-500">{{ participant.email }}</div>
+                    <div class="text-sm font-medium text-gray-900">{{ client.firstName }} {{ client.lastName }}</div>
+                    <div class="text-sm text-gray-500">{{ client.email }}</div>
                   </div>
                 </div>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                {{ formatDate(participant.registrationDate) }}
+                {{ client.roles.join(', ') }}
               </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <div class="text-sm text-gray-900">
-                  <span class="font-medium">{{ participant.totalBookings }}</span> Buchungen
-                </div>
-                <div class="text-sm text-gray-500">
-                  {{ participant.activeBookings }} aktiv
-                </div>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                {{ client.email }}
               </td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <span 
                   class="inline-flex px-2 py-1 text-xs font-semibold rounded-full"
-                  :class="getStatusBadgeClass(participant.status)"
+                  :class="getStatusBadgeClass(client.isActive)"
                 >
-                  {{ getStatusText(participant.status) }}
+                  {{ getStatusText(client.isActive) }}
                 </span>
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {{ participant.lastActivity ? formatDate(participant.lastActivity) : 'Nie' }}
+                {{ client.id }}
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                 <div class="flex space-x-2">
                   <button
-                    @click="viewParticipantDetails(participant)"
+                    @click="viewClientDetails(client)"
                     class="text-indigo-600 hover:text-indigo-900 font-medium"
                   >
                     Details
                   </button>
                   <button
-                    @click="contactParticipant(participant)"
+                    @click="contactClient(client)"
                     class="text-green-600 hover:text-green-900 font-medium"
                   >
                     Kontakt
                   </button>
                   <button
-                    v-if="participant.status === 'active'"
-                    @click="deactivateParticipant(participant.id)"
+                    v-if="client.isActive"
+                    @click="deactivateClient(client.id)"
                     class="text-red-600 hover:text-red-900 font-medium"
                     :disabled="isUpdating"
                   >
@@ -206,7 +201,7 @@
                   </button>
                   <button
                     v-else
-                    @click="activateParticipant(participant.id)"
+                    @click="activateClient(client.id)"
                     class="text-green-600 hover:text-green-900 font-medium"
                     :disabled="isUpdating"
                   >
@@ -244,9 +239,9 @@
                 Zeige
                 <span class="font-medium">{{ (currentPage - 1) * itemsPerPage + 1 }}</span>
                 bis
-                <span class="font-medium">{{ Math.min(currentPage * itemsPerPage, filteredParticipants.length) }}</span>
+                <span class="font-medium">{{ Math.min(currentPage * itemsPerPage, filteredClients.length) }}</span>
                 von
-                <span class="font-medium">{{ filteredParticipants.length }}</span>
+                <span class="font-medium">{{ filteredClients.length }}</span>
                 Ergebnissen
               </p>
             </div>
@@ -302,7 +297,7 @@
 </template>
 
 <script setup lang="ts">
-import type { AdminParticipant } from '~/stores/admin'
+import type { User } from '~/types'
 
 // Stores
 const adminStore = useAdminStore()
@@ -316,50 +311,47 @@ const currentPage = ref(1)
 const itemsPerPage = 15
 
 // Computed
-const participants = computed(() => adminStore.participants)
+const clients = computed(() => adminStore.users)
 
-const participantStats = computed(() => {
-  const oneWeekAgo = new Date()
-  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7)
-  
+const clientStats = computed(() => {
   return {
-    total: participants.value.length,
-    active: participants.value.filter(p => p.status === 'active').length,
-    newThisWeek: participants.value.filter(p => 
-      new Date(p.registrationDate) > oneWeekAgo
-    ).length
+    total: clients.value.length,
+    active: clients.value.filter(c => c.isActive).length,
+    inactive: clients.value.filter(c => !c.isActive).length
   }
 })
 
-const filteredParticipants = computed(() => {
-  let filtered = participants.value
+const filteredClients = computed(() => {
+  let filtered = clients.value
 
   // Search filter
   if (searchQuery.value) {
     const query = searchQuery.value.toLowerCase()
-    filtered = filtered.filter(participant => 
-      participant.name.toLowerCase().includes(query) ||
-      participant.email.toLowerCase().includes(query)
+    filtered = filtered.filter(client => 
+      `${client.firstName} ${client.lastName}`.toLowerCase().includes(query) ||
+      client.email.toLowerCase().includes(query)
     )
   }
 
   // Status filter
   if (statusFilter.value) {
-    filtered = filtered.filter(participant => participant.status === statusFilter.value)
+    if (statusFilter.value === 'active') {
+      filtered = filtered.filter(client => client.isActive)
+    } else if (statusFilter.value === 'inactive') {
+      filtered = filtered.filter(client => !client.isActive)
+    }
   }
 
-  // Sort by registration date (newest first)
-  return filtered.sort((a, b) => 
-    new Date(b.registrationDate).getTime() - new Date(a.registrationDate).getTime()
-  )
+  // Sort by email (alphabetical)
+  return filtered.sort((a, b) => a.email.localeCompare(b.email))
 })
 
-const totalPages = computed(() => Math.ceil(filteredParticipants.value.length / itemsPerPage))
+const totalPages = computed(() => Math.ceil(filteredClients.value.length / itemsPerPage))
 
-const paginatedParticipants = computed(() => {
+const paginatedClients = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage
   const end = start + itemsPerPage
-  return filteredParticipants.value.slice(start, end)
+  return filteredClients.value.slice(start, end)
 })
 
 const visiblePages = computed(() => {
@@ -403,88 +395,76 @@ const getInitials = (name: string) => {
     .slice(0, 2)
 }
 
-const formatDate = (dateString: string) => {
-  return new Date(dateString).toLocaleDateString('de-DE', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric'
-  })
+// Removed formatDate function as we no longer display dates
+
+const getStatusText = (isActive: boolean) => {
+  return isActive ? 'Aktiv' : 'Inaktiv'
 }
 
-const getStatusText = (status: string) => {
-  switch (status) {
-    case 'active': return 'Aktiv'
-    case 'inactive': return 'Inaktiv'
-    default: return status
-  }
+const getStatusBadgeClass = (isActive: boolean) => {
+  return isActive ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
 }
 
-const getStatusBadgeClass = (status: string) => {
-  switch (status) {
-    case 'active': return 'bg-green-100 text-green-800'
-    case 'inactive': return 'bg-gray-100 text-gray-800'
-    default: return 'bg-gray-100 text-gray-800'
-  }
+const viewClientDetails = (client: User) => {
+  // TODO: Implement client details modal or navigation
+  console.log('View client details:', client)
 }
 
-const viewParticipantDetails = (participant: AdminParticipant) => {
-  // TODO: Implement participant details modal or navigation
-  console.log('View participant details:', participant)
-}
-
-const contactParticipant = (participant: AdminParticipant) => {
+const contactClient = (client: User) => {
   // Create mailto link
   const subject = encodeURIComponent('Kontakt vom Fitnessstudio')
-  const body = encodeURIComponent(`Hallo ${participant.name},\n\n`)
-  window.open(`mailto:${participant.email}?subject=${subject}&body=${body}`)
+  const body = encodeURIComponent(`Hallo ${client.firstName} ${client.lastName},\n\n`)
+  window.open(`mailto:${client.email}?subject=${subject}&body=${body}`)
 }
 
-const activateParticipant = async (participantId: string) => {
+const activateClient = async (clientId: string) => {
   isUpdating.value = true
   try {
-    const result = await adminStore.updateParticipantStatus(participantId, 'active')
-    if (!result.success) {
-      console.error('Failed to activate participant:', result.error)
-    }
+    // TODO: Implement client status update in admin store
+    console.log('Activate client:', clientId)
+    // const result = await adminStore.updateClientStatus(clientId, true)
+    // if (!result.success) {
+    //   console.error('Failed to activate client:', result.error)
+    // }
   } catch (error) {
-    console.error('Error activating participant:', error)
+    console.error('Error activating client:', error)
   } finally {
     isUpdating.value = false
   }
 }
 
-const deactivateParticipant = async (participantId: string) => {
-  if (!confirm('Sind Sie sicher, dass Sie diesen Teilnehmer deaktivieren möchten?')) {
+const deactivateClient = async (clientId: string) => {
+  if (!confirm('Sind Sie sicher, dass Sie diesen Klienten deaktivieren möchten?')) {
     return
   }
   
   isUpdating.value = true
   try {
-    const result = await adminStore.updateParticipantStatus(participantId, 'inactive')
-    if (!result.success) {
-      console.error('Failed to deactivate participant:', result.error)
-    }
+    // TODO: Implement client status update in admin store
+    console.log('Deactivate client:', clientId)
+    // const result = await adminStore.updateClientStatus(clientId, false)
+    // if (!result.success) {
+    //   console.error('Failed to deactivate client:', result.error)
+    // }
   } catch (error) {
-    console.error('Error deactivating participant:', error)
+    console.error('Error deactivating client:', error)
   } finally {
     isUpdating.value = false
   }
 }
 
-const exportParticipants = () => {
+const exportClients = () => {
   try {
     // Create CSV content
-    const headers = ['Name', 'E-Mail', 'Registrierung', 'Status', 'Buchungen Gesamt', 'Aktive Buchungen', 'Letzte Aktivität']
+    const headers = ['Name', 'E-Mail', 'Status', 'Rollen', 'ID']
     const csvContent = [
       headers.join(','),
-      ...filteredParticipants.value.map(participant => [
-        `"${participant.name}"`,
-        `"${participant.email}"`,
-        formatDate(participant.registrationDate),
-        getStatusText(participant.status),
-        participant.totalBookings,
-        participant.activeBookings,
-        participant.lastActivity ? formatDate(participant.lastActivity) : 'Nie'
+      ...filteredClients.value.map(client => [
+        `"${client.firstName} ${client.lastName}"`,
+        `"${client.email}"`,
+        getStatusText(client.isActive),
+        `"${client.roles.join(', ')}"`,
+        client.id
       ].join(','))
     ].join('\n')
     
@@ -492,10 +472,10 @@ const exportParticipants = () => {
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
     const link = document.createElement('a')
     link.href = URL.createObjectURL(blob)
-    link.download = `teilnehmer-${new Date().toISOString().split('T')[0]}.csv`
+    link.download = `klienten-${new Date().toISOString().split('T')[0]}.csv`
     link.click()
   } catch (error) {
-    console.error('Error exporting participants:', error)
+    console.error('Error exporting clients:', error)
   }
 }
 
@@ -504,13 +484,14 @@ watch([searchQuery, statusFilter], () => {
   currentPage.value = 1
 })
 
-// Load participants on mount
+// Load clients on mount
 onMounted(async () => {
   isLoading.value = true
   try {
-    await adminStore.fetchParticipants()
+    console.log('Loading clients...')
+    await adminStore.getUsers()
   } catch (error) {
-    console.error('Error loading participants:', error)
+    console.error('Error loading clients:', error)
   } finally {
     isLoading.value = false
   }

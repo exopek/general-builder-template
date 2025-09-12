@@ -396,7 +396,59 @@
 - **Mobile-First Design**: All admin components now work seamlessly on mobile devices
 - **TypeScript Integration**: Full type safety across all enhanced admin components
 
-### Phase 7: Future Enhancements (Optional)
+### Phase 7: Admin Dashboard mit Sidebar-Navigation ✅ COMPLETED
+- [x] **Neues Admin-Layout erstellen**
+  - [x] Erstelle `layouts/admin.vue` mit fester Sidebar und Hauptinhaltsbereich
+  - [x] Implementiere responsive Sidebar die auf mobilen Geräten kollabiert
+  - [x] Integriere Hamburger-Menü für mobile Navigation
+  
+- [x] **Sidebar-Navigation implementieren**
+  - [x] Dashboard (Übersicht/Statistiken)
+  - [x] Buchungen verwalten (bestehende Funktionen)
+  - [x] Kurse verwalten (bestehende Funktionen)  
+  - [x] Teilnehmer verwalten (bestehende Funktionen)
+  - [x] Logout und User-Bereich Links im oberen Bereich
+  - [x] Aktiver Menüpunkt wird optisch hervorgehoben
+  
+- [x] **Admin-Seiten Layout-Migration**
+  - [x] `pages/admin/index.vue`: Header entfernen, Layout `admin` verwenden
+  - [x] `pages/admin/bookings.vue`: Header entfernen, Layout `admin` verwenden
+  - [x] `pages/admin/courses.vue`: Header entfernen, Layout `admin` verwenden
+  - [x] `pages/admin/participants.vue`: Header entfernen, Layout `admin` verwenden
+
+**🎯 Features implementiert:**
+- **Einheitliche Admin-Navigation**: Alle Admin-Bereiche sind über eine feste Sidebar erreichbar mit professioneller Struktur
+- **Mobile-Responsive Design**: Sidebar kollabiert automatisch zu Hamburger-Menü auf mobilen Geräten
+- **Verbesserte UX**: Nahtlose Navigation zwischen Admin-Bereichen ohne Seitenwechsel - alle Funktionen in zusammenhängender Oberfläche
+- **Konsistentes Design**: Moderne Sidebar mit Tailwind CSS Design-System und Gradient-Akzenten
+- **Aktive Menü-Hervorhebung**: Intelligente Hervorhebung des aktuellen Bereichs mit blauer Akzentfarbe und rechtem Border
+- **User-Management Integration**: Direkter Zugang zu User-Bereich und Logout-Funktion in der Sidebar
+- **Clean Layout Migration**: Alle Admin-Seiten erfolgreich von Header-basierten zu Sidebar-basierten Layouts migriert
+- **TypeScript-Integration**: Vollständige Typsicherheit für alle neuen Layout-Komponenten
+- **Performance-Optimierung**: Leichtgewichtige Inline-SVG-Icons für bessere Performance
+
+### Phase 8: Admin Panel - Klienten-Management Integration ⏳ IN PROGRESS
+- [ ] **Users Endpoint Integration**
+  - [ ] Admin Store `getUsers()` Methode bereits vorhanden nutzen
+  - [ ] `pages/admin/participants.vue` umstellen: `adminStore.getUsers()` statt `fetchParticipants()`
+  - [ ] `adminStore.users` statt `adminStore.participants` verwenden
+
+- [ ] **Umbenennung Teilnehmer → Klienten**
+  - [ ] Alle UI-Texte in `pages/admin/participants.vue`: "Teilnehmer" → "Klienten"
+  - [ ] Page Title: "Teilnehmer-Verwaltung" → "Klienten-Verwaltung"
+  - [ ] `components/admin/ParticipantsList.vue`: Alle "Teilnehmer" → "Klienten"
+  - [ ] Button-Labels und Tabellenspalten entsprechend anpassen
+
+- [ ] **Einfache User-Daten Darstellung**
+  - [ ] ParticipantsList.vue: User Properties direkt anzeigen (`firstName`, `lastName`, `email`)
+  - [ ] Basis-Tabelle: Name, E-Mail, Status (`isActive`), Rollen
+  - [ ] Keine berechneten Werte (totalBookings, etc.) - nur vorhandene User-Daten
+  - [ ] `AdminParticipant` Type durch `User` Type ersetzen
+  - [ ] Statistiken-Modal entfernen (da keine zusätzlichen Berechnungen)
+
+**🎯 Resultat:** Schlanke Klienten-Verwaltung mit nur den vorhandenen User-Daten aus der API.
+
+### Phase 9: Future Enhancements (Optional)
 - [ ] **Builder.io Integration**
   - [ ] Setup Builder.io Content-Bereiche
   - [ ] Erstelle Custom Components für Builder

@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
-import { API_ENDPOINTS, ERROR_MESSAGES } from '~/utils/constants'
+import { API_BASE_URL, API_ENDPOINTS, ERROR_MESSAGES } from '~/utils/constants'
 import type { Booking } from './bookings'
+import type { User, UserReadDto } from '~/types'
+import { Mappers } from '~/utils/mappers'
 
 export interface DashboardStats {
   totalCourses: number
@@ -33,6 +35,7 @@ export const useAdminStore = defineStore('admin', {
     dashboardStats: null as DashboardStats | null,
     courseParticipants: {} as Record<string, CourseParticipant[]>, // courseId -> participants
     allBookings: [] as BookingOverview[],
+    users: [] as User[],
     isLoading: false,
     error: null as string | null
   }),
@@ -310,6 +313,43 @@ export const useAdminStore = defineStore('admin', {
         return { success: true }
       } catch (error: any) {
         console.error('Update booking status error:', error)
+        this.error = error?.data?.message || ERROR_MESSAGES.NETWORK_ERROR
+        return { 
+          success: false, 
+          error: this.error || undefined 
+        }
+      } finally {
+        this.isLoading = false
+      }
+    },
+
+    async getUsers(): Promise<{ success: boolean; error?: string }> {
+      try {
+        this.isLoading = true
+        this.error = null
+
+        console.log('Getting users...')
+        const authStore = useAuthStore()
+        if (!authStore.token) {
+          console.log('No auth token available')
+          return { success: false, error: ERROR_MESSAGES.UNAUTHORIZED }
+        }
+
+        console.log('Fetching users from:', `${API_BASE_URL}${API_ENDPOINTS.USERS.LIST}`)
+
+        const users = await $fetch<UserReadDto[]>(`${API_BASE_URL}${API_ENDPOINTS.USERS.LIST}`, {
+          headers: {
+            Authorization: `Bearer ${authStore.token}`
+          }
+        })
+
+        console.log('Raw users response:', users)
+        this.users = (await Mappers.User()).mapUsers(users)
+        console.log('Mapped users:', this.users)
+
+        return { success: true }
+      } catch (error: any) {
+        console.error('Get users error:', error)
         this.error = error?.data?.message || ERROR_MESSAGES.NETWORK_ERROR
         return { 
           success: false, 
