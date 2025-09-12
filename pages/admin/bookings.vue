@@ -3,17 +3,17 @@
     <!-- Header -->
     <div class="mb-8 flex items-center justify-between">
       <div>
-        <h1 class="text-3xl font-bold text-gray-900">Buchungen-Verwaltung</h1>
+        <h1 class="text-3xl font-bold text-white-900">Buchungen-Verwaltung</h1>
         <p class="mt-1 text-sm text-gray-500">
           Überblick und Verwaltung aller Buchungen
         </p>
       </div>
-      <button
+      <!-- <button
         @click="exportBookings"
         class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors"
       >
         Export CSV
-      </button>
+      </button> -->
     </div>
 
     <!-- Main Content -->
