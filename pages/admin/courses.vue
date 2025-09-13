@@ -16,6 +16,11 @@
       </button>
     </div>
 
+    <!-- Dashboard Overview -->
+    <div class="mb-8">
+      <AdminDashboard />
+    </div>
+
     <!-- Main Content -->
     <CourseManager @create-course="handleCreateCourse" @edit-course="handleEditCourse" />
 
@@ -68,6 +73,7 @@ const handleFormSuccess = () => {
 }
 
 // Dynamic imports
+const AdminDashboard = defineAsyncComponent(() => import('~/components/admin/AdminDashboard.vue'))
 const CourseManager = defineAsyncComponent(() => import('~/components/admin/CourseManager.vue'))
 const CourseForm = defineAsyncComponent(() => import('~/components/admin/CourseForm.vue'))
 </script>
