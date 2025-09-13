@@ -19,40 +19,11 @@
 
       <!-- Dashboard Content -->
       <div v-else class="space-y-8">
-        <!-- Next Course Section -->
-        <!-- <div v-if="nextRegisteredCourse" class="space-y-4">
-          <h2 class="text-2xl font-bold text-gray-900">Nächster Kurs</h2>
-          <CourseCard 
-            :course="nextRegisteredCourse" 
-            :showBookingButton="false"
-            class="max-w-md"
-          />
-        </div> -->
+        <!-- Next Course Hero Section -->
+        <NextCourseHero />
 
-        <!-- No Courses Placeholder -->
-       <!--  <div v-else class="bg-white shadow rounded-lg p-8 text-center">
-          <div class="max-w-md mx-auto">
-            <svg class="mx-auto h-16 w-16 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-            </svg>
-            <h3 class="text-xl font-medium text-gray-900 mb-2">
-              Noch keine Kurse gebucht
-            </h3>
-            <p class="text-gray-500 mb-6">
-              Entdecken Sie unser vielfältiges Kursangebot und buchen Sie Ihren ersten Kurs!
-            </p>
-            <NuxtLink
-              to="/courses"
-              class="inline-flex items-center px-6 py-3 text-white font-medium rounded-md transition-colors"
-              style="background: linear-gradient(-90deg, rgb(252, 209, 34) 0%, rgb(252, 124, 34) 35%, rgb(252, 85, 32) 70%, rgb(251, 60, 54) 100%);"
-            >
-              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-              Kurse entdecken
-            </NuxtLink>
-          </div>
-        </div> -->
+        <!-- User Statistics -->
+        <UserStats :show-detailed-stats="true" />
 
         <!-- Quick Access Actions -->
         <div class="bg-white shadow rounded-lg">
@@ -150,10 +121,12 @@ const nextRegisteredCourse = computed(() => {
 // Methods
 const loadDashboardData = async () => {
   isLoading.value = true
-  
+
   try {
-    await coursesStore.fetchCourses()
-    await bookingsStore.fetchUserBookings()
+    await Promise.all([
+      coursesStore.fetchCourses(),
+      bookingsStore.fetchMyBookings()
+    ])
   } catch (error) {
     console.error('Error loading dashboard data:', error)
   } finally {

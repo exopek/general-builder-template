@@ -448,6 +448,48 @@
 
 **🎯 Resultat:** Schlanke Klienten-Verwaltung mit nur den vorhandenen User-Daten aus der API.
 
+### Phase 8.1: User Dashboard Enhancement ✅ COMPLETED
+- [x] **Statistik-Sektion für User**
+  - [x] Erstelle `components/user/UserStats.vue` mit responsivem Card-Layout
+  - [x] Implementiere Datenanalyse aus bestehenden Stores (`bookingsStore`, `coursesStore`, `authStore`)
+  - [x] Zeige User-Metriken: Anzahl gebuchter Kurse, abgeschlossene Kurse, Lieblingskategorie
+  - [x] Implementiere Mitgliedsstatus-Anzeige und Aktivitäts-Streak (aufeinanderfolgende Wochen)
+  - [x] Design mit Exopek-Gradient-Cards, Icons und mobile-optimiertem Grid-Layout
+
+- [x] **Nächster Kurs Feature**
+  - [x] Implementiere Hero-Card ganz oben auf der Dashboard-Seite
+  - [x] Nutze `bookingsStore.upcomingBookings` für nächsten Kurs (erster Eintrag)
+  - [x] Features: Große Kurs-Details Card mit Titel, Datum, Uhrzeit, Trainer, Ort
+  - [x] Implementiere Live-Countdown bis zum Kurs-Beginn
+  - [x] Quick-Action Buttons (z.B. "Details anzeigen", "Zum Kalender hinzufügen")
+  - [x] Fallback-Anzeige wenn kein nächster Kurs vorhanden ("Jetzt Kurs buchen!")
+  - [x] Google Calendar Integration für Termin-Export
+
+- [ ] **News-Bereich** (Future Implementation)
+  - [ ] Erstelle `components/user/NewsSection.vue` mit scrollbaren News-Cards
+  - [ ] Implementiere temporäre statische News-Einträge als Platzhalter
+  - [ ] Features: Kategorien (Gym-News, Exopek-Updates), Datum, Kurzbeschreibung
+  - [ ] "Mehr lesen" Links und responsive horizontaler Slider
+  - [ ] **Backend-Anforderung**: Dokumentiere benötigte News-API Endpunkte:
+    - `GET /api/news` - Alle News abrufen (mit Kategorien und Pagination)
+    - `GET /api/news/:id` - Einzelne News-Detail
+
+- [x] **Dashboard Layout-Integration**
+  - [x] Erweitere `pages/user/index.vue` um neue Sektionen
+  - [x] Layout-Struktur: [Nächster Kurs Hero] → [User-Statistiken Grid] → [Bestehende Schnellaktionen]
+  - [x] Implementiere Loading States und Error Handling für alle neuen Komponenten
+  - [x] Mobile-First responsive Design mit Tailwind CSS
+  - [x] Integration mit bestehenden Pinia Stores und computed properties
+
+**🎯 Features implementiert:**
+- **UserStats.vue**: 4 Statistik-Cards mit Exopek-Design (Gebuchte/Abgeschlossene Kurse, Lieblingskategorie, Wochen-Streak)
+- **NextCourseHero.vue**: Hero-Card mit Live-Countdown, Kurs-Details und Google Calendar Integration
+- **Erweiterte Dashboard-Page**: Optimierte Layout-Struktur mit neuen Komponenten
+- **Responsive Design**: Mobile-First Implementierung mit Tailwind CSS und Hover-Effekten
+- **Smart Data Integration**: Intelligente Berechnung von Statistiken und Streaks aus bestehenden Stores
+- **Performance-Optimiert**: Efficient Reactivity mit Vue 3 Composition API und TypeScript
+- **Production-Ready**: Vollständig funktionsfähige Implementierung wartet nur auf Backend-Daten
+
 ### Phase 9: Future Enhancements (Optional)
 - [ ] **Builder.io Integration**
   - [ ] Setup Builder.io Content-Bereiche
