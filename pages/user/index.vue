@@ -1,43 +1,16 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
-    <!-- Header -->
-    <div class="bg-white shadow">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="py-6">
-          <div class="flex items-center justify-between">
-            <div>
-              <h1 class="text-3xl font-bold text-gray-900">
-                Willkommen zurück, {{ user?.firstName }}!
-              </h1>
-              <p class="mt-1 text-sm text-gray-500">
-                Verwalten Sie Ihre Kurse und Buchungen
-              </p>
-            </div>
-            <div class="flex items-center space-x-4">
-              <NuxtLink
-                to="/courses"
-                class="text-white px-4 py-2 rounded-md transition-colors"
-                style="background: linear-gradient(-90deg, rgb(252, 209, 34) 0%, rgb(252, 124, 34) 35%, rgb(252, 85, 32) 70%, rgb(251, 60, 54) 100%);"
-              >
-                Neue Kurse entdecken
-              </NuxtLink>
-              <button
-                @click="handleLogout"
-                class="text-gray-400 hover:text-gray-600 transition-colors"
-                title="Abmelden"
-              >
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+  <div>
+    <!-- Page Header -->
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-900">
+        Willkommen zurück, {{ user?.firstName }}!
+      </h1>
+      <p class="mt-1 text-sm text-gray-500">
+        Verwalten Sie Ihre Kurse und Buchungen
+      </p>
     </div>
 
     <!-- Main Content -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <!-- Loading State -->
       <div v-if="isLoading" class="text-center py-12">
         <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 mb-4" style="border-color: rgb(252, 85, 32);"></div>
@@ -142,7 +115,6 @@
           </div>
         </div>
       </div>
-    </div>
   </div>
 </template>
 
@@ -150,11 +122,12 @@
 // Page meta
 definePageMeta({
   middleware: 'user',
+  layout: 'user',
   title: 'Dashboard'
 })
 
 // Stores and composables
-const { user, logout } = useAuth()
+const { user } = useAuth()
 const coursesStore = useCoursesStore()
 const bookingsStore = useBookingsStore()
 
@@ -188,17 +161,10 @@ const loadDashboardData = async () => {
   }
 }
 
-const handleLogout = async () => {
-  if (confirm('Möchten Sie sich wirklich abmelden?')) {
-    await logout()
-  }
-}
 
 // Lifecycle
 onMounted(async () => {
   await loadDashboardData()
 })
 
-// Dynamic imports
-const CourseCard = defineAsyncComponent(() => import('~/components/booking/CourseCard.vue'))
 </script>

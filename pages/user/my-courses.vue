@@ -1,42 +1,14 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
-    <!-- Header -->
-    <div class="bg-white shadow">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="py-6">
-          <div class="flex items-center justify-between">
-            <div>
-              <h1 class="text-3xl font-bold text-gray-900">Meine Kurse</h1>
-              <p class="mt-1 text-sm text-gray-500">
-                Ihre angemeldeten Kurse
-              </p>
-            </div>
-            <NuxtLink
-              to="/courses"
-              class="bg-orange-600 text-white px-4 py-2 rounded-md hover:bg-orange-700 transition-colors"
-            >
-              Neue Kurse entdecken
-            </NuxtLink>
-          </div>
-        </div>
-      </div>
+  <div>
+    <!-- Page Header -->
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-900">Meine Kurse</h1>
+      <p class="mt-1 text-sm text-gray-500">
+        Ihre angemeldeten Kurse
+      </p>
     </div>
 
     <!-- Main Content -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-
-        <!-- Back Button -->
-    <div class="mb-6">
-        <NuxtLink
-          to="/user"
-          class="inline-flex items-center text-orange-600 hover:text-orange-500"
-        >
-          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-          </svg>
-          Zurück
-        </NuxtLink>
-      </div>
       <!-- Loading State -->
       <div v-if="bookingsStore.isLoading" class="text-center py-12">
         <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600 mb-4"></div>
@@ -99,7 +71,6 @@
           </div>
         </div>
       </div>
-    </div>
   </div>
 </template>
 
@@ -122,6 +93,8 @@ interface Course {
 
 // Page meta
 definePageMeta({
+  middleware: 'user',
+  layout: 'user',
   title: 'Kurse'
 })
 
