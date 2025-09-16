@@ -1,7 +1,7 @@
 // nuxt.config.js - Hydration Safe + LCP Optimized
 export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
-  devtools: { enabled: false },
+  devtools: { enabled: true },
   
   modules: [
     '@builder.io/sdk-vue/nuxt',
@@ -87,13 +87,13 @@ export default defineNuxtConfig({
       include: ['@builder.io/sdk-vue', 'vue', '@vue/shared']
     },
     build: {
-      minify: process.env.NODE_ENV === 'production' ? 'terser' : false,
-      terserOptions: process.env.NODE_ENV === 'production' ? {
+      minify: 'terser',
+      terserOptions: {
         compress: {
           drop_console: true,
           drop_debugger: true
         }
-      } : undefined,
+      },
       rollupOptions: {
         output: {
           manualChunks: {

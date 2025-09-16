@@ -1,8 +1,5 @@
 <template>
   <div>
-    <!-- Challenge Hero Section as first section -->
-    <ChallengeHeroSection />
-    
     <Content 
       :api-key="apiKey" 
       :model="model" 
