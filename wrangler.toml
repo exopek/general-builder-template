@@ -2,5 +2,8 @@ name = "general-builder-template"
 compatibility_date = "2025-08-21"
 pages_build_output_dir = "dist"
 
+[build]
+command = "yarn install && yarn generate"
+
 [env.production.vars]
 BUILDER_API_KEY = "2221ab9020b44cdd9cbb4a4793414e46"
