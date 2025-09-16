@@ -81,7 +81,7 @@ export default defineNuxtConfig({
     }
   },
   
-  // Vite Build Optimierung
+  // Vite Build Optimierung - Development optimiert
   vite: {
     build: {
       minify: 'terser',
@@ -94,7 +94,6 @@ export default defineNuxtConfig({
       rollupOptions: {
         output: {
           manualChunks: {
-            // Builder SDK isolieren
             'builder': ['@builder.io/sdk-vue'],
             'vue-vendor': ['vue', '@vue/shared']
           }
