@@ -72,7 +72,7 @@ yarn preview             # Preview production build locally
 ## Development Patterns
 
 ### Adding New Builder.io Components
-1. Create Vue component in `components/`
+1. Create Vue component in `components/website`
 2. Register in `plugins/custom-components.ts` with input schema
 3. Define Builder.io compatible props and types
 4. Test in Builder.io visual editor

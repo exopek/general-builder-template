@@ -1,6 +1,10 @@
 import { register } from '@builder.io/sdk-vue';
 import GymOfferCard from '~/components/GymOfferCard.vue';
 import CurrentWeekCoursesGrid from '~/components/CurrentWeekCoursesGrid.vue';
+import GymHeroSection from '~/components/website/GymHeroSection.vue';
+import TrainingProgramsSection from '~/components/website/TrainingProgramsSection.vue';
+import GymFeaturesSection from '~/components/website/GymFeaturesSection.vue';
+import GymMembershipSection from '~/components/website/GymMembershipSection.vue';
 
 type ComponentInput = {
     name: string;
@@ -34,6 +38,55 @@ export const registeredComponents: RegisteredComponent[] = [
             { name: 'showHeader', type: 'boolean', defaultValue: true },
             { name: 'headerTitle', type: 'string', defaultValue: 'Aktuelle Woche' },
             { name: 'headerSubtitle', type: 'string', defaultValue: '' }
+        ]
+    },
+    {
+        component: GymHeroSection,
+        name: 'GymHeroSection',
+        inputs: [
+            { name: 'title', type: 'string', defaultValue: 'Funktionelles Training für echte Ergebnisse' },
+            { name: 'titleHighlight', type: 'string', defaultValue: 'POWER UP' },
+            { name: 'subtitle', type: 'string', defaultValue: 'Erreiche deine Fitnessziele mit unserem professionellen Gruppentraining. Kraft, Ausdauer und Beweglichkeit in einer perfekten Kombination.' },
+            { name: 'badge', type: 'string', defaultValue: '🔥 Jetzt kostenloses Probetraining' },
+            { name: 'backgroundImage', type: 'string', defaultValue: '' },
+            { name: 'primaryCta', type: 'string', defaultValue: 'Jetzt starten' },
+            { name: 'secondaryCta', type: 'string', defaultValue: 'Mehr erfahren' },
+            { name: 'features', type: 'list', defaultValue: ['Kleine Gruppen (max. 12 Personen)', 'Erfahrene Trainer', 'Modernste Ausstattung'] }
+        ]
+    },
+    {
+        component: TrainingProgramsSection,
+        name: 'TrainingProgramsSection',
+        inputs: [
+            { name: 'sectionTitle', type: 'string', defaultValue: 'Unsere Training Programme' },
+            { name: 'sectionSubtitle', type: 'string', defaultValue: 'Entdecke das perfekte Training für deine Ziele. Vom Einsteiger bis zum Profi - wir haben das richtige Programm für dich.' },
+            { name: 'showViewAll', type: 'boolean', defaultValue: true },
+            { name: 'viewAllText', type: 'string', defaultValue: 'Alle Programme ansehen' }
+        ]
+    },
+    {
+        component: GymFeaturesSection,
+        name: 'GymFeaturesSection',
+        inputs: [
+            { name: 'sectionTitle', type: 'string', defaultValue: 'Warum unser Gym?' },
+            { name: 'sectionSubtitle', type: 'string', defaultValue: 'Wir bieten dir alles, was du für dein erfolgreiches Training brauchst. Von der modernsten Ausstattung bis zur persönlichen Betreuung.' },
+            { name: 'showBottomSection', type: 'boolean', defaultValue: true },
+            { name: 'bottomSectionTitle', type: 'string', defaultValue: 'Bereit für dein Training?' },
+            { name: 'bottomSectionSubtitle', type: 'string', defaultValue: 'Starte noch heute mit deinem kostenlosen Probetraining und erlebe den Unterschied.' },
+            { name: 'bottomSectionCta', type: 'string', defaultValue: 'Kostenloses Probetraining' }
+        ]
+    },
+    {
+        component: GymMembershipSection,
+        name: 'GymMembershipSection',
+        inputs: [
+            { name: 'sectionTitle', type: 'string', defaultValue: 'Wähle dein Membership' },
+            { name: 'sectionSubtitle', type: 'string', defaultValue: 'Flexible Optionen für jeden Fitnesstyp. Starte noch heute und erreiche deine Ziele mit unserem professionellen Training.' },
+            { name: 'showTrialSection', type: 'boolean', defaultValue: true },
+            { name: 'trialTitle', type: 'string', defaultValue: 'Kostenloses Probetraining' },
+            { name: 'trialSubtitle', type: 'string', defaultValue: 'Überzeuge dich selbst von der Qualität unseres Trainings. Teste alle Programme 7 Tage lang völlig kostenlos.' },
+            { name: 'trialCta', type: 'string', defaultValue: 'Jetzt 7 Tage kostenlos testen' },
+            { name: 'trialDuration', type: 'string', defaultValue: '7' }
         ]
     }
 ];
