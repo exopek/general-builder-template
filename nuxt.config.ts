@@ -83,9 +83,6 @@ export default defineNuxtConfig({
   
   // Vite Build Optimierung - Development optimiert
   vite: {
-    optimizeDeps: {
-      include: ['@builder.io/sdk-vue', 'vue', '@vue/shared']
-    },
     build: {
       minify: 'terser',
       terserOptions: {
