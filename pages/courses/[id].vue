@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-50 pt-24">
+  <div class="min-h-screen bg-gray-50">
     <!-- Loading State -->
     <div v-if="coursesStore.isLoading" class="flex items-center justify-center min-h-screen">
       <div class="text-center">
