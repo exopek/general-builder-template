@@ -1,6 +1,9 @@
 import { register } from '@builder.io/sdk-vue';
 import GymOfferCard from '~/components/GymOfferCard.vue';
 import CurrentWeekCoursesGrid from '~/components/CurrentWeekCoursesGrid.vue';
+import CourseRecommendationFunnel from '~/components/CourseRecommendationFunnel.vue';
+import ChallengeHeroSection from '~/components/ChallengeHeroSection.vue';
+import CashbackBadge from '~/components/CashbackBadge.vue';
 
 type ComponentInput = {
     name: string;
@@ -34,6 +37,65 @@ export const registeredComponents: RegisteredComponent[] = [
             { name: 'showHeader', type: 'boolean', defaultValue: true },
             { name: 'headerTitle', type: 'string', defaultValue: 'Aktuelle Woche' },
             { name: 'headerSubtitle', type: 'string', defaultValue: '' }
+        ]
+    },
+    {
+        component: CourseRecommendationFunnel,
+        name: 'CourseRecommendationFunnel',
+        inputs: [
+            { name: 'show', type: 'boolean', defaultValue: false }
+        ]
+    },
+    {
+        component: ChallengeHeroSection,
+        name: 'ChallengeHeroSection',
+        inputs: [
+            // Content Props
+            { name: 'subheadText', type: 'text', defaultValue: 'Andere geben dir Geld zurück, wenn du scheiterst. Wir geben dir Geld zurück, wenn du durchziehst.' },
+            { name: 'headlineText', type: 'text', defaultValue: '7 Wochen durchziehen. <span style="color: #ff3b2f;">Direkt 100€ Cashback.</span>' },
+            { name: 'descriptionText', type: 'text', defaultValue: 'Investiere 297€ in deine Fitness. Ziehst du die 7 Wochen durch, bekommst du sofort 100€ zurück – Cash. Die restlichen 197€ kannst du komplett auf Gym-Services anrechnen lassen.' },
+            
+            // CTA Props
+            { name: 'primaryCtaText', type: 'string', defaultValue: 'Jetzt Challenge starten' },
+            { name: 'primaryCtaUrl', type: 'url', defaultValue: '#' },
+            { name: 'primaryCtaColor', type: 'color', defaultValue: '#ff3b2f' },
+            { name: 'secondaryCtaText', type: 'string', defaultValue: 'Challenge-Plan ansehen' },
+            { name: 'secondaryCtaUrl', type: 'url', defaultValue: '#' },
+            { name: 'secondaryCtaColor', type: 'color', defaultValue: '#ffffff' },
+            
+            // Visual Props
+            { name: 'heroImage', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'svg'], defaultValue: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=500&fit=crop&crop=center' },
+            { name: 'heroImageAlt', type: 'string', defaultValue: 'Fitness Challenge' },
+            
+            // Cashback Badge Props
+            { name: 'showCashbackBadge', type: 'boolean', defaultValue: true },
+            { name: 'cashbackAmount', type: 'string', defaultValue: '100€' },
+            { name: 'cashbackText', type: 'string', defaultValue: 'Cashback' },
+            { name: 'badgePosition', type: 'list', enum: ['top-right', 'top-left', 'bottom-right', 'bottom-left'], defaultValue: 'top-right' },
+            { name: 'badgeColor', type: 'color', defaultValue: '#ff3b2f' },
+            { name: 'enableAnimation', type: 'boolean', defaultValue: true },
+            
+            // Section Styling
+            { name: 'backgroundColor', type: 'color', defaultValue: '#0f0f0f' },
+            { name: 'backgroundGradient', type: 'string', defaultValue: 'linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%)' },
+            { name: 'textColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'minHeight', type: 'string', defaultValue: '90vh' },
+            { name: 'padding', type: 'string', defaultValue: '4rem' }
+        ]
+    },
+    {
+        component: CashbackBadge,
+        name: 'CashbackBadge',
+        inputs: [
+            { name: 'amount', type: 'string', defaultValue: '100€' },
+            { name: 'text', type: 'string', defaultValue: 'Cashback' },
+            { name: 'position', type: 'list', enum: ['top-right', 'top-left', 'bottom-right', 'bottom-left'], defaultValue: 'top-right' },
+            { name: 'color', type: 'color', defaultValue: '#ff3b2f' },
+            { name: 'textColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'rotation', type: 'number', defaultValue: -8 },
+            { name: 'scale', type: 'number', defaultValue: 1 },
+            { name: 'glowEffect', type: 'boolean', defaultValue: true },
+            { name: 'pulseAnimation', type: 'boolean', defaultValue: false }
         ]
     }
 ];

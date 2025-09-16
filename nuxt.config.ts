@@ -1,7 +1,7 @@
 // nuxt.config.js - Hydration Safe + LCP Optimized
 export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   
   modules: [
     '@builder.io/sdk-vue/nuxt',
@@ -81,20 +81,22 @@ export default defineNuxtConfig({
     }
   },
   
-  // Vite Build Optimierung
+  // Vite Build Optimierung - Development optimiert
   vite: {
+    optimizeDeps: {
+      include: ['@builder.io/sdk-vue', 'vue', '@vue/shared']
+    },
     build: {
-      minify: 'terser',
-      terserOptions: {
+      minify: process.env.NODE_ENV === 'production' ? 'terser' : false,
+      terserOptions: process.env.NODE_ENV === 'production' ? {
         compress: {
           drop_console: true,
           drop_debugger: true
         }
-      },
+      } : undefined,
       rollupOptions: {
         output: {
           manualChunks: {
-            // Builder SDK isolieren
             'builder': ['@builder.io/sdk-vue'],
             'vue-vendor': ['vue', '@vue/shared']
           }
