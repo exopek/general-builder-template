@@ -177,24 +177,9 @@ export default defineNuxtPlugin(() => {
             {
               name: 'Gray 900',
               value: 'var(--color-gray-900, #212121)'
-            }
-          ],
-          gradients: [
-            {
-              name: 'Primary Gradient',
+            },
+            { name: 'Primary Gradient',
               value: 'var(--gradient-primary, linear-gradient(135deg, #FF6B35 0%, #1B365D 100%))'
-            },
-            {
-              name: 'Secondary Gradient',
-              value: 'var(--gradient-secondary, linear-gradient(135deg, #4A90E2 0%, #7B68EE 100%))'
-            },
-            {
-              name: 'Warm Gradient',
-              value: 'var(--gradient-warm, linear-gradient(135deg, #FF6B35 0%, #F1C40F 100%))'
-            },
-            {
-              name: 'Cool Gradient',
-              value: 'var(--gradient-cool, linear-gradient(135deg, #4A90E2 0%, #7B68EE 100%))'
             }
           ],
           spacing: [
