@@ -82,8 +82,180 @@ yarn preview             # Preview production build locally
 - Configured in both `nuxt.config.ts` and `wrangler.toml`
 - Development vs production environment handling
 
-## Style
-Minimal, grid-based, rounded corners, glassmorphism, gradients, bold display headlines, bright sporty visuals.  
+## UI Development Style Guide
+
+### Design Philosophy
+Minimal, grid-based, rounded corners, glassmorphism, gradients, bold display headlines, bright sporty visuals.
+
+**Important**: This style guide applies to **both the marketing website AND the booking system**. All UI components, design tokens, and patterns should be consistent across the entire application ecosystem - from public pages to user dashboards to admin panels.
+
+### CSS Framework Usage
+- **Primary**: Tailwind CSS utility classes
+- **Custom tokens**: Use CSS custom properties from `assets/css/global.css`
+- **Avoid**: Inline styles or arbitrary values in Tailwind
+- **Priority**: Design tokens > Tailwind utilities > Custom CSS
+
+### Design Token Usage (from global.css)
+
+**Colors**:
+```css
+/* Primary palette */
+var(--color-primary)        /* #FF6B35 - main brand color */
+var(--color-secondary)      /* #1B365D - dark blue */
+var(--color-accent-blue)    /* #4A90E2 */
+var(--color-accent-green)   /* #27AE60 */
+
+/* Neutral colors */
+var(--color-gray-50) to var(--color-gray-900)
+var(--color-white)
+var(--color-black)
+
+/* Gradients */
+var(--gradient-primary)     /* Primary to secondary */
+var(--gradient-warm)        /* Orange to yellow */
+var(--gradient-cool)        /* Blue to purple */
+```
+
+**Spacing** (use these over arbitrary Tailwind values):
+```css
+var(--spacing-xs)    /* 4px */
+var(--spacing-sm)    /* 8px */
+var(--spacing-md)    /* 16px */
+var(--spacing-lg)    /* 24px */
+var(--spacing-xl)    /* 32px */
+var(--spacing-2xl)   /* 40px */
+/* Also: --space-3, --space-4, --space-6, --space-8, --space-16 */
+```
+
+**Typography**:
+```css
+var(--font-family-primary)  /* Fira Sans stack */
+var(--font-family-display)  /* Comfortaa display font */
+var(--font-size-xs) to var(--font-size-6xl)
+var(--font-weight-light) to var(--font-weight-black)
+```
+
+### Component Development Rules
+
+**1. Reuse Before Creating**
+- Check `components/` folder for existing base components
+- Prefer composition over duplication
+- Use slots and props for component variants
+
+**2. Component Organization**
+```
+components/
+├── base/           # Reusable primitives (buttons, cards, inputs)
+├── layout/         # Layout components (header, footer)
+├── feature/        # Feature-specific components
+└── GymOfferCard.vue # Builder.io registered components
+```
+
+**3. Template Size Guidelines**
+- **Single component**: Max 50-80 lines template
+- **Large templates**: Split into smaller composable components
+- **Builder.io components**: Keep simple for visual editor
+
+**4. Tailwind CSS Best Practices**
+
+**Preferred utility class patterns**:
+```vue
+<!-- Good: Use design tokens via utility classes -->
+<div class="bg-white rounded-xl shadow-md p-6">
+  <h2 class="text-2xl font-bold text-gray-800">Title</h2>
+</div>
+
+<!-- Better: Use CSS custom properties when available -->
+<div class="card">  <!-- Pre-defined in global.css -->
+  <h2 class="text-2xl font-bold">Title</h2>
+</div>
+```
+
+**Avoid**:
+```vue
+<!-- Don't use arbitrary values -->
+<div class="bg-[#FF6B35] rounded-[12px] p-[24px]">
+
+<!-- Don't duplicate complex styles -->
+<div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
+<div class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300">
+```
+
+**5. Pre-built Component Classes (from global.css)**
+
+Use these instead of building from scratch:
+```css
+/* Buttons */
+.btn, .btn-primary, .btn-secondary, .btn-ghost
+
+/* Cards */
+.card, .card-glass
+
+/* Navigation */
+.nav-pill
+
+/* Stats */
+.stat-card, .stat-number, .stat-label
+
+/* Progress */
+.progress-bar, .progress-fill
+
+/* Avatar */
+.avatar, .avatar-group
+```
+
+**6. Responsive Design**
+- Mobile-first approach with Tailwind breakpoints
+- Use container max-width: `var(--container-max-width)` (1200px)
+- Test on mobile, tablet, desktop
+
+**7. Animation & Transitions**
+```css
+/* Use predefined transitions */
+var(--transition-fast)    /* 150ms */
+var(--transition-normal)  /* 300ms */
+var(--transition-slow)    /* 500ms */
+
+/* Animation classes available */
+.fade-in, .slide-up
+```
+
+### Builder.io Component Guidelines
+
+**When creating Builder.io components**:
+1. Keep templates simple and focused
+2. Use design tokens for consistent theming
+3. Provide meaningful input schemas
+4. Test in Builder.io visual editor
+5. Document component props and usage
+
+**Example structure**:
+```vue
+<template>
+  <div class="card">
+    <h3 class="text-xl font-semibold">{{ title }}</h3>
+    <p class="text-gray-600">{{ description }}</p>
+  </div>
+</template>
+
+<script setup lang="ts">
+interface Props {
+  title: string
+  description: string
+}
+defineProps<Props>()
+</script>
+```
+
+### Code Review Checklist
+
+- [ ] Uses design tokens over hardcoded values
+- [ ] Reuses existing components where possible
+- [ ] Follows Tailwind utility-first approach
+- [ ] Template is reasonably sized (consider splitting)
+- [ ] Responsive design implemented
+- [ ] Accessible markup (semantic HTML, ARIA)
+- [ ] Builder.io components are registered properly  
 
 ## Key File Dependencies
 
