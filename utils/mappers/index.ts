@@ -12,5 +12,6 @@ export * from './userMapper'
 export const Mappers = {
   Course: () => import('./courseMapper').then(m => m.CourseMapperUtils),
   Booking: () => import('./bookingMapper').then(m => m.BookingMapperUtils),
-  User: () => import('./userMapper').then(m => m.UserMapperUtils)
+  User: () => import('./userMapper').then(m => m.UserMapperUtils),
+  Article: () => import('./articleMapper').then(m => m.articleMapper)
 }

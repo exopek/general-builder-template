@@ -124,7 +124,7 @@
 
           </div>
         </div>
-        <a href="/preise" class="nav-link">
+        <a href="/mitgliedschaften" class="nav-link">
           Preise
         </a>
       </nav>
@@ -187,7 +187,7 @@
               class="mobile-nav-link text-3xl font-bold text-gray-900 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-orange-400 hover:to-red-500 transition-all duration-300">
               Angebot
             </a>
-            <a @click="toggleMobileMenu" href="/preise" 
+            <a @click="toggleMobileMenu" href="/mitgliedschaften" 
               class="mobile-nav-link text-3xl font-bold text-gray-900 hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-orange-400 hover:to-red-500 transition-all duration-300">
               Preise
             </a>
