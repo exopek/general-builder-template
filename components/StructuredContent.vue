@@ -1,13 +1,13 @@
 <template>
   <div class="structured-content">
     <!-- Main Heading -->
-    <h1 v-if="props.content.h1" class="text-4xl md:text-5xl font-bold text-gray-900 mb-8">
+    <h1 v-if="props.content.h1" class="text-4xl md:text-5xl font-bold text-white mb-8">
       {{ props.content.h1 }}
     </h1>
 
     <!-- Introduction -->
-    <div v-if="content.introduction" class="introduction mb-12">
-      <div class="text-xl text-gray-700 font-medium bg-gray-50 rounded-xl" style="padding: 1.5rem; border-left: 4px solid var(--color-primary); line-height: 1.625;">
+    <div v-if="content.introduction" class="mb-12">
+      <div class="text-xl text-white bg-gray-100 font-medium rounded-xl border-1 p-6" style="line-height: 1.625; border-color: var(--color-primary);">
         {{ content.introduction.text }}
       </div>
     </div>
@@ -20,16 +20,15 @@
         class="section"
       >
         <!-- Section Heading -->
-        <h2 v-if="section.h2" class="text-2xl font-bold text-gray-900" style="margin-bottom: 1.5rem;">
+        <h2 v-if="section.h2" class="text-2xl font-bold text-white" style="margin-bottom: 1.5rem;">
           {{ section.h2 }}
         </h2>
 
         <!-- Section Content -->
         <div v-if="section.content" class="section-content">
           <!-- Main text -->
-          <p v-if="section.content.text" class="text-lg text-gray-700" style="line-height: 1.625; margin-bottom: 1.5rem;">
-            {{ section.content.text }}
-          </p>
+          <div v-if="section.content.text" class="text-lg text-gray-800" style="line-height: 1.625; margin-bottom: 1.5rem;" v-html="section.content.text">
+          </div>
 
           <!-- Subsections -->
           <div v-if="section.content.h3 && section.content.h3.length > 0" class="subsections">
@@ -39,7 +38,7 @@
                 :key="subIndex"
                 class="card" style="padding: 1rem; transition: all 0.2s ease;"
               >
-                <h3 class="text-lg font-semibold text-gray-800 flex items-center">
+                <h3 class="text-lg font-semibold text-gray-900 flex items-center">
                   <span style="width: 0.5rem; height: 0.5rem; border-radius: 50%; margin-right: 0.75rem; background-color: var(--color-primary);"></span>
                   {{ subsection }}
                 </h3>
@@ -51,21 +50,21 @@
     </div>
 
     <!-- Conclusion -->
-    <div v-if="content.conclusion" class="conclusion bg-gray-50 rounded-xl" style="margin-top: 4rem; padding: 2rem;">
-      <h2 v-if="content.conclusion.h2" class="text-2xl font-bold text-gray-900" style="margin-bottom: 1.5rem;">
+    <div v-if="content.conclusion" class="conclusion bg-gray-100 rounded-xl" style="margin-top: 4rem; padding: 2rem;">
+      <h2 v-if="content.conclusion.h2" class="text-2xl font-bold text-white" style="margin-bottom: 1.5rem;">
         {{ content.conclusion.h2 }}
       </h2>
-      <p v-if="content.conclusion.text" class="text-lg text-gray-700" style="line-height: 1.625;">
+      <p v-if="content.conclusion.text" class="text-lg text-gray-800" style="line-height: 1.625;">
         {{ content.conclusion.text }}
       </p>
     </div>
 
     <!-- Call to Action -->
     <div v-if="content.callToAction" class="call-to-action bg-gray-100 rounded-xl" style="margin-top: 3rem; padding: 2rem; border: 1px solid var(--color-primary-light);">
-      <h2 v-if="content.callToAction.h2" class="text-2xl font-bold text-gray-900" style="margin-bottom: 1rem;">
+      <h2 v-if="content.callToAction.h2" class="text-2xl font-bold text-white" style="margin-bottom: 1rem;">
         {{ content.callToAction.h2 }}
       </h2>
-      <p v-if="content.callToAction.text" class="text-lg text-gray-700" style="line-height: 1.625; margin-bottom: 1.5rem;">
+      <p v-if="content.callToAction.text" class="text-lg text-gray-800" style="line-height: 1.625; margin-bottom: 1.5rem;">
         {{ content.callToAction.text }}
       </p>
       <div class="flex flex-col sm:flex-row gap-4">

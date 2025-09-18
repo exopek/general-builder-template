@@ -9,7 +9,7 @@
     <!-- Desktop Header -->
     <div class="desktop-header container flex items-center justify-between transition-all py-2"
       :class="[
-        !isScrolled ? 'text-gray-900' : (isDarkBackground ? 'text-white' : 'text-gray-900')
+        !isScrolled ? 'text-gray-900' : 'text-white'
       ]">
       <!-- Logo -->
       <a href="/" class="flex items-center">

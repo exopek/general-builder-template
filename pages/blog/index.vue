@@ -1,9 +1,9 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
+  <div class="min-h-screen bg-gray-50 pt-6">
     <!-- Header Section -->
     <div class="bg-gradient-to-r from-primary to-secondary text-white py-16">
       <div class="container mx-auto px-4">
-        <h1 class="text-4xl md:text-6xl font-bold text-center mb-4">Blog</h1>
+        <h1 class="text-6xl md:text-6xl font-bold text-center mb-4">Der Blog für deinen Fortschritt</h1>
         <p class="text-xl text-center opacity-90 max-w-2xl mx-auto">
           Entdecke die neuesten Artikel zu Fitness, Training und Gesundheit
         </p>
