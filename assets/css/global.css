@@ -42,7 +42,7 @@
   /* Gradients */
   --gradient-primary: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
   --gradient-secondary: linear-gradient(135deg, var(--color-accent-blue) 0%, var(--color-accent-purple) 100%);
-  --gradient-warm: linear-gradient(135deg, #FF6B35 0%, #F1C40F 100%);
+  --gradient-warm: linear-gradient(135deg, #E55A2B 0%, #FF6B35 40%, #F1C40F 100%);
   --gradient-cool: linear-gradient(135deg, #4A90E2 0%, #7B68EE 100%);
   
   /* Typography */
@@ -256,7 +256,7 @@ body {
   font-weight: var(--font-weight-medium);
   text-decoration: none;
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: all;
   font-size: var(--font-size-base);
   line-height: var(--line-height-none);
 }
@@ -267,9 +267,9 @@ body {
 }
 
 .btn-primary:hover {
-  box-shadow: var(--shadow-lg);
   background: var(--color-white);
-  color: var(--gradient-warm);
+  color: var(--color-primary);
+  border: var(--color-primary) 2px solid;
 }
 
 .btn-secondary {

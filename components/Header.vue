@@ -320,6 +320,17 @@ watch(isMobileMenuOpen, (isOpen: boolean) => {
   }
 })
 
+// Prevent body scroll when mega menu is open
+watch(showAngebotMenu, (isOpen: boolean) => {
+  if (typeof document !== 'undefined') {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+  }
+})
+
 // Setup scroll listener
 onMounted(() => {
   if (typeof window !== 'undefined') {
