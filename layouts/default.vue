@@ -7,15 +7,13 @@
       <Header/>
       
       <!-- Page Content -->
-      <main class="relative z-10">
+      <main class="relative z-10 pt-32">
         <slot/>
       </main>
       
       <!-- Builder.io Footer -->
-     
-      
-      
-      
+      <Footer />
+
       <!-- Global Toast Container -->
       <ToastContainer />
     </div>

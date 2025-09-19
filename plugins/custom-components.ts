@@ -1,4 +1,5 @@
 import { register } from '@builder.io/sdk-vue';
+import { Fragment } from 'vue';
 import GymOfferCard from '~/components/GymOfferCard.vue';
 import CurrentWeekCoursesGrid from '~/components/CurrentWeekCoursesGrid.vue';
 import CourseRecommendationFunnel from '~/components/CourseRecommendationFunnel.vue';
@@ -101,8 +102,7 @@ export const registeredComponents: RegisteredComponent[] = [
 ];
 
 export default defineNuxtPlugin(() => {
-
-    // Register components with Builder.io
+    // Register custom components with Builder.io
     registeredComponents.forEach(({ component, name, inputs }) => {
         register('component', {
             name,
