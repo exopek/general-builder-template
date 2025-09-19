@@ -1,70 +1,16 @@
 <template>
-  <div class="min-h-screen container">
+  <div class="min-h-screen bg-gray-50">
     <!-- Hero Section -->
-    <div class="relative h-96 md:h-96 overflow-hidden rounded-2xl mb-32">
-      <!-- Background Image -->
-      <div
-        v-if="hasImage(article.image)"
-        class="absolute inset-0 bg-cover bg-center"
-        :style="{ backgroundImage: `url(${article.image})` }"
-      >
-        <div class="absolute inset-0 bg-black/40"></div>
-      </div>
-      <div v-else class="absolute inset-0 bg-gradient-to-br from-primary to-secondary"></div>
-
-      <!-- Hero Content -->
-      <div class="relative h-full max-w-4xl mx-auto flex items-end">
-        <div class="pb-8">
-          <div class="text-white">
-            <!-- Category -->
-            <div v-if="article.category" class="mb-4">
-              <span class="inline-block bg-primary px-4 py-2 rounded-full text-sm font-medium">
-                {{ article.category }}
-              </span>
-            </div>
-
-            <!-- Title -->
-            <h1 class="text-3xl md:text-5xl font-bold mb-4 leading-tight">
-              {{ props.article.title }}
-            </h1>
-
-            <!-- Meta Information -->
-            <div class="flex flex-wrap items-center gap-6 text-sm opacity-90">
-              <span v-if="article.author" class="flex items-center gap-2">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
-                </svg>
-                {{ article.author }}
-              </span>
-              <span v-if="article.publishedAt" class="flex items-center gap-2">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
-                </svg>
-                {{ formatDate(article.publishedAt) }}
-              </span>
-              <span v-if="article.readTime" class="flex items-center gap-2">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path>
-                </svg>
-                {{ article.readTime }} Min. Lesezeit
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+     <div class="pb-16">
+      <BlogHero :article="article" />
+     </div>
+    
 
     <!-- Main Content -->
+    <div class="container mx-auto px-4 pb-16">
         <div class="max-w-4xl mx-auto">
           <!-- Article Content -->
           <article>
-            <!-- Excerpt -->
-            <div v-if="article.excerpt" class="mb-8">
-              <p class="text-xl text-gray-600 leading-relaxed italic border-l-4 border-primary pl-6">
-                {{ article.excerpt }}
-              </p>
-            </div>
-
             <!-- Structured Content -->
             <div v-if="hasStructuredContent(article.content)">
               <StructuredContent :content="article.content.blogPost.content" />
@@ -85,35 +31,13 @@
             </div>
           </article>
         </div>
-      
+    </div>
 
     <!-- Call to Action -->
-    <div v-if="hasCallToAction(article.content)" class="rounded-2xl bg-gray-100 mt-16" style="border: 1px solid var(--color-primary-light);">
-      <div class="py-12">
-        <div class="max-w-4xl mx-auto text-center">
-          <h2 v-if="article.content.blogPost.content.callToAction.h2" class="text-3xl font-bold text-white mb-4">
-            {{ article.content.blogPost.content.callToAction.h2 }}
-          </h2>
-          <p v-if="article.content.blogPost.content.callToAction.text" class="text-xl text-gray-800 mb-8" style="line-height: 1.625;">
-            {{ article.content.blogPost.content.callToAction.text }}
-          </p>
-          <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <NuxtLink
-              to="/kurse"
-              class="btn btn-primary"
-            >
-              Kurse entdecken
-            </NuxtLink>
-            <NuxtLink
-              to="/preise"
-              class="btn btn-secondary"
-            >
-              Preise ansehen
-            </NuxtLink>
-          </div>
-        </div>
-      </div>
-    </div>
+    <BlogCallToAction
+      v-if="hasCallToAction(article.content)"
+      :call-to-action="article.content.blogPost.content.callToAction"
+    />
   </div>
 </template>
 
@@ -133,6 +57,10 @@ const hasStructuredContent = (content: any): boolean => {
 
 const hasCallToAction = (content: any): boolean => {
   return content?.blogPost?.content?.callToAction
+}
+
+const hasTags = (tags: string[] | undefined): boolean => {
+  return !!tags && tags.length > 0
 }
 </script>
 
