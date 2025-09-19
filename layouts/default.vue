@@ -12,10 +12,8 @@
       </main>
       
       <!-- Builder.io Footer -->
-     
-      
-      
-      
+      <Footer />
+
       <!-- Global Toast Container -->
       <ToastContainer />
     </div>

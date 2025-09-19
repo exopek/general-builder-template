@@ -5,6 +5,7 @@ import CurrentWeekCoursesGrid from '~/components/CurrentWeekCoursesGrid.vue';
 import CourseRecommendationFunnel from '~/components/CourseRecommendationFunnel.vue';
 import ChallengeHeroSection from '~/components/ChallengeHeroSection.vue';
 import CashbackBadge from '~/components/CashbackBadge.vue';
+import Footer from '~/components/Footer.vue';
 
 type ComponentInput = {
     name: string;
@@ -98,6 +99,11 @@ export const registeredComponents: RegisteredComponent[] = [
             { name: 'glowEffect', type: 'boolean', defaultValue: true },
             { name: 'pulseAnimation', type: 'boolean', defaultValue: false }
         ]
+    },
+    {
+        component: Footer,
+        name: 'Footer',
+        inputs: []
     }
 ];
 
