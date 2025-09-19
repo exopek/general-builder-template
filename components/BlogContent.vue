@@ -34,10 +34,13 @@
     </div>
 
     <!-- Call to Action -->
-    <BlogCallToAction
+     <div class="pb-16">
+      <BlogCallToAction
       v-if="hasCallToAction(article.content)"
       :call-to-action="article.content.blogPost.content.callToAction"
     />
+     </div>
+    
   </div>
 </template>
 

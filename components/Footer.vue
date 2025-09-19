@@ -2,9 +2,9 @@
   <footer class="bg-white border-t border-gray-200 py-16">
     <div class="container">
       <!-- Main Footer Content -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+      <div class="flex flex-row justify-between">
         <!-- Brand Section -->
-        <div class="lg:col-span-2">
+        <div class="flex flex-col gap-3">
           <div class="flex items-center mb-3">
             <NuxtLink to="/" class="flex items-center">
               <img src="https://cdn.builder.io/api/v1/image/assets%2F2221ab9020b44cdd9cbb4a4793414e46%2F698b3f14d8e54640a0e15fce4eb0c6a3"
@@ -17,7 +17,7 @@
           </p>
 
           <!-- Contact Information -->
-          <div class="space-y-2">
+          <div class="space-y-3">
             <div class="flex items-center gap-2 text-gray-600 text-sm">
               <svg class="w-4 h-4 text-orange-500" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
@@ -41,8 +41,9 @@
         </div>
 
         <!-- Training Section -->
-        <div>
-          <h3 class="font-semibold text-gray-900 mb-3 text-sm">Training</h3>
+         <div class="flex flex-row gap-24">
+          <div>
+          <h3 class="font-semibold text-gray-900 mb-3 text-xl">Training</h3>
           <ul class="space-y-2">
             <li>
               <NuxtLink to="/kurse" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
@@ -69,7 +70,7 @@
 
         <!-- Service Section -->
         <div>
-          <h3 class="font-semibold text-gray-900 mb-3 text-sm">Service</h3>
+          <h3 class="font-semibold text-gray-900 mb-3 text-xl">Service</h3>
           <ul class="space-y-2">
             <li>
               <NuxtLink to="/probetraining" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
@@ -93,10 +94,12 @@
             </li>
           </ul>
         </div>
+         </div>
+        
       </div>
 
       <!-- Bottom Bar -->
-      <div class="border-t border-gray-200 pt-4 flex flex-col md:flex-row justify-between items-center gap-3">
+      <div class="border-t border-gray-200 mt-4 pt-4 flex flex-col md:flex-row justify-between items-center gap-3">
         <p class="text-gray-500 text-xs">
           © 2025 EXOPEK GYM UG. Alle Rechte vorbehalten.
         </p>

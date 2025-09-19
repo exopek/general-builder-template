@@ -8,7 +8,7 @@
     <!-- Introduction -->
     <div v-if="content.introduction" class="mb-12">
       <div class="text-xl text-white bg-gray-100 font-medium rounded-xl border-1 p-6" style="line-height: 1.625; border-color: var(--color-primary);">
-        {{ content.introduction.text }}
+        <p class="prose-links" v-html="content.introduction.text"></p>
       </div>
     </div>
 
@@ -25,13 +25,12 @@
         </h2>
 
         <!-- Section Content -->
-        <div v-if="section.content" class="section-content">
+        <div>
           <!-- Main text -->
-          <div v-if="section.content.text" class="text-lg text-gray-800 prose-links" style="line-height: 1.625; margin-bottom: 1.5rem;" v-html="section.content.text">
-          </div>
+          <p v-if="section.content && section.content.text" class="text-lg text-gray-800 prose-links" style="line-height: 1.625; margin-bottom: 1.5rem;" v-html="section.content.text"></p>
 
           <!-- Subsections -->
-          <div v-if="section.content.h3 && section.content.h3.length > 0" class="subsections">
+          <!-- <div v-if="section.content.h3 && section.content.h3.length > 0" class="subsections">
             <div class="grid gap-4 md:gap-6">
               <div
                 v-for="(subsection, subIndex) in section.content.h3"
@@ -44,7 +43,7 @@
                 </h3>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </section>
     </div>
@@ -54,11 +53,8 @@
       <h2 v-if="content.conclusion.h2" class="text-2xl font-bold text-white" style="margin-bottom: 1.5rem;">
         {{ content.conclusion.h2 }}
       </h2>
-      <p v-if="content.conclusion.text" class="text-lg text-gray-800" style="line-height: 1.625;">
-        {{ content.conclusion.text }}
-      </p>
+      <p v-if="content.conclusion.text" class="text-lg text-gray-800" style="line-height: 1.625;" v-html="content.conclusion.text"></p>
     </div>
-
   </div>
 </template>
 
