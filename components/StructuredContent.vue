@@ -1,5 +1,5 @@
 <template>
-  <div class="structured-content">
+  <div>
     <!-- Main Heading -->
     <h1 v-if="props.content.h1" class="text-4xl md:text-5xl font-bold text-white mb-8">
       {{ props.content.h1 }}
@@ -27,7 +27,7 @@
         <!-- Section Content -->
         <div v-if="section.content" class="section-content">
           <!-- Main text -->
-          <div v-if="section.content.text" class="text-lg text-gray-800" style="line-height: 1.625; margin-bottom: 1.5rem;" v-html="section.content.text">
+          <div v-if="section.content.text" class="text-lg text-gray-800 prose-links" style="line-height: 1.625; margin-bottom: 1.5rem;" v-html="section.content.text">
           </div>
 
           <!-- Subsections -->
@@ -59,29 +59,6 @@
       </p>
     </div>
 
-    <!-- Call to Action -->
-    <div v-if="content.callToAction" class="call-to-action bg-gray-100 rounded-xl" style="margin-top: 3rem; padding: 2rem; border: 1px solid var(--color-primary-light);">
-      <h2 v-if="content.callToAction.h2" class="text-2xl font-bold text-white" style="margin-bottom: 1rem;">
-        {{ content.callToAction.h2 }}
-      </h2>
-      <p v-if="content.callToAction.text" class="text-lg text-gray-800" style="line-height: 1.625; margin-bottom: 1.5rem;">
-        {{ content.callToAction.text }}
-      </p>
-      <div class="flex flex-col sm:flex-row gap-4">
-        <NuxtLink
-          to="/kurse"
-          class="btn btn-primary"
-        >
-          Kurse entdecken
-        </NuxtLink>
-        <NuxtLink
-          to="/preise"
-          class="btn btn-secondary"
-        >
-          Preise ansehen
-        </NuxtLink>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -117,5 +94,14 @@ const props = defineProps<StructuredContentProps>()
 .section:not(:last-child) {
   border-bottom: 1px solid var(--color-gray-200);
   padding-bottom: 3rem;
+}
+
+.prose-links :deep(a) {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.prose-links :deep(a:hover) {
+  opacity: 0.8;
 }
 </style>
