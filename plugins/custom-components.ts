@@ -5,7 +5,6 @@ import CurrentWeekCoursesGrid from '~/components/CurrentWeekCoursesGrid.vue';
 import CourseRecommendationFunnel from '~/components/CourseRecommendationFunnel.vue';
 import ChallengeHeroSection from '~/components/ChallengeHeroSection.vue';
 import CashbackBadge from '~/components/CashbackBadge.vue';
-import Footer from '~/components/Footer.vue';
 
 type ComponentInput = {
     name: string;
@@ -99,22 +98,10 @@ export const registeredComponents: RegisteredComponent[] = [
             { name: 'glowEffect', type: 'boolean', defaultValue: true },
             { name: 'pulseAnimation', type: 'boolean', defaultValue: false }
         ]
-    },
-    {
-        component: Footer,
-        name: 'Footer',
-        inputs: []
     }
 ];
 
 export default defineNuxtPlugin(() => {
-    // Register Vue Fragment as Core:Fragment for Builder.io
-    register('component', {
-        name: 'Core:Fragment',
-        component: Fragment,
-        inputs: []
-    });
-
     // Register custom components with Builder.io
     registeredComponents.forEach(({ component, name, inputs }) => {
         register('component', {
