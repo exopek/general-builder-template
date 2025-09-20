@@ -5,7 +5,7 @@
     />
   <div class="min-h-screen bg-gray-50">
     <!-- Hero Section -->
-     <div class="pb-16">
+     <div class="pb-16 pt-8">
       <BlogHero :article="article" />
      </div>
     

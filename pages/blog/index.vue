@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
+  <div class="min-h-screen bg-gray-50 pb-4">
     <!-- Header Section -->
     <div class="bg-gradient-to-r from-primary to-secondary text-white py-16">
       <div class="container mx-auto px-4">
@@ -11,7 +11,7 @@
     </div>
 
     <!-- Blog Articles Grid -->
-    <div class="container mx-auto px-4 py-16">
+    <div class="container mx-auto">
       <!-- Loading State -->
       <div v-if="pending" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         <div v-for="n in 6" :key="n" class="bg-white rounded-xl shadow-md overflow-hidden animate-pulse">
