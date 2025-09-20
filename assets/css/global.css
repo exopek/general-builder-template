@@ -394,7 +394,7 @@ body {
   max-width: var(--container-max-width);
   margin: 0 auto;
   padding: 0 var(--spacing-md);
-  width: var(--container-max-width);
+  width: 100%;
 }
 
 @media (min-width: 768px) {

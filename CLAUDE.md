@@ -209,6 +209,72 @@ Use these instead of building from scratch:
 - Use container max-width: `var(--container-max-width)` (1200px)
 - Test on mobile, tablet, desktop
 
+**Container Classes - Responsive Layout Best Practices**:
+
+**Preferred approach for responsive containers**:
+```vue
+<!-- GOOD: Use container with responsive padding -->
+<div class="container mx-auto">
+  <div class="max-w-4xl mx-auto">
+    <!-- Content -->
+  </div>
+</div>
+```
+
+**How the container class works in global.css**:
+```css
+.container {
+  max-width: var(--container-max-width); /* 1200px */
+  margin: 0 auto;
+  width: 100%;                          /* Responsive: 100% width up to max-width */
+  padding: 0 var(--spacing-md);         /* Base padding: 16px */
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 0 var(--spacing-lg);       /* Tablet+: 24px padding */
+  }
+}
+```
+
+**Container responsive behavior**:
+- **Mobile (375px)**: `width: 100%` = 375px with 16px padding
+- **Tablet (768px)**: `width: 100%` = 768px with 24px padding
+- **Desktop (1024px+)**: `width: 100%` up to max 1200px
+- **Large screens**: Capped at 1200px max-width, centered
+
+**Common container patterns**:
+```vue
+<!-- Basic container with responsive padding -->
+<div class="container mx-auto">
+
+<!-- Container with content width constraint -->
+<div class="container mx-auto">
+  <div class="max-w-4xl mx-auto">
+    <!-- Long-form content like blog posts -->
+  </div>
+</div>
+
+<!-- Container with section-specific constraints -->
+<div class="container mx-auto">
+  <div class="max-w-2xl mx-auto text-center">
+    <!-- Error states, forms, centered content -->
+  </div>
+</div>
+```
+
+**AVOID these container anti-patterns**:
+```vue
+<!-- DON'T: Use w-full without max-width on large screens -->
+<div class="w-full px-4">  <!-- Content gets too wide on desktop -->
+
+<!-- DON'T: Use fixed container padding without responsiveness -->
+<div class="container mx-auto px-4">  <!-- Same padding on all screens -->
+
+<!-- DON'T: Mix container with width overrides -->
+<div class="container w-screen">  <!-- Conflicts with container logic -->
+```
+
 **7. Animation & Transitions**
 ```css
 /* Use predefined transitions */

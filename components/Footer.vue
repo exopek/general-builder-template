@@ -2,9 +2,9 @@
   <footer class="bg-white border-t border-gray-200 py-16">
     <div class="container">
       <!-- Main Footer Content -->
-      <div class="flex flex-row justify-between">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
         <!-- Brand Section -->
-        <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-3 lg:max-w-md">
           <div class="flex items-center mb-3">
             <NuxtLink to="/" class="flex items-center">
               <img src="https://cdn.builder.io/api/v1/image/assets%2F2221ab9020b44cdd9cbb4a4793414e46%2F698b3f14d8e54640a0e15fce4eb0c6a3"
@@ -40,61 +40,62 @@
           </div>
         </div>
 
-        <!-- Training Section -->
-         <div class="flex flex-row gap-24">
+        <!-- Navigation Sections -->
+        <div class="flex flex-col sm:flex-row sm:gap-12 md:gap-16 gap-8">
+          <!-- Training Section -->
           <div>
-          <h3 class="font-semibold text-gray-900 mb-3 text-xl">Training</h3>
-          <ul class="space-y-2">
-            <li>
-              <NuxtLink to="/kurse" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
-                Unsere Kurse
-              </NuxtLink>
-            </li>
-            <li>
-              <NuxtLink to="/mitgliedschaft" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
-                Mitgliedschaft
-              </NuxtLink>
-            </li>
-            <li>
-              <NuxtLink to="/preise" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
-                Preise
-              </NuxtLink>
-            </li>
-            <li>
-              <NuxtLink to="/personal-training" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
-                Personal Training
-              </NuxtLink>
-            </li>
-          </ul>
-        </div>
+            <h3 class="font-semibold text-gray-900 mb-3 text-xl">Training</h3>
+            <ul class="space-y-2">
+              <li>
+                <NuxtLink to="/kurse" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
+                  Unsere Kurse
+                </NuxtLink>
+              </li>
+              <li>
+                <NuxtLink to="/mitgliedschaft" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
+                  Mitgliedschaft
+                </NuxtLink>
+              </li>
+              <li>
+                <NuxtLink to="/preise" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
+                  Preise
+                </NuxtLink>
+              </li>
+              <li>
+                <NuxtLink to="/personal-training" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
+                  Personal Training
+                </NuxtLink>
+              </li>
+            </ul>
+          </div>
 
-        <!-- Service Section -->
-        <div>
-          <h3 class="font-semibold text-gray-900 mb-3 text-xl">Service</h3>
-          <ul class="space-y-2">
-            <li>
-              <NuxtLink to="/probetraining" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
-                Probetraining
-              </NuxtLink>
-            </li>
-            <li>
-              <NuxtLink to="/kursplan" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
-                Kursplan
-              </NuxtLink>
-            </li>
-            <li>
-              <NuxtLink to="/support" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
-                Support
-              </NuxtLink>
-            </li>
-            <li>
-              <NuxtLink to="/faq" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
-                FAQ
-              </NuxtLink>
-            </li>
-          </ul>
+          <!-- Service Section -->
+          <div>
+            <h3 class="font-semibold text-gray-900 mb-3 text-xl">Service</h3>
+            <ul class="space-y-2">
+              <li>
+                <NuxtLink to="/probetraining" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
+                  Probetraining
+                </NuxtLink>
+              </li>
+              <li>
+                <NuxtLink to="/kursplan" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
+                  Kursplan
+                </NuxtLink>
+              </li>
+              <li>
+                <NuxtLink to="/support" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
+                  Support
+                </NuxtLink>
+              </li>
+              <li>
+                <NuxtLink to="/faq" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
+                  FAQ
+                </NuxtLink>
+              </li>
+            </ul>
+          </div>
         </div>
-         </div>
         
       </div>
 
