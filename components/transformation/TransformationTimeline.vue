@@ -7,7 +7,7 @@
         <TransformationBadge
           v-if="showBadge"
           :text="badgeText"
-          variant="info"
+          variant="featured"
           class="mb-4"
         />
 
@@ -27,62 +27,32 @@
       </div>
 
       <!-- Timeline Container -->
-      <div class="relative max-w-7xl mx-auto">
-
-        <!-- Progress Line (Desktop) -->
-        <div class="hidden lg:block absolute top-1/2 left-0 right-0 h-2 bg-gray-200 rounded-full transform -translate-y-1/2 shadow-inner">
-          <div
-            class="h-full bg-gradient-to-r from-orange-500 via-red-500 to-blue-600 transition-all duration-1000 ease-out rounded-full shadow-lg"
-            :style="{ width: progressPercentage + '%' }"
-          ></div>
-        </div>
-
-        <!-- Progress Line (Mobile) -->
-        <div class="lg:hidden absolute left-8 top-0 bottom-0 w-2 bg-gray-200 rounded-full shadow-inner">
-          <div
-            class="w-full bg-gradient-to-b from-orange-500 via-red-500 to-blue-600 transition-all duration-1000 ease-out rounded-full shadow-lg"
-            :style="{ height: progressPercentage + '%' }"
-          ></div>
-        </div>
+      <div ref="timelineContainer" class="relative max-w-7xl mx-auto">
 
         <!-- Timeline Items -->
-        <div class="lg:grid lg:grid-cols-7 lg:gap-6 xl:gap-8 space-y-12 lg:space-y-0">
+        <div class="space-y-12">
           <div
             v-for="(week, index) in timelineWeeks"
             :key="index"
-            class="relative flex lg:flex-col items-start lg:items-center"
-            :class="{ 'lg:col-span-1': true }"
+            class="relative flex items-start timeline-week"
           >
 
-            <!-- Week Number Circle -->
-            <div class="relative z-10 flex-shrink-0 lg:mb-6">
-              <TransformationIcon
-                :emoji="week.emoji"
-                :variant="getWeekVariant(index)"
-                size="lg"
-                :animated="index <= currentWeek"
-                class="lg:mx-auto"
-              />
-
-              <!-- Week Number Badge -->
+            <!-- Week Number Badge -->
+            <div class="relative z-10 flex-shrink-0 -ml-2">
               <TransformationBadge
                 :text="`Woche ${index + 1}`"
-                size="xs"
-                variant="neutral"
-                position="bottom-right"
-                class="absolute -bottom-1 -right-1"
+                size="sm"
+                :variant="getBadgeVariant(index)"
+                class="shadow-md"
               />
             </div>
 
             <!-- Week Content -->
-            <div class="ml-6 lg:ml-0 flex-1 lg:text-center">
+            <div class="ml-6 flex-1">
               <TransformationCard
                 variant="elevated"
                 size="sm"
-                :class="[
-                  'transition-all duration-500 hover:shadow-xl timeline-item',
-                  index <= currentWeek ? 'opacity-100 scale-100 shadow-lg' : 'opacity-80 scale-95'
-                ]"
+                class="transition-all duration-150 hover:shadow-xl timeline-item opacity-100 scale-100 shadow-lg"
               >
                 <h3 class="font-bold text-lg lg:text-xl mb-3 text-gray-900 leading-tight">{{ week.title }}</h3>
                 <p class="text-sm lg:text-base text-gray-600 mb-4 leading-relaxed">{{ week.description }}</p>
@@ -94,13 +64,13 @@
                     :key="goal"
                     class="flex items-center gap-3 text-xs lg:text-sm text-gray-700"
                   >
-                    <div class="w-2 h-2 rounded-full bg-gradient-to-r from-orange-500 to-red-500 flex-shrink-0 shadow-sm"></div>
+                    <div class="w-2 h-2 rounded-full bg-gradient-warm flex-shrink-0 shadow-sm"></div>
                     <span>{{ goal }}</span>
                   </div>
                 </div>
 
-                <!-- Week Results (if completed) -->
-                <div v-if="week.results && index <= currentWeek" class="mt-4 pt-3 border-t border-gray-200">
+                <!-- Week Results -->
+                <div v-if="week.results" class="mt-4 pt-3 border-t border-gray-200">
                   <div class="flex items-center justify-between text-xs">
                     <span class="text-gray-600">Durchschnittlicher Fortschritt:</span>
                     <TransformationBadge
@@ -306,6 +276,81 @@ const getWeekVariant = (weekIndex: number) => {
   if (weekIndex === props.currentWeek) return 'primary'
   return 'neutral'
 }
+
+const getBadgeVariant = (weekIndex: number) => {
+  if (weekIndex < currentWeekDisplay.value) return 'featured'
+  if (weekIndex === currentWeekDisplay.value) return 'featured'
+  return 'neutral'
+}
+
+
+// Reactive scroll-based current week for badge colors only
+const scrollCurrentWeek = ref(props.currentWeek)
+const timelineContainer = ref<HTMLElement>()
+
+// Calculate current week based on scroll position (for badge colors only)
+const updateCurrentWeek = () => {
+  if (!timelineContainer.value) return
+
+  const windowHeight = window.innerHeight
+  const centerY = windowHeight * 0.5 // Center of viewport
+
+  // Find all week elements
+  const weekCards = timelineContainer.value.querySelectorAll('.timeline-week')
+  if (weekCards.length === 0) return
+
+  let activeWeek = 0
+
+  // Check each week's position relative to center of screen
+  for (let i = 0; i < weekCards.length; i++) {
+    const weekRect = weekCards[i].getBoundingClientRect()
+    const weekCenter = weekRect.top + (weekRect.height * 0.3) // 30% down the card
+
+    if (weekCenter <= centerY) {
+      activeWeek = i
+    } else {
+      break
+    }
+  }
+
+  scrollCurrentWeek.value = activeWeek
+}
+
+// Use scroll-based current week for badge colors
+const currentWeekDisplay = computed(() => scrollCurrentWeek.value)
+
+// Throttle scroll updates for better performance
+let scrollTimeout: number | null = null
+const throttledUpdateCurrentWeek = () => {
+  if (scrollTimeout) return
+
+  scrollTimeout = requestAnimationFrame(() => {
+    updateCurrentWeek()
+    scrollTimeout = null
+  })
+}
+
+// Setup scroll listener
+onMounted(() => {
+  if (typeof window !== 'undefined') {
+    window.addEventListener('scroll', throttledUpdateCurrentWeek, { passive: true })
+    window.addEventListener('resize', throttledUpdateCurrentWeek, { passive: true })
+    // Initial calculation
+    nextTick(() => {
+      updateCurrentWeek()
+    })
+  }
+})
+
+onUnmounted(() => {
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('scroll', throttledUpdateCurrentWeek)
+    window.removeEventListener('resize', throttledUpdateCurrentWeek)
+    if (scrollTimeout) {
+      cancelAnimationFrame(scrollTimeout)
+    }
+  }
+})
 </script>
 
 <style scoped>
@@ -339,8 +384,7 @@ const getWeekVariant = (weekIndex: number) => {
   50% { opacity: 0.8; }
 }
 
-.bg-gradient-to-r,
-.bg-gradient-to-b {
+.bg-gradient-warm {
   animation: pulse 3s ease-in-out infinite;
 }
 

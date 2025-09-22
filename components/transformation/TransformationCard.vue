@@ -78,7 +78,7 @@ const variantClasses = computed(() => {
     default: 'border border-gray-200',
     elevated: 'shadow-lg border-0',
     glass: 'card-glass border-0',
-    gradient: 'bg-gradient-primary border-0 text-white'
+    gradient: 'bg-gradient-warm border-0 text-white'
   }
   return variants[props.variant]
 })
@@ -114,11 +114,11 @@ const gapClasses = computed(() => {
 }
 
 /* Gradient text override for gradient variant */
-.bg-gradient-to-r h3 {
+.bg-gradient-warm h3 {
   color: white;
 }
 
-.bg-gradient-to-r p {
+.bg-gradient-warm p {
   color: rgba(255, 255, 255, 0.9);
 }
 

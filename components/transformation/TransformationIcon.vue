@@ -43,7 +43,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const variantClasses = computed(() => {
   const variants = {
-    primary: 'bg-gradient-to-r from-orange-500 to-yellow-400 text-white hover:from-orange-600 hover:to-orange-500',
+    primary: 'bg-gradient-warm text-white hover:brightness-110',
     secondary: 'bg-blue-900 text-white hover:bg-blue-800',
     accent: 'bg-blue-500 text-white hover:bg-purple-500',
     success: 'bg-green-500 text-white hover:bg-green-600',

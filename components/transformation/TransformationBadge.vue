@@ -1,6 +1,6 @@
 <template>
   <span
-    class="inline-flex items-center gap-1 font-semibold rounded-full whitespace-nowrap leading-none font-family-primary"
+    class="inline-flex items-center gap-1 font-semibold rounded-full whitespace-nowrap leading-none font-family-primary transition-all duration-150"
     :class="[
       variantClasses,
       sizeClasses,
@@ -53,9 +53,9 @@ const hasIcon = computed(() => !!props.icon)
 
 const variantClasses = computed(() => {
   const variants = {
-    new: 'bg-gradient-to-r from-orange-500 to-yellow-400 text-white',
+    new: 'bg-gradient-warm text-white',
     popular: 'bg-orange-500 text-white',
-    featured: 'bg-gradient-to-r from-orange-500 to-blue-900 text-white',
+    featured: 'bg-gradient-warm text-white',
     limited: 'bg-purple-600 text-white',
     success: 'bg-green-500 text-white',
     warning: 'bg-yellow-400 text-gray-900',

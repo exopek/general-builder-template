@@ -28,7 +28,7 @@
       <div class="w-full h-1.5 bg-white/20 rounded-full overflow-hidden mb-1"
            :class="progressBarClass">
         <div
-          class="h-full bg-gradient-to-r from-orange-500 to-yellow-400 rounded-full transition-all duration-1000 ease-out"
+          class="h-full bg-gradient-warm rounded-full transition-all duration-1000 ease-out"
           :class="progressFillClass"
           :style="{ width: progressPercentage + '%' }"
         ></div>
@@ -71,7 +71,7 @@ const variantClasses = computed(() => {
   const variants = {
     primary: 'border-l-primary text-gray-900',
     secondary: 'bg-secondary text-white border-l-secondary',
-    gradient: 'bg-gradient-primary text-white border-l-primary',
+    gradient: 'bg-gradient-warm text-white border-l-primary',
     minimal: 'bg-transparent text-gray-900 border-l-gray-300',
     highlight: 'bg-yellow-400 text-gray-900 border-l-primary'
   }
@@ -137,7 +137,7 @@ const progressFillClass = computed(() => {
   const variants = {
     primary: 'bg-orange-500',
     secondary: 'bg-white',
-    gradient: 'bg-gradient-to-r from-orange-500 to-yellow-400',
+    gradient: 'bg-gradient-warm',
     minimal: 'bg-orange-500',
     highlight: 'bg-orange-500'
   }
@@ -147,7 +147,7 @@ const progressFillClass = computed(() => {
 const numberStyles = computed(() => {
   if (props.variant === 'gradient') {
     return {
-      background: 'linear-gradient(to right, #f97316, #eab308)',
+      background: 'var(--gradient-warm)',
       backgroundClip: 'text',
       WebkitBackgroundClip: 'text',
       WebkitTextFillColor: 'transparent',
