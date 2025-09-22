@@ -42,7 +42,7 @@ interface Props {
   text?: string
   href?: string
   external?: boolean
-  variant?: 'primary' | 'secondary' | 'ghost' | 'gradient' | 'outline'
+  variant?: 'primary' | 'secondary' | 'secondaryFull' | 'ghost' | 'gradient' | 'outline'
   size?: 'sm' | 'md' | 'lg' | 'xl'
   icon?: string
   iconPosition?: 'left' | 'right'
@@ -73,6 +73,7 @@ const variantClasses = computed(() => {
   const variants = {
     primary: 'btn-primary',
     secondary: 'btn-secondary',
+    secondaryFull: 'bg-secondary',
     ghost: 'btn-ghost',
     gradient: 'bg-gradient-warm text-white hover:bg-gradient-primary hover:-translate-y-0.5',
     outline: 'bg-transparent text-primary border-2 border-primary hover:bg-primary hover:text-white hover:-translate-y-0.5'

@@ -39,13 +39,14 @@
         >
           <!-- Icon -->
           <div class="flex justify-center mb-8">
-            <TransformationIcon
-              :emoji="benefit.emoji"
-              :variant="benefit.iconVariant || 'primary'"
-              size="xl"
-              :animated="true"
-              class="group-hover:scale-125 transition-all duration-500 group-hover:rotate-6"
-            />
+            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-100 to-orange-200 flex items-center justify-center group-hover:scale-125 transition-all duration-500 group-hover:rotate-6 group-hover:shadow-lg">
+              <img
+                :src="`/icons/${benefit.icon}.svg`"
+                :alt="benefit.title"
+                class="w-8 h-8 transition-all duration-300"
+                :class="getIconColorClass(benefit.iconVariant || 'primary')"
+              />
+            </div>
           </div>
 
           <!-- Content -->
@@ -93,11 +94,11 @@
           <!-- Without Program -->
           <div class="space-y-4">
             <div class="flex items-center gap-3 mb-6">
-              <TransformationIcon
-                emoji="😟"
-                variant="warning"
-                size="md"
-              />
+              <div class="w-10 h-10 rounded-xl bg-red-100 flex items-center justify-center">
+                <svg class="w-6 h-6 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                </svg>
+              </div>
               <h4 class="text-xl font-bold text-gray-900">{{ withoutProgramTitle }}</h4>
             </div>
 
@@ -118,11 +119,11 @@
           <!-- With Program -->
           <div class="space-y-4">
             <div class="flex items-center gap-3 mb-6">
-              <TransformationIcon
-                emoji="🚀"
-                variant="success"
-                size="md"
-              />
+              <div class="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center">
+                <svg class="w-6 h-6 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+              </div>
               <h4 class="text-xl font-bold text-gray-900">{{ withProgramTitle }}</h4>
             </div>
 
@@ -184,7 +185,7 @@
 
       <!-- CTA Section -->
       <div v-if="showCta" class="text-center mt-12 lg:mt-16">
-        <div class="bg-gradient-primary rounded-2xl p-8 md:p-12 text-white">
+        <div class="bg-gradient-warm rounded-2xl p-8 md:p-12 text-white">
           <h3 class="text-2xl md:text-3xl font-bold mb-4">{{ ctaHeadline }}</h3>
           <p class="text-lg opacity-90 max-w-2xl mx-auto mb-8">{{ ctaDescription }}</p>
 
@@ -198,9 +199,8 @@
             <TransformationButton
               :text="secondaryCtaText"
               :href="secondaryCtaUrl"
-              variant="ghost"
+              variant="secondaryFull"
               size="lg"
-              class="text-white border-white hover:bg-white hover:text-gray-900"
             />
           </div>
         </div>
@@ -214,7 +214,7 @@
 interface Benefit {
   title: string
   description: string
-  emoji: string
+  icon: string
   iconVariant?: 'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'neutral'
   features?: string[]
   highlight?: string
@@ -266,6 +266,19 @@ interface Props {
   subheadlineColor?: string
 }
 
+// Icon color classes for different variants
+const getIconColorClass = (variant: string) => {
+  const colorMap = {
+    primary: 'filter brightness-0 saturate-100 invert-25 sepia-96 saturate-1831 hue-rotate-338 brightness-92 contrast-93',
+    secondary: 'filter brightness-0 saturate-100 invert-13 sepia-27 saturate-1824 hue-rotate-172 brightness-96 contrast-100',
+    accent: 'filter brightness-0 saturate-100 invert-42 sepia-96 saturate-2447 hue-rotate-185 brightness-100 contrast-92',
+    success: 'filter brightness-0 saturate-100 invert-47 sepia-69 saturate-959 hue-rotate-121 brightness-98 contrast-86',
+    warning: 'filter brightness-0 saturate-100 invert-74 sepia-29 saturate-1567 hue-rotate-356 brightness-101 contrast-103',
+    neutral: 'filter brightness-0 saturate-100 invert-54 sepia-18 saturate-340 hue-rotate-169 brightness-96 contrast-87'
+  }
+  return colorMap[variant as keyof typeof colorMap] || colorMap.primary
+}
+
 const props = withDefaults(defineProps<Props>(), {
   headline: 'Warum unser 7-Wochen Programm funktioniert',
   subheadline: 'Entdecke die wissenschaftlich fundierten Vorteile unseres Transformationsprogramms und erlebe selbst, warum über 94% unserer Teilnehmer ihre Ziele erreichen.',
@@ -276,7 +289,7 @@ const props = withDefaults(defineProps<Props>(), {
     {
       title: 'Personalisierte Trainingspläne',
       description: 'Maßgeschneiderte Workouts basierend auf deinem Fitnesslevel, deinen Zielen und verfügbarer Zeit.',
-      emoji: '🎯',
+      icon: 'bullseye-arrow',
       iconVariant: 'primary',
       features: ['Individueller Trainingsplan', 'Wöchentliche Anpassungen', 'Progressionstracking', 'Technik-Coaching'],
       highlight: 'Bestseller'
@@ -284,35 +297,35 @@ const props = withDefaults(defineProps<Props>(), {
     {
       title: 'Ernährungsberatung',
       description: 'Professionelle Ernährungsstrategien für optimale Ergebnisse ohne Verzicht auf Lieblingsspeisen.',
-      emoji: '🥗',
+      icon: 'recipe',
       iconVariant: 'success',
       features: ['Flexible Meal Plans', 'Makro-Berechnung', 'Restaurant-Guide', 'Rezept-Sammlung']
     },
     {
       title: 'Community & Support',
       description: 'Eine motivierende Gemeinschaft und persönliche Betreuung durch zertifizierte Trainer.',
-      emoji: '👥',
+      icon: 'users-medical',
       iconVariant: 'secondary',
       features: ['24/7 Support Chat', 'Wöchentliche Check-ins', 'Motivationsgruppen', 'Erfolgs-Tracking']
     },
     {
       title: 'Mentale Stärke',
       description: 'Entwickle die richtige Mindset und überwinde mentale Barrieren für langanhaltenden Erfolg.',
-      emoji: '🧠',
+      icon: 'brain-lightning',
       iconVariant: 'accent',
       features: ['Mindset-Training', 'Stress-Management', 'Gewohnheits-Coaching', 'Selbstvertrauen']
     },
     {
       title: 'Flexibilität',
       description: 'Trainiere wann und wo du willst - im Studio, zu Hause oder unterwegs.',
-      emoji: '⏰',
+      icon: 'calendar-clock',
       iconVariant: 'warning',
       features: ['Home Workouts', 'Studio Sessions', 'Reise-Routinen', 'Zeitsparende Optionen']
     },
     {
       title: 'Messbare Ergebnisse',
       description: 'Verfolge deinen Fortschritt mit detaillierten Metriken und regelmäßigen Erfolgskontrollen.',
-      emoji: '📊',
+      icon: 'chart-pie-alt',
       iconVariant: 'neutral',
       features: ['Body Composition', 'Kraftmessungen', 'Foto-Vergleiche', 'Leistungsanalyse'],
       highlight: 'Datenbasiert'
