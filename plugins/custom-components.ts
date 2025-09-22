@@ -6,10 +6,21 @@ import CourseRecommendationFunnel from '~/components/CourseRecommendationFunnel.
 import ChallengeHeroSection from '~/components/ChallengeHeroSection.vue';
 import CashbackBadge from '~/components/CashbackBadge.vue';
 
+// Transformation Components
+import TransformationHero from '~/components/transformation/TransformationHero.vue';
+import TransformationTimeline from '~/components/transformation/TransformationTimeline.vue';
+import TransformationBenefits from '~/components/transformation/TransformationBenefits.vue';
+import TransformationTestimonials from '~/components/transformation/TransformationTestimonials.vue';
+import TransformationPricing from '~/components/transformation/TransformationPricing.vue';
+import TransformationFAQ from '~/components/transformation/TransformationFAQ.vue';
+import TransformationResults from '~/components/transformation/TransformationResults.vue';
+
 type ComponentInput = {
     name: string;
     type: string;
     defaultValue?: any;
+    allowedFileTypes?: string[];
+    enum?: string[];
 };
 
 type RegisteredComponent = {
@@ -97,6 +108,151 @@ export const registeredComponents: RegisteredComponent[] = [
             { name: 'scale', type: 'number', defaultValue: 1 },
             { name: 'glowEffect', type: 'boolean', defaultValue: true },
             { name: 'pulseAnimation', type: 'boolean', defaultValue: false }
+        ]
+    },
+
+    // === TRANSFORMATION COMPONENTS ===
+    {
+        component: TransformationHero,
+        name: 'TransformationHero',
+        inputs: [
+            // Content
+            { name: 'headline', type: 'richText', defaultValue: 'Deine <span style="color: #f97316;">7-Wochen</span><br>Transformation beginnt jetzt' },
+            { name: 'subheadline', type: 'text', defaultValue: 'Erreiche deine Fitnessziele mit unserem bewährten 7-Wochen-Programm. Professionelle Betreuung, maßgeschneiderte Trainingspläne und eine Gemeinschaft, die dich unterstützt.' },
+            { name: 'badgeText', type: 'string', defaultValue: 'Limitiertes Angebot' },
+            { name: 'showBadge', type: 'boolean', defaultValue: true },
+
+            // CTAs
+            { name: 'primaryCtaText', type: 'string', defaultValue: 'Jetzt starten' },
+            { name: 'primaryCtaUrl', type: 'url', defaultValue: '#anmeldung' },
+            { name: 'secondaryCtaText', type: 'string', defaultValue: 'Mehr erfahren' },
+            { name: 'secondaryCtaUrl', type: 'url', defaultValue: '#details' },
+
+            // Visual
+            { name: 'heroImage', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png'], defaultValue: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=750&fit=crop&crop=center' },
+            { name: 'heroImageAlt', type: 'string', defaultValue: '7-Wochen Fitness Transformation' },
+            { name: 'showImageBadge', type: 'boolean', defaultValue: true },
+            { name: 'imageBadgeText', type: 'string', defaultValue: '100% Erfolgsgarantie' },
+
+            // Counters
+            { name: 'showCounters', type: 'boolean', defaultValue: true },
+            { name: 'participantsCount', type: 'number', defaultValue: 2847 },
+            { name: 'successRate', type: 'number', defaultValue: 94 },
+            { name: 'avgWeightLoss', type: 'number', defaultValue: 8 },
+
+            // Trust Indicators
+            { name: 'showTrustIndicators', type: 'boolean', defaultValue: true },
+            { name: 'trustIndicator1', type: 'string', defaultValue: 'Geld-zurück-Garantie' },
+            { name: 'trustIndicator2', type: 'string', defaultValue: 'Zertifizierte Trainer' },
+            { name: 'trustIndicator3', type: 'string', defaultValue: 'Kostenlose Probestunde' }
+        ]
+    },
+
+    {
+        component: TransformationTimeline,
+        name: 'TransformationTimeline',
+        inputs: [
+            { name: 'headline', type: 'string', defaultValue: 'Dein 7-Wochen Transformations-Plan' },
+            { name: 'subheadline', type: 'text', defaultValue: 'Jede Woche bringt dich deinem Ziel näher. Unser strukturierter Plan führt dich Schritt für Schritt zu deiner besten Version.' },
+            { name: 'showBadge', type: 'boolean', defaultValue: true },
+            { name: 'badgeText', type: 'string', defaultValue: 'Bewährtes System' },
+            { name: 'currentWeek', type: 'number', defaultValue: 3 },
+            { name: 'progressPercentage', type: 'number', defaultValue: 45 },
+            { name: 'showOverallStats', type: 'boolean', defaultValue: true },
+            { name: 'showCta', type: 'boolean', defaultValue: true },
+            { name: 'ctaHeadline', type: 'string', defaultValue: 'Starte deine eigene 7-Wochen Transformation' },
+            { name: 'primaryCtaText', type: 'string', defaultValue: 'Jetzt anmelden' },
+            { name: 'primaryCtaUrl', type: 'url', defaultValue: '#anmeldung' }
+        ]
+    },
+
+    {
+        component: TransformationBenefits,
+        name: 'TransformationBenefits',
+        inputs: [
+            { name: 'headline', type: 'string', defaultValue: 'Warum unser 7-Wochen Programm funktioniert' },
+            { name: 'subheadline', type: 'text', defaultValue: 'Entdecke die wissenschaftlich fundierten Vorteile unseres Transformationsprogramms und erlebe selbst, warum über 94% unserer Teilnehmer ihre Ziele erreichen.' },
+            { name: 'showBadge', type: 'boolean', defaultValue: true },
+            { name: 'badgeText', type: 'string', defaultValue: 'Bewiesene Erfolge' },
+            { name: 'showComparison', type: 'boolean', defaultValue: true },
+            { name: 'comparisonHeadline', type: 'string', defaultValue: 'Der Unterschied ist deutlich sichtbar' },
+            { name: 'showMetrics', type: 'boolean', defaultValue: true },
+            { name: 'metricsHeadline', type: 'string', defaultValue: 'Unsere Teilnehmer erreichen durchschnittlich' },
+            { name: 'showCta', type: 'boolean', defaultValue: true },
+            { name: 'ctaHeadline', type: 'string', defaultValue: 'Bereit für deine Transformation?' },
+            { name: 'primaryCtaText', type: 'string', defaultValue: 'Programm starten' },
+            { name: 'primaryCtaUrl', type: 'url', defaultValue: '#anmeldung' }
+        ]
+    },
+
+    {
+        component: TransformationTestimonials,
+        name: 'TransformationTestimonials',
+        inputs: [
+            { name: 'headline', type: 'string', defaultValue: 'Echte Erfolgsgeschichten unserer Teilnehmer' },
+            { name: 'subheadline', type: 'text', defaultValue: 'Überzeuge dich selbst von den beeindruckenden Transformationen. Diese Ergebnisse sprechen für sich und können auch deine Realität werden.' },
+            { name: 'showBadge', type: 'boolean', defaultValue: true },
+            { name: 'badgeText', type: 'string', defaultValue: 'Verifizierte Erfolge' },
+            { name: 'showSummaryStats', type: 'boolean', defaultValue: true },
+            { name: 'summaryStatsHeadline', type: 'string', defaultValue: 'Diese Erfolge sprechen für sich' },
+            { name: 'showCta', type: 'boolean', defaultValue: true },
+            { name: 'ctaHeadline', type: 'string', defaultValue: 'Deine Erfolgsgeschichte beginnt jetzt' },
+            { name: 'primaryCtaText', type: 'string', defaultValue: 'Meine Transformation starten' },
+            { name: 'primaryCtaUrl', type: 'url', defaultValue: '#anmeldung' }
+        ]
+    },
+
+    {
+        component: TransformationPricing,
+        name: 'TransformationPricing',
+        inputs: [
+            { name: 'headline', type: 'string', defaultValue: 'Wähle dein Transformations-Paket' },
+            { name: 'subheadline', type: 'text', defaultValue: 'Investiere in deine Gesundheit und wähle das Paket, das perfekt zu deinen Zielen und deinem Budget passt. Alle Pakete beinhalten unsere Erfolgsgarantie.' },
+            { name: 'showBadge', type: 'boolean', defaultValue: true },
+            { name: 'badgeText', type: 'string', defaultValue: 'Limitierte Zeit' },
+            { name: 'showValueProposition', type: 'boolean', defaultValue: true },
+            { name: 'valuePropositionHeadline', type: 'string', defaultValue: 'Warum sich die Investition lohnt' },
+            { name: 'showComparison', type: 'boolean', defaultValue: true },
+            { name: 'comparisonHeadline', type: 'string', defaultValue: 'Detaillierter Paket-Vergleich' },
+            { name: 'showFaqTeaser', type: 'boolean', defaultValue: true },
+            { name: 'faqTeaserHeadline', type: 'string', defaultValue: 'Noch Fragen zu den Paketen?' }
+        ]
+    },
+
+    {
+        component: TransformationFAQ,
+        name: 'TransformationFAQ',
+        inputs: [
+            { name: 'headline', type: 'string', defaultValue: 'Häufig gestellte Fragen' },
+            { name: 'subheadline', type: 'text', defaultValue: 'Finde schnell Antworten auf die wichtigsten Fragen zu unserem 7-Wochen Transformationsprogramm. Falls du weitere Fragen hast, kontaktiere uns gerne direkt.' },
+            { name: 'showBadge', type: 'boolean', defaultValue: true },
+            { name: 'badgeText', type: 'string', defaultValue: 'Alles erklärt' },
+            { name: 'showSearch', type: 'boolean', defaultValue: true },
+            { name: 'searchPlaceholder', type: 'string', defaultValue: 'Suche nach Stichworten...' },
+            { name: 'showCategories', type: 'boolean', defaultValue: true },
+            { name: 'showContactSection', type: 'boolean', defaultValue: true },
+            { name: 'contactSectionHeadline', type: 'string', defaultValue: 'Noch Fragen? Wir sind für dich da!' },
+            { name: 'primaryContactText', type: 'string', defaultValue: 'Kostenloses Beratungsgespräch' },
+            { name: 'primaryContactUrl', type: 'url', defaultValue: '#beratung' }
+        ]
+    },
+
+    {
+        component: TransformationResults,
+        name: 'TransformationResults',
+        inputs: [
+            { name: 'headline', type: 'string', defaultValue: 'Echte Transformationen. Echte Ergebnisse.' },
+            { name: 'subheadline', type: 'text', defaultValue: 'Sieh selbst, was in nur 7 Wochen möglich ist. Diese Erfolgsgeschichten zeigen das wahre Potenzial unseres Programms und können auch deine Realität werden.' },
+            { name: 'showBadge', type: 'boolean', defaultValue: true },
+            { name: 'badgeText', type: 'string', defaultValue: 'Verifizierte Ergebnisse' },
+            { name: 'showStatistics', type: 'boolean', defaultValue: true },
+            { name: 'showFilters', type: 'boolean', defaultValue: true },
+            { name: 'showLoadMore', type: 'boolean', defaultValue: true },
+            { name: 'loadMoreText', type: 'string', defaultValue: 'Weitere Erfolgsgeschichten laden' },
+            { name: 'showCta', type: 'boolean', defaultValue: true },
+            { name: 'ctaHeadline', type: 'string', defaultValue: 'Schreibe deine eigene Erfolgsgeschichte' },
+            { name: 'primaryCtaText', type: 'string', defaultValue: 'Meine Transformation starten' },
+            { name: 'primaryCtaUrl', type: 'url', defaultValue: '#anmeldung' }
         ]
     }
 ];
