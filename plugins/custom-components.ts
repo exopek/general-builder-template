@@ -14,6 +14,7 @@ import TransformationTestimonials from '~/components/transformation/Transformati
 import TransformationPricing from '~/components/transformation/TransformationPricing.vue';
 import TransformationFAQ from '~/components/transformation/TransformationFAQ.vue';
 import TransformationResults from '~/components/transformation/TransformationResults.vue';
+import TransformationQuiz from '~/components/TransformationQuiz.vue';
 
 type ComponentInput = {
     name: string;
@@ -282,6 +283,38 @@ export const registeredComponents: RegisteredComponent[] = [
             { name: 'ctaHeadline', type: 'string', defaultValue: 'Schreibe deine eigene Erfolgsgeschichte' },
             { name: 'primaryCtaText', type: 'string', defaultValue: 'Meine Transformation starten' },
             { name: 'primaryCtaUrl', type: 'url', defaultValue: '#anmeldung' }
+        ]
+    },
+
+    {
+        component: TransformationQuiz,
+        name: 'TransformationQuiz',
+        inputs: [
+            // Content
+            { name: 'headline', type: 'richText', defaultValue: 'Bist du bereit für deine 7-Wochen Transformation?' },
+            { name: 'subheadline', type: 'text', defaultValue: 'Beantworte diese kurzen Fragen und finde heraus, ob unser Programm perfekt für dich ist' },
+
+            // Badge
+            { name: 'showBadge', type: 'boolean', defaultValue: true },
+            { name: 'badgeText', type: 'string', defaultValue: 'Quiz' },
+
+            // Step Labels
+            { name: 'showStepLabels', type: 'boolean', defaultValue: true },
+            { name: 'step1Label', type: 'string', defaultValue: 'Schritt 1: Deine Ziele' },
+            { name: 'step2Label', type: 'string', defaultValue: 'Schritt 2: Betreuung & Sicherheit' },
+            { name: 'step3Label', type: 'string', defaultValue: 'Schritt 3: Dein Start' },
+
+            // Final CTA
+            { name: 'finalCtaHeadline', type: 'string', defaultValue: 'Perfekt! Du bist bereit für deine Transformation' },
+            { name: 'finalCtaSubtext', type: 'text', defaultValue: 'Sichere dir jetzt deinen Platz und starte noch heute mit deiner 7-Wochen Transformation' },
+            { name: 'finalCtaText', type: 'string', defaultValue: 'Jetzt starten - Nur 297€' },
+            { name: 'finalCtaUrl', type: 'url', defaultValue: '#anmeldung' },
+            { name: 'cashbackText', type: 'string', defaultValue: '💰 100€ Cashback bei erfolgreichem Abschluss' },
+
+            // Styling
+            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'headlineColor', type: 'color', defaultValue: '#1f2937' },
+            { name: 'subheadlineColor', type: 'color', defaultValue: '#6b7280' }
         ]
     }
 ];

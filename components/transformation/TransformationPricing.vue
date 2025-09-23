@@ -27,7 +27,7 @@
       </div>
 
       <!-- Pricing Cards -->
-      <div class="grid lg:grid-cols-3 gap-6 max-w-5xl mx-auto mb-16">
+      <div class="space-y-6 max-w-6xl mx-auto mb-16">
         <TransformationCard
           v-for="(plan, index) in pricingPlans"
           :key="index"
@@ -36,119 +36,130 @@
           :hover-effect="false"
           :class="[
             'relative',
-            plan.featured ? 'scale-105 lg:scale-105 z-10 ring-2 ring-orange-200' : ''
+            plan.featured ? 'ring-2 ring-orange-200' : ''
           ]"
         >
-          
+          <!-- Content Grid -->
+          <div class="grid md:grid-cols-12 gap-6 items-center">
 
-          <!-- Plan Header -->
-          <div class="text-center mb-8">
-            <div class="mb-4">
-              <div class="w-12 h-12 mx-auto mb-2">
-                <img
-                  :src="plan.icon"
-                  :alt="plan.name"
-                  class="w-full h-full object-contain"
+            <!-- Left: Plan Info & Pricing (4 columns) -->
+            <div class="md:col-span-4 text-center md:text-left">
+              <!-- Plan Header -->
+              <div class="flex items-center justify-center md:justify-start gap-3 mb-4">
+                
+                
+                <div>
+                  <h3 class="text-lg lg:text-xl font-bold mb-1 text-gray-900">
+                    {{ plan.name }}
+                  </h3>
+                  <p class="text-xs opacity-90" :class="plan.featured ? 'text-gray-100' : 'text-gray-600'">
+                    {{ plan.description }}
+                  </p>
+                </div>
+              </div>
+
+              <!-- Pricing -->
+              <div class="mb-4">
+                <div class="flex items-baseline justify-center md:justify-start gap-2 mb-2">
+                  <span class="text-2xl md:text-3xl font-black text-gray-700">
+                    {{ plan.price }}€
+                  </span>
+                  <span class="text-sm opacity-80" :class="plan.featured ? 'text-gray-100' : 'text-gray-600'">
+                    {{ plan.period }}
+                  </span>
+                </div>
+
+                <!-- Original Price (if discounted) -->
+                <div v-if="plan.originalPrice" class="flex items-center justify-center md:justify-start gap-2 mb-2">
+                  <span class="text-sm line-through opacity-60" :class="plan.featured ? 'text-gray-200' : 'text-gray-500'">
+                    {{ plan.originalPrice }}€
+                  </span>
+                  <TransformationBadge
+                    :text="`${plan.discount}% Ersparnis`"
+                    variant="success"
+                    size="sm"
+                  />
+                </div>
+
+                <!-- Payment Info -->
+                <p class="text-xs opacity-70" :class="plan.featured ? 'text-gray-100' : 'text-gray-600'">
+                  {{ plan.paymentInfo }}
+                </p>
+              </div>
+            </div>
+
+            <!-- Middle: Features (5 columns) -->
+            <div class="md:col-span-5">
+              <!-- Features List -->
+              <div class="space-y-2">
+                <h4 class="font-semibold text-xs mb-3" :class="plan.featured ? 'text-white' : 'text-gray-700'">
+                  Was ist enthalten:
+                </h4>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <div
+                    v-for="feature in plan.features.slice(0, 6)"
+                    :key="feature"
+                    class="flex items-start gap-2"
+                  >
+                    <svg class="w-3 h-3 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                    </svg>
+                    <span class="text-xs" :class="plan.featured ? 'text-gray-100' : 'text-gray-700'">
+                      {{ feature }}
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Show remaining features if more than 6 -->
+                <div v-if="plan.features.length > 6" class="text-xs opacity-70" :class="plan.featured ? 'text-gray-100' : 'text-gray-600'">
+                  + {{ plan.features.length - 6 }} weitere Features
+                </div>
+              </div>
+
+              <!-- Bonus Features (if any) -->
+              <div v-if="plan.bonusFeatures" class="rounded-lg p-3 mt-4 border" :class="plan.featured ? 'bg-white/10 border-white/20' : 'bg-gray-50 border-gray-200'">
+                <h5 class="font-semibold mb-2 flex items-center gap-2 text-xs text-gray-900">
+                  <div class="w-3 h-3">
+                    <img src="/icons/trophy.svg" alt="Bonus" class="w-full h-full filter brightness-0"/>
+                  </div>
+                  Exklusive Boni:
+                </h5>
+                <div class="space-y-1">
+                  <div
+                    v-for="bonus in plan.bonusFeatures.slice(0, 2)"
+                    :key="bonus"
+                    class="flex items-start gap-2"
+                  >
+                    <svg class="w-3 h-3 text-yellow-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                    </svg>
+                    <span class="text-xs" :class="plan.featured ? 'text-gray-100' : 'text-gray-700'">
+                      {{ bonus }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: CTA (3 columns) -->
+            <div class="md:col-span-3 text-center md:text-right">
+              <div class="space-y-3">
+                <!-- CTA Button -->
+                <TransformationButton
+                  :text="plan.ctaText"
+                  :href="plan.ctaUrl"
+                  :variant="plan.featured ? 'secondary' : 'gradient'"
+                  size="md"
+                  class="w-full md:w-auto md:min-w-[140px]"
                 />
-              </div>
-            </div>
 
-            <h3 class="text-xl lg:text-2xl font-bold mb-2 text-gray-900">
-              {{ plan.name }}
-            </h3>
-            <p class="text-sm opacity-90" :class="plan.featured ? 'text-gray-100' : 'text-gray-600'">
-              {{ plan.description }}
-            </p>
-          </div>
-
-          <!-- Pricing -->
-          <div class="text-center mb-8">
-            <div class="flex items-baseline justify-center gap-2 mb-3">
-              <span class="text-3xl md:text-4xl font-black text-gray-700">
-                {{ plan.price }}€
-              </span>
-              <span class="text-base opacity-80" :class="plan.featured ? 'text-gray-100' : 'text-gray-600'">
-                {{ plan.period }}
-              </span>
-            </div>
-
-            <!-- Original Price (if discounted) -->
-            <div v-if="plan.originalPrice" class="flex items-center justify-center gap-3">
-              <span class="text-base line-through opacity-60" :class="plan.featured ? 'text-gray-200' : 'text-gray-500'">
-                {{ plan.originalPrice }}€
-              </span>
-              <TransformationBadge
-                :text="`${plan.discount}% Ersparnis`"
-                variant="success"
-                size="sm"
-              />
-            </div>
-
-            <!-- Payment Info -->
-            <p class="text-sm mt-2 opacity-70" :class="plan.featured ? 'text-gray-100' : 'text-gray-600'">
-              {{ plan.paymentInfo }}
-            </p>
-          </div>
-
-          <!-- Features List -->
-          <div class="space-y-3 mb-8">
-            <h4 class="font-semibold text-sm text-gray-700">
-              Was ist enthalten:
-            </h4>
-            <div class="space-y-3">
-              <div
-                v-for="feature in plan.features"
-                :key="feature"
-                class="flex items-start gap-3"
-              >
-                <svg class="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-                </svg>
-                <span class="text-sm" :class="plan.featured ? 'text-gray-100' : 'text-gray-700'">
-                  {{ feature }}
-                </span>
+                <!-- Additional Info -->
+                <p v-if="plan.additionalInfo" class="text-xs opacity-70 text-primary">
+                  {{ plan.additionalInfo }}
+                </p>
               </div>
             </div>
           </div>
-
-          <!-- Bonus Features (if any) -->
-          <div v-if="plan.bonusFeatures" class="rounded-lg p-4 mb-6 border" :class="plan.featured ? 'bg-white/10 border-white/20' : 'bg-gray-50 border-gray-200'">
-            <h5 class="font-semibold mb-3 flex items-center gap-2 text-sm" :class="plan.featured ? 'text-gray-900' : 'text-white'">
-              <div class="w-4 h-4">
-                <img src="/icons/trophy.svg" alt="Bonus" class="w-full h-full"/>
-              </div>
-              Exklusive Boni:
-            </h5>
-            <div class="space-y-2">
-              <div
-                v-for="bonus in plan.bonusFeatures"
-                :key="bonus"
-                class="flex items-start gap-3"
-              >
-                <svg class="w-4 h-4 text-yellow-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                </svg>
-                <span class="text-sm" :class="plan.featured ? 'text-gray-100' : 'text-gray-700'">
-                  {{ bonus }}
-                </span>
-              </div>
-            </div>
-          </div>
-
-
-          <!-- CTA Button -->
-          <TransformationButton
-            :text="plan.ctaText"
-            :href="plan.ctaUrl"
-            :variant="plan.featured ? 'secondary' : 'gradient'"
-            size="md"
-            class="w-full"
-          />
-
-          <!-- Additional Info -->
-          <p v-if="plan.additionalInfo" class="text-xs text-center mt-3 opacity-70" :class="plan.featured ? 'text-gray-200' : 'text-gray-500'">
-            {{ plan.additionalInfo }}
-          </p>
         </TransformationCard>
       </div>
 
@@ -165,7 +176,7 @@
               <div class="w-12 h-12 mx-auto mb-4">
                 <img src="/icons/coins.svg" alt="Geld-zurück" class="w-full h-full" />
               </div>
-              <h4 class="font-semibold text-gray-900 mb-2">Geld-zurück-Garantie</h4>
+              <h4 class="font-semibold text-gray-900 mb-2">Erfolgs-Bonus</h4>
               <p class="text-sm text-gray-600">{{ guaranteeText }}</p>
             </div>
 
@@ -189,7 +200,7 @@
       </div>
 
       <!-- Comparison Table -->
-      <div v-if="showComparison" class="max-w-6xl mx-auto mb-16">
+      <!-- <div v-if="showComparison" class="max-w-6xl mx-auto mb-16">
         <h3 class="text-2xl font-bold text-center text-gray-900 mb-8">{{ comparisonHeadline }}</h3>
 
         <div class="overflow-x-auto">
@@ -234,7 +245,7 @@
             </tbody>
           </table>
         </div>
-      </div>
+      </div> -->
 
       <!-- FAQ Teaser -->
       <div v-if="showFaqTeaser" class="text-center">
@@ -321,7 +332,7 @@ const props = withDefaults(defineProps<Props>(), {
   showBadge: true,
 
   pricingPlans: () => [
-    {
+    /* {
       name: 'Core Start',
       description: 'Dein Einstieg in die Transformation',
       icon: '/icons/brain-lightning.svg',
@@ -342,7 +353,7 @@ const props = withDefaults(defineProps<Props>(), {
       ctaText: 'Starter wählen',
       ctaUrl: '#core-start',
       additionalInfo: 'Sofortiger Download nach Zahlung'
-    },
+    }, */
     {
       name: 'Hybrid Transform',
       description: 'Intensives Training + persönliche Betreuung',
@@ -367,7 +378,7 @@ const props = withDefaults(defineProps<Props>(), {
       additionalInfo: 'Bei Erfolg: 100€ Cashback erhalten',
       featured: true,
       badge: 'Bestseller'
-    },
+    }/* ,
     {
       name: 'High Performance',
       description: 'Premium Transformation mit VIP-Betreuung',
@@ -388,13 +399,13 @@ const props = withDefaults(defineProps<Props>(), {
       ctaText: 'VIP werden',
       ctaUrl: '#high-performance',
       additionalInfo: 'Limitiert auf 20 Plätze pro Monat'
-    }
+    } */
   ],
 
   showValueProposition: true,
   valuePropositionHeadline: 'Mehr als nur ein Programm - Dein Weg ins EXOPEK',
   valuePropositionDescription: 'Starte mit der Transformation und werde Teil unserer Community. Nach 7 Wochen wartet deine neue Gym-Heimat auf dich.',
-  guaranteeText: 'Professionelle Betreuung durch zertifizierte Trainer.',
+  guaranteeText: 'Cashback wenn du Erfolg hast. Machen wir unsere Sache gut, bekommst du 100€ zurück.',
   successText: '89% unserer Teilnehmer werden danach EXOPEK-Mitglieder.',
   supportText: 'Nahtloser Übergang: Von der Transformation zur dauerhaften Mitgliedschaft.',
 
