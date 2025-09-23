@@ -449,14 +449,34 @@
 **🎯 Resultat:** Schlanke Klienten-Verwaltung mit nur den vorhandenen User-Daten aus der API.
 
 ### Phase 9: Future Enhancements (Optional)
-- [ ] **Builder.io Integration**
-  - [ ] Setup Builder.io Content-Bereiche
-  - [ ] Erstelle Custom Components für Builder
-  - [ ] Teste Content-Management Workflow
-  - [ ] Dokumentiere Builder.io Setup
-  
 - [ ] **Advanced Features**
   - [ ] Implementiere Push Notifications
   - [ ] Setup Email Templates für Buchungsbestätigungen
   - [ ] Erweiterte Analytics und Reporting
   - [ ] Offline-Support mit Service Workers
+
+### Phase 10: Builder.io 7-Wochen-Transformation Landing Page ⏳ NEW
+- [ ] **Base Components (Wiederverwendbar)**
+  - [ ] Erstelle `components/transformation/` Ordner für modulare Architektur
+  - [ ] Erstelle `TransformationCard.vue` - Basis-Karte für verschiedene Transformation-Inhalte
+  - [ ] Erstelle `TransformationButton.vue` - CTA-Button mit verschiedenen Varianten (Primary, Secondary, Ghost)
+  - [ ] Erstelle `TransformationIcon.vue` - Icon-Container mit Hintergrund und Hover-Effekten
+  - [ ] Erstelle `TransformationBadge.vue` - Badge/Label für Highlights (NEU, BELIEBT, etc.)
+  - [ ] Erstelle `TransformationCounter.vue` - Countdown/Number Display für Statistiken
+
+- [ ] **Section Components (Builder.io Registriert)**
+  - [ ] Erstelle `TransformationHero.vue` - Hero-Sektion mit Transformation-Versprechen, Countdown, CTAs
+  - [ ] Erstelle `TransformationTimeline.vue` - Interaktive 7-Wochen Timeline mit Progress-Indicator
+  - [ ] Erstelle `TransformationBenefits.vue` - Benefits Grid (3x3) mit Icons und Hover-Effekten
+  - [ ] Erstelle `TransformationTestimonials.vue` - Erfolgsgeschichten-Slider mit Ratings
+  - [ ] Erstelle `TransformationPricing.vue` - Pricing-Karten mit verschiedenen Paketen und Popular-Badge
+  - [ ] Erstelle `TransformationFAQ.vue` - FAQ Accordion mit Kategorien und Such-Filter
+  - [ ] Erstelle `TransformationResults.vue` - Before/After Galerie in Masonry-Layout mit Statistiken
+
+- [ ] **Builder.io Integration**
+  - [ ] Registriere alle Section Components in `plugins/custom-components.ts`
+  - [ ] Definiere umfangreiche Input-Schemas für editierbare Inhalte (Texte, Bilder, URLs)
+  - [ ] Erstelle deutsche SEO-optimierte Platzhalter-Texte für Fitness-Transformation
+  - [ ] Setup responsive Container-Klassen für Mobile-First Design
+
+**🎯 Ziel:** Modulare, wiederverwendbare Builder.io-Komponenten für professionelle 7-Wochen-Transformation Landing Page mit deutscher SEO-Optimierung und komponentenweiser Architektur.
