@@ -27,94 +27,84 @@
       </div>
 
       <!-- Pricing Cards -->
-      <div class="grid lg:grid-cols-3 gap-8 lg:gap-10 max-w-7xl mx-auto mb-16">
+      <div class="grid lg:grid-cols-3 gap-6 max-w-5xl mx-auto mb-16">
         <TransformationCard
           v-for="(plan, index) in pricingPlans"
           :key="index"
           :variant="plan.featured ? 'gradient' : 'elevated'"
-          size="lg"
-          :hover-effect="true"
+          size="md"
+          :hover-effect="false"
           :class="[
-            'relative transition-all duration-500',
-            plan.featured ? 'scale-105 lg:scale-110 z-10 ring-4 ring-orange-200' : ''
+            'relative',
+            plan.featured ? 'scale-105 lg:scale-105 z-10 ring-2 ring-orange-200' : ''
           ]"
         >
-          <!-- Popular Badge -->
-          <TransformationBadge
-            v-if="plan.featured"
-            :text="plan.badge || 'Beliebt'"
-            variant="new"
-            size="lg"
-            position="top-right"
-            animated
-          />
+          
 
           <!-- Plan Header -->
-          <div class="text-center mb-10">
-            <div class="mb-6">
-              <TransformationIcon
-                :emoji="plan.emoji"
-                :variant="plan.featured ? 'success' : 'primary'"
-                size="xl"
-                :animated="true"
-                class="hover:scale-110 transition-transform duration-300"
-              />
+          <div class="text-center mb-8">
+            <div class="mb-4">
+              <div class="w-12 h-12 mx-auto mb-2">
+                <img
+                  :src="plan.icon"
+                  :alt="plan.name"
+                  class="w-full h-full object-contain"
+                />
+              </div>
             </div>
 
-            <h3 class="text-2xl lg:text-3xl font-bold mb-3" :class="plan.featured ? 'text-white' : 'text-gray-900'">
+            <h3 class="text-xl lg:text-2xl font-bold mb-2 text-gray-900">
               {{ plan.name }}
             </h3>
-            <p class="text-sm lg:text-base opacity-90" :class="plan.featured ? 'text-white' : 'text-gray-600'">
+            <p class="text-sm opacity-90" :class="plan.featured ? 'text-gray-100' : 'text-gray-600'">
               {{ plan.description }}
             </p>
           </div>
 
           <!-- Pricing -->
-          <div class="text-center mb-10">
+          <div class="text-center mb-8">
             <div class="flex items-baseline justify-center gap-2 mb-3">
-              <span class="text-4xl md:text-5xl lg:text-6xl font-black" :class="plan.featured ? 'text-white' : 'text-gray-900'">
+              <span class="text-3xl md:text-4xl font-black text-gray-700">
                 {{ plan.price }}€
               </span>
-              <span class="text-lg lg:text-xl opacity-80" :class="plan.featured ? 'text-white' : 'text-gray-600'">
+              <span class="text-base opacity-80" :class="plan.featured ? 'text-gray-100' : 'text-gray-600'">
                 {{ plan.period }}
               </span>
             </div>
 
             <!-- Original Price (if discounted) -->
             <div v-if="plan.originalPrice" class="flex items-center justify-center gap-3">
-              <span class="text-lg lg:text-xl line-through opacity-60" :class="plan.featured ? 'text-white' : 'text-gray-500'">
+              <span class="text-base line-through opacity-60" :class="plan.featured ? 'text-gray-200' : 'text-gray-500'">
                 {{ plan.originalPrice }}€
               </span>
               <TransformationBadge
                 :text="`${plan.discount}% Ersparnis`"
                 variant="success"
                 size="sm"
-                animated
               />
             </div>
 
             <!-- Payment Info -->
-            <p class="text-sm mt-2 opacity-70" :class="plan.featured ? 'text-white' : 'text-gray-600'">
+            <p class="text-sm mt-2 opacity-70" :class="plan.featured ? 'text-gray-100' : 'text-gray-600'">
               {{ plan.paymentInfo }}
             </p>
           </div>
 
           <!-- Features List -->
-          <div class="space-y-4 mb-10">
-            <h4 class="font-semibold" :class="plan.featured ? 'text-white' : 'text-gray-900'">
+          <div class="space-y-3 mb-8">
+            <h4 class="font-semibold text-sm text-gray-700">
               Was ist enthalten:
             </h4>
-            <div class="space-y-4">
+            <div class="space-y-3">
               <div
-                v-for="(feature, featureIndex) in plan.features"
+                v-for="feature in plan.features"
                 :key="feature"
-                class="flex items-start gap-3 transition-all duration-300 hover:translate-x-1"
-                :style="{ animationDelay: `${featureIndex * 0.1}s` }"
+                class="flex items-start gap-3"
               >
-                <svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5 transition-colors duration-300" fill="currentColor" viewBox="0 0 20 20">
+                <svg class="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                   <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                 </svg>
-                <span class="text-sm lg:text-base" :class="plan.featured ? 'text-white' : 'text-gray-700'">
+                <span class="text-sm" :class="plan.featured ? 'text-gray-100' : 'text-gray-700'">
                   {{ feature }}
                 </span>
               </div>
@@ -122,13 +112,11 @@
           </div>
 
           <!-- Bonus Features (if any) -->
-          <div v-if="plan.bonusFeatures" class="bg-black/10 rounded-xl p-5 mb-10 border transition-all duration-300 hover:shadow-lg" :class="plan.featured ? 'bg-white/10 border-white/20' : 'bg-gray-50 border-gray-200'">
-            <h5 class="font-semibold mb-3 flex items-center gap-2" :class="plan.featured ? 'text-white' : 'text-gray-900'">
-              <TransformationIcon
-                emoji="🎁"
-                variant="warning"
-                size="sm"
-              />
+          <div v-if="plan.bonusFeatures" class="rounded-lg p-4 mb-6 border" :class="plan.featured ? 'bg-white/10 border-white/20' : 'bg-gray-50 border-gray-200'">
+            <h5 class="font-semibold mb-3 flex items-center gap-2 text-sm" :class="plan.featured ? 'text-gray-900' : 'text-white'">
+              <div class="w-4 h-4">
+                <img src="/icons/trophy.svg" alt="Bonus" class="w-full h-full"/>
+              </div>
               Exklusive Boni:
             </h5>
             <div class="space-y-2">
@@ -140,36 +128,25 @@
                 <svg class="w-4 h-4 text-yellow-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
                 </svg>
-                <span class="text-sm" :class="plan.featured ? 'text-white' : 'text-gray-700'">
+                <span class="text-sm" :class="plan.featured ? 'text-gray-100' : 'text-gray-700'">
                   {{ bonus }}
                 </span>
               </div>
             </div>
           </div>
 
-          <!-- Guarantee -->
-          <div v-if="plan.guarantee" class="text-center mb-8">
-            <div class="flex items-center justify-center gap-2 text-sm" :class="plan.featured ? 'text-white' : 'text-gray-600'">
-              <TransformationIcon
-                emoji="🛡️"
-                variant="success"
-                size="sm"
-              />
-              <span>{{ plan.guarantee }}</span>
-            </div>
-          </div>
 
           <!-- CTA Button -->
           <TransformationButton
             :text="plan.ctaText"
             :href="plan.ctaUrl"
             :variant="plan.featured ? 'secondary' : 'gradient'"
-            size="lg"
-            class="w-full transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
+            size="md"
+            class="w-full"
           />
 
           <!-- Additional Info -->
-          <p v-if="plan.additionalInfo" class="text-xs text-center mt-4 opacity-70" :class="plan.featured ? 'text-white' : 'text-gray-500'">
+          <p v-if="plan.additionalInfo" class="text-xs text-center mt-3 opacity-70" :class="plan.featured ? 'text-gray-200' : 'text-gray-500'">
             {{ plan.additionalInfo }}
           </p>
         </TransformationCard>
@@ -185,34 +162,25 @@
 
           <div class="grid md:grid-cols-3 gap-8 lg:gap-10">
             <div class="text-center">
-              <TransformationIcon
-                emoji="💰"
-                variant="success"
-                size="lg"
-                class="mx-auto mb-4"
-              />
+              <div class="w-12 h-12 mx-auto mb-4">
+                <img src="/icons/coins.svg" alt="Geld-zurück" class="w-full h-full" />
+              </div>
               <h4 class="font-semibold text-gray-900 mb-2">Geld-zurück-Garantie</h4>
               <p class="text-sm text-gray-600">{{ guaranteeText }}</p>
             </div>
 
             <div class="text-center">
-              <TransformationIcon
-                emoji="🏆"
-                variant="primary"
-                size="lg"
-                class="mx-auto mb-4"
-              />
+              <div class="w-12 h-12 mx-auto mb-4">
+                <img src="/icons/trophy.svg" alt="Erfolg" class="w-full h-full" />
+              </div>
               <h4 class="font-semibold text-gray-900 mb-2">Erfolg garantiert</h4>
               <p class="text-sm text-gray-600">{{ successText }}</p>
             </div>
 
             <div class="text-center">
-              <TransformationIcon
-                emoji="👥"
-                variant="secondary"
-                size="lg"
-                class="mx-auto mb-4"
-              />
+              <div class="w-12 h-12 mx-auto mb-4">
+                <img src="/icons/users-medical.svg" alt="Support" class="w-full h-full" />
+              </div>
               <h4 class="font-semibold text-gray-900 mb-2">Premium Support</h4>
               <p class="text-sm text-gray-600">{{ supportText }}</p>
             </div>
@@ -227,12 +195,12 @@
         <div class="overflow-x-auto">
           <table class="w-full bg-white rounded-xl shadow-xl border border-gray-200">
             <thead>
-              <tr class="bg-gray-50">
-                <th class="px-6 py-4 text-left font-semibold text-gray-900">Features</th>
+              <tr class="bg-gray-100">
+                <th class="px-6 py-4 text-left font-bold text-gray-900 border-b border-gray-300">Features</th>
                 <th
                   v-for="plan in pricingPlans"
                   :key="plan.name"
-                  class="px-6 py-4 text-center font-semibold text-gray-900"
+                  class="px-6 py-4 text-center font-bold text-gray-900 border-b border-gray-300"
                 >
                   {{ plan.name }}
                 </th>
@@ -242,25 +210,25 @@
               <tr
                 v-for="(feature, index) in comparisonFeatures"
                 :key="feature.name"
-                :class="index % 2 === 0 ? 'bg-gray-50' : 'bg-white'"
+                :class="index % 2 === 0 ? 'bg-white border-b border-gray-200' : 'bg-gray-50 border-b border-gray-200'"
               >
-                <td class="px-6 py-4 text-gray-900 font-medium">{{ feature.name }}</td>
+                <td class="px-6 py-4 font-medium text-gray-900">{{ feature.name }}</td>
                 <td
                   v-for="plan in pricingPlans"
                   :key="plan.name"
                   class="px-6 py-4 text-center"
                 >
                   <div v-if="feature.values[plan.name] === true">
-                    <svg class="w-5 h-5 text-green-500 mx-auto" fill="currentColor" viewBox="0 0 20 20">
+                    <svg class="w-5 h-5 mx-auto text-green-600" fill="currentColor" viewBox="0 0 20 20">
                       <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                     </svg>
                   </div>
                   <div v-else-if="feature.values[plan.name] === false">
-                    <svg class="w-5 h-5 text-red-400 mx-auto" fill="currentColor" viewBox="0 0 20 20">
+                    <svg class="w-5 h-5 mx-auto text-red-500" fill="currentColor" viewBox="0 0 20 20">
                       <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
                     </svg>
                   </div>
-                  <span v-else class="text-gray-600 text-sm">{{ feature.values[plan.name] }}</span>
+                  <span v-else class="text-sm font-medium text-gray-900">{{ feature.values[plan.name] }}</span>
                 </td>
               </tr>
             </tbody>
@@ -289,7 +257,7 @@
 interface PricingPlan {
   name: string
   description: string
-  emoji: string
+  icon: string
   price: number
   originalPrice?: number
   discount?: number
@@ -347,137 +315,133 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  headline: 'Wähle dein Transformations-Paket',
-  subheadline: 'Investiere in deine Gesundheit und wähle das Paket, das perfekt zu deinen Zielen und deinem Budget passt. Alle Pakete beinhalten unsere Erfolgsgarantie.',
+  headline: 'Starte deine 7-Wochen Transformation',
+  subheadline: 'Eigenständige Programme für neue Mitglieder. Nach Abschluss erhältst du exklusive Angebote für unsere Gym-Mitgliedschaften mit bis zu 80% Ersparnis.',
   badgeText: 'Limitierte Zeit',
   showBadge: true,
 
   pricingPlans: () => [
     {
-      name: 'Starter',
-      description: 'Perfekt für Fitness-Einsteiger',
-      emoji: '🌱',
+      name: 'Core Start',
+      description: 'Dein Einstieg in die Transformation',
+      icon: '/icons/brain-lightning.svg',
       price: 197,
       period: 'einmalig',
       paymentInfo: 'Einmalzahlung, sofortiger Zugang',
       features: [
         '7-Wochen Trainingsplan',
         'Grundlagen der Ernährung',
-        'Community-Zugang',
-        'E-Mail Support',
+        'Workout-App Zugang',
+        'Community-Support',
         'Fortschritts-Tracking',
-        'Mobile App Zugang'
+        'E-Mail Support'
       ],
-      guarantee: '30 Tage Geld-zurück-Garantie',
+      bonusFeatures: [
+        'Nach Abschluss: 50% Rabatt auf Core Mitgliedschaft (ersten 2 Monate)'
+      ],
       ctaText: 'Starter wählen',
-      ctaUrl: '#starter',
+      ctaUrl: '#core-start',
       additionalInfo: 'Sofortiger Download nach Zahlung'
     },
     {
-      name: 'Premium',
-      description: 'Unser beliebtestes Komplettpaket',
-      emoji: '🚀',
+      name: 'Hybrid Transform',
+      description: 'Intensives Training + persönliche Betreuung',
+      icon: '/icons/chart-pie-alt.svg',
       price: 297,
-      originalPrice: 397,
-      discount: 25,
       period: 'einmalig',
-      paymentInfo: 'Einmalzahlung, 25% Ersparnis',
+      paymentInfo: 'Einmalzahlung, sofortiger Zugang',
       features: [
-        'Alles aus Starter-Paket',
-        'Persönliche Trainingsbetreuung',
-        'Individuelle Ernährungspläne',
+        'Alles aus Core Start',
+        'Hybrider Trainingsansatz',
         'Wöchentliche Coaching-Calls',
-        'Prioritärer Support',
+        'Individuelle Ernährungspläne',
+        '3x Personal Training Sessions',
         'Erfolgs-Bonus: 100€ Cashback'
       ],
       bonusFeatures: [
-        'Rezeptbuch mit 50+ Rezepten',
-        'Supplement-Guide',
-        'Meditation & Mindset Training',
-        'Lebenslanger Community-Zugang'
+        'Nach Abschluss: 297€ Verrechnung auf Mitgliedschaft über 6 Monate',
+        'Prioritärer Support'
       ],
-      guarantee: '60 Tage Geld-zurück-Garantie',
       ctaText: 'Premium wählen',
-      ctaUrl: '#premium',
+      ctaUrl: '#hybrid-transform',
       additionalInfo: 'Bei Erfolg: 100€ Cashback erhalten',
       featured: true,
       badge: 'Bestseller'
     },
     {
-      name: 'VIP',
-      description: 'Maximaler Erfolg mit 1:1 Betreuung',
-      emoji: '👑',
+      name: 'High Performance',
+      description: 'Premium Transformation mit VIP-Betreuung',
+      icon: '/icons/trophy.svg',
       price: 497,
       period: 'einmalig',
       paymentInfo: 'Ratenzahlung möglich',
       features: [
-        'Alles aus Premium-Paket',
-        '1:1 Personal Training Sessions',
+        'Alles aus Hybrid Transform',
+        '7x Personal Training Sessions',
         'Tägliche WhatsApp Betreuung',
-        'Individuelle Supplement-Pläne',
-        'Body-Composition Analysen',
-        'VIP Community Gruppe'
+        'Regelmäßige HRV-Messungen',
+        'Resilienzcoaching'
       ],
       bonusFeatures: [
-        'Exklusives VIP-Event Ticket',
-        'Persönlicher Erfolgstrainer',
-        'Maßgeschneiderte Workout-Videos',
-        '12 Monate Follow-up Support'
+        'Nach Abschluss: 497€ Verrechnung auf Mitgliedschaft über 6 Monate'
       ],
-      guarantee: '90 Tage Geld-zurück-Garantie',
       ctaText: 'VIP werden',
-      ctaUrl: '#vip',
+      ctaUrl: '#high-performance',
       additionalInfo: 'Limitiert auf 20 Plätze pro Monat'
     }
   ],
 
   showValueProposition: true,
-  valuePropositionHeadline: 'Warum sich die Investition lohnt',
-  valuePropositionDescription: 'Deine Gesundheit ist unbezahlbar. Mit unserem System erhältst du professionelle Betreuung zum Bruchteil der Kosten eines Personal Trainers.',
-  guaranteeText: 'Nicht zufrieden? Geld zurück. Bis zu 90 Tage je nach Paket.',
-  successText: '94% Erfolgsquote. Deine Transformation ist praktisch garantiert.',
-  supportText: 'Persönliche Betreuung durch zertifizierte Trainer und Ernährungsexperten.',
+  valuePropositionHeadline: 'Mehr als nur ein Programm - Dein Weg ins EXOPEK',
+  valuePropositionDescription: 'Starte mit der Transformation und werde Teil unserer Community. Nach 7 Wochen wartet deine neue Gym-Heimat auf dich.',
+  guaranteeText: 'Professionelle Betreuung durch zertifizierte Trainer.',
+  successText: '89% unserer Teilnehmer werden danach EXOPEK-Mitglieder.',
+  supportText: 'Nahtloser Übergang: Von der Transformation zur dauerhaften Mitgliedschaft.',
 
   showComparison: true,
   comparisonHeadline: 'Detaillierter Paket-Vergleich',
   comparisonFeatures: () => [
     {
       name: 'Trainingsplan (7 Wochen)',
-      values: { 'Starter': true, 'Premium': true, 'VIP': true }
+      values: { 'Core Start': true, 'Hybrid Transform': true, 'High Performance': true }
     },
     {
-      name: 'Ernährungsgrundlagen',
-      values: { 'Starter': true, 'Premium': true, 'VIP': true }
+      name: 'Workout-App Zugang',
+      values: { 'Core Start': true, 'Hybrid Transform': true, 'High Performance': true }
     },
     {
-      name: 'Community Zugang',
-      values: { 'Starter': true, 'Premium': true, 'VIP': 'VIP Gruppe' }
+      name: 'Personal Training Sessions',
+      values: { 'Core Start': false, 'Hybrid Transform': '3x', 'High Performance': '7x' }
     },
     {
-      name: 'Personal Coaching',
-      values: { 'Starter': false, 'Premium': 'Wöchentlich', 'VIP': 'Täglich' }
+      name: 'Persönliche Betreuung',
+      values: { 'Core Start': 'E-Mail Support', 'Hybrid Transform': 'Wöchentliche Calls', 'High Performance': 'Täglich WhatsApp' }
     },
     {
       name: 'Individuelle Ernährungspläne',
-      values: { 'Starter': false, 'Premium': true, 'VIP': true }
+      values: { 'Core Start': false, 'Hybrid Transform': true, 'High Performance': true }
     },
     {
-      name: '1:1 Training Sessions',
-      values: { 'Starter': false, 'Premium': false, 'VIP': true }
+      name: 'HRV-Messungen',
+      values: { 'Core Start': false, 'Hybrid Transform': false, 'High Performance': 'Regelmäßig' }
+    },
+    {
+      name: 'Resilienzcoaching',
+      values: { 'Core Start': false, 'Hybrid Transform': false, 'High Performance': true }
     },
     {
       name: 'Cashback bei Erfolg',
-      values: { 'Starter': false, 'Premium': '100€', 'VIP': '100€' }
+      values: { 'Core Start': false, 'Hybrid Transform': '100€', 'High Performance': '100€' }
     },
     {
-      name: 'Geld-zurück-Garantie',
-      values: { 'Starter': '30 Tage', 'Premium': '60 Tage', 'VIP': '90 Tage' }
+      name: 'Mitgliedschaftsverrechnung',
+      values: { 'Core Start': '50% Rabatt 2 Monate', 'Hybrid Transform': '297€ über 6 Monate', 'High Performance': '497€ über 6 Monate' }
     }
   ],
 
   showFaqTeaser: true,
-  faqTeaserHeadline: 'Noch Fragen zu den Paketen?',
-  faqTeaserDescription: 'Finde Antworten auf die häufigsten Fragen oder kontaktiere uns direkt.',
+  faqTeaserHeadline: 'Fragen zur Transformation oder Mitgliedschaft?',
+  faqTeaserDescription: 'Erfahre mehr über den nahtlosen Übergang von der Transformation zur Mitgliedschaft.',
   faqButtonText: 'Häufige Fragen ansehen',
   faqButtonUrl: '#faq',
 
@@ -488,43 +452,14 @@ const props = withDefaults(defineProps<Props>(), {
 </script>
 
 <style scoped>
-/* Enhanced hover effects for pricing cards */
-.relative:hover {
-  transform: translateY(-6px);
-}
-
-.scale-105:hover {
-  transform: scale(1.05) translateY(-6px);
-}
-
-.scale-110:hover {
-  transform: scale(1.1) translateY(-6px);
-}
-
-/* Feature list animations */
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.flex.items-start.gap-3 {
-  animation: slideInLeft 0.5s ease-out;
-}
-
 /* Enhanced card shadows */
 .shadow-xl {
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 /* Featured card glow effect */
-.ring-4.ring-orange-200 {
-  box-shadow: 0 0 0 4px rgba(251, 146, 60, 0.3), 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+.ring-2.ring-orange-200 {
+  box-shadow: 0 0 0 2px rgba(251, 146, 60, 0.3), 0 10px 25px -5px rgba(0, 0, 0, 0.15);
 }
 
 /* Table styling enhancements */
@@ -545,20 +480,6 @@ td:last-child {
   border-bottom-right-radius: 0.75rem;
 }
 
-/* Smooth transitions for all interactive elements */
-.transition-transform {
-  transition: transform 0.3s ease;
-}
-
-/* Button hover enhancements */
-.hover\:scale-105:hover {
-  transform: scale(1.05);
-}
-
-.hover\:shadow-xl:hover {
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-}
-
 /* Value proposition card styling */
 .bg-gradient-to-br {
   background-image: linear-gradient(to bottom right, #f9fafb, #ffffff);
@@ -567,7 +488,7 @@ td:last-child {
 /* Responsive improvements */
 @media (max-width: 1023px) {
   .grid.lg\:grid-cols-3 {
-    gap: 2rem;
+    gap: 1.5rem;
   }
 }
 </style>
