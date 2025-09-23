@@ -61,12 +61,13 @@
       <!-- FAQ Accordion -->
       <div class="max-w-5xl mx-auto">
         <div v-if="filteredFaqs.length === 0" class="text-center py-16">
-          <TransformationIcon
-            emoji="🔍"
-            variant="neutral"
-            size="xl"
-            class="mx-auto mb-4"
-          />
+          <div class="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+            <img
+              src="/icons/bullseye-arrow.svg"
+              alt="Suche"
+              class="w-8 h-8 filter grayscale opacity-60"
+            />
+          </div>
           <h3 class="text-xl font-semibold text-gray-900 mb-2">Keine Ergebnisse gefunden</h3>
           <p class="text-gray-600">Versuche andere Suchbegriffe oder kontaktiere uns direkt.</p>
         </div>
@@ -95,11 +96,15 @@
             <div class="flex items-start gap-4">
               <!-- Category Icon -->
               <div class="flex-shrink-0 mt-1">
-                <TransformationIcon
-                  :emoji="getCategoryEmoji(faq.category)"
-                  :variant="getCategoryVariant(faq.category)"
-                  size="sm"
-                />
+                <div class="w-8 h-8 rounded-full flex items-center justify-center"
+                     :class="getCategoryBgClass(faq.category)">
+                  <img
+                    :src="getCategoryIcon(faq.category)"
+                    :alt="getCategoryName(faq.category)"
+                    class="w-5 h-5 filter"
+                    :class="getCategoryIconClass(faq.category)"
+                  />
+                </div>
               </div>
 
               <!-- Question Content -->
@@ -141,7 +146,7 @@
               :aria-labelledby="`faq-question-${index}`"
             >
               <div class="prose prose-gray max-w-none">
-                <p class="text-gray-700 text-base lg:text-lg leading-relaxed whitespace-pre-line">{{ faq.answer }}</p>
+                <div class="text-gray-700 text-base lg:text-lg leading-relaxed" v-html="faq.answer"></div>
 
                 <!-- Additional Links/Actions -->
                 <div v-if="faq.links" class="mt-4 space-y-2">
@@ -159,15 +164,17 @@
                 </div>
 
                 <!-- Contact CTA -->
-                <div v-if="faq.showContactCta" class="mt-6 p-4 bg-gray-50 rounded-lg">
-                  <div class="flex items-center gap-3">
-                    <TransformationIcon
-                      emoji="💬"
-                      variant="primary"
-                      size="sm"
-                    />
-                    <div class="flex-1">
-                      <p class="text-sm text-gray-600">{{ contactCtaText }}</p>
+                <div v-if="faq.showContactCta" class="p-6 bg-gray-50 rounded-lg">
+                  <div class="flex items-start gap-3">
+                    <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center mt-0.5">
+                      <img
+                        src="/icons/users-medical.svg"
+                        alt="Kontakt"
+                        class="w-4 h-4 filter brightness-0 invert"
+                      />
+                    </div>
+                    <div class="flex-1 flex items-center">
+                      <p class="text-sm text-gray-800">{{ contactCtaText }}</p>
                     </div>
                     <TransformationButton
                       :text="contactButtonText"
@@ -184,7 +191,7 @@
       </div>
 
       <!-- Still Have Questions Section -->
-      <div v-if="showContactSection" class="max-w-4xl mx-auto mt-20 text-center">
+      <div v-if="showContactSection" id="still-have-questions" class="max-w-4xl mx-auto mt-20 text-center">
         <div class="bg-gradient-warm rounded-2xl p-8 md:p-12 text-white shadow-2xl border border-orange-200">
           <h3 class="text-2xl md:text-3xl font-bold mb-4">{{ contactSectionHeadline }}</h3>
           <p class="text-lg opacity-90 mb-8">{{ contactSectionDescription }}</p>
@@ -206,11 +213,13 @@
 
           <!-- Response Time Promise -->
           <div class="mt-6 flex items-center justify-center gap-2 text-sm opacity-80">
-            <TransformationIcon
-              emoji="⚡"
-              variant="warning"
-              size="xs"
-            />
+            <div class="w-5 h-5 bg-yellow-500 rounded-full flex items-center justify-center">
+              <img
+                src="/icons/brain-lightning.svg"
+                alt="Schnell"
+                class="w-3 h-3 filter brightness-0 invert"
+              />
+            </div>
             <span>{{ responseTimeText }}</span>
           </div>
         </div>
@@ -298,7 +307,7 @@ const props = withDefaults(defineProps<Props>(), {
     },
     {
       question: 'Was kostet das Programm und gibt es versteckte Kosten?',
-      answer: 'Unsere Preise sind transparent und es gibt keine versteckten Kosten:\n\n• Starter: 197€ (einmalig)\n• Premium: 297€ (einmalig, 25% Rabatt)\n• VIP: 497€ (einmalig)\n\nAlle Preise sind Endpreise inklusive MwSt. Es gibt keine monatlichen Gebühren oder Zusatzkosten.',
+      answer: 'Unsere Preise sind transparent und es gibt keine versteckten Kosten:\n\n• Starter: 197€ (einmalig)\n• Premium: 297€ (einmalig)\n• VIP: 497€ (einmalig)\n\nAlle Preise sind Endpreise inklusive MwSt. Es gibt keine monatlichen Gebühren oder Zusatzkosten.',
       category: 'pricing',
       showContactCta: true
     },
@@ -309,16 +318,15 @@ const props = withDefaults(defineProps<Props>(), {
     },
     {
       question: 'Muss ich auf meine Lieblingsspeisen verzichten?',
-      answer: 'Nein! Unser Ansatz basiert auf flexibler Ernährung:\n\n• 80/20 Regel: 80% gesunde Nahrung, 20% Flexibilität\n• Mahlzeiten-Timing optimiert\n• Restaurant-Guide für auswärts essen\n• Gesunde Alternativen für Lieblingsspeisen\n\nDu lernst, wie du auch Pizza, Schokolade und Co. in deine Transformation integrieren kannst.',
+      answer: 'Nein! Unser Ansatz basiert auf flexibler Ernährung:\n\n• 80/20 Regel: 80% gesunde Nahrung, 20% Flexibilität\n• Mahlzeiten-Timing optimiert\n• Gesunde Alternativen für Lieblingsspeisen\n\nDu lernst, wie du auch Pizza, Schokolade und Co. in deine Transformation integrieren kannst.',
       category: 'nutrition'
     },
     {
       question: 'Welche Unterstützung bekomme ich während des Programms?',
-      answer: 'Du erhältst umfassende Betreuung:\n\n• Community-Chat mit 2.800+ Teilnehmern\n• Wöchentliche Coaching-Calls (Premium/VIP)\n• E-Mail Support (24h Antwort)\n• WhatsApp-Gruppe für Quick-Fragen\n• Persönlicher Ansprechpartner (VIP)\n\nDu bist nie allein auf deinem Weg!',
+      answer: 'Du erhältst umfassende Betreuung:\n\n• Wöchentliche Coaching-Calls (Premium/VIP)\n• E-Mail Support (24h Antwort)\n• WhatsApp-Gruppe für Quick-Fragen\n• Persönlicher Ansprechpartner (VIP)\n\nDu bist nie allein auf deinem Weg!',
       category: 'support',
       links: [
-        { text: 'Community-Regeln ansehen', url: '#community' },
-        { text: 'Support-Team kontaktieren', url: '#support' }
+        { text: 'Support-Team kontaktieren', url: '/kontakt' }
       ]
     },
     {
@@ -353,13 +361,13 @@ const props = withDefaults(defineProps<Props>(), {
   contactSectionHeadline: 'Noch Fragen? Wir sind für dich da!',
   contactSectionDescription: 'Unser Expertenteam beantwortet gerne alle deine Fragen persönlich und unverbindlich.',
   primaryContactText: 'Kostenloses Beratungsgespräch',
-  primaryContactUrl: '#beratung',
+  primaryContactUrl: '/kontakt',
   secondaryContactText: 'WhatsApp Support',
   secondaryContactUrl: '#whatsapp',
   responseTimeText: 'Antwort binnen 2 Stunden',
   contactCtaText: 'Brauchst du weitere Hilfe zu diesem Thema?',
   contactButtonText: 'Fragen stellen',
-  contactButtonUrl: '#kontakt',
+  contactButtonUrl: '#still-have-questions',
 
   backgroundColor: '#ffffff',
   headlineColor: '#1f2937',
@@ -419,6 +427,48 @@ const getCategoryVariant = (categoryId: string) => {
 const getCategoryName = (categoryId: string) => {
   const category = props.categories.find(cat => cat.id === categoryId)
   return category?.name || 'Allgemein'
+}
+
+const getCategoryIcon = (categoryId: string) => {
+  const iconMap: Record<string, string> = {
+    program: '/icons/bullseye-arrow.svg',
+    pricing: '/icons/coins.svg',
+    training: '/icons/trophy.svg',
+    nutrition: '/icons/recipe.svg',
+    support: '/icons/users-medical.svg',
+    results: '/icons/chart-pie-alt.svg'
+  }
+  return iconMap[categoryId] || '/icons/bullseye-arrow.svg'
+}
+
+const getCategoryBgClass = (categoryId: string) => {
+  const bgMap: Record<string, string> = {
+    program: 'bg-primary',
+    pricing: 'bg-primary',
+    training: 'bg-primary',
+    nutrition: 'bg-primary',
+    support: 'bg-primary',
+    results: 'bg-primary'
+  }
+  return bgMap[categoryId] || 'bg-primary'
+}
+
+const getCategoryIconClass = (categoryId: string) => {
+  return 'brightness-0 invert'
+}
+
+const formatAnswerText = (text: string) => {
+  if (!text) return ''
+
+  // Replace \n with <br> for line breaks
+  // Also handle double line breaks for paragraphs
+  return text
+    .replace(/\n\n/g, '</p><p class="mb-4">')
+    .replace(/\n/g, '<br>')
+    .replace(/^/, '<p class="mb-4">')
+    .replace(/$/, '</p>')
+    // Handle bullet points (• character)
+    .replace(/^• /gm, '<br>• ')
 }
 </script>
 

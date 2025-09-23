@@ -21,6 +21,8 @@ type ComponentInput = {
     defaultValue?: any;
     allowedFileTypes?: string[];
     enum?: string[];
+    subFields?: ComponentInput[];
+    required?: boolean;
 };
 
 type RegisteredComponent = {
@@ -181,7 +183,8 @@ export const registeredComponents: RegisteredComponent[] = [
             { name: 'showCta', type: 'boolean', defaultValue: true },
             { name: 'ctaHeadline', type: 'string', defaultValue: 'Bereit für deine Transformation?' },
             { name: 'primaryCtaText', type: 'string', defaultValue: 'Programm starten' },
-            { name: 'primaryCtaUrl', type: 'url', defaultValue: '#anmeldung' }
+            { name: 'primaryCtaUrl', type: 'url', defaultValue: '#anmeldung' },
+            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' }
         ]
     },
 
@@ -230,10 +233,36 @@ export const registeredComponents: RegisteredComponent[] = [
             { name: 'showSearch', type: 'boolean', defaultValue: true },
             { name: 'searchPlaceholder', type: 'string', defaultValue: 'Suche nach Stichworten...' },
             { name: 'showCategories', type: 'boolean', defaultValue: true },
+            {
+                name: 'faqs',
+                type: 'list',
+                subFields: [
+                    { name: 'question', type: 'string', required: true },
+                    { name: 'answer', type: 'longText', required: true },
+                    { name: 'category', type: 'string', required: true, enum: ['program', 'pricing', 'training', 'nutrition', 'support', 'results'] },
+                    { name: 'showContactCta', type: 'boolean', defaultValue: false },
+                    {
+                        name: 'links',
+                        type: 'list',
+                        subFields: [
+                            { name: 'text', type: 'string' },
+                            { name: 'url', type: 'string' }
+                        ]
+                    }
+                ],
+                defaultValue: [
+                    {
+                        question: 'Für wen ist das 7-Wochen Programm geeignet?',
+                        answer: 'Unser Programm ist für alle Fitnesslevel geeignet - vom absoluten Anfänger bis zum fortgeschrittenen Sportler.',
+                        category: 'program'
+                    }
+                ]
+            },
             { name: 'showContactSection', type: 'boolean', defaultValue: true },
             { name: 'contactSectionHeadline', type: 'string', defaultValue: 'Noch Fragen? Wir sind für dich da!' },
             { name: 'primaryContactText', type: 'string', defaultValue: 'Kostenloses Beratungsgespräch' },
-            { name: 'primaryContactUrl', type: 'url', defaultValue: '#beratung' }
+            { name: 'primaryContactUrl', type: 'url', defaultValue: '/kontakt' },
+            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' }
         ]
     },
 
