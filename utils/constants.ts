@@ -32,6 +32,9 @@ export const API_ENDPOINTS = {
     CREATE: '/users',
     UPDATE: (id: string) => `/v1/users/${id}`,
     DELETE: (id: string) => `/v1/users/${id}`
+  },
+  EMAIL: {
+    CONTACT_FORM: '/v1/email/contact-form'
   }
 } as const
 

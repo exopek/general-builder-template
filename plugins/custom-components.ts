@@ -15,6 +15,7 @@ import TransformationPricing from '~/components/transformation/TransformationPri
 import TransformationFAQ from '~/components/transformation/TransformationFAQ.vue';
 import TransformationResults from '~/components/transformation/TransformationResults.vue';
 import TransformationQuiz from '~/components/TransformationQuiz.vue';
+import ContactForm from '~/components/ContactForm.vue';
 
 type ComponentInput = {
     name: string;
@@ -315,6 +316,67 @@ export const registeredComponents: RegisteredComponent[] = [
             { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
             { name: 'headlineColor', type: 'color', defaultValue: '#1f2937' },
             { name: 'subheadlineColor', type: 'color', defaultValue: '#6b7280' }
+        ]
+    },
+
+    {
+        component: ContactForm,
+        name: 'ContactForm',
+        inputs: [
+            // === CONTENT SECTION ===
+            { name: 'headline', type: 'richText', defaultValue: 'Kontaktiere uns' },
+            { name: 'subheadline', type: 'text', defaultValue: 'Hast du Fragen zu unseren Kursen oder benötigst du persönliche Beratung? Wir sind für dich da!' },
+
+            // Badge
+            { name: 'showBadge', type: 'boolean', defaultValue: true },
+            { name: 'badgeText', type: 'string', defaultValue: 'Kontakt' },
+
+            // === FORM LABELS ===
+            { name: 'nameLabel', type: 'string', defaultValue: 'Vollständiger Name' },
+            { name: 'emailLabel', type: 'string', defaultValue: 'E-Mail-Adresse' },
+            { name: 'phoneLabel', type: 'string', defaultValue: 'Telefonnummer' },
+            { name: 'subjectLabel', type: 'string', defaultValue: 'Betreff' },
+            { name: 'messageLabel', type: 'string', defaultValue: 'Nachricht' },
+
+            // === FORM PLACEHOLDERS ===
+            { name: 'namePlaceholder', type: 'string', defaultValue: 'Dein vollständiger Name' },
+            { name: 'emailPlaceholder', type: 'string', defaultValue: 'deine@email.de' },
+            { name: 'phonePlaceholder', type: 'string', defaultValue: '+49 123 456 7890' },
+            { name: 'subjectPlaceholder', type: 'string', defaultValue: 'Worum geht es?' },
+            { name: 'messagePlaceholder', type: 'string', defaultValue: 'Teile uns mit, wie wir dir helfen können...' },
+
+            // === FIELD VISIBILITY ===
+            { name: 'showPhoneField', type: 'boolean', defaultValue: true },
+            { name: 'showSubjectField', type: 'boolean', defaultValue: true },
+            { name: 'showMarketingConsent', type: 'boolean', defaultValue: true },
+
+            // === FIELD REQUIREMENTS ===
+            { name: 'nameRequired', type: 'boolean', defaultValue: true },
+            { name: 'phoneRequired', type: 'boolean', defaultValue: false },
+            { name: 'subjectRequired', type: 'boolean', defaultValue: false },
+
+            // === CONSENT TEXT ===
+            { name: 'marketingConsentText', type: 'text', defaultValue: 'Ja, ich möchte über neue Kurse und Angebote per E-Mail informiert werden.' },
+            { name: 'privacyConsentText', type: 'text', defaultValue: 'Ich habe die Datenschutzerklärung gelesen und stimme der Verarbeitung meiner Daten zu.' },
+
+            // === BUTTON TEXT ===
+            { name: 'submitButtonText', type: 'string', defaultValue: 'Nachricht senden' },
+            { name: 'loadingText', type: 'string', defaultValue: 'Wird gesendet...' },
+
+            // === SUCCESS/ERROR MESSAGES ===
+            { name: 'successTitle', type: 'string', defaultValue: 'Nachricht erfolgreich gesendet!' },
+            { name: 'successMessage', type: 'text', defaultValue: 'Vielen Dank für deine Nachricht. Wir melden uns so schnell wie möglich bei dir.' },
+
+            // === STYLING ===
+            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'headlineColor', type: 'color', defaultValue: '#1f2937' },
+            { name: 'subheadlineColor', type: 'color', defaultValue: '#6b7280' },
+            { name: 'labelColor', type: 'color', defaultValue: '#374151' },
+
+            // === FUNCTIONALITY ===
+            { name: 'enableRouteTracking', type: 'boolean', defaultValue: true },
+            { name: 'debugMode', type: 'boolean', defaultValue: false },
+            { name: 'submitUrl', type: 'string', defaultValue: '/api/contact' }
         ]
     }
 ];
