@@ -166,7 +166,9 @@ export const registeredComponents: RegisteredComponent[] = [
             { name: 'showCta', type: 'boolean', defaultValue: true },
             { name: 'ctaHeadline', type: 'string', defaultValue: 'Starte deine eigene 7-Wochen Transformation' },
             { name: 'primaryCtaText', type: 'string', defaultValue: 'Jetzt anmelden' },
-            { name: 'primaryCtaUrl', type: 'url', defaultValue: '#anmeldung' }
+            { name: 'primaryCtaUrl', type: 'url', defaultValue: '#anmeldung' },
+            { name: 'secondaryCtaText', type: 'string', defaultValue: 'Kostenloses Beratungsgespräch' },
+            { name: 'secondaryCtaUrl', type: 'url', defaultValue: '/kontakt' }
         ]
     },
 
@@ -186,6 +188,8 @@ export const registeredComponents: RegisteredComponent[] = [
             { name: 'ctaHeadline', type: 'string', defaultValue: 'Bereit für deine Transformation?' },
             { name: 'primaryCtaText', type: 'string', defaultValue: 'Programm starten' },
             { name: 'primaryCtaUrl', type: 'url', defaultValue: '#anmeldung' },
+            { name: 'secondaryCtaText', type: 'string', defaultValue: 'Kostenloses Beratungsgespräch' },
+            { name: 'secondaryCtaUrl', type: 'url', defaultValue: '/kontakt' },
             { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' }
         ]
     },

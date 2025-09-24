@@ -7,7 +7,7 @@
         <TransformationBadge
           v-if="showBadge"
           :text="badgeText"
-          variant="limited"
+          variant="featured"
           class="mb-4"
         />
 
@@ -374,7 +374,7 @@ const props = withDefaults(defineProps<Props>(), {
         'Prioritärer Support'
       ],
       ctaText: 'Premium wählen',
-      ctaUrl: '#hybrid-transform',
+      ctaUrl: '/kontakt?utm_source=transformation_pricing&utm_medium=Anmeldung_7_Wochen_Transformation&utm_campaign=Anmledung_zur_7_Wochen_Transformation',
       additionalInfo: 'Bei Erfolg: 100€ Cashback erhalten',
       featured: true,
       badge: 'Bestseller'

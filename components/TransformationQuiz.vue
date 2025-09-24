@@ -209,7 +209,7 @@ const props = withDefaults(defineProps<Props>(), {
   finalCtaHeadline: 'Perfekt! Du bist bereit für deine Transformation',
   finalCtaSubtext: 'Sichere dir jetzt deinen Platz und starte noch heute mit deiner 7-Wochen Transformation',
   finalCtaText: 'Jetzt starten - Nur 297€',
-  finalCtaUrl: '#anmeldung',
+  finalCtaUrl: '/kontakt?source=transformation-quiz',
   cashbackText: '💰 100€ Cashback bei erfolgreichem Abschluss',
   backgroundColor: '#ffffff',
   headlineColor: '#1f2937',
