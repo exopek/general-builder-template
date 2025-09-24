@@ -51,10 +51,10 @@
               :class="index % 2 === 0 ? 'mr-0 lg:mr-8' : 'ml-0 lg:ml-8'"
               :style="{ animationDelay: `${index * 0.1}s` }"
             >
-              <p class="text-lg md:text-xl font-medium text-gray-800 mb-6">{{ question }}</p>
-              <div class="flex items-center gap-3 text-lg font-semibold text-green-600">
-                <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+              <p class="text-lg md:text-xl font-medium text-gray-700 mb-6">{{ question }}</p>
+              <div class="flex items-center gap-3 text-lg font-semibold text-primary">
+                <div class="w-6 h-6 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <svg class="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                   </svg>
                 </div>
@@ -89,7 +89,7 @@
               :class="index % 2 === 0 ? 'mr-0 lg:mr-8' : 'ml-0 lg:ml-8'"
               :style="{ animationDelay: `${index * 0.1}s` }"
             >
-              <p class="text-lg md:text-xl font-medium text-gray-800 mb-6">{{ question }}</p>
+              <p class="text-lg md:text-xl font-medium text-gray-700 mb-6">{{ question }}</p>
               <div class="flex items-center gap-3 text-lg font-semibold text-blue-600">
                 <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
                   <svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
@@ -127,10 +127,10 @@
               :class="index % 2 === 0 ? 'mr-0 lg:mr-8' : 'ml-0 lg:ml-8'"
               :style="{ animationDelay: `${index * 0.1}s` }"
             >
-              <p class="text-lg md:text-xl font-medium text-gray-800 mb-6">{{ question }}</p>
-              <div class="flex items-center gap-3 text-lg font-semibold text-orange-600">
-                <div class="w-6 h-6 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <svg class="w-4 h-4 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
+              <p class="text-lg md:text-xl font-medium text-gray-700 mb-6">{{ question }}</p>
+              <div class="flex items-center gap-3 text-lg font-semibold text-green-600">
+                <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                   </svg>
                 </div>
