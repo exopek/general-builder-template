@@ -68,16 +68,6 @@
                 <span>{{ feature }}</span>
               </div>
             </div>
-
-            <!-- Highlight Badge -->
-            <TransformationBadge
-              v-if="benefit.highlight"
-              :text="benefit.highlight"
-              variant="new"
-              size="sm"
-              class="mt-6 transition-all duration-300 group-hover:scale-110"
-              animated
-            />
           </div>
         </TransformationCard>
       </div>
@@ -152,7 +142,7 @@
             :value="successMetrics.averageWeightLoss"
             label="Ø Gewichtsverlust"
             suffix="kg"
-            variant="highlight"
+            variant="primary"
             size="md"
             :animated="true"
           />
@@ -168,7 +158,7 @@
             :value="successMetrics.energyIncrease"
             label="Mehr Energie"
             suffix="%"
-            variant="secondary"
+            variant="primary"
             size="md"
             :animated="true"
           />
@@ -176,7 +166,7 @@
             :value="successMetrics.satisfactionRate"
             label="Zufriedenheit"
             suffix="%"
-            variant="success"
+            variant="primary"
             size="md"
             :animated="true"
           />

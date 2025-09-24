@@ -89,8 +89,8 @@
         <div v-if="showOverallStats" class="mt-16 lg:mt-20">
           <div class="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
             <TransformationCounter
-              :value="totalParticipants"
-              label="Gesamte Teilnehmer"
+              :value="totalCoursesPerWeek"
+              label="Kurse pro Woche"
               suffix="+"
               variant="primary"
               size="sm"
@@ -100,7 +100,7 @@
               :value="averageWeightLoss"
               label="Ø Gewichtsverlust"
               suffix="kg"
-              variant="highlight"
+              variant="primary"
               size="sm"
               :animated="true"
             />
@@ -108,7 +108,7 @@
               :value="completionRate"
               label="Abschlussquote"
               suffix="%"
-              variant="secondary"
+              variant="primary"
               size="sm"
               :animated="true"
             />
@@ -116,7 +116,7 @@
               :value="satisfactionRate"
               label="Zufriedenheit"
               suffix="%"
-              variant="success"
+              variant="primary"
               size="sm"
               :animated="true"
             />
@@ -176,7 +176,7 @@ interface Props {
 
   // Stats
   showOverallStats?: boolean
-  totalParticipants?: number
+  totalCoursesPerWeek?: number
   averageWeightLoss?: number
   completionRate?: number
   satisfactionRate?: number
@@ -209,22 +209,19 @@ const props = withDefaults(defineProps<Props>(), {
       title: 'Fundament schaffen',
       description: 'Grundlagen des Trainings erlernen und Gewohnheiten etablieren',
       emoji: '🏗️',
-      goals: ['Trainingsroutine entwickeln', 'Ernährungsplan einführen', 'Ziele definieren'],
-      results: '2.1kg Ø'
+      goals: ['Trainingsroutine entwickeln', 'Ernährungsplan einführen', 'Ziele definieren']
     },
     {
       title: 'Intensität steigern',
       description: 'Training intensivieren und erste Erfolge sehen',
       emoji: '💪',
-      goals: ['Gewichte erhöhen', 'Cardio ausbauen', 'Motivation aufrechterhalten'],
-      results: '1.8kg Ø'
+      goals: ['Gewichte erhöhen', 'Cardio ausbauen', 'Motivation aufrechterhalten']
     },
     {
       title: 'Durchbruch erleben',
       description: 'Plateau überwinden und neue Kraftlevel erreichen',
       emoji: '🚀',
-      goals: ['Neue Übungen integrieren', 'Ernährung optimieren', 'Erholung verbessern'],
-      results: '2.3kg Ø'
+      goals: ['Neue Übungen integrieren', 'Ernährung optimieren', 'Erholung verbessern']
     },
     {
       title: 'Stabilität finden',
@@ -253,7 +250,7 @@ const props = withDefaults(defineProps<Props>(), {
   ],
 
   showOverallStats: true,
-  totalParticipants: 2847,
+  totalCoursesPerWeek: 16,
   averageWeightLoss: 8.2,
   completionRate: 94,
   satisfactionRate: 98,

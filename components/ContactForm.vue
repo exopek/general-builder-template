@@ -397,6 +397,12 @@ const routeInfo = ref<RouteInfo | null>(null)
 onMounted(() => {
   if (props.enableRouteTracking) {
     captureRouteInfo()
+    if (routeInfo.value?.utmMedium) {
+      form.value.subject = routeInfo.value?.utmMedium.replaceAll("_", " ")
+    }
+    if (routeInfo.value?.utmCampaign) {
+      form.value.message = routeInfo.value?.utmCampaign.replaceAll("_", " ")
+    }
   }
 })
 
