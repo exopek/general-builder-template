@@ -8,15 +8,20 @@
       { 'animate-bounce': animated }
     ]"
   >
-    <!-- Icon (optional for About us stats) -->
-    <AboutIcon
+    <!-- Icon (optional) -->
+    <div
       v-if="icon || iconName"
-      :icon="icon"
-      :name="iconName"
-      :variant="iconVariant"
-      :size="iconSize"
       class="mb-2"
-    />
+    >
+      <component
+        :is="icon || 'AboutIcon'"
+        v-if="icon || iconName"
+        :icon="icon"
+        :name="iconName"
+        :variant="iconVariant"
+        :size="iconSize"
+      />
+    </div>
 
     <!-- Label (optional, can be above or below) -->
     <div
@@ -379,5 +384,13 @@ onMounted(() => {
 @keyframes fadeIn {
   from { opacity: 0; transform: scale(0.8); }
   to { opacity: 1; transform: scale(1); }
+}
+
+/* Suffix sizing relative to number */
+.text-2xl + .font-semibold,
+.text-4xl + .font-semibold,
+.text-5xl + .font-semibold,
+.text-6xl + .font-semibold {
+  font-size: 0.6em;
 }
 </style>

@@ -38,35 +38,18 @@
           </div>
 
           <!-- Company Stats/Trust Indicators -->
-          <div v-if="showStats" class="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-lg mx-auto lg:mx-0">
-            <AboutStatistic
-              v-if="foundedYear"
-              :value="new Date().getFullYear() - foundedYear"
-              label="Jahre Erfahrung"
-              suffix="+"
-              variant="minimal"
-              size="sm"
-              :count-up="true"
-            />
-            <AboutStatistic
-              v-if="clientsServed"
-              :value="clientsServed"
-              label="Aktive Mitglieder"
-              suffix="+"
-              variant="minimal"
-              size="sm"
-              :count-up="true"
-            />
-            <AboutStatistic
-              v-if="projectsCompleted"
-              :value="projectsCompleted"
-              label="Trainingsstunden"
-              suffix="+"
-              variant="minimal"
-              size="sm"
-              :count-up="true"
-            />
-          </div>
+          <BaseStatisticGrid
+            v-if="showStats"
+            :statistics="statsData"
+            grid-type="fixed-3"
+            gap="sm"
+            max-width="lg"
+            default-size="sm"
+            default-variant="minimal"
+            :default-count-up="true"
+            animation="stagger"
+            container-class="mx-auto lg:mx-0"
+          />
 
           <!-- CTA Buttons -->
           <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
@@ -265,6 +248,40 @@ const props = withDefaults(defineProps<Props>(), {
   backgroundColor: '#0f0f0f',
   headlineColor: '#ffffff',
   subheadlineColor: '#d1d5db'
+})
+
+// Transform stats into array format
+const statsData = computed(() => {
+  const stats = []
+
+  if (props.foundedYear) {
+    stats.push({
+      key: 'experience',
+      value: new Date().getFullYear() - props.foundedYear,
+      label: 'Jahre Erfahrung',
+      suffix: '+'
+    })
+  }
+
+  if (props.clientsServed) {
+    stats.push({
+      key: 'clients',
+      value: props.clientsServed,
+      label: 'Aktive Mitglieder',
+      suffix: '+'
+    })
+  }
+
+  if (props.projectsCompleted) {
+    stats.push({
+      key: 'projects',
+      value: props.projectsCompleted,
+      label: 'Trainingsstunden',
+      suffix: '+'
+    })
+  }
+
+  return stats
 })
 </script>
 

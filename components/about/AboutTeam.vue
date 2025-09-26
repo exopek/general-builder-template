@@ -117,46 +117,15 @@
           </h3>
         </div>
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
-          <AboutStatistic
-            :value="totalTeamSize"
-            label="Qualifizierte Trainer"
-            suffix=""
-            icon-name="people"
-            variant="primary"
-            size="md"
-            :count-up="true"
-          />
-          <AboutStatistic
-            v-if="averageExperience"
-            :value="averageExperience"
-            label="Ø Erfahrung"
-            suffix=" Jahre"
-            icon-name="award"
-            variant="primary"
-            size="md"
-            :count-up="true"
-          />
-          <AboutStatistic
-            v-if="departmentsCount"
-            :value="departmentsCount"
-            label="Trainingsbereiche"
-            icon-name="target"
-            variant="primary"
-            size="md"
-            :count-up="true"
-          />
-          <AboutStatistic
-            v-if="satisfactionScore"
-            :value="satisfactionScore"
-            label="Mitgliederzufriedenheit"
-            suffix="%"
-            icon-name="heart"
-            variant="primary"
-            size="md"
-            :count-up="true"
-          />
-        </div>
+        <BaseStatisticGrid
+          :statistics="teamStatsData"
+          grid-type="fixed-4"
+          gap="lg"
+          default-size="md"
+          default-variant="primary"
+          :default-count-up="true"
+          animation="stagger"
+        />
       </div>
 
       <!-- Company Culture Section -->
@@ -418,6 +387,51 @@ const props = withDefaults(defineProps<Props>(), {
   headlineColor: '#1f2937',
   subheadlineColor: '#6b7280',
   textColor: '#374151'
+})
+
+// Transform team stats into array format
+const teamStatsData = computed(() => {
+  const stats: any[] = [
+    {
+      key: 'teamSize',
+      value: props.totalTeamSize,
+      label: 'Qualifizierte Trainer',
+      suffix: '',
+      iconName: 'people'
+    }
+  ]
+
+  if (props.averageExperience) {
+    stats.push({
+      key: 'averageExperience',
+      value: props.averageExperience,
+      label: 'Ø Erfahrung',
+      suffix: ' Jahre',
+      iconName: 'award'
+    })
+  }
+
+  if (props.departmentsCount) {
+    stats.push({
+      key: 'departments',
+      value: props.departmentsCount,
+      label: 'Trainingsbereiche',
+      suffix: '',
+      iconName: 'target'
+    })
+  }
+
+  if (props.satisfactionScore) {
+    stats.push({
+      key: 'satisfaction',
+      value: props.satisfactionScore,
+      label: 'Mitgliederzufriedenheit',
+      suffix: '%',
+      iconName: 'heart'
+    })
+  }
+
+  return stats
 })
 
 // Reactive state for flipped cards

@@ -1,6 +1,6 @@
 <template>
   <section
-    class="min-h-screen flex items-center py-16 md:py-20 overflow-hidden relative"
+    class="flex items-center py-16 md:py-20 overflow-hidden relative"
     :style="{ backgroundColor: backgroundColor }"
   >
     <!-- Background Elements -->
@@ -38,33 +38,17 @@
           </div>
 
           <!-- Counter Stats -->
-          <div v-if="showCounters" class="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-lg mx-auto lg:mx-0">
-            <TransformationCounter
-              :value="participantsCount"
-              :label="participantsLabel"
-              suffix="+"
-              variant="highlight"
-              size="sm"
-              :animated="true"
-            />
-            <TransformationCounter
-              :value="successRate"
-              :label="successLabel"
-              suffix="%"
-              variant="primary"
-              size="sm"
-              :animated="true"
-            />
-            <TransformationCounter
-              v-if="avgWeightLoss"
-              :value="avgWeightLoss"
-              :label="weightLossLabel"
-              suffix="kg"
-              variant="secondary"
-              size="sm"
-              :animated="true"
-            />
-          </div>
+          <BaseStatisticGrid
+            v-if="showCounters"
+            :statistics="countersData"
+            grid-type="fixed-3"
+            gap="sm"
+            max-width="lg"
+            default-size="sm"
+            :default-animated="true"
+            animation="stagger"
+            container-class="mx-auto lg:mx-0"
+          />
 
           <!-- CTA Buttons -->
           <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
@@ -183,6 +167,25 @@
 </template>
 
 <script setup lang="ts">
+interface CounterData {
+  key?: string
+  value: number
+  label: string
+  suffix?: string
+  variant?: 'default' | 'primary' | 'secondary' | 'gradient' | 'glass' | 'minimal' | 'highlight'
+  description?: string
+  iconName?: 'heart' | 'target' | 'people' | 'shield' | 'location' | 'award' | 'handshake' | 'lightbulb'
+  size?: 'sm' | 'md' | 'lg' | 'xl'
+  animated?: boolean
+  countUp?: boolean
+  showTrend?: boolean
+  trendValue?: number
+  trendSuffix?: string
+  showProgress?: boolean
+  maxValue?: number
+  progressLabel?: string
+}
+
 interface Props {
   // Content
   headline?: string
@@ -210,8 +213,11 @@ interface Props {
   floatingCard2Title?: string
   floatingCard2Text?: string
 
-  // Counters
+  // Counters - New dynamic structure
   showCounters?: boolean
+  counters?: CounterData[]
+
+  // Counters - Legacy support (will be deprecated)
   participantsCount?: number
   participantsLabel?: string
   successRate?: number
@@ -255,6 +261,31 @@ const props = withDefaults(defineProps<Props>(), {
   floatingCard2Text: 'Wöchentliche Fortschritte',
 
   showCounters: true,
+  counters: () => [
+    {
+      key: 'participants',
+      value: 2847,
+      label: 'Erfolgreiche Teilnehmer',
+      suffix: '+',
+      variant: 'highlight'
+    },
+    {
+      key: 'successRate',
+      value: 94,
+      label: 'Erfolgsquote',
+      suffix: '%',
+      variant: 'primary'
+    },
+    {
+      key: 'weightLoss',
+      value: 8,
+      label: 'Ø Gewichtsverlust',
+      suffix: 'kg',
+      variant: 'secondary'
+    }
+  ],
+
+  // Legacy defaults (for backward compatibility)
   participantsCount: 2847,
   participantsLabel: 'Erfolgreiche Teilnehmer',
   successRate: 94,
@@ -270,6 +301,69 @@ const props = withDefaults(defineProps<Props>(), {
   backgroundColor: '#0f0f0f',
   headlineColor: '#ffffff',
   subheadlineColor: '#d1d5db'
+})
+
+// Transform counters into array format - supports both dynamic and legacy structure
+const countersData = computed(() => {
+  // If dynamic counters array is provided, use it
+  if (props.counters && props.counters.length > 0) {
+    return props.counters.map((counter: CounterData) => ({
+      key: counter.key,
+      value: counter.value,
+      label: counter.label,
+      suffix: counter.suffix || '',
+      variant: counter.variant || 'primary',
+      description: counter.description,
+      iconName: counter.iconName,
+      size: counter.size,
+      animated: counter.animated,
+      countUp: counter.countUp,
+      showTrend: counter.showTrend,
+      trendValue: counter.trendValue,
+      trendSuffix: counter.trendSuffix,
+      showProgress: counter.showProgress,
+      maxValue: counter.maxValue,
+      progressLabel: counter.progressLabel
+    }))
+  }
+
+  // Fallback to legacy individual props for backward compatibility
+  const legacyCounters = []
+
+  // Add participants counter if data exists
+  if (props.participantsCount && props.participantsLabel) {
+    legacyCounters.push({
+      key: 'participants',
+      value: props.participantsCount,
+      label: props.participantsLabel,
+      suffix: '+',
+      variant: 'highlight' as const
+    })
+  }
+
+  // Add success rate counter if data exists
+  if (props.successRate && props.successLabel) {
+    legacyCounters.push({
+      key: 'successRate',
+      value: props.successRate,
+      label: props.successLabel,
+      suffix: '%',
+      variant: 'primary' as const
+    })
+  }
+
+  // Add weight loss counter if provided
+  if (props.avgWeightLoss && props.weightLossLabel) {
+    legacyCounters.push({
+      key: 'weightLoss',
+      value: props.avgWeightLoss,
+      label: props.weightLossLabel,
+      suffix: 'kg',
+      variant: 'secondary' as const
+    })
+  }
+
+  return legacyCounters
 })
 </script>
 

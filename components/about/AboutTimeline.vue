@@ -85,7 +85,7 @@
               <!-- Custom content for metrics/achievements -->
               <div v-if="item.metrics && item.metrics.length > 0" class="mt-4">
                 <div class="grid grid-cols-2 gap-3">
-                  <AboutStatistic
+                  <BaseStatistic
                     v-for="metric in item.metrics"
                     :key="metric.label"
                     :value="metric.value"
