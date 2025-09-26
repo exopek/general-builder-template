@@ -1,6 +1,6 @@
 <template>
   <section class="py-16 md:py-20" :style="{ backgroundColor: backgroundColor }">
-    <div class="container mx-auto">
+    <div id="details" class="container mx-auto">
 
       <!-- Section Header -->
       <div class="text-center mb-16 lg:mb-20">
