@@ -26,6 +26,10 @@ import AboutStats from '~/components/about/AboutStats.vue';
 import AboutLocation from '~/components/about/AboutLocation.vue';
 import AboutCTA from '~/components/about/AboutCTA.vue';
 
+// Base Components
+import BaseStatistic from '~/components/base/BaseStatistic.vue';
+import BaseStatisticGrid from '~/components/base/BaseStatisticGrid.vue';
+
 type ComponentInput = {
     name: string;
     type: string;
@@ -193,6 +197,25 @@ export const registeredComponents: RegisteredComponent[] = [
             { name: 'comparisonHeadline', type: 'string', defaultValue: 'Der Unterschied ist deutlich sichtbar' },
             { name: 'showMetrics', type: 'boolean', defaultValue: true },
             { name: 'metricsHeadline', type: 'string', defaultValue: 'Unsere Teilnehmer erreichen durchschnittlich' },
+            {
+                name: 'metrics',
+                type: 'list',
+                subFields: [
+                    { name: 'key', type: 'string' },
+                    { name: 'value', type: 'number', required: true },
+                    { name: 'label', type: 'string', required: true },
+                    { name: 'suffix', type: 'string', defaultValue: '' },
+                    { name: 'description', type: 'string' },
+                    { name: 'iconName', type: 'list', enum: ['heart', 'target', 'people', 'shield', 'location', 'award', 'handshake', 'lightbulb'] },
+                    { name: 'variant', type: 'list', enum: ['default', 'primary', 'secondary', 'gradient', 'glass', 'minimal', 'highlight'], defaultValue: 'primary' }
+                ],
+                defaultValue: [
+                    { key: 'averageWeightLoss', value: 8.2, label: 'Ø Gewichtsverlust', suffix: 'kg' },
+                    { key: 'muscleGain', value: 15, label: 'Muskelzuwachs', suffix: '%' },
+                    { key: 'energyIncrease', value: 40, label: 'Mehr Energie', suffix: '%' },
+                    { key: 'satisfactionRate', value: 94, label: 'Zufriedenheit', suffix: '%' }
+                ]
+            },
             { name: 'showCta', type: 'boolean', defaultValue: true },
             { name: 'ctaHeadline', type: 'string', defaultValue: 'Bereit für deine Transformation?' },
             { name: 'primaryCtaText', type: 'string', defaultValue: 'Programm starten' },
@@ -390,6 +413,108 @@ export const registeredComponents: RegisteredComponent[] = [
             { name: 'enableRouteTracking', type: 'boolean', defaultValue: true },
             { name: 'debugMode', type: 'boolean', defaultValue: false },
             { name: 'submitUrl', type: 'string', defaultValue: '/api/contact' }
+        ]
+    },
+
+    // === BASE COMPONENTS ===
+    {
+        component: BaseStatistic,
+        name: 'BaseStatistic',
+        inputs: [
+            // Main data
+            { name: 'value', type: 'number', defaultValue: 100, required: true },
+            { name: 'targetValue', type: 'number' },
+            { name: 'maxValue', type: 'number' },
+            { name: 'label', type: 'string', defaultValue: 'Statistik' },
+            { name: 'description', type: 'string' },
+            { name: 'suffix', type: 'string', defaultValue: '' },
+
+            // Icon
+            { name: 'icon', type: 'string' },
+            { name: 'iconName', type: 'list', enum: ['heart', 'target', 'people', 'shield', 'location', 'award', 'handshake', 'lightbulb'] },
+            { name: 'iconVariant', type: 'list', enum: ['primary', 'secondary', 'accent', 'success', 'info', 'neutral'], defaultValue: 'primary' },
+            { name: 'iconSize', type: 'list', enum: ['sm', 'md', 'lg'], defaultValue: 'md' },
+
+            // Styling
+            { name: 'variant', type: 'list', enum: ['default', 'primary', 'secondary', 'gradient', 'glass', 'minimal', 'highlight'], defaultValue: 'default' },
+            { name: 'size', type: 'list', enum: ['sm', 'md', 'lg', 'xl'], defaultValue: 'md' },
+            { name: 'alignment', type: 'list', enum: ['left', 'center', 'right'], defaultValue: 'center' },
+            { name: 'labelPosition', type: 'list', enum: ['top', 'bottom'], defaultValue: 'bottom' },
+
+            // Animations & Effects
+            { name: 'animated', type: 'boolean', defaultValue: false },
+            { name: 'countUp', type: 'boolean', defaultValue: true },
+            { name: 'duration', type: 'number', defaultValue: 2000 },
+
+            // Progress & Trends
+            { name: 'showProgress', type: 'boolean', defaultValue: false },
+            { name: 'progressLabel', type: 'string', defaultValue: 'erreicht' },
+            { name: 'showTrend', type: 'boolean', defaultValue: false },
+            { name: 'trendValue', type: 'number' },
+            { name: 'trendSuffix', type: 'string', defaultValue: '%' }
+        ]
+    },
+
+    {
+        component: BaseStatisticGrid,
+        name: 'BaseStatisticGrid',
+        inputs: [
+            // Statistics data
+            {
+                name: 'statistics',
+                type: 'list',
+                required: true,
+                subFields: [
+                    { name: 'key', type: 'string' },
+                    { name: 'value', type: 'number', defaultValue: 0, required: true },
+                    { name: 'label', type: 'string', defaultValue: 'Statistik', required: true },
+                    { name: 'suffix', type: 'string', defaultValue: '' },
+                    { name: 'description', type: 'string' },
+                    { name: 'iconName', type: 'list', enum: ['heart', 'target', 'people', 'shield', 'location', 'award', 'handshake', 'lightbulb'] },
+                    { name: 'variant', type: 'list', enum: ['default', 'primary', 'secondary', 'gradient', 'glass', 'minimal', 'highlight'], defaultValue: 'primary' },
+                    { name: 'size', type: 'list', enum: ['sm', 'md', 'lg', 'xl'] },
+                    { name: 'animated', type: 'boolean' },
+                    { name: 'countUp', type: 'boolean' },
+                    { name: 'showTrend', type: 'boolean', defaultValue: false },
+                    { name: 'trendValue', type: 'number' },
+                    { name: 'trendSuffix', type: 'string', defaultValue: '%' },
+                    { name: 'showProgress', type: 'boolean', defaultValue: false },
+                    { name: 'maxValue', type: 'number' },
+                    { name: 'progressLabel', type: 'string' }
+                ],
+                defaultValue: [
+                    {
+                        value: 100,
+                        label: 'Beispiel Statistik',
+                        suffix: '%',
+                        iconName: 'target',
+                        variant: 'primary'
+                    }
+                ]
+            },
+
+            // Grid layout
+            { name: 'gridType', type: 'list', enum: ['auto', 'fixed-2', 'fixed-3', 'fixed-4', 'fixed-5', 'fixed-6'], defaultValue: 'auto' },
+            { name: 'gap', type: 'list', enum: ['sm', 'md', 'lg', 'xl'], defaultValue: 'md' },
+            { name: 'maxWidth', type: 'list', enum: ['sm', 'md', 'lg', 'xl', 'full', 'none'], defaultValue: 'none' },
+            { name: 'alignment', type: 'list', enum: ['left', 'center', 'right'], defaultValue: 'center' },
+
+            // Default props for all statistics
+            { name: 'defaultSize', type: 'list', enum: ['sm', 'md', 'lg', 'xl'], defaultValue: 'md' },
+            { name: 'defaultVariant', type: 'list', enum: ['default', 'primary', 'secondary', 'gradient', 'glass', 'minimal', 'highlight'], defaultValue: 'primary' },
+            { name: 'defaultAnimated', type: 'boolean', defaultValue: true },
+            { name: 'defaultCountUp', type: 'boolean', defaultValue: true },
+
+            // Animation
+            { name: 'animation', type: 'list', enum: ['none', 'stagger', 'fade', 'slide-up'], defaultValue: 'stagger' },
+            { name: 'animationDuration', type: 'number', defaultValue: 100 },
+
+            // Context
+            { name: 'showContext', type: 'boolean', defaultValue: false },
+            { name: 'contextText', type: 'text' },
+
+            // Styling
+            { name: 'containerClass', type: 'string' }
         ]
     },
 

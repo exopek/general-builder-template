@@ -29,39 +29,19 @@
       </div>
 
       <!-- Main Stats Grid -->
-      <div v-if="stats && stats.length > 0" class="mb-16">
-        <div
-          class="grid gap-6 lg:gap-8"
-          :class="getGridClasses(stats.length)"
-        >
-          <AboutStatistic
-            v-for="(stat, index) in stats"
-            :key="index"
-            :value="stat.value"
-            :label="stat.label"
-            :suffix="stat.suffix"
-            :description="stat.description"
-            :icon-name="stat.iconName"
-            :variant="stat.variant || 'primary'"
-            :size="statSize"
-            :show-trend="stat.showTrend"
-            :trend-value="stat.trendValue"
-            :trend-suffix="stat.trendSuffix"
-            :count-up="true"
-            class="main-stat"
-          />
-        </div>
-      </div>
-
-      <!-- Additional Context -->
-      <div v-if="showContext" class="text-center">
-        <p
-          class="text-base md:text-lg max-w-2xl mx-auto"
-          :style="{ color: textColor }"
-        >
-          {{ contextText }}
-        </p>
-      </div>
+      <BaseStatisticGrid
+        v-if="stats && stats.length > 0"
+        :statistics="stats"
+        grid-type="auto"
+        gap="lg"
+        :default-size="statSize"
+        default-variant="primary"
+        :default-count-up="true"
+        animation="stagger"
+        :show-context="showContext"
+        :context-text="contextText"
+        container-class="mb-16"
+      />
 
     </div>
   </section>
@@ -155,37 +135,9 @@ const props = withDefaults(defineProps<Props>(), {
   textColor: '#374151'
 })
 
-// Helper function for responsive grid classes
-const getGridClasses = (statCount: number): string => {
-  if (statCount === 1) return 'grid-cols-1 max-w-sm mx-auto'
-  if (statCount === 2) return 'grid-cols-1 md:grid-cols-2 max-w-2xl mx-auto'
-  if (statCount === 3) return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
-  if (statCount <= 4) return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'
-  if (statCount <= 6) return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
-  return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
-}
+// Note: Grid classes logic moved to BaseStatisticGrid component
 </script>
 
 <style scoped>
-.main-stat {
-  animation: fadeInUp 0.8s ease-out;
-}
-
-.main-stat:nth-child(1) { animation-delay: 0.1s; }
-.main-stat:nth-child(2) { animation-delay: 0.2s; }
-.main-stat:nth-child(3) { animation-delay: 0.3s; }
-.main-stat:nth-child(4) { animation-delay: 0.4s; }
-.main-stat:nth-child(5) { animation-delay: 0.5s; }
-.main-stat:nth-child(6) { animation-delay: 0.6s; }
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+/* Animation styles moved to BaseStatisticGrid component */
 </style>

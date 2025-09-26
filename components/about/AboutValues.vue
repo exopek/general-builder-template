@@ -108,7 +108,7 @@
             />
             <!-- Fallback: Values stats -->
             <div v-else class="grid grid-cols-2 gap-4">
-              <AboutStatistic
+              <BaseStatistic
                 :value="98"
                 label="Mitgliederzufriedenheit"
                 suffix="%"
@@ -116,7 +116,7 @@
                 variant="primary"
                 size="sm"
               />
-              <AboutStatistic
+              <BaseStatistic
                 :value="8"
                 label="Qualifizierte Trainer"
                 suffix=""

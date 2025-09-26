@@ -86,42 +86,17 @@
         </div>
 
         <!-- Overall Progress Stats -->
-        <div v-if="showOverallStats" class="mt-16 lg:mt-20">
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
-            <TransformationCounter
-              :value="totalCoursesPerWeek"
-              label="Kurse pro Woche"
-              suffix="+"
-              variant="primary"
-              size="sm"
-              :animated="true"
-            />
-            <TransformationCounter
-              :value="averageWeightLoss"
-              label="Ø Gewichtsverlust"
-              suffix="kg"
-              variant="primary"
-              size="sm"
-              :animated="true"
-            />
-            <TransformationCounter
-              :value="completionRate"
-              label="Abschlussquote"
-              suffix="%"
-              variant="primary"
-              size="sm"
-              :animated="true"
-            />
-            <TransformationCounter
-              :value="satisfactionRate"
-              label="Zufriedenheit"
-              suffix="%"
-              variant="primary"
-              size="sm"
-              :animated="true"
-            />
-          </div>
-        </div>
+        <BaseStatisticGrid
+          v-if="showOverallStats"
+          :statistics="overallStatsData"
+          grid-type="fixed-4"
+          gap="lg"
+          default-size="sm"
+          default-variant="primary"
+          :default-animated="true"
+          animation="stagger"
+          container-class="mt-16 lg:mt-20"
+        />
 
         <!-- CTA Section -->
         <div v-if="showCta" class="mt-16 lg:mt-20 text-center">
@@ -267,6 +242,34 @@ const props = withDefaults(defineProps<Props>(), {
   headlineColor: '#1f2937',
   subheadlineColor: '#6b7280'
 })
+
+// Transform overall stats into array format
+const overallStatsData = computed(() => [
+  {
+    key: 'totalCourses',
+    value: props.totalCoursesPerWeek,
+    label: 'Kurse pro Woche',
+    suffix: '+'
+  },
+  {
+    key: 'averageWeightLoss',
+    value: props.averageWeightLoss,
+    label: 'Ø Gewichtsverlust',
+    suffix: 'kg'
+  },
+  {
+    key: 'completionRate',
+    value: props.completionRate,
+    label: 'Abschlussquote',
+    suffix: '%'
+  },
+  {
+    key: 'satisfactionRate',
+    value: props.satisfactionRate,
+    label: 'Zufriedenheit',
+    suffix: '%'
+  }
+])
 
 const getWeekVariant = (weekIndex: number) => {
   if (weekIndex < props.currentWeek) return 'success'

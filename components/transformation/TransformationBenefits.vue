@@ -137,40 +137,15 @@
       <div v-if="showMetrics" class="text-center">
         <h3 class="text-2xl font-bold text-gray-900 mb-8">{{ metricsHeadline }}</h3>
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-          <TransformationCounter
-            :value="successMetrics.averageWeightLoss"
-            label="Ø Gewichtsverlust"
-            suffix="kg"
-            variant="primary"
-            size="md"
-            :animated="true"
-          />
-          <TransformationCounter
-            :value="successMetrics.muscleGain"
-            label="Muskelzuwachs"
-            suffix="%"
-            variant="primary"
-            size="md"
-            :animated="true"
-          />
-          <TransformationCounter
-            :value="successMetrics.energyIncrease"
-            label="Mehr Energie"
-            suffix="%"
-            variant="primary"
-            size="md"
-            :animated="true"
-          />
-          <TransformationCounter
-            :value="successMetrics.satisfactionRate"
-            label="Zufriedenheit"
-            suffix="%"
-            variant="primary"
-            size="md"
-            :animated="true"
-          />
-        </div>
+        <BaseStatisticGrid
+          :statistics="metrics || []"
+          grid-type="fixed-4"
+          gap="md"
+          default-size="md"
+          default-variant="primary"
+          :default-animated="true"
+          animation="stagger"
+        />
       </div>
 
       <!-- CTA Section -->
@@ -210,11 +185,14 @@ interface Benefit {
   highlight?: string
 }
 
-interface SuccessMetrics {
-  averageWeightLoss: number
-  muscleGain: number
-  energyIncrease: number
-  satisfactionRate: number
+interface StatisticData {
+  key?: string
+  value: number
+  label: string
+  suffix?: string
+  description?: string
+  iconName?: 'heart' | 'target' | 'people' | 'shield' | 'location' | 'award' | 'handshake' | 'lightbulb'
+  variant?: 'default' | 'primary' | 'secondary' | 'gradient' | 'glass' | 'minimal' | 'highlight'
 }
 
 interface Props {
@@ -239,7 +217,7 @@ interface Props {
   // Metrics
   showMetrics?: boolean
   metricsHeadline?: string
-  successMetrics?: SuccessMetrics
+  metrics?: StatisticData[]
 
   // CTA
   showCta?: boolean
@@ -254,19 +232,6 @@ interface Props {
   backgroundColor?: string
   headlineColor?: string
   subheadlineColor?: string
-}
-
-// Icon color classes for different variants
-const getIconColorClass = (variant: string) => {
-  const colorMap = {
-    primary: 'filter brightness-0 saturate-100 invert-25 sepia-96 saturate-1831 hue-rotate-338 brightness-92 contrast-93',
-    secondary: 'filter brightness-0 saturate-100 invert-13 sepia-27 saturate-1824 hue-rotate-172 brightness-96 contrast-100',
-    accent: 'filter brightness-0 saturate-100 invert-42 sepia-96 saturate-2447 hue-rotate-185 brightness-100 contrast-92',
-    success: 'filter brightness-0 saturate-100 invert-47 sepia-69 saturate-959 hue-rotate-121 brightness-98 contrast-86',
-    warning: 'filter brightness-0 saturate-100 invert-74 sepia-29 saturate-1567 hue-rotate-356 brightness-101 contrast-103',
-    neutral: 'filter brightness-0 saturate-100 invert-54 sepia-18 saturate-340 hue-rotate-169 brightness-96 contrast-87'
-  }
-  return colorMap[variant as keyof typeof colorMap] || colorMap.primary
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -346,12 +311,32 @@ const props = withDefaults(defineProps<Props>(), {
 
   showMetrics: true,
   metricsHeadline: 'Unsere Teilnehmer erreichen durchschnittlich',
-  successMetrics: () => ({
-    averageWeightLoss: 8.2,
-    muscleGain: 15,
-    energyIncrease: 40,
-    satisfactionRate: 94
-  }),
+  metrics: () => [
+    {
+      key: 'averageWeightLoss',
+      value: 8.2,
+      label: 'Ø Gewichtsverlust',
+      suffix: 'kg'
+    },
+    {
+      key: 'muscleGain',
+      value: 15,
+      label: 'Muskelzuwachs',
+      suffix: '%'
+    },
+    {
+      key: 'energyIncrease',
+      value: 40,
+      label: 'Mehr Energie',
+      suffix: '%'
+    },
+    {
+      key: 'satisfactionRate',
+      value: 94,
+      label: 'Zufriedenheit',
+      suffix: '%'
+    }
+  ],
 
   showCta: true,
   ctaHeadline: 'Bereit für deine Transformation?',
@@ -365,6 +350,21 @@ const props = withDefaults(defineProps<Props>(), {
   headlineColor: '#1f2937',
   subheadlineColor: '#6b7280'
 })
+
+// Icon color classes for different variants
+const getIconColorClass = (variant: string) => {
+  const colorMap = {
+    primary: 'filter brightness-0 saturate-100 invert-25 sepia-96 saturate-1831 hue-rotate-338 brightness-92 contrast-93',
+    secondary: 'filter brightness-0 saturate-100 invert-13 sepia-27 saturate-1824 hue-rotate-172 brightness-96 contrast-100',
+    accent: 'filter brightness-0 saturate-100 invert-42 sepia-96 saturate-2447 hue-rotate-185 brightness-100 contrast-92',
+    success: 'filter brightness-0 saturate-100 invert-47 sepia-69 saturate-959 hue-rotate-121 brightness-98 contrast-86',
+    warning: 'filter brightness-0 saturate-100 invert-74 sepia-29 saturate-1567 hue-rotate-356 brightness-101 contrast-103',
+    neutral: 'filter brightness-0 saturate-100 invert-54 sepia-18 saturate-340 hue-rotate-169 brightness-96 contrast-87'
+  }
+  return colorMap[variant as keyof typeof colorMap] || colorMap.primary
+}
+
+// Metrics are now directly configurable via Builder.io props
 </script>
 
 <style scoped>

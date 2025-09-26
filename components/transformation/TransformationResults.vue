@@ -47,40 +47,16 @@
       </div>
 
       <!-- Results Statistics -->
-      <div v-if="showStatistics" class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
-        <TransformationCounter
-          :value="statistics.totalTransformations"
-          label="Erfolgreiche Transformationen"
-          suffix="+"
-          variant="primary"
-          size="md"
-          :animated="true"
-        />
-        <TransformationCounter
-          :value="statistics.averageWeightLoss"
-          label="Ø Gewichtsverlust"
-          suffix="kg"
-          variant="highlight"
-          size="md"
-          :animated="true"
-        />
-        <TransformationCounter
-          :value="statistics.averageDuration"
-          label="Ø Programmdauer"
-          suffix="Wochen"
-          variant="secondary"
-          size="md"
-          :animated="true"
-        />
-        <TransformationCounter
-          :value="statistics.satisfactionRate"
-          label="Zufriedenheitsrate"
-          suffix="%"
-          variant="success"
-          size="md"
-          :animated="true"
-        />
-      </div>
+      <BaseStatisticGrid
+        v-if="showStatistics"
+        :statistics="statisticsData"
+        grid-type="fixed-4"
+        gap="md"
+        default-size="md"
+        :default-animated="true"
+        animation="stagger"
+        container-class="mb-16"
+      />
 
       <!-- Results Masonry Grid -->
       <div class="masonry-container mb-12">
@@ -284,14 +260,14 @@
 
               <!-- Detailed Stats -->
               <div class="grid grid-cols-2 gap-4">
-                <TransformationCounter
+                <BaseStatistic
                   :value="selectedResult.weightLoss"
                   label="Gewichtsverlust"
                   suffix="kg"
                   variant="highlight"
                   size="sm"
                 />
-                <TransformationCounter
+                <BaseStatistic
                   :value="selectedResult.duration"
                   label="Dauer"
                   suffix="Wochen"
@@ -544,6 +520,38 @@ const props = withDefaults(defineProps<Props>(), {
   headlineColor: '#1f2937',
   subheadlineColor: '#6b7280'
 })
+
+// Transform statistics into array format
+const statisticsData = computed(() => [
+  {
+    key: 'totalTransformations',
+    value: props.statistics.totalTransformations,
+    label: 'Erfolgreiche Transformationen',
+    suffix: '+',
+    variant: 'primary'
+  },
+  {
+    key: 'averageWeightLoss',
+    value: props.statistics.averageWeightLoss,
+    label: 'Ø Gewichtsverlust',
+    suffix: 'kg',
+    variant: 'highlight'
+  },
+  {
+    key: 'averageDuration',
+    value: props.statistics.averageDuration,
+    label: 'Ø Programmdauer',
+    suffix: 'Wochen',
+    variant: 'secondary'
+  },
+  {
+    key: 'satisfactionRate',
+    value: props.statistics.satisfactionRate,
+    label: 'Zufriedenheitsrate',
+    suffix: '%',
+    variant: 'success'
+  }
+])
 
 const selectedFilter = ref('all')
 const selectedResult = ref<TransformationResult | null>(null)

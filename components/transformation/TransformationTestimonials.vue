@@ -126,21 +126,21 @@
 
                   <!-- Achievement Stats -->
                   <div class="grid grid-cols-3 gap-4 pt-4">
-                    <TransformationCounter
+                    <BaseStatistic
                       :value="testimonial.weightLoss"
                       label="Gewichtsverlust"
                       suffix="kg"
                       variant="highlight"
                       size="sm"
                     />
-                    <TransformationCounter
+                    <BaseStatistic
                       :value="testimonial.durationWeeks"
                       label="Dauer"
                       suffix="Wochen"
                       variant="primary"
                       size="sm"
                     />
-                    <TransformationCounter
+                    <BaseStatistic
                       :value="testimonial.satisfactionScore"
                       label="Zufriedenheit"
                       suffix="%"
@@ -211,40 +211,14 @@
       <div v-if="showSummaryStats" class="text-center">
         <h3 class="text-2xl font-bold text-gray-900 mb-8">{{ summaryStatsHeadline }}</h3>
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-          <TransformationCounter
-            :value="summaryStats.totalParticipants"
-            label="Erfolgreiche Transformationen"
-            suffix="+"
-            variant="primary"
-            size="md"
-            :animated="true"
-          />
-          <TransformationCounter
-            :value="summaryStats.averageRating"
-            label="Durchschnittsbewertung"
-            suffix="/5"
-            variant="success"
-            size="md"
-            :animated="true"
-          />
-          <TransformationCounter
-            :value="summaryStats.averageWeightLoss"
-            label="Ø Gewichtsverlust"
-            suffix="kg"
-            variant="highlight"
-            size="md"
-            :animated="true"
-          />
-          <TransformationCounter
-            :value="summaryStats.recommendationRate"
-            label="Empfehlungsrate"
-            suffix="%"
-            variant="secondary"
-            size="md"
-            :animated="true"
-          />
-        </div>
+        <BaseStatisticGrid
+          :statistics="summaryStatsData"
+          grid-type="fixed-4"
+          gap="md"
+          default-size="md"
+          :default-animated="true"
+          animation="stagger"
+        />
       </div>
 
       <!-- CTA Section -->

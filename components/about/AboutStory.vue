@@ -150,7 +150,7 @@
         </h3>
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
-          <AboutStatistic
+          <BaseStatistic
             v-for="achievement in achievements"
             :key="achievement.label"
             :value="achievement.value"

@@ -38,33 +38,17 @@
           </div>
 
           <!-- Counter Stats -->
-          <div v-if="showCounters" class="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-lg mx-auto lg:mx-0">
-            <TransformationCounter
-              :value="participantsCount"
-              :label="participantsLabel"
-              suffix="+"
-              variant="highlight"
-              size="sm"
-              :animated="true"
-            />
-            <TransformationCounter
-              :value="successRate"
-              :label="successLabel"
-              suffix="%"
-              variant="primary"
-              size="sm"
-              :animated="true"
-            />
-            <TransformationCounter
-              v-if="avgWeightLoss"
-              :value="avgWeightLoss"
-              :label="weightLossLabel"
-              suffix="kg"
-              variant="secondary"
-              size="sm"
-              :animated="true"
-            />
-          </div>
+          <BaseStatisticGrid
+            v-if="showCounters"
+            :statistics="countersData"
+            grid-type="fixed-3"
+            gap="sm"
+            max-width="lg"
+            default-size="sm"
+            :default-animated="true"
+            animation="stagger"
+            container-class="mx-auto lg:mx-0"
+          />
 
           <!-- CTA Buttons -->
           <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
@@ -270,6 +254,39 @@ const props = withDefaults(defineProps<Props>(), {
   backgroundColor: '#0f0f0f',
   headlineColor: '#ffffff',
   subheadlineColor: '#d1d5db'
+})
+
+// Transform counters into array format
+const countersData = computed(() => {
+  const counters = [
+    {
+      key: 'participants',
+      value: props.participantsCount,
+      label: props.participantsLabel,
+      suffix: '+',
+      variant: 'highlight'
+    },
+    {
+      key: 'successRate',
+      value: props.successRate,
+      label: props.successLabel,
+      suffix: '%',
+      variant: 'primary'
+    }
+  ]
+
+  // Add weight loss counter if provided
+  if (props.avgWeightLoss) {
+    counters.push({
+      key: 'weightLoss',
+      value: props.avgWeightLoss,
+      label: props.weightLossLabel,
+      suffix: 'kg',
+      variant: 'secondary'
+    })
+  }
+
+  return counters
 })
 </script>
 
