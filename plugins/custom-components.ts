@@ -151,11 +151,56 @@ export const registeredComponents: RegisteredComponent[] = [
             { name: 'showImageBadge', type: 'boolean', defaultValue: true },
             { name: 'imageBadgeText', type: 'string', defaultValue: '100% Erfolgsgarantie' },
 
-            // Counters
+            // Counters - New dynamic structure
             { name: 'showCounters', type: 'boolean', defaultValue: true },
-            { name: 'participantsCount', type: 'number', defaultValue: 2847 },
-            { name: 'successRate', type: 'number', defaultValue: 94 },
-            { name: 'avgWeightLoss', type: 'number', defaultValue: 8 },
+            {
+                name: 'counters',
+                type: 'list',
+                subFields: [
+                    { name: 'key', type: 'string' },
+                    { name: 'value', type: 'number', defaultValue: 0, required: true },
+                    { name: 'label', type: 'string', defaultValue: 'Statistik', required: true },
+                    { name: 'suffix', type: 'string', defaultValue: '' },
+                    { name: 'variant', type: 'list', enum: ['default', 'primary', 'secondary', 'gradient', 'glass', 'minimal', 'highlight'], defaultValue: 'primary' },
+                    { name: 'description', type: 'string' },
+                    { name: 'iconName', type: 'list', enum: ['heart', 'target', 'people', 'shield', 'location', 'award', 'handshake', 'lightbulb'] },
+                    { name: 'size', type: 'list', enum: ['sm', 'md', 'lg', 'xl'] },
+                    { name: 'animated', type: 'boolean' },
+                    { name: 'countUp', type: 'boolean' },
+                    { name: 'showTrend', type: 'boolean', defaultValue: false },
+                    { name: 'trendValue', type: 'number' },
+                    { name: 'trendSuffix', type: 'string', defaultValue: '%' },
+                    { name: 'showProgress', type: 'boolean', defaultValue: false },
+                    { name: 'maxValue', type: 'number' },
+                    { name: 'progressLabel', type: 'string' }
+                ],
+                defaultValue: [
+                    {
+                        key: 'participants',
+                        value: 2847,
+                        label: 'Erfolgreiche Teilnehmer',
+                        suffix: '+',
+                        variant: 'highlight',
+                        iconName: 'people'
+                    },
+                    {
+                        key: 'successRate',
+                        value: 94,
+                        label: 'Erfolgsquote',
+                        suffix: '%',
+                        variant: 'primary',
+                        iconName: 'target'
+                    },
+                    {
+                        key: 'weightLoss',
+                        value: 8,
+                        label: 'Ø Gewichtsverlust',
+                        suffix: 'kg',
+                        variant: 'secondary',
+                        iconName: 'award'
+                    }
+                ]
+            },
 
             // Trust Indicators
             { name: 'showTrustIndicators', type: 'boolean', defaultValue: true },
@@ -205,12 +250,9 @@ export const registeredComponents: RegisteredComponent[] = [
                     { name: 'value', type: 'number', required: true },
                     { name: 'label', type: 'string', required: true },
                     { name: 'suffix', type: 'string', defaultValue: '' },
-                    { name: 'description', type: 'string' },
-                    { name: 'iconName', type: 'list', enum: ['heart', 'target', 'people', 'shield', 'location', 'award', 'handshake', 'lightbulb'] },
-                    { name: 'variant', type: 'list', enum: ['default', 'primary', 'secondary', 'gradient', 'glass', 'minimal', 'highlight'], defaultValue: 'primary' }
+                    { name: 'description', type: 'string' }
                 ],
                 defaultValue: [
-                    { key: 'averageWeightLoss', value: 8.2, label: 'Ø Gewichtsverlust', suffix: 'kg' },
                     { key: 'muscleGain', value: 15, label: 'Muskelzuwachs', suffix: '%' },
                     { key: 'energyIncrease', value: 40, label: 'Mehr Energie', suffix: '%' },
                     { key: 'satisfactionRate', value: 94, label: 'Zufriedenheit', suffix: '%' }

@@ -139,7 +139,7 @@
 
         <BaseStatisticGrid
           :statistics="metrics || []"
-          grid-type="fixed-4"
+          grid-type="auto"
           gap="md"
           default-size="md"
           default-variant="primary"
@@ -311,32 +311,6 @@ const props = withDefaults(defineProps<Props>(), {
 
   showMetrics: true,
   metricsHeadline: 'Unsere Teilnehmer erreichen durchschnittlich',
-  metrics: () => [
-    {
-      key: 'averageWeightLoss',
-      value: 8.2,
-      label: 'Ø Gewichtsverlust',
-      suffix: 'kg'
-    },
-    {
-      key: 'muscleGain',
-      value: 15,
-      label: 'Muskelzuwachs',
-      suffix: '%'
-    },
-    {
-      key: 'energyIncrease',
-      value: 40,
-      label: 'Mehr Energie',
-      suffix: '%'
-    },
-    {
-      key: 'satisfactionRate',
-      value: 94,
-      label: 'Zufriedenheit',
-      suffix: '%'
-    }
-  ],
 
   showCta: true,
   ctaHeadline: 'Bereit für deine Transformation?',
