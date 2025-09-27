@@ -38,33 +38,46 @@
 
 <script setup lang="ts">
 interface Props {
+  // Content
   headline?: string
   subheadline?: string
   badgeText?: string
   badgeVariant?: 'new' | 'popular' | 'featured' | 'limited'
   showBadge?: boolean
+
+  // CTAs
   primaryCtaText?: string
   primaryCtaUrl?: string
   primaryCtaExternal?: boolean
   secondaryCtaText?: string
   secondaryCtaUrl?: string
   secondaryCtaExternal?: boolean
+
+  // Visual
   heroImage?: string
   heroImageAlt?: string
   imageOverlay?: boolean
   showImageBadge?: boolean
   imageBadgeText?: string
+
+  // Floating Cards
   showFloatingCards?: boolean
   floatingCard1Title?: string
   floatingCard1Text?: string
   floatingCard2Title?: string
   floatingCard2Text?: string
+
+  // Company Stats
   showStats?: boolean
   foundedYear?: number
   clientsServed?: number
   projectsCompleted?: number
+
+  // Trust Indicators
   showTrustIndicators?: boolean
   trustIndicators?: string[]
+
+  // Styling
   backgroundColor?: string
   headlineColor?: string
   subheadlineColor?: string
@@ -76,39 +89,47 @@ const props = withDefaults(defineProps<Props>(), {
   badgeText: 'Über uns',
   badgeVariant: 'featured',
   showBadge: true,
+
   primaryCtaText: 'Probetraining buchen',
   primaryCtaUrl: '#probetraining',
   primaryCtaExternal: false,
   secondaryCtaText: 'Kurse entdecken',
   secondaryCtaUrl: '#kurse',
   secondaryCtaExternal: false,
+
   heroImage: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=750&fit=crop&crop=center',
   heroImageAlt: 'Funktionelles Training im Exopek Gym',
   imageOverlay: false,
   showImageBadge: true,
   imageBadgeText: 'Functional Fitness',
+
   showFloatingCards: true,
   floatingCard1Title: 'Tom & Lisa',
   floatingCard1Text: 'Gründer & Head Trainer',
   floatingCard2Title: 'Unser Team',
   floatingCard2Text: '8 leidenschaftliche Trainer',
+
   showStats: true,
   foundedYear: 2018,
   clientsServed: 800,
   projectsCompleted: 5000,
+
   showTrustIndicators: true,
   trustIndicators: () => [
     'Persönliche Betreuung durch unser Team',
     'Wir kennen jeden beim Namen',
     'Familie statt anonymes Gym'
   ],
+
   backgroundColor: '#0f0f0f',
   headlineColor: '#ffffff',
   subheadlineColor: '#d1d5db'
 })
 
+// Transform stats into array format
 const statsData = computed(() => {
   const stats = []
+
   if (props.foundedYear) {
     stats.push({
       key: 'experience',
@@ -117,6 +138,7 @@ const statsData = computed(() => {
       suffix: '+'
     })
   }
+
   if (props.clientsServed) {
     stats.push({
       key: 'clients',
@@ -125,6 +147,7 @@ const statsData = computed(() => {
       suffix: '+'
     })
   }
+
   if (props.projectsCompleted) {
     stats.push({
       key: 'projects',
@@ -133,6 +156,7 @@ const statsData = computed(() => {
       suffix: '+'
     })
   }
+
   return stats
 })
 </script>

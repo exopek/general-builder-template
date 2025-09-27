@@ -1,232 +1,63 @@
 <template>
-  <section id="faq" class="py-16 md:py-20" :style="{ backgroundColor: backgroundColor }">
-    <div class="container mx-auto">
+  <BaseFAQ
+    :headline="headline"
+    :subheadline="subheadline"
+    :badge-text="badgeText"
+    :show-badge="showBadge"
+    :show-search="showSearch"
+    :search-placeholder="searchPlaceholder"
+    :show-categories="showCategories"
+    :categories="categories"
+    :faqs="faqs"
+    :show-contact-section="showContactSection"
+    :contact-section-headline="contactSectionHeadline"
+    :contact-section-description="contactSectionDescription"
+    :primary-contact-text="primaryContactText"
+    :primary-contact-url="primaryContactUrl"
+    :secondary-contact-text="secondaryContactText"
+    :secondary-contact-url="secondaryContactUrl"
+    :response-time-text="responseTimeText"
+    :contact-cta-text="contactCtaText"
+    :contact-button-text="contactButtonText"
+    :contact-button-url="contactButtonUrl"
+    :background-color="backgroundColor"
+    :headline-color="headlineColor"
+    :subheadline-color="subheadlineColor"
+    card-component="TransformationCard"
+    badge-variant="info"
+  >
+    <template #category-icon="{ category }">
+      <img
+        :src="getCategoryIcon(category)"
+        :alt="getCategoryName(category)"
+        class="w-5 h-5 filter brightness-0 invert"
+      />
+    </template>
 
-      <!-- Section Header -->
-      <div class="text-center mb-16 lg:mb-20">
-        <TransformationBadge
-          v-if="showBadge"
-          :text="badgeText"
-          variant="info"
-          class="mb-4"
-        />
+    <template #no-results-icon>
+      <img
+        src="/icons/bullseye-arrow.svg"
+        alt="Suche"
+        class="w-8 h-8 filter grayscale opacity-60"
+      />
+    </template>
 
-        <h2
-          class="text-3xl md:text-4xl lg:text-5xl font-black mb-6"
-          :style="{ color: headlineColor }"
-        >
-          {{ headline }}
-        </h2>
+    <template #contact-icon>
+      <img
+        src="/icons/users-medical.svg"
+        alt="Kontakt"
+        class="w-4 h-4 filter brightness-0 invert"
+      />
+    </template>
 
-        <p
-          class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto"
-          :style="{ color: subheadlineColor }"
-        >
-          {{ subheadline }}
-        </p>
-      </div>
-
-      <!-- Search & Categories -->
-      <div v-if="showSearch || showCategories" class="max-w-5xl mx-auto mb-16">
-
-        <!-- Category Filter -->
-        <div v-if="showCategories" class="flex flex-wrap gap-4 justify-center">
-          <TransformationButton
-            text="Alle"
-            variant="ghost"
-            size="sm"
-            :class="[
-              'transition-all duration-300',
-              selectedCategory === 'all' ? 'bg-orange-500 text-white shadow-lg transform scale-105' : 'hover:bg-gray-100'
-            ]"
-            @click="selectCategory('all')"
-            :aria-pressed="selectedCategory === 'all'"
-          />
-          <TransformationButton
-            v-for="category in categories"
-            :key="category.id"
-            :text="category.name"
-            variant="ghost"
-            size="sm"
-            :class="[
-              'transition-all duration-300',
-              selectedCategory === category.id ? 'bg-orange-500 text-white shadow-lg transform scale-105' : 'hover:bg-gray-100'
-            ]"
-            @click="selectCategory(category.id)"
-            :aria-pressed="selectedCategory === category.id"
-          />
-        </div>
-      </div>
-
-      <!-- FAQ Accordion -->
-      <div class="max-w-5xl mx-auto">
-        <div v-if="filteredFaqs.length === 0" class="text-center py-16">
-          <div class="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
-            <img
-              src="/icons/bullseye-arrow.svg"
-              alt="Suche"
-              class="w-8 h-8 filter grayscale opacity-60"
-            />
-          </div>
-          <h3 class="text-xl font-semibold text-gray-900 mb-2">Keine Ergebnisse gefunden</h3>
-          <p class="text-gray-600">Versuche andere Suchbegriffe oder kontaktiere uns direkt.</p>
-        </div>
-
-        <div v-else class="space-y-6" role="region" aria-label="Häufig gestellte Fragen">
-          <TransformationCard
-            v-for="(faq, index) in filteredFaqs"
-            :key="index"
-            variant="elevated"
-            size="md"
-            :hover-effect="false"
-            class="cursor-pointer transition-all duration-500 hover:shadow-xl faq-item"
-            :class="[
-              openItems.includes(index) ? 'ring-2 ring-orange-500 shadow-xl' : 'hover:shadow-lg',
-              'transform hover:-translate-y-1'
-            ]"
-            @click="toggleItem(index)"
-            @keydown.enter="toggleItem(index)"
-            @keydown.space.prevent="toggleItem(index)"
-            :tabindex="0"
-            role="button"
-            :aria-expanded="openItems.includes(index)"
-            :aria-controls="`faq-answer-${index}`"
-          >
-            <!-- Question Header -->
-            <div class="flex items-start gap-4">
-              <!-- Category Icon -->
-              <div class="flex-shrink-0 mt-1">
-                <div class="w-8 h-8 rounded-full flex items-center justify-center"
-                     :class="getCategoryBgClass(faq.category)">
-                  <img
-                    :src="getCategoryIcon(faq.category)"
-                    :alt="getCategoryName(faq.category)"
-                    class="w-5 h-5 filter"
-                    :class="getCategoryIconClass(faq.category)"
-                  />
-                </div>
-              </div>
-
-              <!-- Question Content -->
-              <div class="flex-1">
-                <div class="flex items-start justify-between gap-4">
-                  <h3 class="text-lg font-semibold text-gray-900 leading-tight">
-                    {{ faq.question }}
-                  </h3>
-
-                  <!-- Toggle Button -->
-                  <button
-                    class="flex-shrink-0 w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center transition-all duration-500 hover:bg-gray-200 focus:ring-2 focus:ring-orange-200 focus:outline-none"
-                    :class="openItems.includes(index) ? 'bg-orange-500 text-white rotate-180 shadow-lg' : 'text-gray-600'"
-                    :aria-label="openItems.includes(index) ? 'Antwort schließen' : 'Antwort anzeigen'"
-                    tabindex="-1"
-                  >
-                    <svg class="w-5 h-5 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                    </svg>
-                  </button>
-                </div>
-
-                <!-- Category Badge -->
-                <TransformationBadge
-                  :text="getCategoryName(faq.category)"
-                  variant="neutral"
-                  size="xs"
-                  class="mt-2"
-                />
-              </div>
-            </div>
-
-            <!-- Answer Content (Collapsible) -->
-            <div
-              v-if="openItems.includes(index)"
-              :id="`faq-answer-${index}`"
-              class="mt-6 pt-6 border-t border-gray-200 animate-fadeIn"
-              role="region"
-              :aria-labelledby="`faq-question-${index}`"
-            >
-              <div class="prose prose-gray max-w-none">
-                <div class="text-gray-700 text-base lg:text-lg leading-relaxed" v-html="faq.answer"></div>
-
-                <!-- Additional Links/Actions -->
-                <div v-if="faq.links" class="mt-4 space-y-2">
-                  <h4 class="font-medium text-gray-900">Hilfreiche Links:</h4>
-                  <div class="space-y-1">
-                    <a
-                      v-for="link in faq.links"
-                      :key="link.text"
-                      :href="link.url"
-                      class="block text-orange-600 hover:text-orange-700 text-sm underline"
-                    >
-                      {{ link.text }}
-                    </a>
-                  </div>
-                </div>
-
-                <!-- Contact CTA -->
-                <div v-if="faq.showContactCta" class="p-6 bg-gray-50 rounded-lg">
-                  <div class="flex items-start gap-3">
-                    <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center mt-0.5">
-                      <img
-                        src="/icons/users-medical.svg"
-                        alt="Kontakt"
-                        class="w-4 h-4 filter brightness-0 invert"
-                      />
-                    </div>
-                    <div class="flex-1 flex items-center">
-                      <p class="text-sm text-gray-800">{{ contactCtaText }}</p>
-                    </div>
-                    <TransformationButton
-                      :text="contactButtonText"
-                      :href="contactButtonUrl"
-                      variant="primary"
-                      size="sm"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </TransformationCard>
-        </div>
-      </div>
-
-      <!-- Still Have Questions Section -->
-      <div v-if="showContactSection" id="still-have-questions" class="max-w-4xl mx-auto mt-20 text-center">
-        <div class="bg-gradient-warm rounded-2xl p-8 md:p-12 text-white shadow-2xl border border-orange-200">
-          <h3 class="text-2xl md:text-3xl font-bold mb-4">{{ contactSectionHeadline }}</h3>
-          <p class="text-lg opacity-90 mb-8">{{ contactSectionDescription }}</p>
-
-          <div class="flex flex-col sm:flex-row gap-4 lg:gap-6 justify-center">
-            <TransformationButton
-              :text="primaryContactText"
-              :href="primaryContactUrl"
-              variant="secondary"
-              size="lg"
-            />
-            <TransformationButton
-              :text="secondaryContactText"
-              :href="secondaryContactUrl"
-              variant="secondaryFull"
-              size="lg"
-            />
-          </div>
-
-          <!-- Response Time Promise -->
-          <div class="mt-6 flex items-center justify-center gap-2 text-sm opacity-80">
-            <div class="w-5 h-5 bg-yellow-500 rounded-full flex items-center justify-center">
-              <img
-                src="/icons/brain-lightning.svg"
-                alt="Schnell"
-                class="w-3 h-3 filter brightness-0 invert"
-              />
-            </div>
-            <span>{{ responseTimeText }}</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
+    <template #response-time-icon>
+      <img
+        src="/icons/brain-lightning.svg"
+        alt="Schnell"
+        class="w-3 h-3 filter brightness-0 invert"
+      />
+    </template>
+  </BaseFAQ>
 </template>
 
 <script setup lang="ts">
@@ -374,56 +205,6 @@ const props = withDefaults(defineProps<Props>(), {
   subheadlineColor: '#6b7280'
 })
 
-const searchQuery = ref('')
-const selectedCategory = ref('all')
-const openItems = ref<number[]>([])
-
-const filteredFaqs = computed(() => {
-  let filtered = props.faqs
-
-  // Filter by category
-  if (selectedCategory.value !== 'all') {
-    filtered = filtered.filter(faq => faq.category === selectedCategory.value)
-  }
-
-  // Filter by search query
-  if (searchQuery.value.trim()) {
-    const query = searchQuery.value.toLowerCase()
-    filtered = filtered.filter(faq =>
-      faq.question.toLowerCase().includes(query) ||
-      faq.answer.toLowerCase().includes(query)
-    )
-  }
-
-  return filtered
-})
-
-const selectCategory = (categoryId: string) => {
-  selectedCategory.value = categoryId
-  searchQuery.value = ''
-  openItems.value = []
-}
-
-const toggleItem = (index: number) => {
-  const actualIndex = props.faqs.indexOf(filteredFaqs.value[index])
-
-  if (openItems.value.includes(actualIndex)) {
-    openItems.value = openItems.value.filter(i => i !== actualIndex)
-  } else {
-    openItems.value.push(actualIndex)
-  }
-}
-
-const getCategoryEmoji = (categoryId: string) => {
-  const category = props.categories.find(cat => cat.id === categoryId)
-  return category?.emoji || '❓'
-}
-
-const getCategoryVariant = (categoryId: string) => {
-  const category = props.categories.find(cat => cat.id === categoryId)
-  return category?.variant || 'neutral'
-}
-
 const getCategoryName = (categoryId: string) => {
   const category = props.categories.find(cat => cat.id === categoryId)
   return category?.name || 'Allgemein'
@@ -440,138 +221,5 @@ const getCategoryIcon = (categoryId: string) => {
   }
   return iconMap[categoryId] || '/icons/bullseye-arrow.svg'
 }
-
-const getCategoryBgClass = (categoryId: string) => {
-  const bgMap: Record<string, string> = {
-    program: 'bg-primary',
-    pricing: 'bg-primary',
-    training: 'bg-primary',
-    nutrition: 'bg-primary',
-    support: 'bg-primary',
-    results: 'bg-primary'
-  }
-  return bgMap[categoryId] || 'bg-primary'
-}
-
-const getCategoryIconClass = (categoryId: string) => {
-  return 'brightness-0 invert'
-}
-
-const formatAnswerText = (text: string) => {
-  if (!text) return ''
-
-  // Replace \n with <br> for line breaks
-  // Also handle double line breaks for paragraphs
-  return text
-    .replace(/\n\n/g, '</p><p class="mb-4">')
-    .replace(/\n/g, '<br>')
-    .replace(/^/, '<p class="mb-4">')
-    .replace(/$/, '</p>')
-    // Handle bullet points (• character)
-    .replace(/^• /gm, '<br>• ')
-}
 </script>
 
-<style scoped>
-/* Fade-in animation for answers */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fadeIn {
-  animation: fadeIn 0.5s ease-out;
-}
-
-/* FAQ item entrance animation */
-@keyframes slideInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.faq-item {
-  animation: slideInUp 0.6s ease-out;
-}
-
-.faq-item:nth-child(1) { animation-delay: 0.1s; }
-.faq-item:nth-child(2) { animation-delay: 0.2s; }
-.faq-item:nth-child(3) { animation-delay: 0.3s; }
-.faq-item:nth-child(4) { animation-delay: 0.4s; }
-.faq-item:nth-child(5) { animation-delay: 0.5s; }
-
-/* Search input focus styles */
-input:focus {
-  box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.2);
-  transform: translateY(-1px);
-}
-
-input:hover {
-  border-color: rgba(249, 115, 22, 0.3);
-}
-
-/* Category button active state */
-.bg-orange-500 {
-  transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4);
-}
-
-/* Enhanced hover effects */
-.hover\:bg-gray-100:hover {
-  background-color: rgba(243, 244, 246, 0.8);
-  transform: translateY(-1px);
-}
-
-.hover\:-translate-y-1:hover {
-  transform: translateY(-4px);
-}
-
-.hover\:shadow-xl:hover {
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-}
-
-/* Smooth accordion transitions */
-.transition-all {
-  transition: all 0.5s ease;
-}
-
-/* Focus styles for accessibility */
-[tabindex="0"]:focus {
-  outline: 2px solid #f97316;
-  outline-offset: 2px;
-}
-
-button:focus {
-  outline: 2px solid #f97316;
-  outline-offset: 2px;
-}
-
-/* Search icon color change on focus */
-input:focus + svg {
-  color: #f97316;
-}
-
-/* Enhanced prose styling */
-.prose p {
-  margin-bottom: 1rem;
-}
-
-.prose ul {
-  margin: 0.5rem 0;
-}
-
-.prose li {
-  margin: 0.25rem 0;
-}
-</style>

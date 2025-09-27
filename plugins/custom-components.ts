@@ -27,6 +27,9 @@ import AboutLocation from '~/components/about/AboutLocation.vue';
 import AboutCTA from '~/components/about/AboutCTA.vue';
 
 // Base Components
+import BaseButton from '~/components/base/BaseButton.vue';
+import BaseHero from '~/components/base/BaseHero.vue';
+import BaseFAQ from '~/components/base/BaseFAQ.vue';
 import BaseStatistic from '~/components/base/BaseStatistic.vue';
 import BaseStatisticGrid from '~/components/base/BaseStatisticGrid.vue';
 
@@ -161,10 +164,10 @@ export const registeredComponents: RegisteredComponent[] = [
                     { name: 'value', type: 'number', defaultValue: 0, required: true },
                     { name: 'label', type: 'string', defaultValue: 'Statistik', required: true },
                     { name: 'suffix', type: 'string', defaultValue: '' },
-                    { name: 'variant', type: 'list', enum: ['default', 'primary', 'secondary', 'gradient', 'glass', 'minimal', 'highlight'], defaultValue: 'primary' },
+                    { name: 'variant', type: 'string', defaultValue: 'primary' },
                     { name: 'description', type: 'string' },
-                    { name: 'iconName', type: 'list', enum: ['heart', 'target', 'people', 'shield', 'location', 'award', 'handshake', 'lightbulb'] },
-                    { name: 'size', type: 'list', enum: ['sm', 'md', 'lg', 'xl'] },
+                    { name: 'iconName', type: 'string' },
+                    { name: 'size', type: 'string' },
                     { name: 'animated', type: 'boolean' },
                     { name: 'countUp', type: 'boolean' },
                     { name: 'showTrend', type: 'boolean', defaultValue: false },
@@ -319,7 +322,7 @@ export const registeredComponents: RegisteredComponent[] = [
                 subFields: [
                     { name: 'question', type: 'string', required: true },
                     { name: 'answer', type: 'longText', required: true },
-                    { name: 'category', type: 'string', required: true, enum: ['program', 'pricing', 'training', 'nutrition', 'support', 'results'] },
+                    { name: 'category', type: 'string', required: true },
                     { name: 'showContactCta', type: 'boolean', defaultValue: false },
                     {
                         name: 'links',
@@ -460,6 +463,179 @@ export const registeredComponents: RegisteredComponent[] = [
 
     // === BASE COMPONENTS ===
     {
+        component: BaseButton,
+        name: 'BaseButton',
+        inputs: [
+            { name: 'text', type: 'string', defaultValue: 'Button Text' },
+            { name: 'href', type: 'url' },
+            { name: 'external', type: 'boolean', defaultValue: false },
+            { name: 'variant', type: 'list', enum: ['primary', 'secondary', 'secondaryFull', 'ghost', 'gradient', 'outline'], defaultValue: 'primary' },
+            { name: 'size', type: 'list', enum: ['sm', 'md', 'lg', 'xl'], defaultValue: 'md' },
+            { name: 'icon', type: 'string' },
+            { name: 'iconPosition', type: 'list', enum: ['left', 'right'], defaultValue: 'left' },
+            { name: 'iconOnly', type: 'boolean', defaultValue: false },
+            { name: 'badge', type: 'string' },
+            { name: 'loading', type: 'boolean', defaultValue: false },
+            { name: 'disabled', type: 'boolean', defaultValue: false }
+        ]
+    },
+
+    {
+        component: BaseHero,
+        name: 'BaseHero',
+        inputs: [
+            // Content
+            { name: 'headline', type: 'richText', defaultValue: 'Your Hero Headline' },
+            { name: 'subheadline', type: 'text', defaultValue: 'Your hero subheadline text goes here.' },
+            { name: 'badgeText', type: 'string', defaultValue: 'New' },
+            { name: 'badgeVariant', type: 'list', enum: ['new', 'popular', 'featured', 'limited'], defaultValue: 'featured' },
+            { name: 'showBadge', type: 'boolean', defaultValue: true },
+
+            // CTAs
+            { name: 'primaryCtaText', type: 'string', defaultValue: 'Get Started' },
+            { name: 'primaryCtaUrl', type: 'url', defaultValue: '#' },
+            { name: 'primaryCtaExternal', type: 'boolean', defaultValue: false },
+            { name: 'secondaryCtaText', type: 'string', defaultValue: 'Learn More' },
+            { name: 'secondaryCtaUrl', type: 'url', defaultValue: '#' },
+            { name: 'secondaryCtaExternal', type: 'boolean', defaultValue: false },
+
+            // Visual
+            { name: 'heroImage', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png'], defaultValue: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=750&fit=crop&crop=center' },
+            { name: 'heroImageAlt', type: 'string', defaultValue: 'Hero Image' },
+            { name: 'imageOverlay', type: 'boolean', defaultValue: false },
+            { name: 'showImageBadge', type: 'boolean', defaultValue: true },
+            { name: 'imageBadgeText', type: 'string', defaultValue: 'Featured' },
+
+            // Statistics
+            { name: 'showStats', type: 'boolean', defaultValue: false },
+            {
+                name: 'statistics',
+                type: 'list',
+                subFields: [
+                    { name: 'key', type: 'string' },
+                    { name: 'value', type: 'number', defaultValue: 0, required: true },
+                    { name: 'label', type: 'string', defaultValue: 'Statistic', required: true },
+                    { name: 'suffix', type: 'string', defaultValue: '' },
+                    { name: 'variant', type: 'string', defaultValue: 'primary' }
+                ],
+                defaultValue: []
+            },
+            { name: 'defaultCountUp', type: 'boolean', defaultValue: true },
+
+            // Trust Indicators
+            { name: 'showTrustIndicators', type: 'boolean', defaultValue: false },
+            {
+                name: 'trustIndicators',
+                type: 'list',
+                subFields: [
+                    { name: 'indicator', type: 'string', required: true }
+                ],
+                defaultValue: []
+            },
+
+            // Floating Cards
+            { name: 'showFloatingCards', type: 'boolean', defaultValue: false },
+            { name: 'floatingCard1Title', type: 'string', defaultValue: 'Card 1' },
+            { name: 'floatingCard1Text', type: 'string', defaultValue: 'Description' },
+            { name: 'floatingCard1Icon', type: 'string', defaultValue: 'award' },
+            { name: 'floatingCard1Emoji', type: 'string' },
+            { name: 'floatingCard2Title', type: 'string', defaultValue: 'Card 2' },
+            { name: 'floatingCard2Text', type: 'string', defaultValue: 'Description' },
+            { name: 'floatingCard2Icon', type: 'string', defaultValue: 'people' },
+            { name: 'floatingCard2Emoji', type: 'string' },
+            { name: 'floatingCardComponent', type: 'string', defaultValue: 'AboutCard' },
+            { name: 'floatingIconComponent', type: 'string', defaultValue: 'AboutIcon' },
+
+            // Styling
+            { name: 'backgroundColor', type: 'color', defaultValue: '#0f0f0f' },
+            { name: 'headlineColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'subheadlineColor', type: 'color', defaultValue: '#d1d5db' }
+        ]
+    },
+
+    {
+        component: BaseFAQ,
+        name: 'BaseFAQ',
+        inputs: [
+            // Content
+            { name: 'headline', type: 'richText', defaultValue: 'Häufig gestellte Fragen' },
+            { name: 'subheadline', type: 'text', defaultValue: 'Hier finden Sie Antworten auf die wichtigsten Fragen.' },
+            { name: 'badgeText', type: 'string', defaultValue: 'FAQ' },
+            { name: 'badgeVariant', type: 'list', enum: ['new', 'popular', 'featured', 'limited', 'info', 'neutral'], defaultValue: 'info' },
+            { name: 'showBadge', type: 'boolean', defaultValue: true },
+
+            // Search & Filter
+            { name: 'showSearch', type: 'boolean', defaultValue: true },
+            { name: 'searchPlaceholder', type: 'string', defaultValue: 'Suche nach Stichworten...' },
+            { name: 'showCategories', type: 'boolean', defaultValue: true },
+            { name: 'showCategoryIcons', type: 'boolean', defaultValue: true },
+            { name: 'showCategoryBadges', type: 'boolean', defaultValue: true },
+            {
+                name: 'categories',
+                type: 'list',
+                subFields: [
+                    { name: 'id', type: 'string', required: true },
+                    { name: 'name', type: 'string', required: true },
+                    { name: 'emoji', type: 'string' },
+                    { name: 'variant', type: 'string', defaultValue: 'primary' }
+                ],
+                defaultValue: []
+            },
+
+            // FAQ Data
+            {
+                name: 'faqs',
+                type: 'list',
+                subFields: [
+                    { name: 'question', type: 'string', required: true },
+                    { name: 'answer', type: 'longText', required: true },
+                    { name: 'category', type: 'string', required: true },
+                    { name: 'showContactCta', type: 'boolean', defaultValue: false },
+                    {
+                        name: 'links',
+                        type: 'list',
+                        subFields: [
+                            { name: 'text', type: 'string' },
+                            { name: 'url', type: 'string' }
+                        ]
+                    }
+                ],
+                defaultValue: []
+            },
+
+            // UI Components
+            { name: 'cardComponent', type: 'string', defaultValue: 'TransformationCard' },
+
+            // No Results
+            { name: 'noResultsTitle', type: 'string', defaultValue: 'Keine Ergebnisse gefunden' },
+            { name: 'noResultsText', type: 'string', defaultValue: 'Versuche andere Suchbegriffe oder kontaktiere uns direkt.' },
+
+            // Links
+            { name: 'linksTitle', type: 'string', defaultValue: 'Hilfreiche Links' },
+
+            // Contact CTA
+            { name: 'contactCtaText', type: 'string', defaultValue: 'Brauchst du weitere Hilfe zu diesem Thema?' },
+            { name: 'contactButtonText', type: 'string', defaultValue: 'Fragen stellen' },
+            { name: 'contactButtonUrl', type: 'url', defaultValue: '#contact' },
+
+            // Contact Section
+            { name: 'showContactSection', type: 'boolean', defaultValue: false },
+            { name: 'contactSectionHeadline', type: 'string', defaultValue: 'Noch Fragen? Wir sind für dich da!' },
+            { name: 'contactSectionDescription', type: 'text', defaultValue: 'Unser Expertenteam beantwortet gerne alle deine Fragen persönlich und unverbindlich.' },
+            { name: 'primaryContactText', type: 'string', defaultValue: 'Kontakt aufnehmen' },
+            { name: 'primaryContactUrl', type: 'url', defaultValue: '/kontakt' },
+            { name: 'secondaryContactText', type: 'string' },
+            { name: 'secondaryContactUrl', type: 'url' },
+            { name: 'responseTimeText', type: 'string' },
+
+            // Styling
+            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'headlineColor', type: 'color', defaultValue: '#1f2937' },
+            { name: 'subheadlineColor', type: 'color', defaultValue: '#6b7280' }
+        ]
+    },
+
+    {
         component: BaseStatistic,
         name: 'BaseStatistic',
         inputs: [
@@ -473,15 +649,15 @@ export const registeredComponents: RegisteredComponent[] = [
 
             // Icon
             { name: 'icon', type: 'string' },
-            { name: 'iconName', type: 'list', enum: ['heart', 'target', 'people', 'shield', 'location', 'award', 'handshake', 'lightbulb'] },
-            { name: 'iconVariant', type: 'list', enum: ['primary', 'secondary', 'accent', 'success', 'info', 'neutral'], defaultValue: 'primary' },
-            { name: 'iconSize', type: 'list', enum: ['sm', 'md', 'lg'], defaultValue: 'md' },
+            { name: 'iconName', type: 'string' },
+            { name: 'iconVariant', type: 'string', defaultValue: 'primary' },
+            { name: 'iconSize', type: 'string', defaultValue: 'md' },
 
             // Styling
-            { name: 'variant', type: 'list', enum: ['default', 'primary', 'secondary', 'gradient', 'glass', 'minimal', 'highlight'], defaultValue: 'default' },
-            { name: 'size', type: 'list', enum: ['sm', 'md', 'lg', 'xl'], defaultValue: 'md' },
-            { name: 'alignment', type: 'list', enum: ['left', 'center', 'right'], defaultValue: 'center' },
-            { name: 'labelPosition', type: 'list', enum: ['top', 'bottom'], defaultValue: 'bottom' },
+            { name: 'variant', type: 'string', defaultValue: 'default' },
+            { name: 'size', type: 'string', defaultValue: 'md' },
+            { name: 'alignment', type: 'string', defaultValue: 'center' },
+            { name: 'labelPosition', type: 'string', defaultValue: 'bottom' },
 
             // Animations & Effects
             { name: 'animated', type: 'boolean', defaultValue: false },
@@ -512,9 +688,9 @@ export const registeredComponents: RegisteredComponent[] = [
                     { name: 'label', type: 'string', defaultValue: 'Statistik', required: true },
                     { name: 'suffix', type: 'string', defaultValue: '' },
                     { name: 'description', type: 'string' },
-                    { name: 'iconName', type: 'list', enum: ['heart', 'target', 'people', 'shield', 'location', 'award', 'handshake', 'lightbulb'] },
-                    { name: 'variant', type: 'list', enum: ['default', 'primary', 'secondary', 'gradient', 'glass', 'minimal', 'highlight'], defaultValue: 'primary' },
-                    { name: 'size', type: 'list', enum: ['sm', 'md', 'lg', 'xl'] },
+                    { name: 'iconName', type: 'string' },
+                    { name: 'variant', type: 'string', defaultValue: 'primary' },
+                    { name: 'size', type: 'string' },
                     { name: 'animated', type: 'boolean' },
                     { name: 'countUp', type: 'boolean' },
                     { name: 'showTrend', type: 'boolean', defaultValue: false },
@@ -536,19 +712,19 @@ export const registeredComponents: RegisteredComponent[] = [
             },
 
             // Grid layout
-            { name: 'gridType', type: 'list', enum: ['auto', 'fixed-2', 'fixed-3', 'fixed-4', 'fixed-5', 'fixed-6'], defaultValue: 'auto' },
-            { name: 'gap', type: 'list', enum: ['sm', 'md', 'lg', 'xl'], defaultValue: 'md' },
-            { name: 'maxWidth', type: 'list', enum: ['sm', 'md', 'lg', 'xl', 'full', 'none'], defaultValue: 'none' },
-            { name: 'alignment', type: 'list', enum: ['left', 'center', 'right'], defaultValue: 'center' },
+            { name: 'gridType', type: 'string', defaultValue: 'auto' },
+            { name: 'gap', type: 'string', defaultValue: 'md' },
+            { name: 'maxWidth', type: 'string', defaultValue: 'none' },
+            { name: 'alignment', type: 'string', defaultValue: 'center' },
 
             // Default props for all statistics
-            { name: 'defaultSize', type: 'list', enum: ['sm', 'md', 'lg', 'xl'], defaultValue: 'md' },
-            { name: 'defaultVariant', type: 'list', enum: ['default', 'primary', 'secondary', 'gradient', 'glass', 'minimal', 'highlight'], defaultValue: 'primary' },
+            { name: 'defaultSize', type: 'string', defaultValue: 'md' },
+            { name: 'defaultVariant', type: 'string', defaultValue: 'primary' },
             { name: 'defaultAnimated', type: 'boolean', defaultValue: true },
             { name: 'defaultCountUp', type: 'boolean', defaultValue: true },
 
             // Animation
-            { name: 'animation', type: 'list', enum: ['none', 'stagger', 'fade', 'slide-up'], defaultValue: 'stagger' },
+            { name: 'animation', type: 'string', defaultValue: 'stagger' },
             { name: 'animationDuration', type: 'number', defaultValue: 100 },
 
             // Context
