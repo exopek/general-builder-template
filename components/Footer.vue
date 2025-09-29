@@ -6,11 +6,11 @@
         <!-- Brand Section -->
         <div class="flex flex-col gap-3 lg:max-w-md">
           <div class="flex items-center mb-3">
-            <NuxtLink to="/" class="flex items-center">
+            <a href="/" class="flex items-center">
               <img src="https://cdn.builder.io/api/v1/image/assets%2F2221ab9020b44cdd9cbb4a4793414e46%2F698b3f14d8e54640a0e15fce4eb0c6a3"
                    alt="EXOPEK GYM Logo"
                    class="w-auto h-24">
-            </NuxtLink>
+            </a>
           </div>
           <p class="text-gray-600 mb-4 max-w-md text-sm">
             Dein Gym für hybrides Training. Mehr Kraft, Stabilität und Mobilität – überall wo du bist.
@@ -47,24 +47,29 @@
             <h3 class="font-semibold text-gray-900 mb-3 text-xl">Training</h3>
             <ul class="space-y-2">
               <li>
-                <NuxtLink to="/kurse" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
+                <a href="/kurse" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
                   Unsere Kurse
-                </NuxtLink>
+                </a>
               </li>
               <li>
-                <NuxtLink to="/mitgliedschaft" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
+                <a href="/mitgliedschaften" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
                   Mitgliedschaft
-                </NuxtLink>
+                </a>
               </li>
               <li>
-                <NuxtLink to="/preise" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
-                  Preise
-                </NuxtLink>
+                <a href="/7-wochen-challenge" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
+                  7 Wochen Programm
+                </a>
               </li>
               <li>
-                <NuxtLink to="/personal-training" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
+                <a href="/level-up-weeks" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
+                  Level Up Weeks
+                </a>
+              </li>
+              <li>
+                <a href="/personal-training" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
                   Personal Training
-                </NuxtLink>
+                </a>
               </li>
             </ul>
           </div>
@@ -74,24 +79,29 @@
             <h3 class="font-semibold text-gray-900 mb-3 text-xl">Service</h3>
             <ul class="space-y-2">
               <li>
-                <NuxtLink to="/probetraining" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
+                <a href="/probetraining" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
                   Probetraining
-                </NuxtLink>
+                </a>
               </li>
               <li>
-                <NuxtLink to="/kursplan" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
-                  Kursplan
-                </NuxtLink>
+                <a href="/auth/login" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
+                  Kursbuchung
+                </a>
               </li>
               <li>
-                <NuxtLink to="/support" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
+                <a href="/kontakt" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
                   Support
-                </NuxtLink>
+                </a>
               </li>
               <li>
-                <NuxtLink to="/faq" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
+                <a href="/faq" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
                   FAQ
-                </NuxtLink>
+                </a>
+              </li>
+              <li>
+                <a href="/ueber-uns" class="text-gray-600 hover:text-orange-500 transition-colors text-sm">
+                  Über uns
+                </a>
               </li>
             </ul>
           </div>
@@ -106,12 +116,12 @@
         </p>
 
         <div class="flex items-center gap-4">
-          <NuxtLink to="/impressum" class="text-gray-500 hover:text-orange-500 transition-colors text-xs">
+          <a href="/impressum" class="text-gray-500 hover:text-orange-500 transition-colors text-xs">
             Impressum
-          </NuxtLink>
-          <NuxtLink to="/datenschutz" class="text-gray-500 hover:text-orange-500 transition-colors text-xs">
+          </a>
+          <a href="/datenschutz" class="text-gray-500 hover:text-orange-500 transition-colors text-xs">
             Datenschutz
-          </NuxtLink>
+          </a>
 
           <!-- Social Media Icon -->
           <div class="flex items-center gap-2">
