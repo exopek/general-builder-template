@@ -8,6 +8,7 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
     '@vueuse/nuxt',
+    '@nuxtjs/sitemap',
   ],
 
   css: ['~/assets/css/global.css'],
@@ -59,6 +60,25 @@ export default defineNuxtConfig({
     public: {
       builderApiKey: process.env.BUILDER_API_KEY
     }
+  },
+
+  // Site Configuration for SEO and Sitemap
+  site: {
+    url: process.env.NUXT_PUBLIC_SITE_URL || 'https://your-domain.com'
+  },
+
+  // Sitemap Configuration
+  sitemap: {
+    sources: [
+      '/sitemap/builder-urls'
+    ],
+    exclude: [
+      '/auth/**',
+      '/admin/**',
+      '/user/**',
+      '/courses/**',
+      '/api/**'
+    ]
   },
   
   // App Settings - Hydration Safe
