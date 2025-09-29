@@ -128,7 +128,8 @@
     <div class="mobile-header container flex items-center justify-between py-4 transition-all"
       :class="[
         !isScrolled ? 'text-gray-900' : (isDarkBackground ? 'text-white' : 'text-gray-900')
-      ]">
+      ]"
+      style="pointer-events: auto; position: relative; z-index: 60;">
       <!-- Logo -->
       <a href="/" class="flex items-center">
         <img src="https://cdn.builder.io/api/v1/image/assets%2F2221ab9020b44cdd9cbb4a4793414e46%2F698b3f14d8e54640a0e15fce4eb0c6a3"
@@ -139,8 +140,16 @@
 
       <!-- Mobile Menu Button -->
       <button @click="toggleMobileMenu"
-        class="p-2 text-gray-900 transition-all hover:text-gray-500 z-50 relative"
-        :class="{ 'burger-active': isMobileMenuOpen }">
+        class="p-3 text-gray-900 transition-all hover:text-gray-500 z-[100] relative touch-manipulation"
+        :class="{
+          'burger-active': isMobileMenuOpen,
+          'text-white': isScrolled && !isMobileMenuOpen,
+          'text-gray-900': !isScrolled || isMobileMenuOpen
+        }"
+        :aria-expanded="isMobileMenuOpen"
+        :aria-controls="'mobile-menu'"
+        aria-label="Toggle navigation menu"
+        style="pointer-events: auto; -webkit-tap-highlight-color: transparent;">
         <div class="burger-icon">
           <span class="burger-line"></span>
           <span class="burger-line"></span>
@@ -149,41 +158,155 @@
       </button>
     </div>
 
-    <!-- Mobile Dropdown Menu -->
+    <!-- Mobile Drawer Menu -->
     <Transition
-      enter-active-class="transition-all duration-300"
+      enter-active-class="transition-all duration-300 ease-out"
       enter-from-class="opacity-0"
       enter-to-class="opacity-100"
-      leave-active-class="transition-all duration-300"
+      leave-active-class="transition-all duration-200 ease-in"
       leave-from-class="opacity-100"
       leave-to-class="opacity-0"
     >
-      <div v-if="isMobileMenuOpen" class="fixed inset-0 z-40 md:hidden">
-        <!-- Mobile Menu Content -->
-        <div class="card-glass h-full flex flex-col justify-center items-center">
-          <!-- Navigation Links -->
-          <nav class="flex flex-col items-center gap-8 text-center">
-            <a @click="toggleMobileMenu" href="/kurse"
-              class="text-3xl font-bold text-gray-900 hover:bg-gradient-warm hover:text-transparent hover:bg-clip-text transition-all">
-              Kurse
-            </a>
-            <a @click="toggleMobileMenu" href="/angebot"
-              class="text-3xl font-bold text-gray-900 hover:bg-gradient-warm hover:text-transparent hover:bg-clip-text transition-all">
-              Angebot
-            </a>
-            <a @click="toggleMobileMenu" href="/mitgliedschaften"
-              class="text-3xl font-bold text-gray-900 hover:bg-gradient-warm hover:text-transparent hover:bg-clip-text transition-all">
-              Preise
-            </a>
+      <div v-if="isMobileMenuOpen" class="fixed inset-0 z-[999] md:hidden" @click="closeMobileMenu">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
 
-            <!-- Mobile CTA Button -->
-            <div class="pt-8">
-              <a @click="toggleMobileMenu" href="/probetraining"
-                class="btn-primary text-xl px-8 py-4 hover:scale-110">
-                Probetraining
-              </a>
+        <!-- Full-width Mobile Menu -->
+        <div
+          id="mobile-menu"
+          class="absolute inset-0 bg-white overflow-y-auto safe-area-inset"
+          @click.stop
+          @touchstart="handleTouchStart"
+          @touchmove="handleTouchMove"
+          @touchend="handleTouchEnd"
+          role="navigation"
+          aria-label="Main navigation"
+          style="height: 100vh; height: 100dvh;">
+
+            <!-- Header with close button -->
+            <div class="flex items-center justify-between p-6 border-b border-gray-200 bg-white sticky top-0 z-10">
+              <img src="https://cdn.builder.io/api/v1/image/assets%2F2221ab9020b44cdd9cbb4a4793414e46%2F698b3f14d8e54640a0e15fce4eb0c6a3"
+                   alt="Gym Logo"
+                   class="h-8">
+              <button @click="toggleMobileMenu"
+                class="p-3 -m-3 text-gray-500 hover:text-gray-700 transition-colors touch-manipulation"
+                aria-label="Close menu"
+                style="min-height: 44px; min-width: 44px;">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
             </div>
-          </nav>
+
+            <!-- Navigation Content -->
+            <div class="px-6 py-6 space-y-8 min-h-0 flex-1">
+
+              <!-- Quick Actions Section -->
+              <div>
+                <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">Direkt Loslegen</h3>
+                <div class="space-y-3">
+                  <a @click="closeMobileMenu" href="/kurse"
+                    class="mobile-nav-item group">
+                    <div class="font-semibold text-gray-900 group-hover:text-orange-500">Kurse</div>
+                    <div class="text-sm text-gray-500">Wann kommst Du das nächste mal ins Training?</div>
+                  </a>
+                  <a @click="closeMobileMenu" href="/mitgliedschaften"
+                    class="mobile-nav-item group">
+                    <div class="font-semibold text-gray-900 group-hover:text-orange-500">Mitgliedschaften</div>
+                    <div class="text-sm text-gray-500">Was ist Dir Deine Fitness wert?</div>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Programs Section -->
+              <div>
+                <button @click="toggleProgramsSection"
+                  class="flex items-center justify-between w-full text-left mb-3"
+                  :aria-expanded="showProgramsSection"
+                  aria-controls="programs-section">
+                  <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Programme & Specials</h3>
+                  <svg class="w-5 h-5 text-gray-400 transition-transform"
+                    :class="{ 'rotate-180': showProgramsSection }"
+                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                <Transition
+                  enter-active-class="transition-all duration-200 ease-out"
+                  enter-from-class="opacity-0 max-h-0"
+                  enter-to-class="opacity-100 max-h-96"
+                  leave-active-class="transition-all duration-200 ease-in"
+                  leave-from-class="opacity-100 max-h-96"
+                  leave-to-class="opacity-0 max-h-0">
+                  <div v-show="showProgramsSection" id="programs-section" class="space-y-3 overflow-hidden">
+                    <a @click="closeMobileMenu" href="/7-wochen-challenge"
+                      class="mobile-nav-item group">
+                      <div class="font-semibold text-gray-900 group-hover:text-orange-500">7 Wochen Challenge</div>
+                      <div class="text-sm text-gray-500">Geld Zurück für Deinen Erfolg</div>
+                    </a>
+                    <a @click="closeMobileMenu" href="/personal-training"
+                      class="mobile-nav-item group">
+                      <div class="font-semibold text-gray-900 group-hover:text-orange-500">Personal Training</div>
+                      <div class="text-sm text-gray-500">Abgestimmte Trainingserfolge</div>
+                    </a>
+                    <a @click="closeMobileMenu" href="/level-up-weeks"
+                      class="mobile-nav-item group">
+                      <div class="font-semibold text-gray-900 group-hover:text-orange-500">Level Up Weeks</div>
+                      <div class="text-sm text-gray-500">Dein Performance Schub</div>
+                    </a>
+                  </div>
+                </Transition>
+              </div>
+
+              <!-- Info Section -->
+              <div>
+                <button @click="toggleInfoSection"
+                  class="flex items-center justify-between w-full text-left mb-3"
+                  :aria-expanded="showInfoSection"
+                  aria-controls="info-section">
+                  <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Mehr erfahren</h3>
+                  <svg class="w-5 h-5 text-gray-400 transition-transform"
+                    :class="{ 'rotate-180': showInfoSection }"
+                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                <Transition
+                  enter-active-class="transition-all duration-200 ease-out"
+                  enter-from-class="opacity-0 max-h-0"
+                  enter-to-class="opacity-100 max-h-96"
+                  leave-active-class="transition-all duration-200 ease-in"
+                  leave-from-class="opacity-100 max-h-96"
+                  leave-to-class="opacity-0 max-h-0">
+                  <div v-show="showInfoSection" id="info-section" class="space-y-2 overflow-hidden">
+                    <a @click="closeMobileMenu" href="/ueber-uns"
+                      class="mobile-nav-pill">Über uns</a>
+                    <a @click="closeMobileMenu" href="/fragebogen"
+                      class="mobile-nav-pill">Fitness-Check</a>
+                    <a @click="closeMobileMenu" href="/blog"
+                      class="mobile-nav-pill">Blog</a>
+                    <a @click="closeMobileMenu" href="/kontakt"
+                      class="mobile-nav-pill">Kontakt</a>
+                    <a @click="closeMobileMenu" href="/anfahrt"
+                      class="mobile-nav-pill">Anfahrt</a>
+                  </div>
+                </Transition>
+              </div>
+
+              <!-- CTA Button -->
+              <div class="pt-6">
+                <a @click="closeMobileMenu" href="/probetraining"
+                  class="btn btn-primary w-full text-center py-4 text-lg font-semibold">
+                  Probetraining
+                </a>
+              </div>
+
+              <!-- Swipe hint -->
+              <div class="pt-8 pb-6 text-center">
+                <p class="text-sm text-gray-400">Swipe nach unten zum Schließen</p>
+              </div>
+
+            </div>
         </div>
       </div>
     </Transition>
@@ -195,12 +318,89 @@ const isMobileMenuOpen = ref(false)
 const showAngebotMenu = ref(false)
 const isScrolled = ref(false)
 const isDarkBackground = ref(false)
+const showProgramsSection = ref(false)
+const showInfoSection = ref(false)
 
+// Touch gesture state
+const touchStartX = ref(0)
+const touchStartY = ref(0)
+const isDragging = ref(false)
+
+// Mobile menu management
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value
 }
 
-let hideMenuTimeout: NodeJS.Timeout | null = null
+const closeMobileMenu = () => {
+  isMobileMenuOpen.value = false
+  showProgramsSection.value = false
+  showInfoSection.value = false
+}
+
+// Collapsible section toggles
+const toggleProgramsSection = () => {
+  showProgramsSection.value = !showProgramsSection.value
+}
+
+const toggleInfoSection = () => {
+  showInfoSection.value = !showInfoSection.value
+}
+
+// Touch gesture handlers for swipe-to-close (swipe down from top)
+const handleTouchStart = (event: TouchEvent) => {
+  if (!isMobileMenuOpen.value) return
+
+  const touch = event.touches[0]
+  touchStartX.value = touch.clientX
+  touchStartY.value = touch.clientY
+  isDragging.value = true
+}
+
+const handleTouchMove = (event: TouchEvent) => {
+  if (!isDragging.value || !isMobileMenuOpen.value) return
+
+  const touch = event.touches[0]
+  const deltaX = touch.clientX - touchStartX.value
+  const deltaY = touch.clientY - touchStartY.value
+
+  // Only handle downward swipes from the top area
+  if (Math.abs(deltaY) > Math.abs(deltaX) && deltaY > 0 && touchStartY.value < 100) {
+    // Prevent default scrolling behavior
+    event.preventDefault()
+
+    // Apply visual feedback - slightly scale down the menu
+    const menu = document.getElementById('mobile-menu')
+    if (menu && deltaY > 30) {
+      const scale = Math.max(0.95, 1 - (deltaY * 0.001))
+      menu.style.transform = `scale(${scale})`
+      menu.style.transition = 'none'
+    }
+  }
+}
+
+const handleTouchEnd = (event: TouchEvent) => {
+  if (!isDragging.value || !isMobileMenuOpen.value) return
+
+  const touch = event.changedTouches[0]
+  const deltaX = touch.clientX - touchStartX.value
+  const deltaY = touch.clientY - touchStartY.value
+
+  // Reset visual feedback
+  const menu = document.getElementById('mobile-menu')
+  if (menu) {
+    menu.style.transform = ''
+    menu.style.transition = ''
+  }
+
+  // Close menu if swipe distance is significant (>80px downward from top)
+  if (Math.abs(deltaY) > Math.abs(deltaX) && deltaY > 80 && touchStartY.value < 100) {
+    closeMobileMenu()
+  }
+
+  isDragging.value = false
+}
+
+let hideMenuTimeout: number | null = null
 
 const handleShowAngebotMenu = () => {
   showAngebotMenu.value = true
@@ -216,94 +416,80 @@ const handleHideAngebotMenu = () => {
   }, 200)
 }
 
-// Text color detection for dynamic header text - analyze section text color
+// Simplified background detection for desktop only
 const detectBackgroundColor = () => {
   if (typeof window === 'undefined') return
-  
-  const header = document.querySelector('.header-elastic')
+
+  // Skip complex detection on mobile for performance
+  const isMobile = window.innerWidth < 768
+  if (isMobile) {
+    isDarkBackground.value = false
+    return
+  }
+
+  // Simple detection based on common patterns
+  const header = document.querySelector('.header-container')
   if (!header) return
-  
-  // Get the element behind the header
+
   const headerRect = header.getBoundingClientRect()
-  let elementBehind = document.elementFromPoint(headerRect.left + headerRect.width / 2, headerRect.bottom + 1)
-  
-  // Walk up the DOM tree to find the nearest section/container
-  while (elementBehind && elementBehind !== document.body) {
-    // Only consider elements that are likely containers/sections
-    const isContainer = elementBehind.tagName.toLowerCase().match(/^(section|div|main|article|header|footer|aside)$/) ||
-                       elementBehind.classList.contains('section') ||
-                       elementBehind.classList.contains('container') ||
-                       elementBehind.classList.contains('hero') ||
-                       elementBehind.classList.contains('bg-')
-    
-    if (isContainer) {
-      // Find text elements within this container
-      const textElements = elementBehind.querySelectorAll('p, h1, h2, h3, h4, h5, h6, span, div, a')
-      let whiteTextCount = 0
-      let darkTextCount = 0
-      
-      textElements.forEach(el => {
-        const computedStyle = window.getComputedStyle(el)
-        const textColor = computedStyle.color
-        
-        // Parse RGB values to determine if text is light or dark
-        const rgb = textColor.match(/\d+/g)
-        if (rgb && rgb.length >= 3) {
-          const brightness = (parseInt(rgb[0]) * 299 + parseInt(rgb[1]) * 587 + parseInt(rgb[2]) * 114) / 1000
-          if (brightness > 200) {
-            whiteTextCount++
-          } else if (brightness < 100) {
-            darkTextCount++
-          }
-        }
-      })
-      
-      // If we found text elements, determine the dominant color
-      if (whiteTextCount > 0 || darkTextCount > 0) {
-        // If more white text than dark text, use white header text
-        isDarkBackground.value = whiteTextCount > darkTextCount
-        return
+  const elementBehind = document.elementFromPoint(headerRect.left + headerRect.width / 2, headerRect.bottom + 10)
+
+  if (elementBehind) {
+    // Check for common dark background patterns
+    const hasDarkBg = elementBehind.classList.contains('bg-gray-900') ||
+                     elementBehind.classList.contains('bg-black') ||
+                     elementBehind.classList.contains('hero-dark') ||
+                     !!elementBehind.closest('.bg-gray-900, .bg-black, .hero-dark')
+
+    isDarkBackground.value = hasDarkBg
+  }
+}
+
+// Optimized scroll detection with throttling
+let scrollTimeout: number | null = null
+
+const handleScroll = () => {
+  // Throttle scroll events for better mobile performance
+  if (scrollTimeout) return
+
+  scrollTimeout = setTimeout(() => {
+    const newScrolled = window.scrollY > 10
+
+    // Only run expensive operations when state changes
+    if (newScrolled !== isScrolled.value) {
+      isScrolled.value = newScrolled
+
+      // Only detect background color on desktop when scrolled
+      if (newScrolled && window.innerWidth >= 768) {
+        detectBackgroundColor()
+      } else {
+        isDarkBackground.value = false
       }
     }
-    
-    // Move up to parent element
-    elementBehind = elementBehind.parentElement
-  }
-  
-  // Default to dark text if no text found
-  isDarkBackground.value = false
+
+    scrollTimeout = null
+  }, 16) // ~60fps throttling
 }
 
-// Scroll detection with elastic animation
-const handleScroll = () => {
-  const newScrolled = window.scrollY > 10
-  
-  // Trigger elastic animation only when state changes
-  if (newScrolled !== isScrolled.value) {
-    // Add animation class briefly for elastic effect
-    const header = document.querySelector('.header-elastic')
-    if (header) {
-      header.classList.add('animate')
-      setTimeout(() => {
-        header.classList.remove('animate')
-      }, 800)
-    }
-  }
-  
-  isScrolled.value = newScrolled
-  
-  // Detect background color only when scrolled (glassmorphism header)
-  if (newScrolled) {
-    detectBackgroundColor()
-  } else {
-    isDarkBackground.value = false // Always dark text when not scrolled
-  }
-}
-
-// Close menu on escape key
+// Enhanced keyboard navigation for mobile menu
 const handleKeydown = (event: KeyboardEvent) => {
-  if (event.key === 'Escape' && isMobileMenuOpen.value) {
-    isMobileMenuOpen.value = false
+  if (!isMobileMenuOpen.value) return
+
+  if (event.key === 'Escape') {
+    closeMobileMenu()
+    // Focus the menu button after closing
+    nextTick(() => {
+      const menuButton = document.querySelector('[aria-label="Toggle navigation menu"]') as HTMLElement
+      menuButton?.focus()
+    })
+  }
+
+  // Handle Enter key on collapsible sections
+  if (event.key === 'Enter' && event.target) {
+    const target = event.target as HTMLElement
+    if (target.getAttribute('aria-expanded') !== null) {
+      target.click()
+    }
   }
 }
 
@@ -390,6 +576,7 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  pointer-events: none; /* Let parent button handle clicks */
 }
 
 .burger-line {
@@ -398,6 +585,7 @@ onUnmounted(() => {
   background-color: currentColor;
   transition: all var(--transition-normal);
   border-radius: var(--border-radius-sm);
+  pointer-events: none; /* Let parent button handle clicks */
 }
 
 /* Burger Animation */
@@ -412,6 +600,126 @@ onUnmounted(() => {
 
 .burger-active .burger-line:nth-child(3) {
   transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Mobile Navigation Styles */
+.mobile-nav-item {
+  display: block;
+  padding: 12px 16px;
+  border-radius: var(--border-radius-md);
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  transition: all var(--transition-normal);
+  min-height: 44px; /* Thumb-friendly touch target */
+  text-decoration: none;
+}
+
+.mobile-nav-item:hover {
+  background-color: #fff;
+  border-color: #fbbf24;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+  transform: translateY(-1px);
+}
+
+.mobile-nav-item:active {
+  transform: translateY(0);
+}
+
+.mobile-nav-pill {
+  display: block;
+  padding: 10px 16px;
+  border-radius: var(--border-radius-full);
+  background-color: #f3f4f6;
+  color: #374151;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all var(--transition-normal);
+  min-height: 44px; /* Thumb-friendly touch target */
+  display: flex;
+  align-items: center;
+}
+
+.mobile-nav-pill:hover {
+  background-color: #fbbf24;
+  color: #78350f;
+  transform: translateX(4px);
+}
+
+.mobile-nav-pill:active {
+  transform: translateX(2px);
+}
+
+/* Mobile menu optimizations */
+@media (max-width: 768px) {
+  body.menu-open {
+    overflow: hidden;
+  }
+
+  /* Prevent horizontal scrolling */
+  #mobile-menu {
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Safe area handling for mobile devices */
+  .safe-area-inset {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  /* Ensure full height on mobile */
+  #mobile-menu {
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height for mobile browsers */
+    max-height: 100vh;
+    max-height: 100dvh;
+  }
+}
+
+/* Enhanced focus styles for accessibility */
+.mobile-nav-item:focus,
+.mobile-nav-pill:focus,
+button:focus {
+  outline: 2px solid #f59e0b;
+  outline-offset: 2px;
+}
+
+/* Improve button touch targets */
+button {
+  min-height: 44px;
+  min-width: 44px;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Ensure mobile header button works when scrolled */
+.mobile-header {
+  pointer-events: auto;
+  position: relative;
+}
+
+.mobile-header button {
+  pointer-events: auto;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+/* Fix for glassmorphism state touch issues */
+.header-container.card-glass .mobile-header {
+  pointer-events: auto;
+}
+
+.header-container.card-glass .mobile-header button {
+  pointer-events: auto;
+  position: relative;
+  z-index: 100;
 }
 
 </style>
