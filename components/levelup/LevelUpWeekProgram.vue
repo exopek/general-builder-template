@@ -1,6 +1,6 @@
 <template>
   <section class="level-up-week-program py-16 md:py-20" :style="{ backgroundColor }">
-    <div class="container mx-auto">
+    <div id="levelUpWeek" class="container mx-auto">
       <!-- Header Section -->
       <div class="text-center mb-12">
         <TransformationBadge

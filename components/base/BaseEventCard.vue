@@ -1,12 +1,12 @@
 <template>
   <div
-    class="base-event-card"
+    class="relative overflow-hidden rounded-xl transition-all duration-300 hover:shadow-lg"
     :class="[
       variantClasses,
       sizeClasses,
       statusClasses,
       { 'cursor-pointer': clickable },
-      hoverEffect ? 'transition-transform hover:-translate-y-1' : ''
+      hoverEffect ? 'hover:-translate-y-1' : ''
     ]"
     @click="handleClick"
   >
@@ -37,9 +37,9 @@
         <span class="text-sm font-medium text-gray-700">{{ progressLabel }}</span>
         <span class="text-sm text-gray-500">{{ progress }}%</span>
       </div>
-      <div class="progress-bar">
+      <div class="h-2 bg-gray-200 rounded-full overflow-hidden">
         <div
-          class="progress-fill"
+          class="h-full rounded-full transition-all duration-500 bg-gradient-primary"
           :style="{ width: `${progress}%` }"
         ></div>
       </div>
@@ -60,7 +60,7 @@
         <span
           v-for="(feature, index) in features"
           :key="index"
-          class="feature-tag"
+          class="px-2 py-1 bg-gray-100 text-gray-500 text-xs font-medium rounded-sm"
         >
           {{ getFeatureText(feature) }}
         </span>
@@ -156,7 +156,7 @@ const variantClasses = computed(() => {
     timeline: 'card bg-white border-l-4 border-primary pl-6 shadow-sm',
     glass: 'card-glass backdrop-blur-lg border border-white/20',
     elevated: 'card bg-white shadow-xl border-0',
-    gradient: 'card bg-gradient-primary text-white border-0'
+    gradient: 'card bg-gradient-warm text-white border-0'
   }
   return variants[props.variant]
 })
@@ -243,42 +243,8 @@ const handleClick = (event: MouseEvent) => {
 </script>
 
 <style scoped>
-.base-event-card {
-  transition: all var(--transition-normal);
-  border-radius: var(--border-radius-xl);
-  position: relative;
-  overflow: hidden;
-}
-
-.base-event-card:hover {
-  box-shadow: var(--shadow-lg);
-}
-
-.feature-tag {
-  padding: 0.25rem 0.5rem;
-  background-color: var(--color-gray-100);
-  color: var(--color-gray-600);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
-  border-radius: var(--border-radius-sm);
-}
-
-.progress-bar {
-  height: 0.5rem;
-  background-color: var(--color-gray-200);
-  border-radius: var(--border-radius-full);
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  background: var(--gradient-primary);
-  border-radius: var(--border-radius-full);
-  transition: all var(--transition-slow);
-}
-
 /* Gradient variant adjustments */
-.bg-gradient-primary .feature-tag {
+.bg-gradient-primary .px-2 {
   background: rgba(255, 255, 255, 0.2);
   color: white;
 }
@@ -291,14 +257,14 @@ const handleClick = (event: MouseEvent) => {
 .card.border-l-4::before {
   content: '';
   position: absolute;
-  left: -2px;
+  left: -6px;
   top: 50%;
   transform: translateY(-50%);
   width: 12px;
   height: 12px;
-  background: var(--color-primary);
   border-radius: 50%;
-  border: 3px solid white;
+  border: 2px solid white;
+  background: var(--color-primary);
   box-shadow: 0 0 0 1px var(--color-gray-200);
 }
 
@@ -306,7 +272,7 @@ const handleClick = (event: MouseEvent) => {
 .card-glass {
   background: var(--glass-bg);
   backdrop-filter: var(--glass-backdrop);
-  border: 1px solid var(--glass-border);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* Responsive adjustments */
