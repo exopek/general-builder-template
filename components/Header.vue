@@ -102,9 +102,6 @@
                   <a href="/kontakt" class="nav-pill">
                     Kontakt
                   </a>
-                  <a href="/anfahrt" class="nav-pill">
-                    Anfahrt
-                  </a>
                 </div>
               </div>
 
@@ -287,8 +284,6 @@
                       class="mobile-nav-pill">Blog</a>
                     <a @click="closeMobileMenu" href="/kontakt"
                       class="mobile-nav-pill">Kontakt</a>
-                    <a @click="closeMobileMenu" href="/anfahrt"
-                      class="mobile-nav-pill">Anfahrt</a>
                   </div>
                 </Transition>
               </div>

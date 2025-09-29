@@ -39,4 +39,40 @@ const { data: content } = await useAsyncData('builderData', () =>
 );
 
 canShowContent.value = content.value ? true : isPreviewing(route.path);
+
+watchEffect(() => {
+    console.log('Current route path:', content.value);
+  if (content.value) {
+    useHead({
+      title: `${content.value.data.title}`,
+      meta: [
+        {
+          name: 'description',
+          content: `${content.value.data.description}`
+        },
+        {
+          property: 'og:title',
+          content: `${content.value.data.title}`
+        }/* ,
+        {
+          property: 'og:description',
+          content: article.excerpt || 'Entdecke wertvolle Tipps und Insights zu Fitness und Training.'
+        },
+        {
+          property: 'og:image',
+          content: article.image || ''
+        },
+        {
+          property: 'og:type',
+          content: 'article'
+        },
+        {
+          name: 'twitter:card',
+          content: 'summary_large_image'
+        } */
+      ]
+    })
+  }
+})
+
 </script>
