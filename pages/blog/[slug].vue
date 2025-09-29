@@ -55,8 +55,6 @@ const { data: article, pending, error } = useLazyAsyncData(`blog-article-${slug}
       }
     })
 
-    console.log('Fetched blog entry:', entry)
-
     const mappedEntry = articleMapper.fromBuilderIoEntry(entry)
 
     console.log('Fetched and mapped blog article:', mappedEntry)
@@ -83,19 +81,19 @@ const { data: article, pending, error } = useLazyAsyncData(`blog-article-${slug}
   }
 }) */
 
-/* watchEffect(() => {
+watchEffect(() => {
   if (article.value) {
     useHead({
-      title: `${article.title} - Fitness & Training`,
+      title: `${article.value.content.blogPost.meta.title}`,
       meta: [
         {
           name: 'description',
-          content: article.excerpt || 'Entdecke wertvolle Tipps und Insights zu Fitness und Training.'
+          content: `${article.value.content.blogPost.meta.description}`
         },
         {
           property: 'og:title',
-          content: article.title
-        },
+          content: `${article.value.content.blogPost.meta.title}`
+        }/* ,
         {
           property: 'og:description',
           content: article.excerpt || 'Entdecke wertvolle Tipps und Insights zu Fitness und Training.'
@@ -111,10 +109,10 @@ const { data: article, pending, error } = useLazyAsyncData(`blog-article-${slug}
         {
           name: 'twitter:card',
           content: 'summary_large_image'
-        }
+        } */
       ]
     })
   }
-}) */
+})
 </script>
 
