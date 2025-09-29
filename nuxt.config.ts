@@ -64,7 +64,7 @@ export default defineNuxtConfig({
 
   // Site Configuration for SEO and Sitemap
   site: {
-    url: process.env.NUXT_PUBLIC_SITE_URL || 'https://your-domain.com'
+    url: process.env.NUXT_PUBLIC_SITE_URL || 'https://gym.exopek.de'
   },
 
   // Sitemap Configuration
