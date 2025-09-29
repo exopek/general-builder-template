@@ -156,6 +156,7 @@ config/
 ## Component Development Rules
 
 - Reuse before creating new
+- Create base component before creating specific component, then reuse base component to create specific
 - Props + slots for variations
 - Accessible markup (semantic HTML, ARIA)
 

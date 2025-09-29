@@ -27,8 +27,20 @@ import AboutLocation from '~/components/about/AboutLocation.vue';
 import AboutCTA from '~/components/about/AboutCTA.vue';
 
 // Base Components
+import BaseButton from '~/components/base/BaseButton.vue';
+import BaseHero from '~/components/base/BaseHero.vue';
+import BaseFAQ from '~/components/base/BaseFAQ.vue';
 import BaseStatistic from '~/components/base/BaseStatistic.vue';
 import BaseStatisticGrid from '~/components/base/BaseStatisticGrid.vue';
+import BaseEventCard from '~/components/base/BaseEventCard.vue';
+import BaseTimeline from '~/components/base/BaseTimeline.vue';
+import BaseCTA from '~/components/base/BaseCTA.vue';
+
+// Level Up Week Components
+import LevelUpWeekHero from '~/components/levelup/LevelUpWeekHero.vue';
+import LevelUpWeekProgram from '~/components/levelup/LevelUpWeekProgram.vue';
+import LevelUpWeekBenefits from '~/components/levelup/LevelUpWeekBenefits.vue';
+import LevelUpWeekTestimonials from '~/components/levelup/LevelUpWeekTestimonials.vue';
 
 type ComponentInput = {
     name: string;
@@ -161,10 +173,10 @@ export const registeredComponents: RegisteredComponent[] = [
                     { name: 'value', type: 'number', defaultValue: 0, required: true },
                     { name: 'label', type: 'string', defaultValue: 'Statistik', required: true },
                     { name: 'suffix', type: 'string', defaultValue: '' },
-                    { name: 'variant', type: 'list', enum: ['default', 'primary', 'secondary', 'gradient', 'glass', 'minimal', 'highlight'], defaultValue: 'primary' },
+                    { name: 'variant', type: 'string', defaultValue: 'primary' },
                     { name: 'description', type: 'string' },
-                    { name: 'iconName', type: 'list', enum: ['heart', 'target', 'people', 'shield', 'location', 'award', 'handshake', 'lightbulb'] },
-                    { name: 'size', type: 'list', enum: ['sm', 'md', 'lg', 'xl'] },
+                    { name: 'iconName', type: 'string' },
+                    { name: 'size', type: 'string' },
                     { name: 'animated', type: 'boolean' },
                     { name: 'countUp', type: 'boolean' },
                     { name: 'showTrend', type: 'boolean', defaultValue: false },
@@ -319,7 +331,7 @@ export const registeredComponents: RegisteredComponent[] = [
                 subFields: [
                     { name: 'question', type: 'string', required: true },
                     { name: 'answer', type: 'longText', required: true },
-                    { name: 'category', type: 'string', required: true, enum: ['program', 'pricing', 'training', 'nutrition', 'support', 'results'] },
+                    { name: 'category', type: 'string', required: true },
                     { name: 'showContactCta', type: 'boolean', defaultValue: false },
                     {
                         name: 'links',
@@ -460,6 +472,179 @@ export const registeredComponents: RegisteredComponent[] = [
 
     // === BASE COMPONENTS ===
     {
+        component: BaseButton,
+        name: 'BaseButton',
+        inputs: [
+            { name: 'text', type: 'string', defaultValue: 'Button Text' },
+            { name: 'href', type: 'url' },
+            { name: 'external', type: 'boolean', defaultValue: false },
+            { name: 'variant', type: 'list', enum: ['primary', 'secondary', 'secondaryFull', 'ghost', 'gradient', 'outline'], defaultValue: 'primary' },
+            { name: 'size', type: 'list', enum: ['sm', 'md', 'lg', 'xl'], defaultValue: 'md' },
+            { name: 'icon', type: 'string' },
+            { name: 'iconPosition', type: 'list', enum: ['left', 'right'], defaultValue: 'left' },
+            { name: 'iconOnly', type: 'boolean', defaultValue: false },
+            { name: 'badge', type: 'string' },
+            { name: 'loading', type: 'boolean', defaultValue: false },
+            { name: 'disabled', type: 'boolean', defaultValue: false }
+        ]
+    },
+
+    {
+        component: BaseHero,
+        name: 'BaseHero',
+        inputs: [
+            // Content
+            { name: 'headline', type: 'richText', defaultValue: 'Your Hero Headline' },
+            { name: 'subheadline', type: 'text', defaultValue: 'Your hero subheadline text goes here.' },
+            { name: 'badgeText', type: 'string', defaultValue: 'New' },
+            { name: 'badgeVariant', type: 'list', enum: ['new', 'popular', 'featured', 'limited'], defaultValue: 'featured' },
+            { name: 'showBadge', type: 'boolean', defaultValue: true },
+
+            // CTAs
+            { name: 'primaryCtaText', type: 'string', defaultValue: 'Get Started' },
+            { name: 'primaryCtaUrl', type: 'url', defaultValue: '#' },
+            { name: 'primaryCtaExternal', type: 'boolean', defaultValue: false },
+            { name: 'secondaryCtaText', type: 'string', defaultValue: 'Learn More' },
+            { name: 'secondaryCtaUrl', type: 'url', defaultValue: '#' },
+            { name: 'secondaryCtaExternal', type: 'boolean', defaultValue: false },
+
+            // Visual
+            { name: 'heroImage', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png'], defaultValue: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=750&fit=crop&crop=center' },
+            { name: 'heroImageAlt', type: 'string', defaultValue: 'Hero Image' },
+            { name: 'imageOverlay', type: 'boolean', defaultValue: false },
+            { name: 'showImageBadge', type: 'boolean', defaultValue: true },
+            { name: 'imageBadgeText', type: 'string', defaultValue: 'Featured' },
+
+            // Statistics
+            { name: 'showStats', type: 'boolean', defaultValue: false },
+            {
+                name: 'statistics',
+                type: 'list',
+                subFields: [
+                    { name: 'key', type: 'string' },
+                    { name: 'value', type: 'number', defaultValue: 0, required: true },
+                    { name: 'label', type: 'string', defaultValue: 'Statistic', required: true },
+                    { name: 'suffix', type: 'string', defaultValue: '' },
+                    { name: 'variant', type: 'string', defaultValue: 'primary' }
+                ],
+                defaultValue: []
+            },
+            { name: 'defaultCountUp', type: 'boolean', defaultValue: true },
+
+            // Trust Indicators
+            { name: 'showTrustIndicators', type: 'boolean', defaultValue: false },
+            {
+                name: 'trustIndicators',
+                type: 'list',
+                subFields: [
+                    { name: 'indicator', type: 'string', required: true }
+                ],
+                defaultValue: []
+            },
+
+            // Floating Cards
+            { name: 'showFloatingCards', type: 'boolean', defaultValue: false },
+            { name: 'floatingCard1Title', type: 'string', defaultValue: 'Card 1' },
+            { name: 'floatingCard1Text', type: 'string', defaultValue: 'Description' },
+            { name: 'floatingCard1Icon', type: 'string', defaultValue: 'award' },
+            { name: 'floatingCard1Emoji', type: 'string' },
+            { name: 'floatingCard2Title', type: 'string', defaultValue: 'Card 2' },
+            { name: 'floatingCard2Text', type: 'string', defaultValue: 'Description' },
+            { name: 'floatingCard2Icon', type: 'string', defaultValue: 'people' },
+            { name: 'floatingCard2Emoji', type: 'string' },
+            { name: 'floatingCardComponent', type: 'string', defaultValue: 'AboutCard' },
+            { name: 'floatingIconComponent', type: 'string', defaultValue: 'AboutIcon' },
+
+            // Styling
+            { name: 'backgroundColor', type: 'color', defaultValue: '#0f0f0f' },
+            { name: 'headlineColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'subheadlineColor', type: 'color', defaultValue: '#d1d5db' }
+        ]
+    },
+
+    {
+        component: BaseFAQ,
+        name: 'BaseFAQ',
+        inputs: [
+            // Content
+            { name: 'headline', type: 'richText', defaultValue: 'Häufig gestellte Fragen' },
+            { name: 'subheadline', type: 'text', defaultValue: 'Hier finden Sie Antworten auf die wichtigsten Fragen.' },
+            { name: 'badgeText', type: 'string', defaultValue: 'FAQ' },
+            { name: 'badgeVariant', type: 'list', enum: ['new', 'popular', 'featured', 'limited', 'info', 'neutral'], defaultValue: 'info' },
+            { name: 'showBadge', type: 'boolean', defaultValue: true },
+
+            // Search & Filter
+            { name: 'showSearch', type: 'boolean', defaultValue: true },
+            { name: 'searchPlaceholder', type: 'string', defaultValue: 'Suche nach Stichworten...' },
+            { name: 'showCategories', type: 'boolean', defaultValue: true },
+            { name: 'showCategoryIcons', type: 'boolean', defaultValue: true },
+            { name: 'showCategoryBadges', type: 'boolean', defaultValue: true },
+            {
+                name: 'categories',
+                type: 'list',
+                subFields: [
+                    { name: 'id', type: 'string', required: true },
+                    { name: 'name', type: 'string', required: true },
+                    { name: 'emoji', type: 'string' },
+                    { name: 'variant', type: 'string', defaultValue: 'primary' }
+                ],
+                defaultValue: []
+            },
+
+            // FAQ Data
+            {
+                name: 'faqs',
+                type: 'list',
+                subFields: [
+                    { name: 'question', type: 'string', required: true },
+                    { name: 'answer', type: 'longText', required: true },
+                    { name: 'category', type: 'string', required: true },
+                    { name: 'showContactCta', type: 'boolean', defaultValue: false },
+                    {
+                        name: 'links',
+                        type: 'list',
+                        subFields: [
+                            { name: 'text', type: 'string' },
+                            { name: 'url', type: 'string' }
+                        ]
+                    }
+                ],
+                defaultValue: []
+            },
+
+            // UI Components
+            { name: 'cardComponent', type: 'string', defaultValue: 'TransformationCard' },
+
+            // No Results
+            { name: 'noResultsTitle', type: 'string', defaultValue: 'Keine Ergebnisse gefunden' },
+            { name: 'noResultsText', type: 'string', defaultValue: 'Versuche andere Suchbegriffe oder kontaktiere uns direkt.' },
+
+            // Links
+            { name: 'linksTitle', type: 'string', defaultValue: 'Hilfreiche Links' },
+
+            // Contact CTA
+            { name: 'contactCtaText', type: 'string', defaultValue: 'Brauchst du weitere Hilfe zu diesem Thema?' },
+            { name: 'contactButtonText', type: 'string', defaultValue: 'Fragen stellen' },
+            { name: 'contactButtonUrl', type: 'url', defaultValue: '#contact' },
+
+            // Contact Section
+            { name: 'showContactSection', type: 'boolean', defaultValue: false },
+            { name: 'contactSectionHeadline', type: 'string', defaultValue: 'Noch Fragen? Wir sind für dich da!' },
+            { name: 'contactSectionDescription', type: 'text', defaultValue: 'Unser Expertenteam beantwortet gerne alle deine Fragen persönlich und unverbindlich.' },
+            { name: 'primaryContactText', type: 'string', defaultValue: 'Kontakt aufnehmen' },
+            { name: 'primaryContactUrl', type: 'url', defaultValue: '/kontakt' },
+            { name: 'secondaryContactText', type: 'string' },
+            { name: 'secondaryContactUrl', type: 'url' },
+            { name: 'responseTimeText', type: 'string' },
+
+            // Styling
+            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'headlineColor', type: 'color', defaultValue: '#1f2937' },
+            { name: 'subheadlineColor', type: 'color', defaultValue: '#6b7280' }
+        ]
+    },
+
+    {
         component: BaseStatistic,
         name: 'BaseStatistic',
         inputs: [
@@ -473,15 +658,15 @@ export const registeredComponents: RegisteredComponent[] = [
 
             // Icon
             { name: 'icon', type: 'string' },
-            { name: 'iconName', type: 'list', enum: ['heart', 'target', 'people', 'shield', 'location', 'award', 'handshake', 'lightbulb'] },
-            { name: 'iconVariant', type: 'list', enum: ['primary', 'secondary', 'accent', 'success', 'info', 'neutral'], defaultValue: 'primary' },
-            { name: 'iconSize', type: 'list', enum: ['sm', 'md', 'lg'], defaultValue: 'md' },
+            { name: 'iconName', type: 'string' },
+            { name: 'iconVariant', type: 'string', defaultValue: 'primary' },
+            { name: 'iconSize', type: 'string', defaultValue: 'md' },
 
             // Styling
-            { name: 'variant', type: 'list', enum: ['default', 'primary', 'secondary', 'gradient', 'glass', 'minimal', 'highlight'], defaultValue: 'default' },
-            { name: 'size', type: 'list', enum: ['sm', 'md', 'lg', 'xl'], defaultValue: 'md' },
-            { name: 'alignment', type: 'list', enum: ['left', 'center', 'right'], defaultValue: 'center' },
-            { name: 'labelPosition', type: 'list', enum: ['top', 'bottom'], defaultValue: 'bottom' },
+            { name: 'variant', type: 'string', defaultValue: 'default' },
+            { name: 'size', type: 'string', defaultValue: 'md' },
+            { name: 'alignment', type: 'string', defaultValue: 'center' },
+            { name: 'labelPosition', type: 'string', defaultValue: 'bottom' },
 
             // Animations & Effects
             { name: 'animated', type: 'boolean', defaultValue: false },
@@ -512,9 +697,9 @@ export const registeredComponents: RegisteredComponent[] = [
                     { name: 'label', type: 'string', defaultValue: 'Statistik', required: true },
                     { name: 'suffix', type: 'string', defaultValue: '' },
                     { name: 'description', type: 'string' },
-                    { name: 'iconName', type: 'list', enum: ['heart', 'target', 'people', 'shield', 'location', 'award', 'handshake', 'lightbulb'] },
-                    { name: 'variant', type: 'list', enum: ['default', 'primary', 'secondary', 'gradient', 'glass', 'minimal', 'highlight'], defaultValue: 'primary' },
-                    { name: 'size', type: 'list', enum: ['sm', 'md', 'lg', 'xl'] },
+                    { name: 'iconName', type: 'string' },
+                    { name: 'variant', type: 'string', defaultValue: 'primary' },
+                    { name: 'size', type: 'string' },
                     { name: 'animated', type: 'boolean' },
                     { name: 'countUp', type: 'boolean' },
                     { name: 'showTrend', type: 'boolean', defaultValue: false },
@@ -536,19 +721,19 @@ export const registeredComponents: RegisteredComponent[] = [
             },
 
             // Grid layout
-            { name: 'gridType', type: 'list', enum: ['auto', 'fixed-2', 'fixed-3', 'fixed-4', 'fixed-5', 'fixed-6'], defaultValue: 'auto' },
-            { name: 'gap', type: 'list', enum: ['sm', 'md', 'lg', 'xl'], defaultValue: 'md' },
-            { name: 'maxWidth', type: 'list', enum: ['sm', 'md', 'lg', 'xl', 'full', 'none'], defaultValue: 'none' },
-            { name: 'alignment', type: 'list', enum: ['left', 'center', 'right'], defaultValue: 'center' },
+            { name: 'gridType', type: 'string', defaultValue: 'auto' },
+            { name: 'gap', type: 'string', defaultValue: 'md' },
+            { name: 'maxWidth', type: 'string', defaultValue: 'none' },
+            { name: 'alignment', type: 'string', defaultValue: 'center' },
 
             // Default props for all statistics
-            { name: 'defaultSize', type: 'list', enum: ['sm', 'md', 'lg', 'xl'], defaultValue: 'md' },
-            { name: 'defaultVariant', type: 'list', enum: ['default', 'primary', 'secondary', 'gradient', 'glass', 'minimal', 'highlight'], defaultValue: 'primary' },
+            { name: 'defaultSize', type: 'string', defaultValue: 'md' },
+            { name: 'defaultVariant', type: 'string', defaultValue: 'primary' },
             { name: 'defaultAnimated', type: 'boolean', defaultValue: true },
             { name: 'defaultCountUp', type: 'boolean', defaultValue: true },
 
             // Animation
-            { name: 'animation', type: 'list', enum: ['none', 'stagger', 'fade', 'slide-up'], defaultValue: 'stagger' },
+            { name: 'animation', type: 'string', defaultValue: 'stagger' },
             { name: 'animationDuration', type: 'number', defaultValue: 100 },
 
             // Context
@@ -989,6 +1174,453 @@ export const registeredComponents: RegisteredComponent[] = [
 
             // Styling
             { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'headlineColor', type: 'color', defaultValue: '#1f2937' },
+            { name: 'subheadlineColor', type: 'color', defaultValue: '#6b7280' }
+        ]
+    },
+
+    // === BASE COMPONENTS (NEW) ===
+    {
+        component: BaseEventCard,
+        name: 'BaseEventCard',
+        inputs: [
+            // Content
+            { name: 'title', type: 'string', defaultValue: 'Event Title' },
+            { name: 'description', type: 'text', defaultValue: 'Event description goes here.' },
+            { name: 'icon', type: 'string', defaultValue: 'target' },
+            { name: 'iconComponent', type: 'string', defaultValue: 'Icon' },
+            { name: 'badge', type: 'string', defaultValue: '' },
+            { name: 'date', type: 'string', defaultValue: '' },
+            { name: 'status', type: 'string', defaultValue: '' },
+
+            // Features/Tags
+            {
+                name: 'features',
+                type: 'list',
+                subFields: [
+                    { name: 'feature', type: 'string', defaultValue: 'Feature' },
+                    { name: 'text', type: 'string', defaultValue: '' }
+                ],
+                defaultValue: []
+            },
+
+            // Progress
+            { name: 'showProgress', type: 'boolean', defaultValue: false },
+            { name: 'progress', type: 'number', defaultValue: 0 },
+            { name: 'progressLabel', type: 'string', defaultValue: 'Progress' },
+
+            // CTA
+            { name: 'ctaText', type: 'string', defaultValue: '' },
+            { name: 'ctaUrl', type: 'url', defaultValue: '' },
+            { name: 'ctaVariant', type: 'list', enum: ['primary', 'secondary', 'ghost', 'gradient', 'outline'], defaultValue: 'primary' },
+            { name: 'ctaSize', type: 'list', enum: ['sm', 'md', 'lg'], defaultValue: 'md' },
+            { name: 'ctaExternal', type: 'boolean', defaultValue: false },
+
+            // Styling
+            { name: 'variant', type: 'list', enum: ['default', 'featured', 'timeline', 'glass', 'elevated', 'gradient'], defaultValue: 'default' },
+            { name: 'size', type: 'list', enum: ['sm', 'md', 'lg'], defaultValue: 'md' },
+            { name: 'statusVariant', type: 'list', enum: ['default', 'success', 'warning', 'error', 'info'], defaultValue: 'default' },
+
+            // Behavior
+            { name: 'clickable', type: 'boolean', defaultValue: false },
+            { name: 'hoverEffect', type: 'boolean', defaultValue: true }
+        ]
+    },
+
+    {
+        component: BaseTimeline,
+        name: 'BaseTimeline',
+        inputs: [
+            // Content
+            { name: 'headline', type: 'string', defaultValue: 'Timeline Title' },
+            { name: 'subheadline', type: 'text', defaultValue: 'Timeline description goes here.' },
+            {
+                name: 'items',
+                type: 'list',
+                required: true,
+                subFields: [
+                    { name: 'key', type: 'string' },
+                    { name: 'title', type: 'string', defaultValue: 'Timeline Item', required: true },
+                    { name: 'description', type: 'text', defaultValue: 'Item description' },
+                    { name: 'date', type: 'string' },
+                    { name: 'step', type: 'string' },
+                    { name: 'icon', type: 'string' },
+                    {
+                        name: 'features',
+                        type: 'list',
+                        subFields: [
+                            { name: 'feature', type: 'string', defaultValue: 'Feature' },
+                            { name: 'text', type: 'string', defaultValue: '' }
+                        ]
+                    },
+                    { name: 'active', type: 'boolean', defaultValue: false },
+                    { name: 'completed', type: 'boolean', defaultValue: false },
+                    { name: 'status', type: 'list', enum: ['pending', 'active', 'completed'], defaultValue: 'pending' },
+                    { name: 'ctaText', type: 'string' },
+                    { name: 'ctaUrl', type: 'url' },
+                    { name: 'ctaVariant', type: 'list', enum: ['primary', 'secondary', 'ghost', 'outline'], defaultValue: 'outline' }
+                ],
+                defaultValue: [
+                    {
+                        title: 'Step 1',
+                        description: 'First step description',
+                        step: 'Day 1',
+                        icon: 'target',
+                        status: 'completed'
+                    },
+                    {
+                        title: 'Step 2',
+                        description: 'Second step description',
+                        step: 'Day 2',
+                        icon: 'heart',
+                        status: 'active'
+                    }
+                ]
+            },
+
+            // Layout
+            { name: 'orientation', type: 'list', enum: ['vertical', 'horizontal'], defaultValue: 'vertical' },
+            { name: 'variant', type: 'list', enum: ['default', 'minimal', 'cards', 'connected'], defaultValue: 'default' },
+            { name: 'size', type: 'list', enum: ['sm', 'md', 'lg'], defaultValue: 'md' },
+
+            // Progress
+            { name: 'showProgress', type: 'boolean', defaultValue: false },
+            { name: 'currentStep', type: 'number', defaultValue: 1 },
+            { name: 'showNumbers', type: 'boolean', defaultValue: true },
+
+            // Styling
+            { name: 'iconComponent', type: 'string', defaultValue: 'Icon' },
+            { name: 'colorScheme', type: 'list', enum: ['primary', 'secondary', 'gradient'], defaultValue: 'primary' },
+
+            // Behavior
+            { name: 'interactive', type: 'boolean', defaultValue: false }
+        ]
+    },
+
+    {
+        component: BaseCTA,
+        name: 'BaseCTA',
+        inputs: [
+            // Content
+            { name: 'title', type: 'richText', defaultValue: 'Ready to Get Started?' },
+            { name: 'description', type: 'text', defaultValue: 'Join thousands of members who have already transformed their lives with our programs.' },
+            { name: 'badgeText', type: 'string', defaultValue: '' },
+            { name: 'badgeVariant', type: 'list', enum: ['new', 'popular', 'featured', 'limited', 'info'], defaultValue: 'featured' },
+            { name: 'showBadge', type: 'boolean', defaultValue: false },
+
+            // Primary Action
+            { name: 'primaryText', type: 'string', defaultValue: 'Get Started Now' },
+            { name: 'primaryUrl', type: 'url', defaultValue: '#' },
+            { name: 'primaryVariant', type: 'list', enum: ['primary', 'secondary', 'ghost', 'gradient', 'outline'], defaultValue: 'gradient' },
+            { name: 'primaryExternal', type: 'boolean', defaultValue: false },
+            { name: 'primaryDisabled', type: 'boolean', defaultValue: false },
+
+            // Secondary Action
+            { name: 'secondaryText', type: 'string', defaultValue: 'Learn More' },
+            { name: 'secondaryUrl', type: 'url', defaultValue: '#' },
+            { name: 'secondaryVariant', type: 'list', enum: ['primary', 'secondary', 'ghost', 'gradient', 'outline'], defaultValue: 'outline' },
+            { name: 'secondaryExternal', type: 'boolean', defaultValue: false },
+            { name: 'secondaryDisabled', type: 'boolean', defaultValue: false },
+
+            // Trust Indicators
+            {
+                name: 'trustIndicators',
+                type: 'list',
+                subFields: [
+                    { name: 'text', type: 'string', defaultValue: 'Trust indicator' },
+                    { name: 'icon', type: 'string', defaultValue: '' }
+                ],
+                defaultValue: []
+            },
+
+            // Styling
+            { name: 'variant', type: 'list', enum: ['default', 'elevated', 'glass', 'gradient', 'outline', 'minimal'], defaultValue: 'default' },
+            { name: 'size', type: 'list', enum: ['sm', 'md', 'lg', 'xl'], defaultValue: 'md' },
+            { name: 'buttonSize', type: 'list', enum: ['sm', 'md', 'lg', 'xl'], defaultValue: 'lg' },
+            { name: 'alignment', type: 'list', enum: ['left', 'center', 'right'], defaultValue: 'center' },
+
+            // Colors
+            { name: 'titleColor', type: 'string', defaultValue: '' },
+            { name: 'descriptionColor', type: 'string', defaultValue: '' },
+            { name: 'backgroundColor', type: 'string', defaultValue: '' },
+            { name: 'borderColor', type: 'string', defaultValue: '' },
+
+            // Layout
+            { name: 'fullWidth', type: 'boolean', defaultValue: false },
+            { name: 'spacing', type: 'list', enum: ['tight', 'normal', 'relaxed'], defaultValue: 'normal' },
+
+            // Components
+            { name: 'iconComponent', type: 'string', defaultValue: 'Icon' }
+        ]
+    },
+
+    // === LEVEL UP WEEK COMPONENTS ===
+    {
+        component: LevelUpWeekHero,
+        name: 'LevelUpWeekHero',
+        inputs: [
+            // Content
+            { name: 'headline', type: 'richText', defaultValue: 'Level Up Week: Deine intensive <span style="color: #ff6b35;">Community-Woche</span>' },
+            { name: 'subheadline', type: 'text', defaultValue: 'Die Level Up Weeks sind unser halbjährliches Community-Event, bei dem sich alles um deinen persönlichen Fortschritt dreht. Eine Woche voller intensiver Workshops, neuer Routinen und wertvollen Wissens – gemeinsam mit Gleichgesinnten.' },
+            { name: 'badgeText', type: 'string', defaultValue: 'Halbjährliches Event' },
+            { name: 'badgeVariant', type: 'list', enum: ['new', 'popular', 'featured', 'limited'], defaultValue: 'featured' },
+            { name: 'showBadge', type: 'boolean', defaultValue: true },
+
+            // Event-specific content
+            { name: 'nextEventDate', type: 'string', defaultValue: '' },
+            { name: 'registrationDeadline', type: 'string', defaultValue: '' },
+            { name: 'eventDuration', type: 'string', defaultValue: '7 Tage' },
+            { name: 'showEventCountdown', type: 'boolean', defaultValue: false },
+            { name: 'registrationStatus', type: 'string', defaultValue: 'Anmeldung offen' },
+
+            // CTAs
+            { name: 'primaryCtaText', type: 'string', defaultValue: 'Zur nächsten Level Up Week anmelden' },
+            { name: 'primaryCtaUrl', type: 'url', defaultValue: '#anmeldung' },
+            { name: 'primaryCtaExternal', type: 'boolean', defaultValue: false },
+            { name: 'secondaryCtaText', type: 'string', defaultValue: 'Mehr über das Event erfahren' },
+            { name: 'secondaryCtaUrl', type: 'url', defaultValue: '#details' },
+            { name: 'secondaryCtaExternal', type: 'boolean', defaultValue: false },
+
+            // Visual
+            { name: 'heroImage', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png'], defaultValue: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=750&fit=crop&crop=center' },
+            { name: 'heroImageAlt', type: 'string', defaultValue: 'Level Up Week Community Training' },
+            { name: 'imageOverlay', type: 'boolean', defaultValue: false },
+            { name: 'showImageBadge', type: 'boolean', defaultValue: true },
+            { name: 'imageBadgeText', type: 'string', defaultValue: 'Community Event' },
+
+            // Statistics
+            { name: 'showStats', type: 'boolean', defaultValue: true },
+            {
+                name: 'statistics',
+                type: 'list',
+                subFields: [
+                    { name: 'key', type: 'string' },
+                    { name: 'value', type: 'number', defaultValue: 0, required: true },
+                    { name: 'label', type: 'string', defaultValue: 'Statistik', required: true },
+                    { name: 'suffix', type: 'string', defaultValue: '' },
+                    { name: 'variant', type: 'string', defaultValue: 'primary' },
+                    { name: 'description', type: 'string' },
+                    { name: 'iconName', type: 'string' }
+                ],
+                defaultValue: []
+            },
+            { name: 'defaultCountUp', type: 'boolean', defaultValue: true },
+
+            // Trust Indicators
+            { name: 'showTrustIndicators', type: 'boolean', defaultValue: true },
+            {
+                name: 'trustIndicators',
+                type: 'list',
+                subFields: [
+                    { name: 'indicator', type: 'string', required: true }
+                ],
+                defaultValue: [
+                    { indicator: 'Halbjährliches Community-Event' },
+                    { indicator: 'Intensive Workshops & Routinen' },
+                    { indicator: 'Wertvolles Wissen & Fortschritt' }
+                ]
+            },
+
+            // Floating Cards
+            { name: 'showFloatingCards', type: 'boolean', defaultValue: true },
+            { name: 'floatingCard1Title', type: 'string', defaultValue: 'Nächstes Event' },
+            { name: 'floatingCard1Text', type: 'string', defaultValue: 'Jetzt anmelden' },
+            { name: 'floatingCard1Icon', type: 'string', defaultValue: 'target' },
+            { name: 'floatingCard2Title', type: 'string', defaultValue: 'Community' },
+            { name: 'floatingCard2Text', type: 'string', defaultValue: 'Gleichgesinnte' },
+            { name: 'floatingCard2Icon', type: 'string', defaultValue: 'people' },
+
+            // Level Up Week specific
+            { name: 'participantCount', type: 'number', defaultValue: 150 },
+            { name: 'completionRate', type: 'number', defaultValue: 94 },
+            { name: 'averageProgress', type: 'number', defaultValue: 85 },
+            { name: 'communitySize', type: 'number', defaultValue: 500 },
+
+            // Styling
+            { name: 'backgroundColor', type: 'color', defaultValue: '#0f0f0f' },
+            { name: 'headlineColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'subheadlineColor', type: 'color', defaultValue: '#d1d5db' }
+        ]
+    },
+
+    {
+        component: LevelUpWeekProgram,
+        name: 'LevelUpWeekProgram',
+        inputs: [
+            // Content
+            { name: 'headline', type: 'richText', defaultValue: 'Dein <span style="color: #ff6b35;">7-Tage Intensivprogramm</span>' },
+            { name: 'subheadline', type: 'text', defaultValue: 'Jeder Tag der Level Up Week hat einen spezifischen Fokus. Von intensiven Workshops bis hin zu neuen Routinen – hier ist dein kompletter Überblick über die Woche.' },
+            { name: 'badgeText', type: 'string', defaultValue: 'Programm-Überblick' },
+            { name: 'showBadge', type: 'boolean', defaultValue: true },
+
+            // Overview Statistics
+            { name: 'showOverviewStats', type: 'boolean', defaultValue: true },
+            { name: 'totalDays', type: 'number', defaultValue: 7 },
+            { name: 'workshopsCount', type: 'number', defaultValue: 14 },
+            { name: 'participantCapacity', type: 'number', defaultValue: 150 },
+
+            // Timeline
+            { name: 'timelineOrientation', type: 'list', enum: ['vertical', 'horizontal'], defaultValue: 'vertical' },
+            { name: 'timelineVariant', type: 'list', enum: ['default', 'minimal', 'cards', 'connected'], defaultValue: 'cards' },
+            { name: 'timelineSize', type: 'list', enum: ['sm', 'md', 'lg'], defaultValue: 'md' },
+            { name: 'showTimelineProgress', type: 'boolean', defaultValue: true },
+            { name: 'currentDay', type: 'number', defaultValue: 1 },
+            { name: 'showDayNumbers', type: 'boolean', defaultValue: true },
+            { name: 'interactiveTimeline', type: 'boolean', defaultValue: false },
+
+            // Daily Focus
+            { name: 'showDailyFocus', type: 'boolean', defaultValue: true },
+            { name: 'dailyFocusTitle', type: 'string', defaultValue: 'Tägliche Schwerpunkte' },
+            { name: 'focusCardSize', type: 'list', enum: ['sm', 'md', 'lg'], defaultValue: 'md' },
+
+            // Workshops
+            { name: 'showWorkshops', type: 'boolean', defaultValue: true },
+            { name: 'workshopsTitle', type: 'string', defaultValue: 'Workshop-Highlights' },
+            { name: 'workshopCardSize', type: 'list', enum: ['sm', 'md', 'lg'], defaultValue: 'md' },
+
+            // Schedule
+            { name: 'showSchedule', type: 'boolean', defaultValue: true },
+            { name: 'scheduleTitle', type: 'string', defaultValue: 'Wochenübersicht' },
+
+            // CTA
+            { name: 'showCta', type: 'boolean', defaultValue: true },
+            { name: 'ctaTitle', type: 'string', defaultValue: 'Bereit für deine intensive Woche?' },
+            { name: 'ctaDescription', type: 'text', defaultValue: 'Sichere dir deinen Platz für die nächste Level Up Week und erlebe eine Woche voller Fortschritt.' },
+            { name: 'primaryCtaText', type: 'string', defaultValue: 'Jetzt anmelden' },
+            { name: 'primaryCtaUrl', type: 'url', defaultValue: '#anmeldung' },
+            { name: 'primaryCtaExternal', type: 'boolean', defaultValue: false },
+            { name: 'secondaryCtaText', type: 'string', defaultValue: 'Fragen stellen' },
+            { name: 'secondaryCtaUrl', type: 'url', defaultValue: '#kontakt' },
+            { name: 'secondaryCtaExternal', type: 'boolean', defaultValue: false },
+
+            // Styling
+            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'headlineColor', type: 'color', defaultValue: '#1f2937' },
+            { name: 'subheadlineColor', type: 'color', defaultValue: '#6b7280' }
+        ]
+    },
+
+    {
+        component: LevelUpWeekBenefits,
+        name: 'LevelUpWeekBenefits',
+        inputs: [
+            // Content
+            { name: 'headline', type: 'richText', defaultValue: 'Was die <span style="color: #ff6b35;">Level Up Week</span> dir bringt' },
+            { name: 'subheadline', type: 'text', defaultValue: 'Eine Woche, die dein Leben verändert. Erlebe intensive Workshops, baue neue Routinen auf und gewinne wertvolles Wissen – gemeinsam mit einer starken Community.' },
+            { name: 'badgeText', type: 'string', defaultValue: 'Deine Vorteile' },
+            { name: 'showBadge', type: 'boolean', defaultValue: true },
+
+            // Benefits
+            { name: 'benefitCardSize', type: 'list', enum: ['sm', 'md', 'lg'], defaultValue: 'md' },
+
+            // Metrics
+            { name: 'showMetrics', type: 'boolean', defaultValue: true },
+            { name: 'metricsTitle', type: 'string', defaultValue: 'Messbare Ergebnisse nach nur einer Woche' },
+            { name: 'metricsSubtitle', type: 'string', defaultValue: 'Das erreichen unsere Teilnehmer durchschnittlich' },
+
+            // Community Impact
+            { name: 'showCommunityImpact', type: 'boolean', defaultValue: true },
+            { name: 'communityImpactTitle', type: 'string', defaultValue: 'Die Kraft der Community' },
+            { name: 'communityImpactDescription', type: 'text', defaultValue: 'Gemeinsam erreichen wir mehr. Die Level Up Week verbindet dich mit Gleichgesinnten und schafft langfristige Verbindungen.' },
+            { name: 'communitySize', type: 'number', defaultValue: 500 },
+
+            // Before/After Comparison
+            { name: 'showComparison', type: 'boolean', defaultValue: true },
+            { name: 'comparisonTitle', type: 'string', defaultValue: 'Deine Transformation in einer Woche' },
+            { name: 'comparisonSubtitle', type: 'string', defaultValue: 'So veränderst du dich während der Level Up Week' },
+            { name: 'beforeTitle', type: 'string', defaultValue: 'Ausgangssituation' },
+            { name: 'beforeDescription', type: 'text', defaultValue: 'Wo du stehst, bevor die Level Up Week beginnt' },
+            {
+                name: 'beforePoints',
+                type: 'list',
+                subFields: [
+                    { name: 'feature', type: 'string', defaultValue: 'Punkt' }
+                ]
+            },
+            { name: 'afterTitle', type: 'string', defaultValue: 'Nach der Level Up Week' },
+            { name: 'afterDescription', type: 'text', defaultValue: 'Was du nach einer intensiven Woche erreicht hast' },
+            {
+                name: 'afterPoints',
+                type: 'list',
+                subFields: [
+                    { name: 'feature', type: 'string', defaultValue: 'Punkt' }
+                ]
+            },
+
+            // Success Stories Preview
+            { name: 'showSuccessPreview', type: 'boolean', defaultValue: true },
+            { name: 'successPreviewTitle', type: 'string', defaultValue: 'Was andere erreicht haben' },
+            { name: 'successPreviewSubtitle', type: 'string', defaultValue: 'Echte Ergebnisse von echten Teilnehmern' },
+
+            // CTA
+            { name: 'showCta', type: 'boolean', defaultValue: true },
+            { name: 'ctaTitle', type: 'string', defaultValue: 'Bereit für deine eigene Transformation?' },
+            { name: 'ctaDescription', type: 'text', defaultValue: 'Sichere dir deinen Platz für die nächste Level Up Week und erlebe, was in einer intensiven Woche möglich ist.' },
+            { name: 'primaryCtaText', type: 'string', defaultValue: 'Zur Level Up Week anmelden' },
+            { name: 'primaryCtaUrl', type: 'url', defaultValue: '#anmeldung' },
+            { name: 'primaryCtaExternal', type: 'boolean', defaultValue: false },
+            { name: 'secondaryCtaText', type: 'string', defaultValue: 'Kostenlose Beratung' },
+            { name: 'secondaryCtaUrl', type: 'url', defaultValue: '#beratung' },
+            { name: 'secondaryCtaExternal', type: 'boolean', defaultValue: false },
+
+            // Styling
+            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'headlineColor', type: 'color', defaultValue: '#1f2937' },
+            { name: 'subheadlineColor', type: 'color', defaultValue: '#6b7280' }
+        ]
+    },
+
+    {
+        component: LevelUpWeekTestimonials,
+        name: 'LevelUpWeekTestimonials',
+        inputs: [
+            // Content
+            { name: 'headline', type: 'richText', defaultValue: 'Echte <span style="color: #ff6b35;">Erfolgsgeschichten</span> aus der Community' },
+            { name: 'subheadline', type: 'text', defaultValue: 'Höre direkt von Teilnehmern der Level Up Week, wie eine intensive Woche ihr Leben verändert hat. Diese authentischen Geschichten zeigen, was möglich ist.' },
+            { name: 'badgeText', type: 'string', defaultValue: 'Community Stories' },
+            { name: 'showBadge', type: 'boolean', defaultValue: true },
+
+            // Summary Statistics
+            { name: 'showSummaryStats', type: 'boolean', defaultValue: true },
+            { name: 'summaryStatsTitle', type: 'string', defaultValue: 'Community-Erfolge in Zahlen' },
+            { name: 'summaryStatsSubtitle', type: 'string', defaultValue: 'Was unsere Teilnehmer gemeinsam erreicht haben' },
+
+            // Featured Testimonials
+            { name: 'showFeaturedTestimonials', type: 'boolean', defaultValue: true },
+
+            // Community Testimonials
+            { name: 'showCommunityTestimonials', type: 'boolean', defaultValue: true },
+            { name: 'communityTestimonialsTitle', type: 'string', defaultValue: 'Stimmen aus der Community' },
+            { name: 'communityTestimonialsSubtitle', type: 'string', defaultValue: 'Was Teilnehmer über ihre Level Up Week sagen' },
+
+            // Progress Highlights
+            { name: 'showProgressHighlights', type: 'boolean', defaultValue: true },
+            { name: 'progressHighlightsTitle', type: 'string', defaultValue: 'Durchschnittliche Verbesserungen' },
+            { name: 'progressHighlightsSubtitle', type: 'string', defaultValue: 'Das erreichen unsere Teilnehmer in nur 7 Tagen' },
+
+            // Before/After Stories
+            { name: 'showBeforeAfter', type: 'boolean', defaultValue: true },
+            { name: 'beforeAfterTitle', type: 'string', defaultValue: 'Transformation in 7 Tagen' },
+            { name: 'beforeAfterSubtitle', type: 'string', defaultValue: 'Echte Vorher-Nachher Geschichten' },
+
+            // Community Feedback
+            { name: 'showCommunityFeedback', type: 'boolean', defaultValue: true },
+            { name: 'communityFeedbackTitle', type: 'string', defaultValue: 'Die Community spricht für sich' },
+            { name: 'communityFeedbackDescription', type: 'text', defaultValue: 'Diese Zahlen zeigen die Kraft einer starken Gemeinschaft' },
+
+            // CTA
+            { name: 'showCta', type: 'boolean', defaultValue: true },
+            { name: 'ctaTitle', type: 'string', defaultValue: 'Schreibe deine eigene Erfolgsgeschichte' },
+            { name: 'ctaDescription', type: 'text', defaultValue: 'Werde Teil der nächsten Level Up Week und erlebe, was in einer intensiven Woche möglich ist.' },
+            { name: 'primaryCtaText', type: 'string', defaultValue: 'Meine Level Up Week starten' },
+            { name: 'primaryCtaUrl', type: 'url', defaultValue: '#anmeldung' },
+            { name: 'primaryCtaExternal', type: 'boolean', defaultValue: false },
+            { name: 'secondaryCtaText', type: 'string', defaultValue: 'Success Stories ansehen' },
+            { name: 'secondaryCtaUrl', type: 'url', defaultValue: '#stories' },
+            { name: 'secondaryCtaExternal', type: 'boolean', defaultValue: false },
+
+            // Styling
+            { name: 'backgroundColor', type: 'color', defaultValue: '#f8fafc' },
             { name: 'headlineColor', type: 'color', defaultValue: '#1f2937' },
             { name: 'subheadlineColor', type: 'color', defaultValue: '#6b7280' }
         ]

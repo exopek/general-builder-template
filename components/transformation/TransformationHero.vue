@@ -1,169 +1,36 @@
 <template>
-  <section
-    class="flex items-center py-16 md:py-20 overflow-hidden relative"
-    :style="{ backgroundColor: backgroundColor }"
-  >
-    <!-- Background Elements -->
-    <div class="absolute inset-0 bg-gradient-to-br from-black/20 to-transparent"></div>
-
-    <div class="container mx-auto">
-      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-
-        <!-- Content Side -->
-        <div class="space-y-8 text-center lg:text-left relative z-10">
-
-          <!-- Badge -->
-          <TransformationBadge
-            v-if="showBadge"
-            :text="badgeText"
-            :variant="badgeVariant"
-            class="mx-auto lg:mx-0"
-            animated
-          />
-
-          <!-- Main Headline -->
-          <div class="space-y-4">
-            <h1
-              class="text-4xl md:text-5xl lg:text-6xl font-black leading-tight"
-              :style="{ color: headlineColor }"
-              v-html="headline"
-            ></h1>
-
-            <p
-              class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto lg:mx-0"
-              :style="{ color: subheadlineColor }"
-            >
-              {{ subheadline }}
-            </p>
-          </div>
-
-          <!-- Counter Stats -->
-          <BaseStatisticGrid
-            v-if="showCounters"
-            :statistics="countersData"
-            grid-type="fixed-3"
-            gap="sm"
-            max-width="lg"
-            default-size="sm"
-            :default-animated="true"
-            animation="stagger"
-            container-class="mx-auto lg:mx-0"
-          />
-
-          <!-- CTA Buttons -->
-          <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-            <TransformationButton
-              v-if="primaryCtaText"
-              :text="primaryCtaText"
-              :href="primaryCtaUrl"
-              variant="gradient"
-              size="lg"
-              class="w-full sm:w-auto"
-            />
-
-            <TransformationButton
-              v-if="secondaryCtaText"
-              :text="secondaryCtaText"
-              :href="secondaryCtaUrl"
-              variant="outline"
-              size="lg"
-              class="w-full sm:w-auto"
-            />
-          </div>
-
-          <!-- Trust Indicators -->
-          <div v-if="showTrustIndicators" class="flex flex-wrap items-center justify-center lg:justify-start gap-6 pt-4">
-            <div class="flex items-center gap-2 text-sm text-gray-600">
-              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-              </svg>
-              {{ trustIndicator1 }}
-            </div>
-            <div class="flex items-center gap-2 text-sm text-gray-600">
-              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-              </svg>
-              {{ trustIndicator2 }}
-            </div>
-            <div class="flex items-center gap-2 text-sm text-gray-600">
-              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-              </svg>
-              {{ trustIndicator3 }}
-            </div>
-          </div>
-        </div>
-
-        <!-- Visual Side -->
-        <div class="relative flex items-center justify-center">
-          <div class="relative max-w-md lg:max-w-lg w-full">
-
-            <!-- Main Hero Image -->
-            <div class="relative rounded-2xl overflow-hidden shadow-2xl">
-              <img
-                :src="heroImage"
-                :alt="heroImageAlt"
-                class="w-full h-auto object-cover"
-                style="aspect-ratio: 4/5;"
-              />
-
-              <!-- Overlay Badge -->
-              <TransformationBadge
-                v-if="showImageBadge"
-                :text="imageBadgeText"
-                variant="new"
-                size="lg"
-                position="top-right"
-                animated
-              />
-            </div>
-
-            <!-- Floating Elements -->
-            <div v-if="showFloatingElements" class="absolute -top-4 -left-4 lg:-left-8">
-              <TransformationCard
-                variant="glass"
-                size="sm"
-                class="backdrop-blur-lg"
-              >
-                <div class="flex items-center gap-3">
-                  <TransformationIcon
-                    emoji="💪"
-                    variant="primary"
-                    size="sm"
-                  />
-                  <div>
-                    <div class="font-semibold text-white">{{ floatingCard1Title }}</div>
-                    <div class="text-sm text-white/80">{{ floatingCard1Text }}</div>
-                  </div>
-                </div>
-              </TransformationCard>
-            </div>
-
-            <div v-if="showFloatingElements" class="absolute -bottom-4 -right-4 lg:-right-8">
-              <TransformationCard
-                variant="glass"
-                size="sm"
-                class="backdrop-blur-lg"
-              >
-                <div class="flex items-center gap-3">
-                  <TransformationIcon
-                    emoji="🎯"
-                    variant="success"
-                    size="sm"
-                  />
-                  <div>
-                    <div class="font-semibold text-white">{{ floatingCard2Title }}</div>
-                    <div class="text-sm text-white/80">{{ floatingCard2Text }}</div>
-                  </div>
-                </div>
-              </TransformationCard>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
+  <BaseHero
+    :headline="headline"
+    :subheadline="subheadline"
+    :badge-text="badgeText"
+    :badge-variant="badgeVariant"
+    :show-badge="showBadge"
+    :primary-cta-text="primaryCtaText"
+    :primary-cta-url="primaryCtaUrl"
+    :secondary-cta-text="secondaryCtaText"
+    :secondary-cta-url="secondaryCtaUrl"
+    :hero-image="heroImage"
+    :hero-image-alt="heroImageAlt"
+    :show-image-badge="showImageBadge"
+    :image-badge-text="imageBadgeText"
+    :show-stats="showCounters"
+    :statistics="countersData"
+    :default-count-up="true"
+    :show-trust-indicators="showTrustIndicators"
+    :trust-indicators="trustIndicatorsArray"
+    :show-floating-cards="showFloatingElements"
+    :floating-card1-title="floatingCard1Title"
+    :floating-card1-text="floatingCard1Text"
+    :floating-card1-emoji="'💪'"
+    :floating-card2-title="floatingCard2Title"
+    :floating-card2-text="floatingCard2Text"
+    :floating-card2-emoji="'🎯'"
+    :floating-card-component="'TransformationCard'"
+    :floating-icon-component="'TransformationIcon'"
+    :background-color="backgroundColor"
+    :headline-color="headlineColor"
+    :subheadline-color="subheadlineColor"
+  />
 </template>
 
 <script setup lang="ts">
@@ -365,26 +232,16 @@ const countersData = computed(() => {
 
   return legacyCounters
 })
+
+// Transform trust indicators into array format
+const trustIndicatorsArray = computed(() => {
+  const indicators = []
+
+  if (props.trustIndicator1) indicators.push(props.trustIndicator1)
+  if (props.trustIndicator2) indicators.push(props.trustIndicator2)
+  if (props.trustIndicator3) indicators.push(props.trustIndicator3)
+
+  return indicators
+})
 </script>
 
-<style scoped>
-/* Custom gradient animations */
-@keyframes gradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-/* Floating animation for cards */
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-.absolute .card {
-  animation: float 6s ease-in-out infinite;
-}
-
-.absolute:nth-child(2) .card {
-  animation-delay: -3s;
-}
-</style>
