@@ -29,6 +29,7 @@ import AboutCTA from '~/components/about/AboutCTA.vue';
 // Base Components
 import BaseButton from '~/components/base/BaseButton.vue';
 import BaseHero from '~/components/base/BaseHero.vue';
+import BaseHeroImage from '~/components/base/BaseHeroImage.vue';
 import BaseFAQ from '~/components/base/BaseFAQ.vue';
 import BaseStatistic from '~/components/base/BaseStatistic.vue';
 import BaseStatisticGrid from '~/components/base/BaseStatisticGrid.vue';
@@ -564,6 +565,52 @@ export const registeredComponents: RegisteredComponent[] = [
             { name: 'backgroundColor', type: 'color', defaultValue: '#0f0f0f' },
             { name: 'headlineColor', type: 'color', defaultValue: '#ffffff' },
             { name: 'subheadlineColor', type: 'color', defaultValue: '#d1d5db' }
+        ]
+    },
+
+    {
+        component: BaseHeroImage,
+        name: 'BaseHeroImage',
+        inputs: [
+            // Content
+            { name: 'headline', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet consectetur' },
+            { name: 'subheadline', type: 'text', defaultValue: 'Congue mauris rhoncus aenean vel elit scelerisque mauris pellentesque pulvinar.' },
+            { name: 'badgeText', type: 'string', defaultValue: 'New' },
+            { name: 'showBadge', type: 'boolean', defaultValue: false },
+
+            // CTAs
+            { name: 'primaryCtaText', type: 'string', defaultValue: 'Contact now' },
+            { name: 'primaryCtaUrl', type: 'url', defaultValue: '#' },
+            { name: 'primaryCtaExternal', type: 'boolean', defaultValue: false },
+            { name: 'secondaryCtaText', type: 'string', defaultValue: '' },
+            { name: 'secondaryCtaUrl', type: 'url', defaultValue: '#' },
+            { name: 'secondaryCtaExternal', type: 'boolean', defaultValue: false },
+
+            // Background Image
+            { name: 'backgroundImage', type: 'file', defaultValue: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&h=1000&fit=crop' },
+            { name: 'backgroundImageAlt', type: 'string', defaultValue: 'Hero Background' },
+            { name: 'imagePosition', type: 'string', defaultValue: 'center' },
+
+            // Overlay
+            { name: 'overlayColor', type: 'color', defaultValue: '#000000' },
+            { name: 'overlayOpacity', type: 'number', defaultValue: 0.5 },
+            { name: 'showGradientOverlay', type: 'boolean', defaultValue: true },
+            { name: 'gradientDirection', type: 'string', defaultValue: 'to-r' },
+
+            // Trust Indicators
+            { name: 'showTrustIndicators', type: 'boolean', defaultValue: false },
+            {
+                name: 'trustIndicators',
+                type: 'list',
+                subFields: [
+                    { name: 'indicator', type: 'string', required: true }
+                ],
+                defaultValue: []
+            },
+
+            // Colors
+            { name: 'headlineColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'subheadlineColor', type: 'color', defaultValue: '#e5e7eb' }
         ]
     },
 
