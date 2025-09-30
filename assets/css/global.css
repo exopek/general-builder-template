@@ -114,9 +114,9 @@
   --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   
   /* Glassmorphism */
-  --glass-bg: rgba(255, 255, 255, 0.1);
-  --glass-border: rgba(255, 255, 255, 0.2);
-  --glass-backdrop: blur(10px);
+  --glass-bg: rgba(255, 255, 255, 0.15);
+  --glass-border: rgba(255, 255, 255, 0.3);
+  --glass-backdrop: blur(16px);
   
   /* Transitions */
   --transition-fast: 150ms ease;
@@ -291,6 +291,7 @@ body {
 
 .btn-ghost:hover {
   background: var(--color-gray-100);
+  color: var(--color-white);
 }
 
 /* Navigation */
@@ -343,7 +344,7 @@ body {
 
 .progress-fill {
   height: 100%;
-  background: var(--gradient-primary);
+  background: var(--gradient-warm);
   border-radius: var(--border-radius-full);
   transition: width var(--transition-normal);
 }

@@ -29,12 +29,20 @@ import AboutCTA from '~/components/about/AboutCTA.vue';
 // Base Components
 import BaseButton from '~/components/base/BaseButton.vue';
 import BaseHero from '~/components/base/BaseHero.vue';
+import BaseHeroImage from '~/components/base/BaseHeroImage.vue';
 import BaseFAQ from '~/components/base/BaseFAQ.vue';
 import BaseStatistic from '~/components/base/BaseStatistic.vue';
 import BaseStatisticGrid from '~/components/base/BaseStatisticGrid.vue';
 import BaseEventCard from '~/components/base/BaseEventCard.vue';
 import BaseTimeline from '~/components/base/BaseTimeline.vue';
 import BaseCTA from '~/components/base/BaseCTA.vue';
+import BaseModal from '~/components/base/BaseModal.vue';
+
+// Composite Components
+import SevenWeekQuestionnaire from '~/components/composite/SevenWeekQuestionnaire.vue';
+
+// Feature Components
+import TransformationPopup from '~/components/feature/TransformationPopup.vue';
 
 // Level Up Week Components
 import LevelUpWeekHero from '~/components/levelup/LevelUpWeekHero.vue';
@@ -543,22 +551,66 @@ export const registeredComponents: RegisteredComponent[] = [
             },
 
             // Floating Cards
-            { name: 'showFloatingCards', type: 'boolean', defaultValue: false },
+            { name: 'showFloatingCards', type: 'boolean', defaultValue: true },
             { name: 'floatingCard1Title', type: 'string', defaultValue: 'Card 1' },
             { name: 'floatingCard1Text', type: 'string', defaultValue: 'Description' },
-            { name: 'floatingCard1Icon', type: 'string', defaultValue: 'award' },
-            { name: 'floatingCard1Emoji', type: 'string' },
+            { name: 'floatingCard1Icon', type: 'boolean', defaultValue: true },
+            { name: 'floatingCard1Emoji', type: 'string', defaultValue: '' },
             { name: 'floatingCard2Title', type: 'string', defaultValue: 'Card 2' },
             { name: 'floatingCard2Text', type: 'string', defaultValue: 'Description' },
-            { name: 'floatingCard2Icon', type: 'string', defaultValue: 'people' },
-            { name: 'floatingCard2Emoji', type: 'string' },
-            { name: 'floatingCardComponent', type: 'string', defaultValue: 'AboutCard' },
-            { name: 'floatingIconComponent', type: 'string', defaultValue: 'AboutIcon' },
+            { name: 'floatingCard2Icon', type: 'boolean', defaultValue: true },
+            { name: 'floatingCard2Emoji', type: 'string', defaultValue: '' },
 
             // Styling
             { name: 'backgroundColor', type: 'color', defaultValue: '#0f0f0f' },
             { name: 'headlineColor', type: 'color', defaultValue: '#ffffff' },
             { name: 'subheadlineColor', type: 'color', defaultValue: '#d1d5db' }
+        ]
+    },
+
+    {
+        component: BaseHeroImage,
+        name: 'BaseHeroImage',
+        inputs: [
+            // Content
+            { name: 'headline', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet consectetur' },
+            { name: 'subheadline', type: 'text', defaultValue: 'Congue mauris rhoncus aenean vel elit scelerisque mauris pellentesque pulvinar.' },
+            { name: 'badgeText', type: 'string', defaultValue: 'New' },
+            { name: 'showBadge', type: 'boolean', defaultValue: false },
+
+            // CTAs
+            { name: 'primaryCtaText', type: 'string', defaultValue: 'Contact now' },
+            { name: 'primaryCtaUrl', type: 'url', defaultValue: '#' },
+            { name: 'primaryCtaExternal', type: 'boolean', defaultValue: false },
+            { name: 'secondaryCtaText', type: 'string', defaultValue: '' },
+            { name: 'secondaryCtaUrl', type: 'url', defaultValue: '#' },
+            { name: 'secondaryCtaExternal', type: 'boolean', defaultValue: false },
+
+            // Background Image
+            { name: 'backgroundImage', type: 'file', defaultValue: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&h=1000&fit=crop' },
+            { name: 'backgroundImageAlt', type: 'string', defaultValue: 'Hero Background' },
+            { name: 'imagePosition', type: 'string', defaultValue: 'center' },
+
+            // Overlay
+            { name: 'overlayColor', type: 'color', defaultValue: '#000000' },
+            { name: 'overlayOpacity', type: 'number', defaultValue: 0.5 },
+            { name: 'showGradientOverlay', type: 'boolean', defaultValue: true },
+            { name: 'gradientDirection', type: 'string', defaultValue: 'to-r' },
+
+            // Trust Indicators
+            { name: 'showTrustIndicators', type: 'boolean', defaultValue: false },
+            {
+                name: 'trustIndicators',
+                type: 'list',
+                subFields: [
+                    { name: 'indicator', type: 'string', required: true }
+                ],
+                defaultValue: []
+            },
+
+            // Colors
+            { name: 'headlineColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'subheadlineColor', type: 'color', defaultValue: '#e5e7eb' }
         ]
     },
 
@@ -1623,6 +1675,49 @@ export const registeredComponents: RegisteredComponent[] = [
             { name: 'backgroundColor', type: 'color', defaultValue: '#f8fafc' },
             { name: 'headlineColor', type: 'color', defaultValue: '#1f2937' },
             { name: 'subheadlineColor', type: 'color', defaultValue: '#6b7280' }
+        ]
+    },
+
+    // === BASE COMPONENTS ===
+    {
+        component: BaseModal,
+        name: 'BaseModal',
+        inputs: [
+            { name: 'show', type: 'boolean', defaultValue: false },
+            { name: 'closeOnBackdrop', type: 'boolean', defaultValue: true },
+            { name: 'maxWidth', type: 'list', enum: ['sm', 'md', 'lg', 'xl', '2xl', '3xl', 'full'], defaultValue: 'lg' },
+            { name: 'backdrop', type: 'list', enum: ['blur', 'dark', 'glass'], defaultValue: 'glass' },
+            { name: 'contentClass', type: 'string', defaultValue: '' }
+        ]
+    },
+
+    // === COMPOSITE COMPONENTS ===
+    {
+        component: SevenWeekQuestionnaire,
+        name: 'SevenWeekQuestionnaire',
+        inputs: []
+    },
+
+    // === FEATURE COMPONENTS ===
+    {
+        component: TransformationPopup,
+        name: 'TransformationPopup',
+        inputs: [
+            // Button Configuration
+            { name: 'buttonText', type: 'string', defaultValue: '7-Wochen Challenge starten' },
+            { name: 'buttonVariant', type: 'list', enum: ['primary', 'secondary', 'secondaryFull', 'ghost', 'gradient', 'outline'], defaultValue: 'gradient' },
+            { name: 'buttonSize', type: 'list', enum: ['sm', 'md', 'lg', 'xl'], defaultValue: 'lg' },
+            { name: 'buttonIcon', type: 'string', defaultValue: '' },
+
+            // Modal Configuration
+            { name: 'modalMaxWidth', type: 'list', enum: ['sm', 'md', 'lg', 'xl', '2xl', '3xl', 'full'], defaultValue: '2xl' },
+            { name: 'modalBackdrop', type: 'list', enum: ['blur', 'dark', 'glass'], defaultValue: 'glass' },
+            { name: 'closeOnBackdrop', type: 'boolean', defaultValue: true },
+            { name: 'showCloseButton', type: 'boolean', defaultValue: true },
+
+            // Behavior
+            { name: 'autoClose', type: 'boolean', defaultValue: true },
+            { name: 'redirectUrl', type: 'url', defaultValue: '' }
         ]
     }
 ];

@@ -38,7 +38,7 @@
               v-model="searchQuery"
               type="text"
               :placeholder="searchPlaceholder"
-              class="w-full px-5 py-4 pr-12 text-lg border-2 border-gray-200 rounded-2xl focus:border-primary focus:ring-4 focus:ring-primary/20 focus:outline-none transition-all duration-300"
+              class="w-full px-5 py-4 pr-12 text-lg text-gray-900 border-2 border-gray-200 rounded-2xl focus:border-primary focus:ring-4 focus:ring-primary/20 focus:outline-none transition-all duration-300"
             />
             <div class="absolute right-4 top-1/2 transform -translate-y-1/2">
               <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -91,17 +91,13 @@
           <p class="text-gray-600">{{ noResultsText }}</p>
         </div>
 
-        <div v-else class="space-y-6" role="region" aria-label="Häufig gestellte Fragen">
-          <component
-            :is="cardComponent"
+        <div v-else class="space-y-4" role="region" aria-label="Häufig gestellte Fragen">
+          <div
             v-for="(faq, index) in filteredFaqs"
             :key="index"
-            variant="elevated"
-            size="md"
-            :hover-effect="false"
-            class="cursor-pointer transition-all duration-500 hover:shadow-xl faq-item"
+            class="bg-white rounded-2xl p-6 cursor-pointer transition-all duration-500 hover:shadow-xl faq-item"
             :class="[
-              openItems.includes(index) ? 'ring-2 ring-orange-500 shadow-xl' : 'hover:shadow-lg',
+              openItems.includes(index) ? 'ring-2 ring-orange-500 shadow-xl' : 'shadow-md hover:shadow-lg',
               'transform hover:-translate-y-1'
             ]"
             @click="toggleItem(index)"
@@ -115,11 +111,10 @@
             <!-- Question Header -->
             <div class="flex items-start gap-4">
               <!-- Category Icon -->
-              <div v-if="showCategoryIcons" class="flex-shrink-0 mt-1">
-                <div class="w-8 h-8 rounded-full flex items-center justify-center"
-                     :class="getCategoryBgClass(faq.category)">
+              <div v-if="showCategoryIcons" class="flex-shrink-0">
+                <div class="w-12 h-12 rounded-full flex items-center justify-center bg-orange-100 text-orange-500">
                   <slot name="category-icon" :category="faq.category">
-                    <span class="text-sm">{{ getCategoryEmoji(faq.category) }}</span>
+                    <span class="text-xl">{{ getCategoryEmoji(faq.category) }}</span>
                   </slot>
                 </div>
               </div>
@@ -127,9 +122,19 @@
               <!-- Question Content -->
               <div class="flex-1">
                 <div class="flex items-start justify-between gap-4">
-                  <h3 class="text-lg font-semibold text-gray-900 leading-tight">
-                    {{ faq.question }}
-                  </h3>
+                  <div>
+                    <h3 class="text-lg md:text-xl font-bold text-gray-900 mb-1">
+                      {{ faq.question }}
+                    </h3>
+                    <!-- Category Badge -->
+                    <TransformationBadge
+                      v-if="showCategoryBadges"
+                      :text="getCategoryName(faq.category)"
+                      variant="neutral"
+                      size="xs"
+                      class="mt-2"
+                    />
+                  </div>
 
                   <!-- Toggle Button -->
                   <button
@@ -137,21 +142,13 @@
                     :class="openItems.includes(index) ? 'bg-orange-500 text-white rotate-180 shadow-lg' : 'text-gray-600'"
                     :aria-label="openItems.includes(index) ? 'Antwort schließen' : 'Antwort anzeigen'"
                     tabindex="-1"
+                    @click.stop="toggleItem(index)"
                   >
                     <svg class="w-5 h-5 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                     </svg>
                   </button>
                 </div>
-
-                <!-- Category Badge -->
-                <TransformationBadge
-                  v-if="showCategoryBadges"
-                  :text="getCategoryName(faq.category)"
-                  variant="neutral"
-                  size="xs"
-                  class="mt-2"
-                />
               </div>
             </div>
 
@@ -163,7 +160,7 @@
               role="region"
               :aria-labelledby="`faq-question-${index}`"
             >
-              <div class="prose prose-gray max-w-none">
+              <div class="prose prose-gray max-w-none pl-16" v-if="showCategoryIcons">
                 <div class="text-gray-700 text-base lg:text-lg leading-relaxed" v-html="faq.answer"></div>
 
                 <!-- Additional Links/Actions -->
@@ -182,7 +179,48 @@
                 </div>
 
                 <!-- Contact CTA -->
-                <div v-if="faq.showContactCta" class="p-6 bg-gray-50 rounded-lg">
+                <div v-if="faq.showContactCta" class="mt-4 p-6 bg-gray-50 rounded-lg">
+                  <div class="flex items-start gap-3">
+                    <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center mt-0.5">
+                      <slot name="contact-icon">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2V10a2 2 0 012-2h2m2 4h6m-6 4h6m-7-5V3a2 2 0 012-2h2a2 2 0 012 2v4"/>
+                        </svg>
+                      </slot>
+                    </div>
+                    <div class="flex-1 flex items-center">
+                      <p class="text-sm text-gray-800">{{ contactCtaText }}</p>
+                    </div>
+                    <BaseButton
+                      :text="contactButtonText"
+                      :href="contactButtonUrl"
+                      variant="primary"
+                      size="sm"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="prose prose-gray max-w-none" v-else>
+                <div class="text-gray-700 text-base lg:text-lg leading-relaxed" v-html="faq.answer"></div>
+
+                <!-- Additional Links/Actions -->
+                <div v-if="faq.links && faq.links.length > 0" class="mt-4 space-y-2">
+                  <h4 class="font-medium text-gray-900">{{ linksTitle }}:</h4>
+                  <div class="space-y-1">
+                    <a
+                      v-for="link in faq.links"
+                      :key="link.text"
+                      :href="link.url"
+                      class="block text-orange-600 hover:text-orange-700 text-sm underline"
+                    >
+                      {{ link.text }}
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Contact CTA -->
+                <div v-if="faq.showContactCta" class="mt-4 p-6 bg-gray-50 rounded-lg">
                   <div class="flex items-start gap-3">
                     <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center mt-0.5">
                       <slot name="contact-icon">
@@ -204,7 +242,7 @@
                 </div>
               </div>
             </div>
-          </component>
+          </div>
         </div>
       </div>
 
