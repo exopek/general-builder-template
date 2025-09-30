@@ -35,6 +35,13 @@ import BaseStatisticGrid from '~/components/base/BaseStatisticGrid.vue';
 import BaseEventCard from '~/components/base/BaseEventCard.vue';
 import BaseTimeline from '~/components/base/BaseTimeline.vue';
 import BaseCTA from '~/components/base/BaseCTA.vue';
+import BaseModal from '~/components/base/BaseModal.vue';
+
+// Composite Components
+import SevenWeekQuestionnaire from '~/components/composite/SevenWeekQuestionnaire.vue';
+
+// Feature Components
+import TransformationPopup from '~/components/feature/TransformationPopup.vue';
 
 // Level Up Week Components
 import LevelUpWeekHero from '~/components/levelup/LevelUpWeekHero.vue';
@@ -1623,6 +1630,49 @@ export const registeredComponents: RegisteredComponent[] = [
             { name: 'backgroundColor', type: 'color', defaultValue: '#f8fafc' },
             { name: 'headlineColor', type: 'color', defaultValue: '#1f2937' },
             { name: 'subheadlineColor', type: 'color', defaultValue: '#6b7280' }
+        ]
+    },
+
+    // === BASE COMPONENTS ===
+    {
+        component: BaseModal,
+        name: 'BaseModal',
+        inputs: [
+            { name: 'show', type: 'boolean', defaultValue: false },
+            { name: 'closeOnBackdrop', type: 'boolean', defaultValue: true },
+            { name: 'maxWidth', type: 'list', enum: ['sm', 'md', 'lg', 'xl', '2xl', '3xl', 'full'], defaultValue: 'lg' },
+            { name: 'backdrop', type: 'list', enum: ['blur', 'dark', 'glass'], defaultValue: 'glass' },
+            { name: 'contentClass', type: 'string', defaultValue: '' }
+        ]
+    },
+
+    // === COMPOSITE COMPONENTS ===
+    {
+        component: SevenWeekQuestionnaire,
+        name: 'SevenWeekQuestionnaire',
+        inputs: []
+    },
+
+    // === FEATURE COMPONENTS ===
+    {
+        component: TransformationPopup,
+        name: 'TransformationPopup',
+        inputs: [
+            // Button Configuration
+            { name: 'buttonText', type: 'string', defaultValue: '7-Wochen Challenge starten' },
+            { name: 'buttonVariant', type: 'list', enum: ['primary', 'secondary', 'secondaryFull', 'ghost', 'gradient', 'outline'], defaultValue: 'gradient' },
+            { name: 'buttonSize', type: 'list', enum: ['sm', 'md', 'lg', 'xl'], defaultValue: 'lg' },
+            { name: 'buttonIcon', type: 'string', defaultValue: '' },
+
+            // Modal Configuration
+            { name: 'modalMaxWidth', type: 'list', enum: ['sm', 'md', 'lg', 'xl', '2xl', '3xl', 'full'], defaultValue: '2xl' },
+            { name: 'modalBackdrop', type: 'list', enum: ['blur', 'dark', 'glass'], defaultValue: 'glass' },
+            { name: 'closeOnBackdrop', type: 'boolean', defaultValue: true },
+            { name: 'showCloseButton', type: 'boolean', defaultValue: true },
+
+            // Behavior
+            { name: 'autoClose', type: 'boolean', defaultValue: true },
+            { name: 'redirectUrl', type: 'url', defaultValue: '' }
         ]
     }
 ];

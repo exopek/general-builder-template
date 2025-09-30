@@ -291,6 +291,7 @@ body {
 
 .btn-ghost:hover {
   background: var(--color-gray-100);
+  color: var(--color-white);
 }
 
 /* Navigation */
@@ -343,7 +344,7 @@ body {
 
 .progress-fill {
   height: 100%;
-  background: var(--gradient-primary);
+  background: var(--gradient-warm);
   border-radius: var(--border-radius-full);
   transition: width var(--transition-normal);
 }
