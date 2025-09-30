@@ -550,17 +550,15 @@ export const registeredComponents: RegisteredComponent[] = [
             },
 
             // Floating Cards
-            { name: 'showFloatingCards', type: 'boolean', defaultValue: false },
+            { name: 'showFloatingCards', type: 'boolean', defaultValue: true },
             { name: 'floatingCard1Title', type: 'string', defaultValue: 'Card 1' },
             { name: 'floatingCard1Text', type: 'string', defaultValue: 'Description' },
-            { name: 'floatingCard1Icon', type: 'string', defaultValue: 'award' },
-            { name: 'floatingCard1Emoji', type: 'string' },
+            { name: 'floatingCard1Icon', type: 'boolean', defaultValue: true },
+            { name: 'floatingCard1Emoji', type: 'string', defaultValue: '' },
             { name: 'floatingCard2Title', type: 'string', defaultValue: 'Card 2' },
             { name: 'floatingCard2Text', type: 'string', defaultValue: 'Description' },
-            { name: 'floatingCard2Icon', type: 'string', defaultValue: 'people' },
-            { name: 'floatingCard2Emoji', type: 'string' },
-            { name: 'floatingCardComponent', type: 'string', defaultValue: 'AboutCard' },
-            { name: 'floatingIconComponent', type: 'string', defaultValue: 'AboutIcon' },
+            { name: 'floatingCard2Icon', type: 'boolean', defaultValue: true },
+            { name: 'floatingCard2Emoji', type: 'string', defaultValue: '' },
 
             // Styling
             { name: 'backgroundColor', type: 'color', defaultValue: '#0f0f0f' },
