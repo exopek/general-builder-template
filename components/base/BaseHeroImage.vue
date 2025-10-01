@@ -1,6 +1,6 @@
 <template>
   <section
-    class="relative overflow-hidden min-h-[600px] md:min-h-[700px] lg:min-h-[800px] flex items-center"
+    class="relative overflow-hidden min-h-screen flex items-center"
   >
     <!-- Background Image -->
     <div class="absolute inset-0 z-0">
