@@ -40,6 +40,7 @@ import BaseModal from '~/components/base/BaseModal.vue';
 import BaseGallerySection from '~/components/base/BaseGallerySection.vue';
 import BaseGalleryGrid from '~/components/base/BaseGalleryGrid.vue';
 import BaseAlternatingFeatures from '~/components/base/BaseAlternatingFeatures.vue';
+import BaseBentoGrid from '~/components/base/BaseBentoGrid.vue';
 
 // Composite Components
 import SevenWeekQuestionnaire from '~/components/composite/SevenWeekQuestionnaire.vue';
@@ -1817,6 +1818,76 @@ export const registeredComponents: RegisteredComponent[] = [
                         primaryButtonUrl: '#',
                         secondaryButtonText: 'See more',
                         secondaryButtonUrl: '#'
+                    }
+                ]
+            },
+
+            // Styling
+            { name: 'sectionBackgroundColor', type: 'color', defaultValue: 'var(--color-white)' }
+        ]
+    },
+
+    {
+        component: BaseBentoGrid,
+        name: 'BaseBentoGrid',
+        inputs: [
+            // Section Header
+            { name: 'tagline', type: 'string', defaultValue: 'Tagline' },
+            { name: 'headline', type: 'string', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'subheadline', type: 'text', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.' },
+
+            // Featured Card (Left)
+            {
+                name: 'featuredCard',
+                type: 'object',
+                subFields: [
+                    { name: 'type', type: 'text', enum: ['image', 'content'], defaultValue: 'image' },
+                    { name: 'heading', type: 'string', defaultValue: 'Lorem ipsum' },
+                    { name: 'description', type: 'text', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' },
+                    { name: 'image', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'webp'] },
+                    { name: 'imageAlt', type: 'string', defaultValue: '' },
+                    { name: 'buttonText', type: 'string', defaultValue: 'Learn more' },
+                    { name: 'buttonUrl', type: 'url', defaultValue: '#' },
+                    { name: 'backgroundColor', type: 'color', defaultValue: 'var(--color-gray-200)' },
+                    { name: 'textColor', type: 'color', defaultValue: 'var(--color-white)' }
+                ],
+                defaultValue: {
+                    type: 'image'
+                }
+            },
+
+            // Cards (Right Grid)
+            {
+                name: 'cards',
+                type: 'list',
+                subFields: [
+                    { name: 'type', type: 'text', enum: ['image', 'content'], defaultValue: 'image' },
+                    { name: 'heading', type: 'string', defaultValue: 'Lorem ipsum' },
+                    { name: 'description', type: 'text', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eu id pellentesque placerat elerismod.' },
+                    { name: 'image', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'webp'] },
+                    { name: 'imageAlt', type: 'string', defaultValue: '' },
+                    { name: 'buttonText', type: 'string', defaultValue: 'Learn more' },
+                    { name: 'buttonUrl', type: 'url', defaultValue: '#' },
+                    { name: 'backgroundColor', type: 'color', defaultValue: 'var(--color-gray-200)' },
+                    { name: 'textColor', type: 'color', defaultValue: 'var(--color-white)' },
+                    { name: 'spanFull', type: 'boolean', defaultValue: false }
+                ],
+                defaultValue: [
+                    {
+                        type: 'content',
+                        heading: 'Lorem ipsum',
+                        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eu id pellentesque placerat elerismod.',
+                        buttonText: 'Learn more',
+                        buttonUrl: '#',
+                        backgroundColor: 'var(--color-gray-900)',
+                        textColor: 'var(--color-white)'
+                    },
+                    {
+                        type: 'image'
+                    },
+                    {
+                        type: 'image',
+                        spanFull: true
                     }
                 ]
             },
