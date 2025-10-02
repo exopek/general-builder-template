@@ -37,6 +37,8 @@ import BaseEventCard from '~/components/base/BaseEventCard.vue';
 import BaseTimeline from '~/components/base/BaseTimeline.vue';
 import BaseCTA from '~/components/base/BaseCTA.vue';
 import BaseModal from '~/components/base/BaseModal.vue';
+import BaseGallerySection from '~/components/base/BaseGallerySection.vue';
+import BaseGalleryGrid from '~/components/base/BaseGalleryGrid.vue';
 
 // Composite Components
 import SevenWeekQuestionnaire from '~/components/composite/SevenWeekQuestionnaire.vue';
@@ -1688,6 +1690,69 @@ export const registeredComponents: RegisteredComponent[] = [
             { name: 'maxWidth', type: 'list', enum: ['sm', 'md', 'lg', 'xl', '2xl', '3xl', 'full'], defaultValue: 'lg' },
             { name: 'backdrop', type: 'list', enum: ['blur', 'dark', 'glass'], defaultValue: 'glass' },
             { name: 'contentClass', type: 'string', defaultValue: '' }
+        ]
+    },
+    {
+        component: BaseGallerySection,
+        name: 'BaseGallerySection',
+        inputs: [
+            // Content
+            { name: 'tagline', type: 'string', defaultValue: 'Tagline' },
+            { name: 'headline', type: 'string', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'description', type: 'text', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
+
+            // Images (4 images exactly)
+            {
+                name: 'images',
+                type: 'list',
+                subFields: [
+                    { name: 'src', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'webp', 'svg'] },
+                    { name: 'alt', type: 'string', defaultValue: '' }
+                ],
+                defaultValue: []
+            },
+
+            // Styling
+            { name: 'gap', type: 'list', enum: ['sm', 'md', 'lg'], defaultValue: 'md' },
+            { name: 'badgeVariant', type: 'list', enum: ['new', 'popular', 'featured', 'limited', 'success', 'warning', 'info', 'neutral'], defaultValue: 'featured' },
+            { name: 'backgroundColor', type: 'color', defaultValue: 'var(--color-gray-50)' },
+            { name: 'headlineColor', type: 'color', defaultValue: 'var(--color-gray-900)' },
+            { name: 'descriptionColor', type: 'color', defaultValue: 'var(--color-gray-700)' },
+            { name: 'showOverlay', type: 'boolean', defaultValue: true }
+        ]
+    },
+
+    {
+        component: BaseGalleryGrid,
+        name: 'BaseGalleryGrid',
+        inputs: [
+            // Content
+            { name: 'tagline', type: 'string', defaultValue: 'Tagline' },
+            { name: 'headline', type: 'string', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'description', type: 'text', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.' },
+
+            // Images
+            {
+                name: 'images',
+                type: 'list',
+                subFields: [
+                    { name: 'src', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'webp', 'svg'] },
+                    { name: 'alt', type: 'string', defaultValue: '' }
+                ],
+                defaultValue: []
+            },
+
+            // Layout
+            { name: 'gap', type: 'list', enum: ['sm', 'md', 'lg'], defaultValue: 'md' },
+            { name: 'imageAspectRatio', type: 'list', enum: ['auto', '1/1', '4/3', '16/9', '3/4'], defaultValue: 'auto' },
+            { name: 'bottomImageAspectRatio', type: 'list', enum: ['auto', '16/9', '21/9', '2/1'], defaultValue: 'auto' },
+
+            // Styling
+            { name: 'backgroundColor', type: 'color', defaultValue: 'var(--color-gray-50)' },
+            { name: 'taglineColor', type: 'color', defaultValue: 'var(--color-primary)' },
+            { name: 'headlineColor', type: 'color', defaultValue: 'var(--color-gray-900)' },
+            { name: 'descriptionColor', type: 'color', defaultValue: 'var(--color-gray-700)' },
+            { name: 'showOverlay', type: 'boolean', defaultValue: true }
         ]
     },
 
