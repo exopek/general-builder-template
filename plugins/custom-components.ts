@@ -41,6 +41,7 @@ import BaseGallerySection from '~/components/base/BaseGallerySection.vue';
 import BaseGalleryGrid from '~/components/base/BaseGalleryGrid.vue';
 import BaseAlternatingFeatures from '~/components/base/BaseAlternatingFeatures.vue';
 import BaseBentoGrid from '~/components/base/BaseBentoGrid.vue';
+import BaseFeatureShowcase from '~/components/base/BaseFeatureShowcase.vue';
 
 // Composite Components
 import SevenWeekQuestionnaire from '~/components/composite/SevenWeekQuestionnaire.vue';
@@ -1888,6 +1889,42 @@ export const registeredComponents: RegisteredComponent[] = [
                     {
                         type: 'image',
                         spanFull: true
+                    }
+                ]
+            },
+
+            // Styling
+            { name: 'sectionBackgroundColor', type: 'color', defaultValue: 'var(--color-white)' }
+        ]
+    },
+
+    {
+        component: BaseFeatureShowcase,
+        name: 'BaseFeatureShowcase',
+        inputs: [
+            // Section Header
+            { name: 'tagline', type: 'string', defaultValue: 'Tagline' },
+            { name: 'headline', type: 'string', defaultValue: 'Lorem ipsum dolor sit amet consectetur adipiscing' },
+            { name: 'description', type: 'text', defaultValue: 'Aliqua id fugiat nostrud lorem est dolus sit amet. Duis exercitation dolor sed tempor incididunt ut labore et dolore minim lorem anim tempor sunt.' },
+
+            // Featured Items (Slider)
+            {
+                name: 'featuredItems',
+                type: 'list',
+                subFields: [
+                    { name: 'image', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'webp'] },
+                    { name: 'imageAlt', type: 'string', defaultValue: '' },
+                    { name: 'heading', type: 'string', defaultValue: 'Lorem ipsum' },
+                    { name: 'description', type: 'text', defaultValue: 'Aliqua id fugiat nostrud lorem est dolus sit amet. Duis exercitation dolor sed tempor incididunt ut labore et dolore minim lorem anim.' }
+                ],
+                defaultValue: [
+                    {
+                        heading: 'Lorem ipsum',
+                        description: 'Aliqua id fugiat nostrud lorem est dolus sit amet. Duis exercitation dolor sed tempor incididunt ut labore et dolore minim lorem anim.'
+                    },
+                    {
+                        heading: 'Lorem ipsum 2',
+                        description: 'Aliqua id fugiat nostrud lorem est dolus sit amet. Duis exercitation dolor sed tempor incididunt ut labore et dolore minim lorem anim.'
                     }
                 ]
             },
