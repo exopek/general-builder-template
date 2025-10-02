@@ -42,6 +42,7 @@ import BaseGalleryGrid from '~/components/base/BaseGalleryGrid.vue';
 import BaseAlternatingFeatures from '~/components/base/BaseAlternatingFeatures.vue';
 import BaseBentoGrid from '~/components/base/BaseBentoGrid.vue';
 import BaseFeatureShowcase from '~/components/base/BaseFeatureShowcase.vue';
+import BaseFeatureGrid from '~/components/base/BaseFeatureGrid.vue';
 
 // Composite Components
 import SevenWeekQuestionnaire from '~/components/composite/SevenWeekQuestionnaire.vue';
@@ -1925,6 +1926,78 @@ export const registeredComponents: RegisteredComponent[] = [
                     {
                         heading: 'Lorem ipsum 2',
                         description: 'Aliqua id fugiat nostrud lorem est dolus sit amet. Duis exercitation dolor sed tempor incididunt ut labore et dolore minim lorem anim.'
+                    }
+                ]
+            },
+
+            // Styling
+            { name: 'sectionBackgroundColor', type: 'color', defaultValue: 'var(--color-white)' }
+        ]
+    },
+
+    {
+        component: BaseFeatureGrid,
+        name: 'BaseFeatureGrid',
+        inputs: [
+            // Section Header
+            { name: 'tagline', type: 'string', defaultValue: 'Tagline' },
+            { name: 'headline', type: 'string', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'description', type: 'text', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.' },
+
+            // Button (Optional)
+            { name: 'showButton', type: 'boolean', defaultValue: true },
+            { name: 'buttonText', type: 'string', defaultValue: 'View all' },
+            { name: 'buttonUrl', type: 'string', defaultValue: '#' },
+
+            // Features
+            {
+                name: 'features',
+                type: 'list',
+                subFields: [
+                    { name: 'number', type: 'string', defaultValue: '01' },
+                    { name: 'heading', type: 'string', defaultValue: 'Lorem ipsum dolor sit amet' },
+                    { name: 'description', type: 'text', defaultValue: 'Aliqua id fugiat nostrud lorem est dolus sit amet. Duis exercitation dolor sed tempor incididunt ut labore et dolore minim lorem anim.' },
+                    { name: 'backgroundColor', type: 'color', defaultValue: 'var(--color-gray-100)' },
+                    { name: 'numberColor', type: 'color', defaultValue: 'var(--color-gray-400)' },
+                    { name: 'headingColor', type: 'color', defaultValue: 'var(--color-gray-900)' },
+                    { name: 'descriptionColor', type: 'color', defaultValue: 'var(--color-gray-600)' }
+                ],
+                defaultValue: [
+                    {
+                        number: '01',
+                        heading: 'Lorem ipsum dolor sit amet',
+                        description: 'Aliqua id fugiat nostrud lorem est dolus sit amet. Duis exercitation dolor sed tempor incididunt ut labore et dolore minim lorem anim and more lorem.',
+                        backgroundColor: 'var(--color-gray-900)',
+                        numberColor: 'var(--color-gray-700)',
+                        headingColor: 'var(--color-white)',
+                        descriptionColor: 'var(--color-gray-300)'
+                    },
+                    {
+                        number: '02',
+                        heading: 'Lorem ipsum dolor sit amet',
+                        description: 'Aliqua id fugiat nostrud lorem est dolus sit amet. Duis exercitation dolor sed tempor incididunt ut labore et dolore minim lorem anim.',
+                        backgroundColor: 'var(--color-gray-100)',
+                        numberColor: 'var(--color-gray-400)',
+                        headingColor: 'var(--color-gray-900)',
+                        descriptionColor: 'var(--color-gray-600)'
+                    },
+                    {
+                        number: '03',
+                        heading: 'Lorem ipsum dolor sit amet',
+                        description: 'Aliqua id fugiat nostrud lorem est dolus sit amet. Duis exercitation dolor sed tempor incididunt ut labore et dolore minim lorem anim.',
+                        backgroundColor: 'var(--color-gray-100)',
+                        numberColor: 'var(--color-gray-400)',
+                        headingColor: 'var(--color-gray-900)',
+                        descriptionColor: 'var(--color-gray-600)'
+                    },
+                    {
+                        number: '04',
+                        heading: 'Lorem ipsum dolor sit amet',
+                        description: 'Aliqua id fugiat nostrud lorem est dolus sit amet. Duis exercitation dolor sed tempor incididunt ut labore et dolore minim lorem anim.',
+                        backgroundColor: 'var(--color-gray-100)',
+                        numberColor: 'var(--color-gray-400)',
+                        headingColor: 'var(--color-gray-900)',
+                        descriptionColor: 'var(--color-gray-600)'
                     }
                 ]
             },
