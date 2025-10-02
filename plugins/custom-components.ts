@@ -39,6 +39,7 @@ import BaseCTA from '~/components/base/BaseCTA.vue';
 import BaseModal from '~/components/base/BaseModal.vue';
 import BaseGallerySection from '~/components/base/BaseGallerySection.vue';
 import BaseGalleryGrid from '~/components/base/BaseGalleryGrid.vue';
+import BaseAlternatingFeatures from '~/components/base/BaseAlternatingFeatures.vue';
 
 // Composite Components
 import SevenWeekQuestionnaire from '~/components/composite/SevenWeekQuestionnaire.vue';
@@ -1753,6 +1754,75 @@ export const registeredComponents: RegisteredComponent[] = [
             { name: 'headlineColor', type: 'color', defaultValue: 'var(--color-gray-900)' },
             { name: 'descriptionColor', type: 'color', defaultValue: 'var(--color-gray-700)' },
             { name: 'showOverlay', type: 'boolean', defaultValue: true }
+        ]
+    },
+
+    {
+        component: BaseAlternatingFeatures,
+        name: 'BaseAlternatingFeatures',
+        inputs: [
+            // Section Header
+            { name: 'tagline', type: 'string', defaultValue: 'Tagline' },
+            { name: 'headline', type: 'string', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'subheadline', type: 'text', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.' },
+
+            // Features List
+            {
+                name: 'features',
+                type: 'list',
+                subFields: [
+                    { name: 'number', type: 'string', defaultValue: '01' },
+                    { name: 'heading', type: 'string', defaultValue: 'Lorem ipsum dolor sit amet' },
+                    { name: 'description', type: 'text', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eu id pellentesque placerat elerismod.' },
+                    { name: 'image', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'webp'] },
+                    { name: 'imageAlt', type: 'string', defaultValue: '' },
+                    { name: 'primaryButtonText', type: 'string', defaultValue: 'Contact' },
+                    { name: 'primaryButtonUrl', type: 'url', defaultValue: '#' },
+                    { name: 'secondaryButtonText', type: 'string', defaultValue: 'See more' },
+                    { name: 'secondaryButtonUrl', type: 'url', defaultValue: '#' }
+                ],
+                defaultValue: [
+                    {
+                        number: '01',
+                        heading: 'Lorem ipsum dolor sit amet',
+                        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eu id pellentesque placerat elerismod.',
+                        primaryButtonText: 'Contact',
+                        primaryButtonUrl: '#',
+                        secondaryButtonText: 'See more',
+                        secondaryButtonUrl: '#'
+                    },
+                    {
+                        number: '02',
+                        heading: 'Lorem ipsum dolor sit amet',
+                        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eu id pellentesque placerat elerismod.',
+                        primaryButtonText: 'Contact',
+                        primaryButtonUrl: '#',
+                        secondaryButtonText: 'See more',
+                        secondaryButtonUrl: '#'
+                    },
+                    {
+                        number: '03',
+                        heading: 'Lorem ipsum dolor sit amet',
+                        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eu id pellentesque placerat elerismod.',
+                        primaryButtonText: 'Contact',
+                        primaryButtonUrl: '#',
+                        secondaryButtonText: 'See more',
+                        secondaryButtonUrl: '#'
+                    },
+                    {
+                        number: '04',
+                        heading: 'Lorem ipsum dolor sit amet',
+                        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eu id pellentesque placerat elerismod.',
+                        primaryButtonText: 'Contact',
+                        primaryButtonUrl: '#',
+                        secondaryButtonText: 'See more',
+                        secondaryButtonUrl: '#'
+                    }
+                ]
+            },
+
+            // Styling
+            { name: 'sectionBackgroundColor', type: 'color', defaultValue: 'var(--color-white)' }
         ]
     },
 
