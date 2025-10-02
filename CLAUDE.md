@@ -36,6 +36,9 @@ yarn preview   # Preview production build locally
 - Custom components registered in `plugins/custom-components.ts`
 - Props & Input Schemas defined for Builder.io Editor
 - Only registered components appear in the visual editor
+- { name: 'position', type: 'list', enum: ['top-right', 'top-left', 'bottom-right', 'bottom-left'], defaultValue: 'top-right' }, this dont work, only
+    subfields with a key value paire works for a list. enum: ['top-right', 'top-left', 'bottom-right', 'bottom-left'] is for builder.io not readable.
+- For a Dropdown to select values this is the way: type: 'text', enum: ['image', 'content'], defaultValue: 'image'
 
 ---
 

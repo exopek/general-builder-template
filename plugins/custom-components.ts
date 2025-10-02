@@ -37,6 +37,12 @@ import BaseEventCard from '~/components/base/BaseEventCard.vue';
 import BaseTimeline from '~/components/base/BaseTimeline.vue';
 import BaseCTA from '~/components/base/BaseCTA.vue';
 import BaseModal from '~/components/base/BaseModal.vue';
+import BaseGallerySection from '~/components/base/BaseGallerySection.vue';
+import BaseGalleryGrid from '~/components/base/BaseGalleryGrid.vue';
+import BaseAlternatingFeatures from '~/components/base/BaseAlternatingFeatures.vue';
+import BaseBentoGrid from '~/components/base/BaseBentoGrid.vue';
+import BaseFeatureShowcase from '~/components/base/BaseFeatureShowcase.vue';
+import BaseFeatureGrid from '~/components/base/BaseFeatureGrid.vue';
 
 // Composite Components
 import SevenWeekQuestionnaire from '~/components/composite/SevenWeekQuestionnaire.vue';
@@ -1688,6 +1694,316 @@ export const registeredComponents: RegisteredComponent[] = [
             { name: 'maxWidth', type: 'list', enum: ['sm', 'md', 'lg', 'xl', '2xl', '3xl', 'full'], defaultValue: 'lg' },
             { name: 'backdrop', type: 'list', enum: ['blur', 'dark', 'glass'], defaultValue: 'glass' },
             { name: 'contentClass', type: 'string', defaultValue: '' }
+        ]
+    },
+    {
+        component: BaseGallerySection,
+        name: 'BaseGallerySection',
+        inputs: [
+            // Content
+            { name: 'tagline', type: 'string', defaultValue: 'Tagline' },
+            { name: 'headline', type: 'string', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'description', type: 'text', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
+
+            // Images (4 images exactly)
+            {
+                name: 'images',
+                type: 'list',
+                subFields: [
+                    { name: 'src', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'webp', 'svg'] },
+                    { name: 'alt', type: 'string', defaultValue: '' }
+                ],
+                defaultValue: []
+            },
+
+            // Styling
+            { name: 'gap', type: 'list', enum: ['sm', 'md', 'lg'], defaultValue: 'md' },
+            { name: 'badgeVariant', type: 'list', enum: ['new', 'popular', 'featured', 'limited', 'success', 'warning', 'info', 'neutral'], defaultValue: 'featured' },
+            { name: 'backgroundColor', type: 'color', defaultValue: 'var(--color-gray-50)' },
+            { name: 'headlineColor', type: 'color', defaultValue: 'var(--color-gray-900)' },
+            { name: 'descriptionColor', type: 'color', defaultValue: 'var(--color-gray-700)' },
+            { name: 'showOverlay', type: 'boolean', defaultValue: true }
+        ]
+    },
+
+    {
+        component: BaseGalleryGrid,
+        name: 'BaseGalleryGrid',
+        inputs: [
+            // Content
+            { name: 'tagline', type: 'string', defaultValue: 'Tagline' },
+            { name: 'headline', type: 'string', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'description', type: 'text', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.' },
+
+            // Images
+            {
+                name: 'images',
+                type: 'list',
+                subFields: [
+                    { name: 'src', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'webp', 'svg'] },
+                    { name: 'alt', type: 'string', defaultValue: '' }
+                ],
+                defaultValue: []
+            },
+
+            // Layout
+            { name: 'gap', type: 'list', enum: ['sm', 'md', 'lg'], defaultValue: 'md' },
+            { name: 'imageAspectRatio', type: 'list', enum: ['auto', '1/1', '4/3', '16/9', '3/4'], defaultValue: 'auto' },
+            { name: 'bottomImageAspectRatio', type: 'list', enum: ['auto', '16/9', '21/9', '2/1'], defaultValue: 'auto' },
+
+            // Styling
+            { name: 'backgroundColor', type: 'color', defaultValue: 'var(--color-gray-50)' },
+            { name: 'taglineColor', type: 'color', defaultValue: 'var(--color-primary)' },
+            { name: 'headlineColor', type: 'color', defaultValue: 'var(--color-gray-900)' },
+            { name: 'descriptionColor', type: 'color', defaultValue: 'var(--color-gray-700)' },
+            { name: 'showOverlay', type: 'boolean', defaultValue: true }
+        ]
+    },
+
+    {
+        component: BaseAlternatingFeatures,
+        name: 'BaseAlternatingFeatures',
+        inputs: [
+            // Section Header
+            { name: 'tagline', type: 'string', defaultValue: 'Tagline' },
+            { name: 'headline', type: 'string', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'subheadline', type: 'text', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.' },
+
+            // Features List
+            {
+                name: 'features',
+                type: 'list',
+                subFields: [
+                    { name: 'number', type: 'string', defaultValue: '01' },
+                    { name: 'heading', type: 'string', defaultValue: 'Lorem ipsum dolor sit amet' },
+                    { name: 'description', type: 'text', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eu id pellentesque placerat elerismod.' },
+                    { name: 'image', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'webp'] },
+                    { name: 'imageAlt', type: 'string', defaultValue: '' },
+                    { name: 'primaryButtonText', type: 'string', defaultValue: 'Contact' },
+                    { name: 'primaryButtonUrl', type: 'url', defaultValue: '#' },
+                    { name: 'secondaryButtonText', type: 'string', defaultValue: 'See more' },
+                    { name: 'secondaryButtonUrl', type: 'url', defaultValue: '#' }
+                ],
+                defaultValue: [
+                    {
+                        number: '01',
+                        heading: 'Lorem ipsum dolor sit amet',
+                        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eu id pellentesque placerat elerismod.',
+                        primaryButtonText: 'Contact',
+                        primaryButtonUrl: '#',
+                        secondaryButtonText: 'See more',
+                        secondaryButtonUrl: '#'
+                    },
+                    {
+                        number: '02',
+                        heading: 'Lorem ipsum dolor sit amet',
+                        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eu id pellentesque placerat elerismod.',
+                        primaryButtonText: 'Contact',
+                        primaryButtonUrl: '#',
+                        secondaryButtonText: 'See more',
+                        secondaryButtonUrl: '#'
+                    },
+                    {
+                        number: '03',
+                        heading: 'Lorem ipsum dolor sit amet',
+                        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eu id pellentesque placerat elerismod.',
+                        primaryButtonText: 'Contact',
+                        primaryButtonUrl: '#',
+                        secondaryButtonText: 'See more',
+                        secondaryButtonUrl: '#'
+                    },
+                    {
+                        number: '04',
+                        heading: 'Lorem ipsum dolor sit amet',
+                        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eu id pellentesque placerat elerismod.',
+                        primaryButtonText: 'Contact',
+                        primaryButtonUrl: '#',
+                        secondaryButtonText: 'See more',
+                        secondaryButtonUrl: '#'
+                    }
+                ]
+            },
+
+            // Styling
+            { name: 'sectionBackgroundColor', type: 'color', defaultValue: 'var(--color-white)' }
+        ]
+    },
+
+    {
+        component: BaseBentoGrid,
+        name: 'BaseBentoGrid',
+        inputs: [
+            // Section Header
+            { name: 'tagline', type: 'string', defaultValue: 'Tagline' },
+            { name: 'headline', type: 'string', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'subheadline', type: 'text', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.' },
+
+            // Featured Card (Left)
+            {
+                name: 'featuredCard',
+                type: 'object',
+                subFields: [
+                    { name: 'type', type: 'text', enum: ['image', 'content'], defaultValue: 'image' },
+                    { name: 'heading', type: 'string', defaultValue: 'Lorem ipsum' },
+                    { name: 'description', type: 'text', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' },
+                    { name: 'image', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'webp'] },
+                    { name: 'imageAlt', type: 'string', defaultValue: '' },
+                    { name: 'buttonText', type: 'string', defaultValue: 'Learn more' },
+                    { name: 'buttonUrl', type: 'url', defaultValue: '#' },
+                    { name: 'backgroundColor', type: 'color', defaultValue: 'var(--color-gray-200)' },
+                    { name: 'textColor', type: 'color', defaultValue: 'var(--color-white)' }
+                ],
+                defaultValue: {
+                    type: 'image'
+                }
+            },
+
+            // Cards (Right Grid)
+            {
+                name: 'cards',
+                type: 'list',
+                subFields: [
+                    { name: 'type', type: 'text', enum: ['image', 'content'], defaultValue: 'image' },
+                    { name: 'heading', type: 'string', defaultValue: 'Lorem ipsum' },
+                    { name: 'description', type: 'text', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eu id pellentesque placerat elerismod.' },
+                    { name: 'image', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'webp'] },
+                    { name: 'imageAlt', type: 'string', defaultValue: '' },
+                    { name: 'buttonText', type: 'string', defaultValue: 'Learn more' },
+                    { name: 'buttonUrl', type: 'url', defaultValue: '#' },
+                    { name: 'backgroundColor', type: 'color', defaultValue: 'var(--color-gray-200)' },
+                    { name: 'textColor', type: 'color', defaultValue: 'var(--color-white)' },
+                    { name: 'spanFull', type: 'boolean', defaultValue: false }
+                ],
+                defaultValue: [
+                    {
+                        type: 'content',
+                        heading: 'Lorem ipsum',
+                        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eu id pellentesque placerat elerismod.',
+                        buttonText: 'Learn more',
+                        buttonUrl: '#',
+                        backgroundColor: 'var(--color-gray-900)',
+                        textColor: 'var(--color-white)'
+                    },
+                    {
+                        type: 'image'
+                    },
+                    {
+                        type: 'image',
+                        spanFull: true
+                    }
+                ]
+            },
+
+            // Styling
+            { name: 'sectionBackgroundColor', type: 'color', defaultValue: 'var(--color-white)' }
+        ]
+    },
+
+    {
+        component: BaseFeatureShowcase,
+        name: 'BaseFeatureShowcase',
+        inputs: [
+            // Section Header
+            { name: 'tagline', type: 'string', defaultValue: 'Tagline' },
+            { name: 'headline', type: 'string', defaultValue: 'Lorem ipsum dolor sit amet consectetur adipiscing' },
+            { name: 'description', type: 'text', defaultValue: 'Aliqua id fugiat nostrud lorem est dolus sit amet. Duis exercitation dolor sed tempor incididunt ut labore et dolore minim lorem anim tempor sunt.' },
+
+            // Featured Items (Slider)
+            {
+                name: 'featuredItems',
+                type: 'list',
+                subFields: [
+                    { name: 'image', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'webp'] },
+                    { name: 'imageAlt', type: 'string', defaultValue: '' },
+                    { name: 'heading', type: 'string', defaultValue: 'Lorem ipsum' },
+                    { name: 'description', type: 'text', defaultValue: 'Aliqua id fugiat nostrud lorem est dolus sit amet. Duis exercitation dolor sed tempor incididunt ut labore et dolore minim lorem anim.' }
+                ],
+                defaultValue: [
+                    {
+                        heading: 'Lorem ipsum',
+                        description: 'Aliqua id fugiat nostrud lorem est dolus sit amet. Duis exercitation dolor sed tempor incididunt ut labore et dolore minim lorem anim.'
+                    },
+                    {
+                        heading: 'Lorem ipsum 2',
+                        description: 'Aliqua id fugiat nostrud lorem est dolus sit amet. Duis exercitation dolor sed tempor incididunt ut labore et dolore minim lorem anim.'
+                    }
+                ]
+            },
+
+            // Styling
+            { name: 'sectionBackgroundColor', type: 'color', defaultValue: 'var(--color-white)' }
+        ]
+    },
+
+    {
+        component: BaseFeatureGrid,
+        name: 'BaseFeatureGrid',
+        inputs: [
+            // Section Header
+            { name: 'tagline', type: 'string', defaultValue: 'Tagline' },
+            { name: 'headline', type: 'string', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'description', type: 'text', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.' },
+
+            // Button (Optional)
+            { name: 'showButton', type: 'boolean', defaultValue: true },
+            { name: 'buttonText', type: 'string', defaultValue: 'View all' },
+            { name: 'buttonUrl', type: 'string', defaultValue: '#' },
+
+            // Features
+            {
+                name: 'features',
+                type: 'list',
+                subFields: [
+                    { name: 'number', type: 'string', defaultValue: '01' },
+                    { name: 'heading', type: 'string', defaultValue: 'Lorem ipsum dolor sit amet' },
+                    { name: 'description', type: 'text', defaultValue: 'Aliqua id fugiat nostrud lorem est dolus sit amet. Duis exercitation dolor sed tempor incididunt ut labore et dolore minim lorem anim.' },
+                    { name: 'backgroundColor', type: 'color', defaultValue: 'var(--color-gray-100)' },
+                    { name: 'numberColor', type: 'color', defaultValue: 'var(--color-gray-400)' },
+                    { name: 'headingColor', type: 'color', defaultValue: 'var(--color-gray-900)' },
+                    { name: 'descriptionColor', type: 'color', defaultValue: 'var(--color-gray-600)' }
+                ],
+                defaultValue: [
+                    {
+                        number: '01',
+                        heading: 'Lorem ipsum dolor sit amet',
+                        description: 'Aliqua id fugiat nostrud lorem est dolus sit amet. Duis exercitation dolor sed tempor incididunt ut labore et dolore minim lorem anim and more lorem.',
+                        backgroundColor: 'var(--color-gray-900)',
+                        numberColor: 'var(--color-gray-700)',
+                        headingColor: 'var(--color-white)',
+                        descriptionColor: 'var(--color-gray-300)'
+                    },
+                    {
+                        number: '02',
+                        heading: 'Lorem ipsum dolor sit amet',
+                        description: 'Aliqua id fugiat nostrud lorem est dolus sit amet. Duis exercitation dolor sed tempor incididunt ut labore et dolore minim lorem anim.',
+                        backgroundColor: 'var(--color-gray-100)',
+                        numberColor: 'var(--color-gray-400)',
+                        headingColor: 'var(--color-gray-900)',
+                        descriptionColor: 'var(--color-gray-600)'
+                    },
+                    {
+                        number: '03',
+                        heading: 'Lorem ipsum dolor sit amet',
+                        description: 'Aliqua id fugiat nostrud lorem est dolus sit amet. Duis exercitation dolor sed tempor incididunt ut labore et dolore minim lorem anim.',
+                        backgroundColor: 'var(--color-gray-100)',
+                        numberColor: 'var(--color-gray-400)',
+                        headingColor: 'var(--color-gray-900)',
+                        descriptionColor: 'var(--color-gray-600)'
+                    },
+                    {
+                        number: '04',
+                        heading: 'Lorem ipsum dolor sit amet',
+                        description: 'Aliqua id fugiat nostrud lorem est dolus sit amet. Duis exercitation dolor sed tempor incididunt ut labore et dolore minim lorem anim.',
+                        backgroundColor: 'var(--color-gray-100)',
+                        numberColor: 'var(--color-gray-400)',
+                        headingColor: 'var(--color-gray-900)',
+                        descriptionColor: 'var(--color-gray-600)'
+                    }
+                ]
+            },
+
+            // Styling
+            { name: 'sectionBackgroundColor', type: 'color', defaultValue: 'var(--color-white)' }
         ]
     },
 
