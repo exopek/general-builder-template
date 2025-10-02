@@ -1,0 +1,1 @@
+think hard. I want this feature section as builder io component #$ARGUMENTS. Keep in mind to watch global.css for utilitie classes. dont use hard coded design tokens. It should be responsive and exact like the image.
