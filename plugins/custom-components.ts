@@ -26,6 +26,15 @@ import AboutStats from '~/components/about/AboutStats.vue';
 import AboutLocation from '~/components/about/AboutLocation.vue';
 import AboutCTA from '~/components/about/AboutCTA.vue';
 
+// Gym Linden Components
+import GymLindenHero from '~/components/gym-linden/GymLindenHero.vue';
+import GymLindenUSPGrid from '~/components/gym-linden/GymLindenUSPGrid.vue';
+import GymLindenExopekShowcase from '~/components/gym-linden/GymLindenExopekShowcase.vue';
+import GymLindenMorningSchedule from '~/components/gym-linden/GymLindenMorningSchedule.vue';
+import GymLindenComparison from '~/components/gym-linden/GymLindenComparison.vue';
+import GymLindenCTA from '~/components/gym-linden/GymLindenCTA.vue';
+import GymLindenFAQ from '~/components/gym-linden/GymLindenFAQ.vue';
+
 // Base Components
 import BaseButton from '~/components/base/BaseButton.vue';
 import BaseHero from '~/components/base/BaseHero.vue';
@@ -43,6 +52,10 @@ import BaseAlternatingFeatures from '~/components/base/BaseAlternatingFeatures.v
 import BaseBentoGrid from '~/components/base/BaseBentoGrid.vue';
 import BaseFeatureShowcase from '~/components/base/BaseFeatureShowcase.vue';
 import BaseFeatureGrid from '~/components/base/BaseFeatureGrid.vue';
+import BaseUSPGrid from '~/components/base/BaseUSPGrid.vue';
+import BaseUSPCard from '~/components/base/BaseUSPCard.vue';
+import BaseScheduleSection from '~/components/base/BaseScheduleSection.vue';
+import BaseComparisonTable from '~/components/base/BaseComparisonTable.vue';
 
 // Composite Components
 import SevenWeekQuestionnaire from '~/components/composite/SevenWeekQuestionnaire.vue';
@@ -2035,6 +2048,43 @@ export const registeredComponents: RegisteredComponent[] = [
             { name: 'autoClose', type: 'boolean', defaultValue: true },
             { name: 'redirectUrl', type: 'url', defaultValue: '' }
         ]
+    },
+
+    // === GYM LINDEN LANDING PAGE COMPONENTS ===
+    {
+        component: GymLindenHero,
+        name: 'GymLindenHero',
+        inputs: []
+    },
+    {
+        component: GymLindenUSPGrid,
+        name: 'GymLindenUSPGrid',
+        inputs: []
+    },
+    {
+        component: GymLindenExopekShowcase,
+        name: 'GymLindenExopekShowcase',
+        inputs: []
+    },
+    {
+        component: GymLindenMorningSchedule,
+        name: 'GymLindenMorningSchedule',
+        inputs: []
+    },
+    {
+        component: GymLindenComparison,
+        name: 'GymLindenComparison',
+        inputs: []
+    },
+    {
+        component: GymLindenCTA,
+        name: 'GymLindenCTA',
+        inputs: []
+    },
+    {
+        component: GymLindenFAQ,
+        name: 'GymLindenFAQ',
+        inputs: []
     }
 ];
 
