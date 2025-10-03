@@ -480,3 +480,34 @@
   - [ ] Setup responsive Container-Klassen für Mobile-First Design
 
 **🎯 Ziel:** Modulare, wiederverwendbare Builder.io-Komponenten für professionelle 7-Wochen-Transformation Landing Page mit deutscher SEO-Optimierung und komponentenweiser Architektur.
+
+### Phase 11: USP Landing Page "Gym Linden" ⏳ NEW
+- [ ] **Neue Base Components erstellen**
+  - [ ] `components/base/BaseUSPCard.vue` - Wiederverwendbare Card für USPs mit Icon, Titel, Beschreibung
+  - [ ] `components/base/BaseScheduleSection.vue` - Zeitplan-Anzeige für Morgenkurse
+  - [ ] `components/base/BaseComparisonTable.vue` - Vergleichstabelle EXOPEK vs traditionelles Training
+
+- [ ] **Landing Page Struktur (`pages/gym-linden-usp.vue`)**
+  - [ ] Hero Section mit BaseHero - H1: "Dein Gym in Linden – Starte fit in den Tag"
+  - [ ] USP Grid mit BaseFeatureGrid - 5 Hauptvorteile des Gyms
+  - [ ] EXOPEK Showcase mit BaseAlternatingFeatures - Link zu https://exopek.de
+  - [ ] Zeitplan-Sektion mit BaseScheduleSection - Morgenkurse vor der Arbeit
+  - [ ] Vergleichs-Sektion mit BaseComparisonTable - Zeit-Effizienz visualisieren
+  - [ ] CTA Section mit BaseCTA - Conversion-fokussiert
+  - [ ] FAQ Section mit BaseFAQ - Häufige Fragen zu Morgentraining & EXOPEK
+
+- [ ] **SEO-Optimierung**
+  - [ ] Meta Tags: Title, Description mit Keywords
+  - [ ] H1 mit PRIMARY KEYWORD: "gym in linden"
+  - [ ] H2/H3 mit SECONDARY KEYWORDS: "gym hannover", "fitnessstudio linden hannover", etc.
+  - [ ] Alt-Texte für alle Bilder mit Keywords
+  - [ ] Schema Markup: LocalBusiness + GymFacility
+  - [ ] Open Graph Tags für Social Media
+
+- [ ] **Keywords Integration**
+  - PRIMARY: "gym in linden"
+  - SECONDARY: "gym hannover", "gym linden", "fitnessstudio hannover linden",
+    "functional training hannover", "fitness hannover linden"
+  - Keywords natürlich in Headlines, Body Copy, CTAs integrieren
+
+**🎯 Ziel:** SEO-optimierte Landing Page für Gym Linden mit Fokus auf Morgentraining, EXOPEK-Konzept, und lokalen Keywords (Hannover/Linden). 100% Tailwind CSS, mobile-first, conversion-optimiert.
