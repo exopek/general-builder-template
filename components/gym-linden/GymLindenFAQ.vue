@@ -29,12 +29,12 @@ const faqProps = {
   faqs: [
   {
     question: 'Was macht euer Gym in Linden besonders?',
-    answer: 'Wir sind das einzige Fitnessstudio in Hannover Linden mit dem innovativen EXOPEK-Trainingssystem. Unsere Morgenkurse ab 6:30 Uhr sind perfekt für Berufstätige. Functional Training und HIIT in nur 45 Minuten – effizienter geht es nicht!',
+    answer: 'Wir sind das einzige Fitnessstudio in Hannover Linden mit dem innovativen EXOPEK-Trainingssystem. Unsere Morgenkurse ab 6:30 Uhr sind perfekt für Berufstätige. Functional Training und HIIT in nur 30 Minuten – effizienter geht es nicht!',
     category: 'Allgemein'
   },
   {
     question: 'Was ist EXOPEK Training genau?',
-    answer: 'EXOPEK ist ein revolutionäres Trainingssystem aus Hannover, das Functional Training und HIIT mit spezieller Ausrüstung (Weighted Vest) kombiniert. Du trainierst intensiver, effizienter und erreichst schneller deine Fitness-Ziele. Mehr Infos auf exopek.de',
+    answer: 'EXOPEK ist ein revolutionäres Trainingssystem aus Hannover, das Functional Training und HIIT mit spezieller Ausrüstung kombiniert. Du trainierst intensiver, effizienter und erreichst schneller deine Fitness-Ziele. Mehr Infos auf exopek.de',
     category: 'Training'
   },
   {

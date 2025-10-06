@@ -11,9 +11,9 @@ const ctaProps = {
   title: 'Bereit für dein bestes Training im <span class="text-gradient-warm">Gym Linden</span>?',
   description: 'Erlebe EXOPEK Training live! Buche jetzt dein kostenloses Probetraining und starte mit mehr Energie in den Tag. Das beste Fitnessstudio Hannover Linden wartet auf dich.',
   primaryText: 'Kostenloses Probetraining',
-  primaryUrl: '/auth/register',
+  primaryUrl: '/kontakt',
   secondaryText: 'Kurse ansehen',
-  secondaryUrl: '/courses',
+  secondaryUrl: '/kurse',
   variant: 'gradient' as const,
   size: 'lg' as const,
   trustIndicators: [
