@@ -1,17 +1,41 @@
 <template>
-  <BaseAlternatingFeatures v-bind="showcaseProps" />
+  <BaseAlternatingFeatures
+    :tagline="tagline"
+    :headline="headline"
+    :subheadline="subheadline"
+    :features="features"
+    :section-background-color="sectionBackgroundColor"
+  />
 </template>
 
 <script setup lang="ts">
-const showcaseProps = {
+interface Feature {
+  number: string;
+  heading: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+  primaryButtonText?: string;
+  primaryButtonUrl?: string;
+  secondaryButtonText?: string;
+  secondaryButtonUrl?: string;
+}
+
+const props = withDefaults(defineProps<{
+  tagline?: string;
+  headline?: string;
+  subheadline?: string;
+  features?: Feature[];
+  sectionBackgroundColor?: string;
+}>(), {
   tagline: 'Das EXOPEK System',
   headline: 'Trainiere mit dem innovativsten Fitness-Konzept',
   subheadline: 'EXOPEK revolutioniert Functional Training und HIIT. Erfahre mehr über das Schweizer Trainingssystem, das unser Gym in Linden so besonders macht.',
-  features: [
+  features: () => [
     {
       number: '01',
       heading: 'Was ist EXOPEK Training?',
-      description: 'EXOPEK ist ein revolutionäres Trainingssystem aus der Schweiz. Es kombiniert Functional Training und HIIT mit spezieller Ausrüstung (Weighted Vest/Rucksack) für maximale Trainingseffizienz. Nur 45 Minuten pro Session – perfekt für Berufstätige.',
+      description: 'EXOPEK ist ein revolutionäres Trainingssystem aus Hannover. Es kombiniert Functional Training und HIIT mit spezieller Ausrüstung für maximale Trainingseffizienz. Nur 30 Minuten pro Session – perfekt für Berufstätige.',
       image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=450&fit=crop',
       imageAlt: 'EXOPEK Functional Training im Gym Hannover Linden',
       primaryButtonText: 'Mehr über EXOPEK',
@@ -37,5 +61,5 @@ const showcaseProps = {
     }
   ],
   sectionBackgroundColor: 'var(--color-gray-300)'
-}
+});
 </script>

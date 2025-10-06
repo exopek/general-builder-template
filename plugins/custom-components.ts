@@ -2054,37 +2054,439 @@ export const registeredComponents: RegisteredComponent[] = [
     {
         component: GymLindenHero,
         name: 'GymLindenHero',
-        inputs: []
+        inputs: [
+            // Content
+            { name: 'headline', type: 'richText', defaultValue: 'Dein <span class="text-gradient-warm">Gym in Linden</span> – Starte fit in den Tag' },
+            { name: 'subheadline', type: 'text', defaultValue: 'Morgentraining vor der Arbeit mit dem innovativen EXOPEK-Konzept. Kürzer trainieren, mehr erreichen – das beste Fitnessstudio in Hannover Linden.' },
+
+            // Hero Image
+            { name: 'heroImage', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png'], defaultValue: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&h=1000&fit=crop' },
+            { name: 'heroImageAlt', type: 'string', defaultValue: 'Functional Training im Gym Linden Hannover mit EXOPEK' },
+
+            // Badge
+            { name: 'badgeText', type: 'string', defaultValue: 'Jetzt neu' },
+            { name: 'badgeVariant', type: 'text', enum: ['new', 'popular', 'featured', 'limited'], defaultValue: 'featured' },
+            { name: 'showBadge', type: 'boolean', defaultValue: true },
+
+            // CTAs
+            { name: 'primaryCtaText', type: 'string', defaultValue: 'Probetraining buchen' },
+            { name: 'primaryCtaUrl', type: 'url', defaultValue: '#kontakt' },
+            { name: 'secondaryCtaText', type: 'string', defaultValue: 'Mehr erfahren' },
+            { name: 'secondaryCtaUrl', type: 'url', defaultValue: '#vorteile' },
+
+            // Statistics
+            { name: 'showStats', type: 'boolean', defaultValue: true },
+            {
+                name: 'statistics',
+                type: 'list',
+                subFields: [
+                    { name: 'value', type: 'number', required: true },
+                    { name: 'label', type: 'string', required: true },
+                    { name: 'suffix', type: 'string' },
+                    { name: 'variant', type: 'text', enum: ['minimal', 'default'], defaultValue: 'minimal' }
+                ],
+                defaultValue: [
+                    { value: 45, label: 'Minuten Training', suffix: 'min', variant: 'minimal' },
+                    { value: 6, label: 'Uhr Kursbeginn', suffix: ':30', variant: 'minimal' },
+                    { value: 100, label: 'Zufriedenheit', suffix: '%', variant: 'minimal' }
+                ]
+            },
+
+            // Trust Indicators
+            { name: 'showTrustIndicators', type: 'boolean', defaultValue: true },
+            {
+                name: 'trustIndicators',
+                type: 'list',
+                subFields: [
+                    { name: 'indicator', type: 'string', required: true }
+                ],
+                defaultValue: [
+                    { indicator: 'Exklusiv in Hannover Linden' },
+                    { indicator: 'EXOPEK zertifiziert' },
+                    { indicator: 'Profi Trainer-Team' }
+                ]
+            },
+
+            // Styling
+            { name: 'backgroundColor', type: 'color', defaultValue: '#0f0f0f' }
+        ]
     },
     {
         component: GymLindenUSPGrid,
         name: 'GymLindenUSPGrid',
-        inputs: []
+        inputs: [
+            // Header
+            { name: 'tagline', type: 'string', defaultValue: 'Deine Vorteile' },
+            { name: 'headline', type: 'richText', defaultValue: 'Warum unser Gym in Hannover Linden?' },
+            { name: 'description', type: 'text', defaultValue: 'Entdecke die Vorteile von funktionalem Training und HIIT im besten Fitnessstudio Hannover Linden. Morgens trainieren, voller Energie in den Tag starten.' },
+
+            // Grid Settings
+            { name: 'columns', type: 'text', enum: ['2', '3', '4'], defaultValue: '3' },
+            { name: 'backgroundColor', type: 'text', enum: ['white', 'gray', 'dark'], defaultValue: 'white' },
+            { name: 'showCta', type: 'boolean', defaultValue: false },
+
+            // USP Cards
+            {
+                name: 'uspCards',
+                type: 'list',
+                subFields: [
+                    { name: 'title', type: 'string', required: true },
+                    { name: 'description', type: 'longText', required: true },
+                    { name: 'variant', type: 'text', enum: ['primary', 'secondary', 'gradient', 'outline'], defaultValue: 'primary' },
+                    { name: 'badge', type: 'string' },
+                    { name: 'linkText', type: 'string' },
+                    { name: 'linkUrl', type: 'url' },
+                    { name: 'iconClass', type: 'string', defaultValue: 'text-orange-600' },
+                    { name: 'iconPath', type: 'longText', required: true }
+                ],
+                defaultValue: [
+                    {
+                        title: 'Morgentraining vor der Arbeit',
+                        description: 'Starte deinen Tag mit Energie! Unsere Morgenkurse ab 6:30 Uhr bringen dich fit und motiviert zur Arbeit. Perfekt für Berufstätige in Hannover Linden.',
+                        variant: 'primary',
+                        iconClass: 'text-orange-600',
+                        iconPath: 'M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z'
+                    },
+                    {
+                        title: 'Konzentrations-Boost für den Tag',
+                        description: 'Morgentraining steigert deine mentale Leistungsfähigkeit. Functional Training und HIIT aktivieren Körper und Geist – perfekt für einen produktiven Arbeitstag.',
+                        variant: 'gradient',
+                        badge: 'Beliebt',
+                        iconClass: 'text-white',
+                        iconPath: 'M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z'
+                    },
+                    {
+                        title: 'Innovatives EXOPEK-Konzept',
+                        description: 'Revolutionäres Trainingssystem aus der Schweiz. EXOPEK kombiniert Functional Training mit spezieller Ausrüstung für maximale Effizienz – exklusiv in unserem Gym Linden.',
+                        variant: 'primary',
+                        linkText: 'Mehr über EXOPEK →',
+                        linkUrl: 'https://exopek.de',
+                        iconClass: 'text-orange-600',
+                        iconPath: 'M11 3a1 1 0 10-2 0v1a1 1 0 102 0V3zM15.657 5.757a1 1 0 00-1.414-1.414l-.707.707a1 1 0 001.414 1.414l.707-.707zM18 10a1 1 0 01-1 1h-1a1 1 0 110-2h1a1 1 0 011 1zM5.05 6.464A1 1 0 106.464 5.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zM5 10a1 1 0 01-1 1H3a1 1 0 110-2h1a1 1 0 011 1zM8 16v-1h4v1a2 2 0 11-4 0zM12 14c.015-.34.208-.646.477-.859a4 4 0 10-4.954 0c.27.213.462.519.476.859h4.002z'
+                    },
+                    {
+                        title: 'Kürzere & effektivere Workouts',
+                        description: 'Nur 45 Minuten pro Session! EXOPEK Training ist hochintensiv und maximal effizient. Spare Zeit, erreiche mehr – ideal für dein Fitness-Ziel im Gym Hannover.',
+                        variant: 'primary',
+                        iconClass: 'text-orange-600',
+                        iconPath: 'M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v3.586L7.707 9.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 10.586V7z'
+                    },
+                    {
+                        title: 'Functional Training + HIIT',
+                        description: 'Kombiniere dein gewohntes HIIT mit dem EXOPEK-Rucksack. Functional Training für den ganzen Körper – intensiver, effektiver, nachhaltiger.',
+                        variant: 'primary',
+                        iconClass: 'text-orange-600',
+                        iconPath: 'M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z'
+                    },
+                    {
+                        title: 'Perfekte Lage in Linden',
+                        description: 'Zentral in Hannover Linden gelegen – schnell erreichbar vor oder nach der Arbeit. Das Fitnessstudio Linden Hannover für deine Nachbarschaft.',
+                        variant: 'outline',
+                        iconClass: 'text-orange-600',
+                        iconPath: 'M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z'
+                    }
+                ]
+            }
+        ]
     },
     {
         component: GymLindenExopekShowcase,
         name: 'GymLindenExopekShowcase',
-        inputs: []
+        inputs: [
+            // Header
+            { name: 'tagline', type: 'string', defaultValue: 'Das EXOPEK System' },
+            { name: 'headline', type: 'richText', defaultValue: 'Trainiere mit dem innovativsten Fitness-Konzept' },
+            { name: 'subheadline', type: 'text', defaultValue: 'EXOPEK revolutioniert Functional Training und HIIT. Erfahre mehr über das Schweizer Trainingssystem, das unser Gym in Linden so besonders macht.' },
+
+            // Features
+            {
+                name: 'features',
+                type: 'list',
+                subFields: [
+                    { name: 'number', type: 'string', required: true },
+                    { name: 'heading', type: 'string', required: true },
+                    { name: 'description', type: 'longText', required: true },
+                    { name: 'image', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png'], required: true },
+                    { name: 'imageAlt', type: 'string', required: true },
+                    { name: 'primaryButtonText', type: 'string' },
+                    { name: 'primaryButtonUrl', type: 'url' },
+                    { name: 'secondaryButtonText', type: 'string' },
+                    { name: 'secondaryButtonUrl', type: 'url' }
+                ],
+                defaultValue: [
+                    {
+                        number: '01',
+                        heading: 'Was ist EXOPEK Training?',
+                        description: 'EXOPEK ist ein revolutionäres Trainingssystem aus Hannover. Es kombiniert Functional Training und HIIT mit spezieller Ausrüstung für maximale Trainingseffizienz. Nur 30 Minuten pro Session – perfekt für Berufstätige.',
+                        image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=450&fit=crop',
+                        imageAlt: 'EXOPEK Functional Training im Gym Hannover Linden',
+                        primaryButtonText: 'Mehr über EXOPEK',
+                        primaryButtonUrl: 'https://exopek.de',
+                        secondaryButtonText: 'Jetzt testen',
+                        secondaryButtonUrl: '#kontakt'
+                    },
+                    {
+                        number: '02',
+                        heading: 'Morgentraining – Der Energie-Boost',
+                        description: 'Training am Morgen aktiviert deinen Stoffwechsel, steigert die Konzentration und gibt dir Energie für den ganzen Tag. Unsere Kurse ab 6:30 Uhr sind perfekt vor der Arbeit. Functional Training Hannover – starte stark in den Tag!',
+                        image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600&h=450&fit=crop',
+                        imageAlt: 'Morgentraining vor der Arbeit im Fitnessstudio Linden',
+                        primaryButtonText: 'Trainingszeiten',
+                        primaryButtonUrl: '#schedule'
+                    },
+                    {
+                        number: '03',
+                        heading: 'Functional Training + HIIT',
+                        description: 'Kombiniere dein gewohntes HIIT-Training mit dem EXOPEK-System. Ganzkörper-Workouts, die alle Muskelgruppen ansprechen. Effizienter trainieren, schneller Ergebnisse sehen – im besten Gym Hannover Linden.',
+                        image: 'https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=600&h=450&fit=crop',
+                        imageAlt: 'HIIT und Functional Training im Gym Linden Hannover'
+                    }
+                ]
+            },
+
+            // Styling
+            { name: 'sectionBackgroundColor', type: 'color', defaultValue: 'var(--color-gray-300)' }
+        ]
     },
     {
         component: GymLindenMorningSchedule,
         name: 'GymLindenMorningSchedule',
-        inputs: []
+        inputs: [
+            // Header
+            { name: 'tagline', type: 'string', defaultValue: 'Dein Trainingsplan' },
+            { name: 'headline', type: 'richText', defaultValue: 'Morgens trainieren im Gym Linden' },
+            { name: 'subheadline', type: 'text', defaultValue: 'Starte deinen Tag mit Energie! Unsere Morgenkurse bringen dich fit und konzentriert zur Arbeit. Functional Training Hannover Linden – perfekt vor dem Büro.' },
+
+            // Time Slots
+            {
+                name: 'timeSlots',
+                type: 'list',
+                subFields: [
+                    { name: 'day', type: 'string', required: true },
+                    { name: 'time', type: 'string', required: true },
+                    { name: 'duration', type: 'string', required: true },
+                    { name: 'courseName', type: 'string', required: true },
+                    { name: 'benefit', type: 'string', required: true },
+                    { name: 'featured', type: 'boolean', defaultValue: false },
+                    { name: 'spotsAvailable', type: 'number', required: true }
+                ],
+                defaultValue: [
+                    {
+                        day: 'Montag',
+                        time: '06:30',
+                        duration: '45 Minuten',
+                        courseName: 'EXOPEK Morning Power',
+                        benefit: 'Perfekt vor der Arbeit',
+                        featured: true,
+                        spotsAvailable: 8
+                    },
+                    {
+                        day: 'Mittwoch',
+                        time: '06:30',
+                        duration: '45 Minuten',
+                        courseName: 'Functional HIIT Intensive',
+                        benefit: 'Ganzkörper-Workout',
+                        spotsAvailable: 12
+                    },
+                    {
+                        day: 'Freitag',
+                        time: '06:30',
+                        duration: '45 Minuten',
+                        courseName: 'EXOPEK Weekend Starter',
+                        benefit: 'Energie fürs Wochenende',
+                        spotsAvailable: 6
+                    }
+                ]
+            },
+
+            // CTA
+            { name: 'showCta', type: 'boolean', defaultValue: true },
+            { name: 'ctaText', type: 'string', defaultValue: 'Jetzt zum Probetraining anmelden' },
+            { name: 'ctaUrl', type: 'url', defaultValue: '#kontakt' }
+        ]
     },
     {
         component: GymLindenComparison,
         name: 'GymLindenComparison',
-        inputs: []
+        inputs: [
+            // Header
+            { name: 'tagline', type: 'string', defaultValue: 'Der Unterschied' },
+            { name: 'headline', type: 'richText', defaultValue: 'EXOPEK vs. Traditionelles Gym-Training' },
+            { name: 'subheadline', type: 'text', defaultValue: 'Entdecke, warum EXOPEK das effizienteste Training für Berufstätige ist. Fitness Hannover Linden – maximale Ergebnisse in minimaler Zeit.' },
+
+            // Column Titles
+            { name: 'leftColumnTitle', type: 'string', defaultValue: 'Klassisches Fitnessstudio' },
+            { name: 'rightColumnTitle', type: 'string', defaultValue: 'EXOPEK im Gym Linden' },
+
+            // Comparison Rows
+            {
+                name: 'comparisonRows',
+                type: 'list',
+                subFields: [
+                    { name: 'feature', type: 'string', required: true },
+                    { name: 'traditional', type: 'string', required: true },
+                    { name: 'exopek', type: 'string', required: true }
+                ],
+                defaultValue: [
+                    {
+                        feature: 'Trainingsdauer pro Session',
+                        traditional: '60-90 Minuten',
+                        exopek: 'Nur 45 Minuten – maximale Effizienz'
+                    },
+                    {
+                        feature: 'Trainingsintensität',
+                        traditional: 'Moderat bis hoch',
+                        exopek: 'Hochintensiv (HIIT) + Functional Training'
+                    },
+                    {
+                        feature: 'Zeitersparnis pro Woche',
+                        traditional: 'Keine',
+                        exopek: 'Bis zu 2 Stunden gespart'
+                    },
+                    {
+                        feature: 'Ganzkörper-Training',
+                        traditional: 'Split-Training über mehrere Tage',
+                        exopek: 'Komplettes Workout in 45 Minuten'
+                    },
+                    {
+                        feature: 'Konzentration & Fokus',
+                        traditional: 'Standard-Effekt',
+                        exopek: 'Maximaler Fokus-Boost für den Arbeitstag'
+                    },
+                    {
+                        feature: 'Trainingskonzept',
+                        traditional: 'Klassisches Gerätetraining',
+                        exopek: 'Innovatives EXOPEK-System aus der Schweiz'
+                    }
+                ]
+            },
+
+            // CTA
+            { name: 'showCta', type: 'boolean', defaultValue: true },
+            { name: 'ctaText', type: 'string', defaultValue: 'Jetzt EXOPEK ausprobieren' },
+            { name: 'ctaUrl', type: 'url', defaultValue: '#kontakt' }
+        ]
     },
     {
         component: GymLindenCTA,
         name: 'GymLindenCTA',
-        inputs: []
+        inputs: [
+            // Content
+            { name: 'title', type: 'richText', defaultValue: 'Bereit für dein bestes Training im <span class="text-gradient-warm">Gym Linden</span>?' },
+            { name: 'description', type: 'text', defaultValue: 'Erlebe EXOPEK Training live! Buche jetzt dein kostenloses Probetraining und starte mit mehr Energie in den Tag. Das beste Fitnessstudio Hannover Linden wartet auf dich.' },
+
+            // CTAs
+            { name: 'primaryText', type: 'string', defaultValue: 'Kostenloses Probetraining' },
+            { name: 'primaryUrl', type: 'url', defaultValue: '/kontakt' },
+            { name: 'secondaryText', type: 'string', defaultValue: 'Kurse ansehen' },
+            { name: 'secondaryUrl', type: 'url', defaultValue: '/kurse' },
+
+            // Styling
+            { name: 'variant', type: 'text', enum: ['default', 'gradient', 'outline'], defaultValue: 'gradient' },
+            { name: 'size', type: 'text', enum: ['sm', 'md', 'lg', 'xl'], defaultValue: 'lg' },
+
+            // Trust Indicators
+            {
+                name: 'trustIndicators',
+                type: 'list',
+                subFields: [
+                    { name: 'indicator', type: 'string', required: true }
+                ],
+                defaultValue: [
+                    { indicator: 'Keine Anmeldegebühr' },
+                    { indicator: 'Flexible Verträge' },
+                    { indicator: 'Profi-Trainer' }
+                ]
+            }
+        ]
     },
     {
         component: GymLindenFAQ,
         name: 'GymLindenFAQ',
-        inputs: []
+        inputs: [
+            // Header
+            { name: 'badgeText', type: 'string', defaultValue: 'Häufige Fragen' },
+            { name: 'badgeVariant', type: 'text', enum: ['new', 'popular', 'featured', 'limited', 'info', 'neutral'], defaultValue: 'info' },
+            { name: 'showBadge', type: 'boolean', defaultValue: true },
+            { name: 'headline', type: 'richText', defaultValue: 'Alles über unser Gym in Linden' },
+            { name: 'subheadline', type: 'text', defaultValue: 'Häufige Fragen zu EXOPEK, Morgentraining und unserem Fitnessstudio Hannover Linden' },
+
+            // Search & Filter
+            { name: 'showSearch', type: 'boolean', defaultValue: true },
+            { name: 'searchPlaceholder', type: 'string', defaultValue: 'Nach Thema suchen...' },
+            { name: 'showCategories', type: 'boolean', defaultValue: true },
+            { name: 'showCategoryIcons', type: 'boolean', defaultValue: false },
+            { name: 'showCategoryBadges', type: 'boolean', defaultValue: true },
+
+            // Categories
+            {
+                name: 'categories',
+                type: 'list',
+                subFields: [
+                    { name: 'id', type: 'string', required: true },
+                    { name: 'name', type: 'string', required: true },
+                    { name: 'emoji', type: 'string' }
+                ],
+                defaultValue: [
+                    { id: 'Allgemein', name: 'Allgemein', emoji: '💡' },
+                    { id: 'Training', name: 'Training', emoji: '💪' },
+                    { id: 'Mitgliedschaft', name: 'Mitgliedschaft', emoji: '📋' }
+                ]
+            },
+
+            // FAQs
+            {
+                name: 'faqs',
+                type: 'list',
+                subFields: [
+                    { name: 'question', type: 'string', required: true },
+                    { name: 'answer', type: 'longText', required: true },
+                    { name: 'category', type: 'string', required: true }
+                ],
+                defaultValue: [
+                    {
+                        question: 'Was macht euer Gym in Linden besonders?',
+                        answer: 'Wir sind das einzige Fitnessstudio in Hannover Linden mit dem innovativen EXOPEK-Trainingssystem. Unsere Morgenkurse ab 6:30 Uhr sind perfekt für Berufstätige. Functional Training und HIIT in nur 30 Minuten – effizienter geht es nicht!',
+                        category: 'Allgemein'
+                    },
+                    {
+                        question: 'Was ist EXOPEK Training genau?',
+                        answer: 'EXOPEK ist ein revolutionäres Trainingssystem aus Hannover, das Functional Training und HIIT mit spezieller Ausrüstung kombiniert. Du trainierst intensiver, effizienter und erreichst schneller deine Fitness-Ziele. Mehr Infos auf exopek.de',
+                        category: 'Training'
+                    },
+                    {
+                        question: 'Warum sollte ich morgens trainieren?',
+                        answer: 'Morgentraining vor der Arbeit steigert deinen Stoffwechsel, verbessert die Konzentration und gibt dir Energie für den ganzen Tag. Unsere Kurse ab 6:30 Uhr sind zeitlich perfekt abgestimmt – du bist pünktlich und energiegeladen im Büro!',
+                        category: 'Training'
+                    },
+                    {
+                        question: 'Wie lange dauert ein Training im Gym Linden?',
+                        answer: 'Nur 45 Minuten! EXOPEK Training ist hochintensiv und maximal effizient. Du sparst Zeit gegenüber traditionellem Gym-Training (60-90 Min.) und erreichst bessere Ergebnisse. Perfekt für Berufstätige in Hannover.',
+                        category: 'Training'
+                    },
+                    {
+                        question: 'Ist EXOPEK auch für Anfänger geeignet?',
+                        answer: 'Absolut! Unsere erfahrenen Trainer passen das Training individuell an dein Fitness-Level an. Egal ob Anfänger oder Fortgeschrittener – beim Functional Training im Gym Hannover Linden bist du richtig.',
+                        category: 'Training'
+                    },
+                    {
+                        question: 'Wo genau ist euer Fitnessstudio in Linden?',
+                        answer: 'Wir sind zentral in Hannover Linden gelegen und perfekt erreichbar – vor oder nach der Arbeit. Das Gym Linden für deine Nachbarschaft. Kontaktiere uns für die genaue Adresse und Wegbeschreibung!',
+                        category: 'Allgemein'
+                    },
+                    {
+                        question: 'Kann ich ein Probetraining machen?',
+                        answer: 'Ja! Buche jetzt dein kostenloses Probetraining und erlebe EXOPEK live. Teste Functional Training Hannover Linden und überzeuge dich selbst vom besten Fitnessstudio in der Region.',
+                        category: 'Mitgliedschaft'
+                    },
+                    {
+                        question: 'Was brauche ich für das Training?',
+                        answer: 'Nur Sportkleidung und Motivation! Die EXOPEK-Ausrüstung stellen wir. Für Functional Training und HIIT empfehlen wir feste Sportschuhe und ein Handtuch.',
+                        category: 'Training'
+                    }
+                ]
+            }
+        ]
     }
 ];
 

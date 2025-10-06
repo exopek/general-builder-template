@@ -93,6 +93,9 @@
                   <a href="/ueber-uns" class="nav-pill">
                     Über uns
                   </a>
+                  <a href="/gym-in-linden" class="nav-pill">
+                    Gym in Linden
+                  </a>
                   <a href="/fragebogen" class="nav-pill">
                     Fitness-Check
                   </a>
@@ -278,6 +281,8 @@
                   <div v-show="showInfoSection" id="info-section" class="space-y-2 overflow-hidden">
                     <a @click="closeMobileMenu" href="/ueber-uns"
                       class="mobile-nav-pill">Über uns</a>
+                    <a @click="closeMobileMenu" href="/gym-in-linden"
+                      class="mobile-nav-pill">Gym in Linden</a>  
                     <a @click="closeMobileMenu" href="/fragebogen"
                       class="mobile-nav-pill">Fitness-Check</a>
                     <a @click="closeMobileMenu" href="/blog"
