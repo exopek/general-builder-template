@@ -1,13 +1,37 @@
 <template>
-  <BaseAlternatingFeatures v-bind="showcaseProps" />
+  <BaseAlternatingFeatures
+    :tagline="tagline"
+    :headline="headline"
+    :subheadline="subheadline"
+    :features="features"
+    :section-background-color="sectionBackgroundColor"
+  />
 </template>
 
 <script setup lang="ts">
-const showcaseProps = {
+interface Feature {
+  number: string;
+  heading: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+  primaryButtonText?: string;
+  primaryButtonUrl?: string;
+  secondaryButtonText?: string;
+  secondaryButtonUrl?: string;
+}
+
+const props = withDefaults(defineProps<{
+  tagline?: string;
+  headline?: string;
+  subheadline?: string;
+  features?: Feature[];
+  sectionBackgroundColor?: string;
+}>(), {
   tagline: 'Das EXOPEK System',
   headline: 'Trainiere mit dem innovativsten Fitness-Konzept',
   subheadline: 'EXOPEK revolutioniert Functional Training und HIIT. Erfahre mehr über das Schweizer Trainingssystem, das unser Gym in Linden so besonders macht.',
-  features: [
+  features: () => [
     {
       number: '01',
       heading: 'Was ist EXOPEK Training?',
@@ -37,5 +61,5 @@ const showcaseProps = {
     }
   ],
   sectionBackgroundColor: 'var(--color-gray-300)'
-}
+});
 </script>

@@ -1,13 +1,39 @@
 <template>
-  <BaseScheduleSection v-bind="scheduleProps" />
+  <BaseScheduleSection
+    :tagline="tagline"
+    :headline="headline"
+    :subheadline="subheadline"
+    :time-slots="timeSlots"
+    :show-cta="showCta"
+    :cta-text="ctaText"
+    :cta-url="ctaUrl"
+  />
 </template>
 
 <script setup lang="ts">
-const scheduleProps = {
+interface TimeSlot {
+  day: string;
+  time: string;
+  duration: string;
+  courseName: string;
+  benefit: string;
+  featured?: boolean;
+  spotsAvailable: number;
+}
+
+const props = withDefaults(defineProps<{
+  tagline?: string;
+  headline?: string;
+  subheadline?: string;
+  timeSlots?: TimeSlot[];
+  showCta?: boolean;
+  ctaText?: string;
+  ctaUrl?: string;
+}>(), {
   tagline: 'Dein Trainingsplan',
   headline: 'Morgens trainieren im Gym Linden',
   subheadline: 'Starte deinen Tag mit Energie! Unsere Morgenkurse bringen dich fit und konzentriert zur Arbeit. Functional Training Hannover Linden – perfekt vor dem Büro.',
-  timeSlots: [
+  timeSlots: () => [
     {
       day: 'Montag',
       time: '06:30',
@@ -37,5 +63,5 @@ const scheduleProps = {
   showCta: true,
   ctaText: 'Jetzt zum Probetraining anmelden',
   ctaUrl: '#kontakt'
-}
+});
 </script>

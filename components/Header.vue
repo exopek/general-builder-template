@@ -93,6 +93,9 @@
                   <a href="/ueber-uns" class="nav-pill">
                     Über uns
                   </a>
+                  <a href="/gym-in-linden" class="nav-pill">
+                    Gym in Linden
+                  </a>
                   <a href="/fragebogen" class="nav-pill">
                     Fitness-Check
                   </a>
