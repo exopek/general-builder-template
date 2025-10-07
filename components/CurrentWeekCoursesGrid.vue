@@ -200,7 +200,7 @@ const weekDays = computed<DaySchedule[]>(() => {
       const dayDate = new Date(currentWeekStart.value)
       dayDate.setDate(dayDate.getDate() + i)
       const dayDateStr = dayDate.toISOString().split('T')[0]
-      
+
       days.push({
         date: dayDateStr,
         courses: []
@@ -215,10 +215,25 @@ const weekDays = computed<DaySchedule[]>(() => {
     const dayDate = new Date(currentWeekStart.value)
     dayDate.setDate(dayDate.getDate() + i)
     const dayDateStr = dayDate.toISOString().split('T')[0]
-    
+
+    // Filter courses for this day and sort by start time
+    const dayCourses = courses.value
+      .filter((course: Course) => course.date === dayDateStr)
+      .sort((a: Course, b: Course) => {
+        // Convert time strings to comparable format
+        const timeA = a.startTime.includes('T')
+          ? new Date(a.startTime).getTime()
+          : a.startTime
+        const timeB = b.startTime.includes('T')
+          ? new Date(b.startTime).getTime()
+          : b.startTime
+
+        return timeA < timeB ? -1 : timeA > timeB ? 1 : 0
+      })
+
     days.push({
       date: dayDateStr,
-      courses: courses.value.filter(course => course.date === dayDateStr)
+      courses: dayCourses
     })
   }
 
