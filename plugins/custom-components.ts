@@ -56,6 +56,10 @@ import BaseUSPGrid from '~/components/base/BaseUSPGrid.vue';
 import BaseUSPCard from '~/components/base/BaseUSPCard.vue';
 import BaseScheduleSection from '~/components/base/BaseScheduleSection.vue';
 import BaseComparisonTable from '~/components/base/BaseComparisonTable.vue';
+import BaseContentImageGrid from '~/components/base/BaseContentImageGrid.vue';
+import BaseContentStatsGallery from '~/components/base/BaseContentStatsGallery.vue';
+import BaseStatsFeatureCards from '~/components/base/BaseStatsFeatureCards.vue';
+import BaseContentBentoGrid from '~/components/base/BaseContentBentoGrid.vue';
 
 // Composite Components
 import SevenWeekQuestionnaire from '~/components/composite/SevenWeekQuestionnaire.vue';
@@ -2017,6 +2021,206 @@ export const registeredComponents: RegisteredComponent[] = [
 
             // Styling
             { name: 'sectionBackgroundColor', type: 'color', defaultValue: 'var(--color-white)' }
+        ]
+    },
+
+    {
+        component: BaseContentImageGrid,
+        name: 'BaseContentImageGrid',
+        inputs: [
+            // Section Header
+            { name: 'tagline', type: 'string', defaultValue: 'Tagline' },
+            { name: 'headline', type: 'string', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'description', type: 'text', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.' },
+            { name: 'sectionBackgroundColor', type: 'color', defaultValue: 'var(--color-gray-50)' },
+
+            // Content Card
+            { name: 'contentHeading', type: 'string', defaultValue: 'Lorem ipsum dolor sit' },
+            { name: 'contentDescription', type: 'text', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit lobortis arcu enim urna adipiscing praesent velit viverra sit semper lorem eu cursus vel hendrerit elementum morbi curabitur etiam nibh justo.' },
+            { name: 'ctaText', type: 'string', defaultValue: 'Contact now' },
+            { name: 'ctaUrl', type: 'url', defaultValue: '#' },
+
+            // Feature Pills
+            {
+                name: 'featurePills',
+                type: 'list',
+                subFields: [
+                    { name: 'text', type: 'string', defaultValue: 'Feature item' }
+                ],
+                defaultValue: [
+                    { text: 'Feature item' },
+                    { text: 'Feature item' },
+                    { text: 'Feature item' },
+                    { text: 'Feature item' }
+                ]
+            },
+
+            // Images
+            { name: 'image1', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'webp'], defaultValue: '' },
+            { name: 'image1Alt', type: 'string', defaultValue: 'Feature image 1' },
+            { name: 'image2', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'webp'], defaultValue: '' },
+            { name: 'image2Alt', type: 'string', defaultValue: 'Feature image 2' },
+            { name: 'image3', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'webp'], defaultValue: '' },
+            { name: 'image3Alt', type: 'string', defaultValue: 'Feature image 3' },
+
+            // Image Settings
+            { name: 'imageAspectRatio', type: 'string', defaultValue: '4/3' }
+        ]
+    },
+
+    {
+        component: BaseContentStatsGallery,
+        name: 'BaseContentStatsGallery',
+        inputs: [
+            // Section Header
+            { name: 'tagline', type: 'string', defaultValue: 'Tagline' },
+            { name: 'headline', type: 'string', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'description', type: 'text', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.' },
+            { name: 'sectionBackgroundColor', type: 'color', defaultValue: 'var(--color-white)' },
+
+            // Statistics
+            {
+                name: 'statistics',
+                type: 'list',
+                subFields: [
+                    { name: 'value', type: 'string', defaultValue: '100', required: true },
+                    { name: 'suffix', type: 'string', defaultValue: '+' },
+                    { name: 'label', type: 'string', defaultValue: 'Lorem ipsum', required: true }
+                ],
+                defaultValue: [
+                    { value: '100', suffix: '+', label: 'Lorem ipsum' },
+                    { value: '50', suffix: 'k', label: 'Class aptent' },
+                    { value: '23', suffix: '+', label: 'Aliquam in' },
+                    { value: '10', suffix: 'M+', label: 'Vestibulum' }
+                ]
+            },
+
+            // Gallery Images
+            {
+                name: 'galleryImages',
+                type: 'list',
+                subFields: [
+                    { name: 'src', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'webp'] },
+                    { name: 'alt', type: 'string', defaultValue: 'Gallery image' }
+                ],
+                defaultValue: [
+                    { src: '', alt: 'Gallery image 1' },
+                    { src: '', alt: 'Gallery image 2' },
+                    { src: '', alt: 'Gallery image 3' },
+                    { src: '', alt: 'Gallery image 4' },
+                    { src: '', alt: 'Gallery image 5' }
+                ]
+            },
+
+            // Gallery Settings
+            { name: 'galleryLayout', type: 'text', enum: ['scroll', 'grid'], defaultValue: 'scroll' },
+            { name: 'imageAspectRatio', type: 'string', defaultValue: '4/3' },
+            { name: 'imageWidth', type: 'string', defaultValue: '280px' }
+        ]
+    },
+
+    {
+        component: BaseStatsFeatureCards,
+        name: 'BaseStatsFeatureCards',
+        inputs: [
+            // Section Header
+            { name: 'tagline', type: 'string', defaultValue: 'Tagline' },
+            { name: 'headline', type: 'string', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'description', type: 'text', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.' },
+            { name: 'sectionBackgroundColor', type: 'color', defaultValue: 'var(--color-white)' },
+
+            // Statistics
+            {
+                name: 'statistics',
+                type: 'list',
+                subFields: [
+                    { name: 'value', type: 'string', defaultValue: '100', required: true },
+                    { name: 'suffix', type: 'string', defaultValue: '+' },
+                    { name: 'label', type: 'string', defaultValue: 'Lorem ipsum', required: true }
+                ],
+                defaultValue: [
+                    { value: '100', suffix: '+', label: 'Lorem ipsum' },
+                    { value: '50', suffix: '+', label: 'Class aptent' },
+                    { value: '5', suffix: '+', label: 'Aliquam in' }
+                ]
+            },
+
+            // Feature Cards
+            {
+                name: 'featureCards',
+                type: 'list',
+                subFields: [
+                    { name: 'icon', type: 'string', defaultValue: '📦' },
+                    { name: 'heading', type: 'string', defaultValue: 'Lorem ipsum', required: true },
+                    { name: 'description', type: 'text', defaultValue: 'Lorem ipsum dolor sit amet consectetur adipiscing elit lectus dapibus.', required: true }
+                ],
+                defaultValue: [
+                    {
+                        icon: '📦',
+                        heading: 'Lorem ipsum',
+                        description: 'Lorem ipsum dolor sit amet consectetur adipiscing elit lectus dapibus.'
+                    },
+                    {
+                        icon: '📦',
+                        heading: 'Lorem ipsum',
+                        description: 'Lorem ipsum dolor sit amet consectetur adipiscing elit lectus dapibus.'
+                    },
+                    {
+                        icon: '📦',
+                        heading: 'Lorem ipsum',
+                        description: 'Lorem ipsum dolor sit amet consectetur adipiscing elit lectus dapibus.'
+                    }
+                ]
+            },
+
+            // Styling
+            { name: 'cardBackgroundColor', type: 'color', defaultValue: 'var(--color-gray-100)' },
+            { name: 'iconSize', type: 'string', defaultValue: '2.5rem' }
+        ]
+    },
+
+    {
+        component: BaseContentBentoGrid,
+        name: 'BaseContentBentoGrid',
+        inputs: [
+            // Section Header
+            { name: 'tagline', type: 'string', defaultValue: 'Tagline' },
+            { name: 'headline', type: 'string', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'description', type: 'text', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.' },
+            { name: 'sectionBackgroundColor', type: 'color', defaultValue: 'var(--color-white)' },
+
+            // Cell 1 (Content Card - Top Left)
+            { name: 'cell1Icon', type: 'string', defaultValue: '📦' },
+            { name: 'cell1Heading', type: 'string', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'cell1Description', type: 'text', defaultValue: 'Lorem ipsum dolor sit amet consectetur adipiscin.' },
+            { name: 'cell1BackgroundColor', type: 'color', defaultValue: 'var(--color-gray-100)' },
+            { name: 'cell1MinHeight', type: 'string', defaultValue: '250px' },
+
+            // Cell 2 (Image - Top Middle, spans 2 rows)
+            { name: 'cell2Image', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'webp'], defaultValue: '' },
+            { name: 'cell2ImageAlt', type: 'string', defaultValue: 'Feature image 2' },
+            { name: 'cell2MinHeight', type: 'string', defaultValue: '400px' },
+
+            // Cell 3 (Image - Top Right)
+            { name: 'cell3Image', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'webp'], defaultValue: '' },
+            { name: 'cell3ImageAlt', type: 'string', defaultValue: 'Feature image 3' },
+            { name: 'cell3MinHeight', type: 'string', defaultValue: '250px' },
+
+            // Cell 4 (Image - Bottom Left)
+            { name: 'cell4Image', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'webp'], defaultValue: '' },
+            { name: 'cell4ImageAlt', type: 'string', defaultValue: 'Feature image 4' },
+            { name: 'cell4MinHeight', type: 'string', defaultValue: '250px' },
+
+            // Cell 5 (Content Card with CTA - Bottom Right)
+            { name: 'cell5Heading', type: 'string', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'cell5Description', type: 'text', defaultValue: 'Lorem ipsum dolor sit amet consectetur adipiscing elit lectus dapibus natoque viverra in lectus mauris sit elementum in lectus mauris sit eget.' },
+            { name: 'cell5CtaText', type: 'string', defaultValue: 'Contact Us' },
+            { name: 'cell5CtaUrl', type: 'url', defaultValue: '#' },
+            { name: 'cell5BackgroundColor', type: 'color', defaultValue: 'var(--color-gray-100)' },
+            { name: 'cell5MinHeight', type: 'string', defaultValue: '250px' },
+
+            // Global Settings
+            { name: 'iconSize', type: 'string', defaultValue: '2.5rem' }
         ]
     },
 
