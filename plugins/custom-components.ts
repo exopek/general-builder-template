@@ -60,6 +60,7 @@ import BaseContentImageGrid from '~/components/base/BaseContentImageGrid.vue';
 import BaseContentStatsGallery from '~/components/base/BaseContentStatsGallery.vue';
 import BaseStatsFeatureCards from '~/components/base/BaseStatsFeatureCards.vue';
 import BaseContentBentoGrid from '~/components/base/BaseContentBentoGrid.vue';
+import BaseContentSection48 from '~/components/base/BaseContentSection48.vue';
 
 // Composite Components
 import SevenWeekQuestionnaire from '~/components/composite/SevenWeekQuestionnaire.vue';
@@ -2221,6 +2222,35 @@ export const registeredComponents: RegisteredComponent[] = [
 
             // Global Settings
             { name: 'iconSize', type: 'string', defaultValue: '2.5rem' }
+        ]
+    },
+
+    {
+        component: BaseContentSection48,
+        name: 'BaseContentSection48',
+        inputs: [
+            // Header Section
+            { name: 'tagline', type: 'string', defaultValue: 'Tagline' },
+            { name: 'heading', type: 'string', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'description', type: 'text', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.' },
+
+            // Card Content
+            { name: 'cardHeading', type: 'string', defaultValue: 'Ut tempus dui non enim accumsan, eu rutrum' },
+            { name: 'cardDescription', type: 'text', defaultValue: 'Cras in nibh lacus. Sed in congue sapien. Vestibulum euismod, orci quis vehicula consectetur, lacus magna fringilla lectus, et commodo orci tellus egestas dui.' },
+
+            // Button
+            { name: 'buttonText', type: 'string', defaultValue: 'Contact Us' },
+            { name: 'buttonVariant', type: 'text', enum: ['primary', 'secondary', 'secondaryFull', 'ghost', 'gradient', 'outline'], defaultValue: 'primary' },
+            { name: 'buttonSize', type: 'text', enum: ['sm', 'md', 'lg', 'xl'], defaultValue: 'md' },
+
+            // Media
+            { name: 'mediaType', type: 'text', enum: ['image', 'video'], defaultValue: 'video' },
+            { name: 'mediaUrl', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'webp', 'mp4', 'webm'], defaultValue: '' },
+            { name: 'videoThumbnail', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'webp'], defaultValue: '' },
+            { name: 'mediaAlt', type: 'string', defaultValue: 'Media content' },
+            { name: 'showPlayButton', type: 'boolean', defaultValue: true },
+            { name: 'playButtonLabel', type: 'string', defaultValue: 'Play video' },
+            { name: 'aspectRatio', type: 'string', defaultValue: '56.25%' }
         ]
     },
 
