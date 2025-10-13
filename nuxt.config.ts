@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@vueuse/nuxt',
     '@nuxtjs/sitemap',
+    'nuxt-simple-cookie-consent',
   ],
 
   css: ['~/assets/css/global.css'],
@@ -120,10 +121,72 @@ export default defineNuxtConfig({
         }
       }
     },
-    
+
     // SSR/Client Build Consistency
     ssr: {
       noExternal: ['@builder.io/sdk-vue']
+    }
+  },
+
+  // Cookie Consent Configuration (GDPR/DSGVO compliant)
+  cookieConsent: {
+    // Consent is required before any non-essential cookies are set
+    consentMode: true,
+
+    // Cookie categories for granular control
+    cookies: {
+      essential: {
+        label: 'Essenzielle Cookies',
+        description: 'Diese Cookies sind für die Grundfunktionen der Website erforderlich und können nicht deaktiviert werden.',
+        required: true
+      },
+      analytics: {
+        label: 'Analyse & Statistik',
+        description: 'Diese Cookies helfen uns, die Nutzung unserer Website zu verstehen und zu verbessern.',
+        required: false,
+        src: 'https://www.googletagmanager.com/gtag/js',
+        async: true,
+        accepted: () => {
+          // Initialize Google Analytics only after consent
+          if (typeof window !== 'undefined' && window.gtag) {
+            window.gtag('consent', 'update', {
+              analytics_storage: 'granted'
+            })
+          }
+        },
+        declined: () => {
+          if (typeof window !== 'undefined' && window.gtag) {
+            window.gtag('consent', 'update', {
+              analytics_storage: 'denied'
+            })
+          }
+        }
+      },
+      marketing: {
+        label: 'Marketing',
+        description: 'Diese Cookies werden verwendet, um Ihnen personalisierte Werbung anzuzeigen.',
+        required: false
+      },
+      functional: {
+        label: 'Funktional',
+        description: 'Diese Cookies ermöglichen erweiterte Funktionalitäten wie z.B. die Speicherung Ihrer Präferenzen.',
+        required: false
+      }
+    },
+
+    // Storage settings
+    cookieExpiryDays: 365,
+
+    // Google Consent Mode v2
+    googleConsentMode: {
+      enabled: true,
+      defaultConsent: {
+        ad_storage: 'denied',
+        analytics_storage: 'denied',
+        functionality_storage: 'denied',
+        personalization_storage: 'denied',
+        security_storage: 'granted'
+      }
     }
   },
 })

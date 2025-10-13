@@ -48,6 +48,17 @@ import BaseCTA from '~/components/base/BaseCTA.vue';
 import BaseModal from '~/components/base/BaseModal.vue';
 import BaseGallerySection from '~/components/base/BaseGallerySection.vue';
 import BaseGalleryGrid from '~/components/base/BaseGalleryGrid.vue';
+
+// Privacy & Legal Sections (use Base components internally)
+import PrivacyHeroSection from '~/components/sections/privacy/PrivacyHeroSection.vue';
+import PrivacyOverviewSection from '~/components/sections/privacy/PrivacyOverviewSection.vue';
+import PrivacyResponsibleSection from '~/components/sections/privacy/PrivacyResponsibleSection.vue';
+import PrivacyHostingSection from '~/components/sections/privacy/PrivacyHostingSection.vue';
+import PrivacyDataCollectionSection from '~/components/sections/privacy/PrivacyDataCollectionSection.vue';
+import PrivacyNewsletterSection from '~/components/sections/privacy/PrivacyNewsletterSection.vue';
+import PrivacyPluginsSection from '~/components/sections/privacy/PrivacyPluginsSection.vue';
+import PrivacyRightsSection from '~/components/sections/privacy/PrivacyRightsSection.vue';
+import PrivacyContactSection from '~/components/sections/privacy/PrivacyContactSection.vue';
 import BaseAlternatingFeatures from '~/components/base/BaseAlternatingFeatures.vue';
 import BaseBentoGrid from '~/components/base/BaseBentoGrid.vue';
 import BaseFeatureShowcase from '~/components/base/BaseFeatureShowcase.vue';
@@ -60,6 +71,7 @@ import BaseContentImageGrid from '~/components/base/BaseContentImageGrid.vue';
 import BaseContentStatsGallery from '~/components/base/BaseContentStatsGallery.vue';
 import BaseStatsFeatureCards from '~/components/base/BaseStatsFeatureCards.vue';
 import BaseContentBentoGrid from '~/components/base/BaseContentBentoGrid.vue';
+import BaseContentSection48 from '~/components/base/BaseContentSection48.vue';
 
 // Composite Components
 import SevenWeekQuestionnaire from '~/components/composite/SevenWeekQuestionnaire.vue';
@@ -2224,6 +2236,35 @@ export const registeredComponents: RegisteredComponent[] = [
         ]
     },
 
+    {
+        component: BaseContentSection48,
+        name: 'BaseContentSection48',
+        inputs: [
+            // Header Section
+            { name: 'tagline', type: 'string', defaultValue: 'Tagline' },
+            { name: 'heading', type: 'string', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'description', type: 'text', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.' },
+
+            // Card Content
+            { name: 'cardHeading', type: 'string', defaultValue: 'Ut tempus dui non enim accumsan, eu rutrum' },
+            { name: 'cardDescription', type: 'text', defaultValue: 'Cras in nibh lacus. Sed in congue sapien. Vestibulum euismod, orci quis vehicula consectetur, lacus magna fringilla lectus, et commodo orci tellus egestas dui.' },
+
+            // Button
+            { name: 'buttonText', type: 'string', defaultValue: 'Contact Us' },
+            { name: 'buttonVariant', type: 'text', enum: ['primary', 'secondary', 'secondaryFull', 'ghost', 'gradient', 'outline'], defaultValue: 'primary' },
+            { name: 'buttonSize', type: 'text', enum: ['sm', 'md', 'lg', 'xl'], defaultValue: 'md' },
+
+            // Media
+            { name: 'mediaType', type: 'text', enum: ['image', 'video'], defaultValue: 'video' },
+            { name: 'mediaUrl', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'webp', 'mp4', 'webm'], defaultValue: '' },
+            { name: 'videoThumbnail', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'webp'], defaultValue: '' },
+            { name: 'mediaAlt', type: 'string', defaultValue: 'Media content' },
+            { name: 'showPlayButton', type: 'boolean', defaultValue: true },
+            { name: 'playButtonLabel', type: 'string', defaultValue: 'Play video' },
+            { name: 'aspectRatio', type: 'string', defaultValue: '56.25%' }
+        ]
+    },
+
     // === COMPOSITE COMPONENTS ===
     {
         component: SevenWeekQuestionnaire,
@@ -2690,6 +2731,166 @@ export const registeredComponents: RegisteredComponent[] = [
                     }
                 ]
             }
+        ]
+    },
+
+    // === PRIVACY & LEGAL SECTIONS ===
+
+    {
+        component: PrivacyHeroSection,
+        name: 'PrivacyHeroSection',
+        inputs: [
+            { name: 'headline', type: 'string', defaultValue: 'Datenschutzerklärung' },
+            { name: 'subheadline', type: 'string', defaultValue: 'Letzte Aktualisierung: ' + new Date().toLocaleDateString('de-DE') },
+            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'showQuickAction', type: 'boolean', defaultValue: true },
+            { name: 'quickActionTitle', type: 'string', defaultValue: 'Cookie-Einstellungen verwalten' },
+            { name: 'quickActionDescription', type: 'longText', defaultValue: 'Sie können Ihre Präferenzen jederzeit ändern und Ihre Einwilligungen verwalten.' },
+            { name: 'quickActionGradient', type: 'text', enum: ['warm', 'cool', 'primary', 'secondary'], defaultValue: 'warm' },
+            { name: 'quickActionButtonText', type: 'string', defaultValue: 'Einstellungen öffnen' },
+            { name: 'quickActionButtonHref', type: 'url', defaultValue: '/cookie-einstellungen' },
+            { name: 'quickActionButtonVariant', type: 'text', enum: ['primary', 'secondary', 'outline', 'gradient'], defaultValue: 'secondary' },
+            { name: 'quickActionButtonSize', type: 'text', enum: ['sm', 'md', 'lg', 'xl'], defaultValue: 'lg' }
+        ]
+    },
+
+    {
+        component: PrivacyOverviewSection,
+        name: 'PrivacyOverviewSection',
+        inputs: [
+            { name: 'sectionTitle', type: 'string', defaultValue: '1. Datenschutz auf einen Blick' },
+            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'highlightTitle', type: 'string', defaultValue: 'Allgemeine Hinweise' },
+            { name: 'highlightIcon', type: 'string', defaultValue: 'ℹ️' },
+            { name: 'highlightVariant', type: 'text', enum: ['default', 'warning', 'info', 'success', 'primary'], defaultValue: 'info' },
+            { name: 'generalInfo', type: 'longText', defaultValue: 'Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.' },
+            { name: 'accordion1Title', type: 'string', defaultValue: 'Wer ist verantwortlich für die Datenerfassung auf dieser Website?' },
+            { name: 'accordion1Content', type: 'longText', defaultValue: 'Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber. Dessen Kontaktdaten können Sie dem Abschnitt "Hinweis zur Verantwortlichen Stelle" in dieser Datenschutzerklärung entnehmen.' },
+            { name: 'accordion2Title', type: 'string', defaultValue: 'Wie erfassen wir Ihre Daten?' },
+            { name: 'accordion2Content1', type: 'longText', defaultValue: 'Ihre Daten werden zum einen dadurch erhoben, dass Sie uns diese mitteilen. Hierbei kann es sich z. B. um Daten handeln, die Sie in ein Kontaktformular eingeben.' },
+            { name: 'accordion2Content2', type: 'longText', defaultValue: 'Andere Daten werden automatisch oder nach Ihrer Einwilligung beim Besuch der Website durch unsere IT-Systeme erfasst. Das sind vor allem technische Daten (z. B. Internetbrowser, Betriebssystem oder Uhrzeit des Seitenaufrufs).' },
+            { name: 'accordion3Title', type: 'string', defaultValue: 'Wofür nutzen wir Ihre Daten?' },
+            { name: 'accordion3Content1', type: 'longText', defaultValue: 'Ein Teil der Daten wird erhoben, um eine fehlerfreie Bereitstellung der Website zu gewährleisten. Andere Daten können zur Analyse Ihres Nutzerverhaltens verwendet werden.' },
+            { name: 'accordion3Content2', type: 'longText', defaultValue: 'Sofern über die Website Verträge geschlossen oder angebahnt werden können, werden die übermittelten Daten auch für Vertragsangebote, Bestellungen oder sonstige Auftragsanfragen verarbeitet.' },
+            { name: 'accordion4Title', type: 'string', defaultValue: 'Welche Rechte haben Sie bezüglich Ihrer Daten?' },
+            { name: 'accordion4Content', type: 'longText', defaultValue: 'Sie haben jederzeit das Recht, unentgeltlich Auskunft über Herkunft, Empfänger und Zweck Ihrer gespeicherten personenbezogenen Daten zu erhalten. Sie haben außerdem ein Recht, die Berichtigung oder Löschung dieser Daten zu verlangen.' }
+        ]
+    },
+
+    {
+        component: PrivacyResponsibleSection,
+        name: 'PrivacyResponsibleSection',
+        inputs: [
+            { name: 'sectionTitle', type: 'string', defaultValue: 'Hinweis zur verantwortlichen Stelle' },
+            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'cardTitle', type: 'string', defaultValue: 'Verantwortliche Stelle' },
+            { name: 'companyName', type: 'string', defaultValue: 'EXOPEK Gym UG (haftungsbeschränkt)' },
+            { name: 'address', type: 'longText', defaultValue: 'Limmerstraße 4c<br>30451 Hannover' },
+            { name: 'phone', type: 'string', defaultValue: '0173 190 1010' },
+            { name: 'email', type: 'string', defaultValue: 'gym@exopek.de' },
+            { name: 'legalNote', type: 'longText', defaultValue: 'Verantwortliche Stelle ist die natürliche oder juristische Person, die allein oder gemeinsam mit anderen über die Zwecke und Mittel der Verarbeitung von personenbezogenen Daten (z. B. Namen, E-Mail-Adressen o. Ä.) entscheidet.' }
+        ]
+    },
+
+    {
+        component: PrivacyHostingSection,
+        name: 'PrivacyHostingSection',
+        inputs: [
+            { name: 'sectionTitle', type: 'string', defaultValue: '2. Hosting' },
+            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'cardTitle', type: 'string', defaultValue: 'Externes Hosting' },
+            { name: 'description', type: 'longText', defaultValue: 'Diese Website wird extern gehostet. Die personenbezogenen Daten, die auf dieser Website erfasst werden, werden auf den Servern des Hosters gespeichert. Hierbei kann es sich v. a. um IP-Adressen, Kontaktanfragen, Meta- und Kommunikationsdaten, Vertragsdaten, Kontaktdaten, Namen, Websitezugriffe und sonstige Daten, die über eine Website generiert werden, handeln.' },
+            { name: 'hosterLabel', type: 'string', defaultValue: 'Wir setzen folgenden Hoster ein:' },
+            { name: 'hosterCompany', type: 'string', defaultValue: 'Cloudflare Germany GmbH' },
+            { name: 'hosterAddress', type: 'string', defaultValue: 'Rosental 7, c/o Mindspace, 80331 München' },
+            { name: 'hosterPhone', type: 'string', defaultValue: '+49 (89) 26207202' },
+            { name: 'hosterEmail', type: 'string', defaultValue: 'support@cloudflare.com' },
+            { name: 'hosterWebsite', type: 'url', defaultValue: 'https://www.cloudflare.com/' },
+            { name: 'hosterWebsiteDisplay', type: 'string', defaultValue: 'cloudflare.com' }
+        ]
+    },
+
+    {
+        component: PrivacyDataCollectionSection,
+        name: 'PrivacyDataCollectionSection',
+        inputs: [
+            { name: 'sectionTitle', type: 'string', defaultValue: '4. Datenerfassung auf dieser Website' },
+            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'cookiesTitle', type: 'string', defaultValue: 'Cookies' },
+            { name: 'cookiesDescription', type: 'longText', defaultValue: 'Unsere Internetseiten verwenden so genannte "Cookies". Cookies sind kleine Datenpakete und richten auf Ihrem Endgerät keinen Schaden an. Sie werden entweder vorübergehend für die Dauer einer Sitzung (Session-Cookies) oder dauerhaft (permanente Cookies) auf Ihrem Endgerät gespeichert.' },
+            { name: 'cookiesSettingsLink', type: 'url', defaultValue: '/cookie-einstellungen' },
+            { name: 'cookiesLinkText', type: 'string', defaultValue: 'Zu den Cookie-Einstellungen' },
+            { name: 'contactFormTitle', type: 'string', defaultValue: 'Kontaktformular' },
+            { name: 'contactFormContent', type: 'longText', defaultValue: 'Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.' },
+            { name: 'inquiryTitle', type: 'string', defaultValue: 'Anfrage per E-Mail, Telefon oder Telefax' },
+            { name: 'inquiryContent', type: 'longText', defaultValue: 'Wenn Sie uns per E-Mail, Telefon oder Telefax kontaktieren, wird Ihre Anfrage inklusive aller daraus hervorgehenden personenbezogenen Daten (Name, Anfrage) zum Zwecke der Bearbeitung Ihres Anliegens bei uns gespeichert und verarbeitet.' }
+        ]
+    },
+
+    {
+        component: PrivacyNewsletterSection,
+        name: 'PrivacyNewsletterSection',
+        inputs: [
+            { name: 'sectionTitle', type: 'string', defaultValue: '5. Newsletter' },
+            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'cardTitle', type: 'string', defaultValue: 'Newsletterdaten' },
+            { name: 'description', type: 'longText', defaultValue: 'Wenn Sie den auf der Website angebotenen Newsletter beziehen möchten, benötigen wir von Ihnen eine E-Mail-Adresse sowie Informationen, welche uns die Überprüfung gestatten, dass Sie der Inhaber der angegebenen E-Mail-Adresse sind und mit dem Empfang des Newsletters einverstanden sind.' }
+        ]
+    },
+
+    {
+        component: PrivacyPluginsSection,
+        name: 'PrivacyPluginsSection',
+        inputs: [
+            { name: 'sectionTitle', type: 'string', defaultValue: '6. Plugins und Tools' },
+            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'gridColumns', type: 'text', enum: ['1', '2', '3', '4'], defaultValue: '3' },
+            { name: 'youtubeTitle', type: 'string', defaultValue: 'YouTube' },
+            { name: 'youtubeIcon', type: 'string', defaultValue: '▶️' },
+            { name: 'youtubeDescription', type: 'longText', defaultValue: 'Diese Website bindet Videos der Website YouTube ein. Betreiber der Website ist die Google Ireland Limited ("Google"), Gordon House, Barrow Street, Dublin 4, Irland. Wir nutzen YouTube im erweiterten Datenschutzmodus.' },
+            { name: 'fontsTitle', type: 'string', defaultValue: 'Google Fonts' },
+            { name: 'fontsIcon', type: 'string', defaultValue: '🔤' },
+            { name: 'fontsDescription', type: 'longText', defaultValue: 'Diese Seite nutzt zur einheitlichen Darstellung von Schriftarten so genannte Google Fonts, die von Google bereitgestellt werden. Beim Aufruf einer Seite lädt Ihr Browser die benötigten Fonts in ihren Browsercache, um Texte und Schriftarten korrekt anzuzeigen.' },
+            { name: 'mapsTitle', type: 'string', defaultValue: 'Google Maps' },
+            { name: 'mapsIcon', type: 'string', defaultValue: '🗺️' },
+            { name: 'mapsDescription', type: 'longText', defaultValue: 'Diese Seite nutzt den Kartendienst Google Maps. Anbieter ist die Google Ireland Limited ("Google"), Gordon House, Barrow Street, Dublin 4, Irland. Mit Hilfe dieses Dienstes können wir Kartenmaterial auf unserer Website einbinden.' }
+        ]
+    },
+
+    {
+        component: PrivacyRightsSection,
+        name: 'PrivacyRightsSection',
+        inputs: [
+            { name: 'sectionTitle', type: 'string', defaultValue: 'Ihre Rechte' },
+            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'gridColumns', type: 'text', enum: ['1', '2', '3', '4'], defaultValue: '2' },
+            { name: 'rightIcon', type: 'string', defaultValue: '✓' },
+            { name: 'right1Title', type: 'string', defaultValue: '✓ Auskunft' },
+            { name: 'right1Description', type: 'longText', defaultValue: 'Sie haben das Recht auf unentgeltliche Auskunft über Ihre gespeicherten personenbezogenen Daten, deren Herkunft und Empfänger sowie den Zweck der Datenverarbeitung.' },
+            { name: 'right2Title', type: 'string', defaultValue: '✓ Berichtigung' },
+            { name: 'right2Description', type: 'longText', defaultValue: 'Sie haben das Recht auf Berichtigung unrichtiger personenbezogener Daten. Sie können außerdem die Vervollständigung unvollständiger Daten verlangen.' },
+            { name: 'right3Title', type: 'string', defaultValue: '✓ Löschung' },
+            { name: 'right3Description', type: 'longText', defaultValue: 'Sie haben das Recht auf Löschung Ihrer bei uns gespeicherten Daten, soweit nicht gesetzliche Aufbewahrungspflichten dem entgegenstehen.' },
+            { name: 'right4Title', type: 'string', defaultValue: '✓ Widerruf' },
+            { name: 'right4Description', type: 'longText', defaultValue: 'Sie können erteilte Einwilligungen jederzeit für die Zukunft widerrufen. Die Rechtmäßigkeit der bis zum Widerruf erfolgten Verarbeitung bleibt davon unberührt.' }
+        ]
+    },
+
+    {
+        component: PrivacyContactSection,
+        name: 'PrivacyContactSection',
+        inputs: [
+            { name: 'title', type: 'string', defaultValue: 'Kontakt Datenschutz' },
+            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'description', type: 'longText', defaultValue: 'Bei Fragen zum Datenschutz wenden Sie sich bitte an:' },
+            { name: 'email', type: 'string', defaultValue: 'gym@exopek.de' },
+            { name: 'phone', type: 'string', defaultValue: '+49 173 190 1010' },
+            { name: 'address', type: 'longText', defaultValue: 'EXOPEK Gym UG (haftungsbeschränkt)\nLimmerstraße 4c\n30451 Hannover' },
+            { name: 'gradient', type: 'text', enum: ['warm', 'cool', 'primary', 'secondary'], defaultValue: 'cool' },
+            { name: 'showFooterNote', type: 'boolean', defaultValue: true },
+            { name: 'footerText', type: 'string', defaultValue: 'Erstellt mit den Services von: ' },
+            { name: 'footerLink', type: 'url', defaultValue: 'https://www.e-recht24.de' },
+            { name: 'footerLinkText', type: 'string', defaultValue: 'e-recht24.de' }
         ]
     }
 ];
