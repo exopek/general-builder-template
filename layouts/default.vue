@@ -16,6 +16,9 @@
 
       <!-- Global Toast Container -->
       <ToastContainer />
+
+      <!-- Cookie Consent Banner (GDPR compliant) -->
+      <BaseConsentBanner />
     </div>
   </template>
   
