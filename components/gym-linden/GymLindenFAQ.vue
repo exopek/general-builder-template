@@ -1,5 +1,5 @@
 <template>
-  <BaseFAQ
+  <FAQ
     :badge-text="badgeText"
     :badge-variant="badgeVariant"
     :show-badge="showBadge"
@@ -16,6 +16,8 @@
 </template>
 
 <script setup lang="ts">
+import FAQ from '~/components/design-system-section-components/FAQ.vue'
+
 interface Category {
   id: string;
   name: string;

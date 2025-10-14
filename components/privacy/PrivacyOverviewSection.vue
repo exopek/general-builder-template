@@ -1,9 +1,9 @@
 <template>
   <div :style="{ backgroundColor }" class="py-8 md:py-12">
     <div class="container">
-    <BasePrivacySection :title="sectionTitle">
+    <ContentSection :title="sectionTitle">
       <!-- Allgemeine Hinweise -->
-      <BasePrivacyHighlight
+      <InfoHighlight
         :title="highlightTitle"
         :icon="highlightIcon"
         :variant="highlightVariant"
@@ -11,46 +11,49 @@
         <p class="text-gray-700 leading-relaxed">
           {{ generalInfo }}
         </p>
-      </BasePrivacyHighlight>
+      </InfoHighlight>
 
       <!-- FAQ Accordions -->
       <div class="mt-6 space-y-4">
-        <BasePrivacyAccordion :title="accordion1Title">
+        <Accordion :title="accordion1Title">
           <p class="text-gray-700 leading-relaxed">
             {{ accordion1Content }}
           </p>
-        </BasePrivacyAccordion>
+        </Accordion>
 
-        <BasePrivacyAccordion :title="accordion2Title">
+        <Accordion :title="accordion2Title">
           <p class="text-gray-700 leading-relaxed mb-3">
             {{ accordion2Content1 }}
           </p>
           <p class="text-gray-700 leading-relaxed">
             {{ accordion2Content2 }}
           </p>
-        </BasePrivacyAccordion>
+        </Accordion>
 
-        <BasePrivacyAccordion :title="accordion3Title">
+        <Accordion :title="accordion3Title">
           <p class="text-gray-700 leading-relaxed mb-3">
             {{ accordion3Content1 }}
           </p>
           <p class="text-gray-700 leading-relaxed">
             {{ accordion3Content2 }}
           </p>
-        </BasePrivacyAccordion>
+        </Accordion>
 
-        <BasePrivacyAccordion :title="accordion4Title">
+        <Accordion :title="accordion4Title">
           <p class="text-gray-700 leading-relaxed">
             {{ accordion4Content }}
           </p>
-        </BasePrivacyAccordion>
+        </Accordion>
       </div>
-    </BasePrivacySection>
+    </ContentSection>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import ContentSection from '~/components/design-system-ui-components/ContentSection.vue'
+import InfoHighlight from '~/components/design-system-ui-components/InfoHighlight.vue'
+import Accordion from '~/components/design-system-ui-components/Accordion.vue'
 interface Props {
   sectionTitle?: string
   backgroundColor?: string

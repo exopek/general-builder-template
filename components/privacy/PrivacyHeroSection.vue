@@ -12,7 +12,7 @@
       </div>
 
     <!-- Quick Action: Cookie Settings -->
-    <BasePrivacyQuickAction
+    <PrivacyQuickAction
       v-if="showQuickAction"
       :title="quickActionTitle"
       :description="quickActionDescription"
@@ -27,6 +27,7 @@
 </template>
 
 <script setup lang="ts">
+import PrivacyQuickAction from '~/components/privacy/PrivacyQuickAction.vue'
 interface Props {
   headline?: string
   subheadline?: string

@@ -137,7 +137,7 @@
       <div v-if="showMetrics" class="text-center">
         <h3 class="text-2xl font-bold text-gray-900 mb-8">{{ metricsHeadline }}</h3>
 
-        <BaseStatisticGrid
+        <StatisticGrid
           :statistics="metrics || []"
           grid-type="auto"
           gap="md"
@@ -176,6 +176,7 @@
 </template>
 
 <script setup lang="ts">
+import StatisticGrid from '~/components/design-system-section-components/StatisticGrid.vue'
 interface Benefit {
   title: string
   description: string

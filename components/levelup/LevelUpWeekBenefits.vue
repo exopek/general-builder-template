@@ -24,7 +24,7 @@
 
       <!-- Main Benefits Grid -->
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-        <BaseEventCard
+        <EventCard
           v-for="(benefit, index) in benefitsData"
           :key="benefit.key || index"
           :title="benefit.title"
@@ -48,7 +48,7 @@
           </h3>
           <p class="text-gray-600 mt-2">{{ metricsSubtitle }}</p>
         </div>
-        <BaseStatisticGrid
+        <StatisticGrid
           :statistics="impactMetrics"
           grid-type="auto"
           gap="lg"
@@ -104,7 +104,7 @@
         </div>
         <div class="grid lg:grid-cols-2 gap-8">
           <!-- Before -->
-          <BaseEventCard
+          <EventCard
             :title="beforeTitle"
             :description="beforeDescription"
             variant="default"
@@ -114,7 +114,7 @@
             :features="beforePoints"
           />
           <!-- After -->
-          <BaseEventCard
+          <EventCard
             :title="afterTitle"
             :description="afterDescription"
             variant="featured"
@@ -135,7 +135,7 @@
           <p class="text-gray-600 mt-2">{{ successPreviewSubtitle }}</p>
         </div>
         <div class="grid md:grid-cols-3 gap-6">
-          <BaseEventCard
+          <EventCard
             v-for="(story, index) in successStories"
             :key="story.key || index"
             :title="story.title"
@@ -149,7 +149,7 @@
       </div>
 
       <!-- Call to Action -->
-      <BaseCTA
+      <CTA
         v-if="showCta"
         :title="ctaTitle"
         :description="ctaDescription"
@@ -170,6 +170,9 @@
 </template>
 
 <script setup lang="ts">
+import EventCard from '~/components/design-system-ui-components/EventCard.vue'
+import StatisticGrid from '~/components/design-system-section-components/StatisticGrid.vue'
+import CTA from '~/components/design-system-section-components/CTA.vue'
 interface Benefit {
   key?: string
   title: string

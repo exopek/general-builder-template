@@ -79,7 +79,7 @@
             >
               {{ featuredCard.description }}
             </p>
-            <BaseButton
+            <Button
               v-if="featuredCard.buttonText"
               :text="featuredCard.buttonText"
               :href="featuredCard.buttonUrl"
@@ -139,7 +139,7 @@
                   {{ card.description }}
                 </p>
               </div>
-              <BaseButton
+              <Button
                 v-if="card.buttonText"
                 :text="card.buttonText"
                 :href="card.buttonUrl"
@@ -156,6 +156,7 @@
 </template>
 
 <script setup lang="ts">
+import Button from '~/components/design-system-ui-components/Button.vue'
 interface Card {
   type: 'image' | 'content'
   heading?: string

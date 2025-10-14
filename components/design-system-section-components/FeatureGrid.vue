@@ -33,7 +33,7 @@
           >
             {{ description }}
           </p>
-          <BaseButton
+          <Button
             v-if="showButton && buttonText"
             :text="buttonText"
             :href="buttonUrl"
@@ -98,6 +98,7 @@
 </template>
 
 <script setup lang="ts">
+import Button from '~/components/design-system-ui-components/Button.vue'
 interface Feature {
   number: string
   heading: string

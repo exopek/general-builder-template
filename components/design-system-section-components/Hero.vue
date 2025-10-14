@@ -40,7 +40,7 @@
           </div>
 
           <!-- Statistics Grid -->
-          <BaseStatisticGrid
+          <StatisticGrid
             v-if="showStats && statisticsData.length > 0"
             :statistics="statisticsData"
             grid-type="fixed-3"
@@ -55,7 +55,7 @@
 
           <!-- CTA Buttons -->
           <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-            <BaseButton
+            <Button
               v-if="primaryCtaText"
               :text="primaryCtaText"
               :href="primaryCtaUrl"
@@ -65,7 +65,7 @@
               :external="primaryCtaExternal"
             />
 
-            <BaseButton
+            <Button
               v-if="secondaryCtaText"
               :text="secondaryCtaText"
               :href="secondaryCtaUrl"
@@ -165,6 +165,8 @@
 </template>
 
 <script setup lang="ts">
+import Button from '~/components/design-system-ui-components/Button.vue'
+import StatisticGrid from '~/components/design-system-section-components/StatisticGrid.vue'
 interface StatisticData {
   key?: string
   value: number

@@ -57,7 +57,7 @@
           <!-- Actions -->
           <div class="flex flex-col md:flex-row gap-3">
             <!-- GDPR compliant: Equal weight buttons -->
-            <BaseButton
+            <Button
               v-if="!showSettings"
               text="Alle ablehnen"
               variant="outline"
@@ -65,7 +65,7 @@
               class="flex-1"
               @click="declineAll"
             />
-            <BaseButton
+            <Button
               v-if="!showSettings"
               text="Einstellungen"
               variant="secondary"
@@ -73,7 +73,7 @@
               class="flex-1"
               @click="showSettings = true"
             />
-            <BaseButton
+            <Button
               v-if="!showSettings"
               text="Alle akzeptieren"
               variant="primary"
@@ -83,7 +83,7 @@
             />
 
             <!-- Settings view buttons -->
-            <BaseButton
+            <Button
               v-if="showSettings"
               text="Nur essenzielle"
               variant="outline"
@@ -91,7 +91,7 @@
               class="flex-1"
               @click="acceptEssentialOnly"
             />
-            <BaseButton
+            <Button
               v-if="showSettings"
               text="Auswahl speichern"
               variant="primary"
@@ -117,6 +117,7 @@
 </template>
 
 <script setup lang="ts">
+import Button from '~/components/design-system-ui-components/Button.vue'
 import { ref, onMounted } from 'vue'
 
 interface CookieCategory {

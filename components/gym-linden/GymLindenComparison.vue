@@ -1,5 +1,5 @@
 <template>
-  <BaseComparisonTable
+  <ComparisonTable
     :tagline="tagline"
     :headline="headline"
     :subheadline="subheadline"
@@ -13,6 +13,8 @@
 </template>
 
 <script setup lang="ts">
+import ComparisonTable from '~/components/design-system-section-components/ComparisonTable.vue'
+
 interface ComparisonRow {
   feature: string;
   traditional: string;

@@ -8,7 +8,7 @@
       class="grid"
       :class="[gridClasses, gapClasses, maxWidthClasses]"
     >
-      <BaseStatistic
+      <Statistic
         v-for="(statistic, index) in statistics"
         :key="statistic.key || index"
         v-bind="getStatisticProps(statistic, index)"
@@ -27,6 +27,8 @@
 </template>
 
 <script setup lang="ts">
+import Statistic from '~/components/design-system-section-components/Statistic.vue'
+
 interface StatisticData {
   key?: string
   value: number

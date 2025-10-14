@@ -86,7 +86,7 @@
         </div>
 
         <!-- Overall Progress Stats -->
-        <BaseStatisticGrid
+        <StatisticGrid
           v-if="showOverallStats"
           :statistics="overallStatsData"
           grid-type="fixed-4"
@@ -127,6 +127,7 @@
 </template>
 
 <script setup lang="ts">
+import StatisticGrid from '~/components/design-system-section-components/StatisticGrid.vue'
 interface WeekData {
   title: string
   description: string

@@ -1,5 +1,5 @@
 <template>
-  <BaseHero
+  <Hero
     :headline="headline"
     :subheadline="subheadline"
     :badge-text="badgeText"
@@ -37,6 +37,7 @@
 </template>
 
 <script setup lang="ts">
+import Hero from '~/components/design-system-section-components/Hero.vue'
 interface Props {
   headline?: string
   subheadline?: string

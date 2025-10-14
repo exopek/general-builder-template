@@ -1,10 +1,10 @@
 <template>
   <div :style="{ backgroundColor }" class="py-8 md:py-12">
     <div class="container">
-    <BasePrivacySection :title="sectionTitle">
+    <ContentSection :title="sectionTitle">
 
       <!-- Cookies -->
-      <BaseInfoCard
+      <InfoCard
         :title="cookiesTitle"
         borderPosition="left"
         borderColor="accent-yellow"
@@ -24,32 +24,35 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
           </svg>
         </NuxtLink>
-      </BaseInfoCard>
+      </InfoCard>
 
       <!-- Kontaktformular -->
-      <BasePrivacyAccordion
+      <Accordion
         :title="contactFormTitle"
         customClass="mb-4"
       >
         <p class="text-gray-700 leading-relaxed">
           {{ contactFormContent }}
         </p>
-      </BasePrivacyAccordion>
+      </Accordion>
 
       <!-- Anfrage per E-Mail, Telefon oder Telefax -->
-      <BasePrivacyAccordion
+      <Accordion
         :title="inquiryTitle"
       >
         <p class="text-gray-700 leading-relaxed">
           {{ inquiryContent }}
         </p>
-      </BasePrivacyAccordion>
-    </BasePrivacySection>
+      </Accordion>
+    </ContentSection>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import ContentSection from '~/components/design-system-ui-components/ContentSection.vue'
+import Accordion from '~/components/design-system-ui-components/Accordion.vue'
+import InfoCard from '~/components/design-system-ui-components/InfoCard.vue'
 interface Props {
   backgroundColor?: string
   sectionTitle?: string

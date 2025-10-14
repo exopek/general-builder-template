@@ -334,7 +334,7 @@
 </template>
 
 <script setup lang="ts">
-import BaseButton from '~/components/base/BaseButton.vue'
+import Button from '~/components/design-system-ui-components/Button.vue'
 
 interface UserData {
   age: number | null

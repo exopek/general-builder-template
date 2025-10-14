@@ -64,7 +64,7 @@
             <p class="text-sm text-gray-500 mb-4 leading-relaxed">
               {{ cardDescription }}
             </p>
-            <BaseButton
+            <Button
               :text="buttonText"
               :variant="buttonVariant"
               size="md"
@@ -120,7 +120,7 @@
                 <p class="text-sm md:text-base text-gray-500 mb-6 md:mb-8 leading-relaxed">
                   {{ cardDescription }}
                 </p>
-                <BaseButton
+                <Button
                   :text="buttonText"
                   :variant="buttonVariant"
                   :size="buttonSize || 'md'"
@@ -136,7 +136,7 @@
 </template>
 
 <script setup lang="ts">
-import BaseButton from '~/components/base/BaseButton.vue'
+import Button from '~/components/design-system-ui-components/Button.vue'
 
 interface Props {
   tagline?: string

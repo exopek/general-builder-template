@@ -1,5 +1,5 @@
 <template>
-  <BaseHero
+  <Hero
     :headline="headline"
     :subheadline="subheadline"
     :hero-image="heroImage"
@@ -20,6 +20,8 @@
 </template>
 
 <script setup lang="ts">
+import Hero from '~/components/design-system-section-components/Hero.vue'
+
 interface Statistic {
   value: number;
   label: string;

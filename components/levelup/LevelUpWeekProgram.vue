@@ -24,7 +24,7 @@
 
       <!-- Program Overview Stats -->
       <div v-if="showOverviewStats" class="mb-16">
-        <BaseStatisticGrid
+        <StatisticGrid
           :statistics="overviewStats"
           grid-type="fixed-3"
           gap="md"
@@ -39,7 +39,7 @@
 
       <!-- Week Timeline -->
       <div class="mb-16">
-        <BaseTimeline
+        <Timeline
           :items="programTimeline"
           :orientation="timelineOrientation"
           :variant="timelineVariant"
@@ -58,7 +58,7 @@
           {{ dailyFocusTitle }}
         </h3>
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <BaseEventCard
+          <EventCard
             v-for="(focus, index) in dailyFocusAreas"
             :key="focus.key || index"
             :title="focus.title"
@@ -79,7 +79,7 @@
           {{ workshopsTitle }}
         </h3>
         <div class="grid lg:grid-cols-2 gap-8">
-          <BaseEventCard
+          <EventCard
             v-for="(workshop, index) in workshopHighlights"
             :key="workshop.key || index"
             :title="workshop.title"
@@ -134,7 +134,7 @@
           <h3 class="text-2xl md:text-3xl font-bold mb-4">{{ ctaTitle }}</h3>
           <p class="text-lg mb-8 opacity-90">{{ ctaDescription }}</p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <BaseButton
+            <Button
               v-if="primaryCtaText"
               :text="primaryCtaText"
               :href="primaryCtaUrl"
@@ -150,6 +150,10 @@
 </template>
 
 <script setup lang="ts">
+import EventCard from '~/components/design-system-ui-components/EventCard.vue'
+import Button from '~/components/design-system-ui-components/Button.vue'
+import StatisticGrid from '~/components/design-system-section-components/StatisticGrid.vue'
+import Timeline from '~/components/design-system-section-components/Timeline.vue'
 interface TimelineItem {
   key?: string
   title: string

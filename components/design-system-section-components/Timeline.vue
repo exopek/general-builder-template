@@ -84,7 +84,7 @@
           <slot :name="`item-${index}`" :item="item" :index="index" />
 
           <!-- CTA Button -->
-          <BaseButton
+          <Button
             v-if="item.ctaText"
             :text="item.ctaText"
             :href="item.ctaUrl"
@@ -104,6 +104,7 @@
 </template>
 
 <script setup lang="ts">
+import Button from '~/components/design-system-ui-components/Button.vue'
 interface TimelineItem {
   key?: string
   title: string

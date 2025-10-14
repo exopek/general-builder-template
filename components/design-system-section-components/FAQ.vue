@@ -50,7 +50,7 @@
 
         <!-- Category Filter -->
         <div v-if="showCategories" class="flex flex-wrap gap-4 justify-center">
-          <BaseButton
+          <Button
             text="Alle"
             variant="ghost"
             size="sm"
@@ -61,7 +61,7 @@
             @click="selectCategory('all')"
             :aria-pressed="selectedCategory === 'all'"
           />
-          <BaseButton
+          <Button
             v-for="category in categories"
             :key="category.id"
             :text="category.name"
@@ -191,7 +191,7 @@
                     <div class="flex-1 flex items-center">
                       <p class="text-sm text-gray-800">{{ contactCtaText }}</p>
                     </div>
-                    <BaseButton
+                    <Button
                       :text="contactButtonText"
                       :href="contactButtonUrl"
                       variant="primary"
@@ -232,7 +232,7 @@
                     <div class="flex-1 flex items-center">
                       <p class="text-sm text-gray-800">{{ contactCtaText }}</p>
                     </div>
-                    <BaseButton
+                    <Button
                       :text="contactButtonText"
                       :href="contactButtonUrl"
                       variant="primary"
@@ -253,13 +253,13 @@
           <p class="text-lg opacity-90 mb-8">{{ contactSectionDescription }}</p>
 
           <div class="flex flex-col sm:flex-row gap-4 lg:gap-6 justify-center">
-            <BaseButton
+            <Button
               :text="primaryContactText"
               :href="primaryContactUrl"
               variant="secondary"
               size="lg"
             />
-            <BaseButton
+            <Button
               v-if="secondaryContactText"
               :text="secondaryContactText"
               :href="secondaryContactUrl"
@@ -287,6 +287,7 @@
 </template>
 
 <script setup lang="ts">
+import Button from '~/components/design-system-ui-components/Button.vue'
 interface FaqItem {
   question: string
   answer: string

@@ -30,7 +30,7 @@
           </h3>
           <p class="text-gray-600 mt-2">{{ summaryStatsSubtitle }}</p>
         </div>
-        <BaseStatisticGrid
+        <StatisticGrid
           :statistics="summaryStats"
           grid-type="fixed-4"
           gap="lg"
@@ -252,6 +252,7 @@
 </template>
 
 <script setup lang="ts">
+import StatisticGrid from '~/components/design-system-section-components/StatisticGrid.vue'
 interface Testimonial {
   key?: string
   name: string

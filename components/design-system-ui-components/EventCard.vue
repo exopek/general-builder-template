@@ -70,7 +70,7 @@
     <!-- Footer Section -->
     <div v-if="hasFooter" class="card-footer mt-6">
       <slot name="footer">
-        <BaseButton
+        <Button
           v-if="ctaText"
           :text="ctaText"
           :href="ctaUrl"
@@ -85,6 +85,7 @@
 </template>
 
 <script setup lang="ts">
+import Button from '~/components/design-system-ui-components/Button.vue'
 interface Props {
   // Content
   title?: string

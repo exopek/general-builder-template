@@ -1,5 +1,5 @@
 <template>
-  <BaseHero
+  <Hero
     :headline="processedHeadline"
     :subheadline="subheadline"
     :badge-text="badgeText"
@@ -80,10 +80,11 @@
         />
       </div>
     </template>
-  </BaseHero>
+  </Hero>
 </template>
 
 <script setup lang="ts">
+import Hero from '~/components/design-system-section-components/Hero.vue'
 interface StatisticData {
   key?: string
   value: number

@@ -1,5 +1,5 @@
 <template>
-  <BaseUSPGrid
+  <USPGrid
     :tagline="tagline"
     :headline="headline"
     :description="description"
@@ -7,7 +7,7 @@
     :background-color="backgroundColor"
     :show-cta="showCta"
   >
-    <BaseUSPCard
+    <USPCard
       v-for="(card, index) in uspCards"
       :key="index"
       :title="card.title"
@@ -22,11 +22,14 @@
           <path v-if="card.iconPath" :fill-rule="card.iconFillRule || 'evenodd'" :d="card.iconPath" :clip-rule="card.iconClipRule || 'evenodd'" />
         </svg>
       </template>
-    </BaseUSPCard>
-  </BaseUSPGrid>
+    </USPCard>
+  </USPGrid>
 </template>
 
 <script setup lang="ts">
+import USPGrid from '~/components/design-system-section-components/USPGrid.vue'
+import USPCard from '~/components/design-system-ui-components/USPCard.vue'
+
 interface USPCard {
   title: string;
   description: string;

@@ -44,8 +44,8 @@
 </template>
 
 <script setup lang="ts">
-import BaseButton from '~/components/base/BaseButton.vue'
-import BaseModal from '~/components/base/BaseModal.vue'
+import Button from '~/components/design-system-ui-components/Button.vue'
+import Modal from '~/components/design-system-ui-components/Modal.vue'
 import SevenWeekQuestionnaire from '~/components/composite/SevenWeekQuestionnaire.vue'
 
 interface UserData {

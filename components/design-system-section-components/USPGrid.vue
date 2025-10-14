@@ -38,7 +38,7 @@
 
       <!-- Optional CTA Button -->
       <div v-if="showCta && ctaText" class="text-center mt-12 md:mt-16">
-        <BaseButton
+        <Button
           :text="ctaText"
           :href="ctaUrl"
           :variant="ctaVariant"
@@ -50,6 +50,7 @@
 </template>
 
 <script setup lang="ts">
+import Button from '~/components/design-system-ui-components/Button.vue'
 interface Props {
   // Header
   showHeader?: boolean

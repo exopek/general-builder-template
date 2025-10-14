@@ -47,7 +47,7 @@
       </div>
 
       <!-- Results Statistics -->
-      <BaseStatisticGrid
+      <StatisticGrid
         v-if="showStatistics"
         :statistics="statisticsData"
         grid-type="fixed-4"
@@ -260,14 +260,14 @@
 
               <!-- Detailed Stats -->
               <div class="grid grid-cols-2 gap-4">
-                <BaseStatistic
+                <Statistic
                   :value="selectedResult.weightLoss"
                   label="Gewichtsverlust"
                   suffix="kg"
                   variant="highlight"
                   size="sm"
                 />
-                <BaseStatistic
+                <Statistic
                   :value="selectedResult.duration"
                   label="Dauer"
                   suffix="Wochen"
@@ -325,6 +325,8 @@
 </template>
 
 <script setup lang="ts">
+import Statistic from '~/components/design-system-section-components/Statistic.vue'
+import StatisticGrid from '~/components/design-system-section-components/StatisticGrid.vue'
 interface TransformationResult {
   name: string
   age: number

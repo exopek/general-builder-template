@@ -1,11 +1,11 @@
 <template>
   <div :style="{ backgroundColor }" class="py-8 md:py-12">
     <div class="container">
-    <BasePrivacySection :title="sectionTitle">
-      <BasePrivacyGrid :columns="gridColumns">
+    <ContentSection :title="sectionTitle">
+      <ContentGrid :columns="gridColumns">
 
         <!-- YouTube -->
-        <BasePrivacyGridItem
+        <ContentGridItem
           :title="youtubeTitle"
           :icon="youtubeIcon"
           bgColor="white"
@@ -14,10 +14,10 @@
           <p class="text-sm text-gray-700 leading-relaxed">
             {{ youtubeDescription }}
           </p>
-        </BasePrivacyGridItem>
+        </ContentGridItem>
 
         <!-- Google Fonts -->
-        <BasePrivacyGridItem
+        <ContentGridItem
           :title="fontsTitle"
           :icon="fontsIcon"
           bgColor="white"
@@ -26,10 +26,10 @@
           <p class="text-sm text-gray-700 leading-relaxed">
             {{ fontsDescription }}
           </p>
-        </BasePrivacyGridItem>
+        </ContentGridItem>
 
         <!-- Google Maps -->
-        <BasePrivacyGridItem
+        <ContentGridItem
           :title="mapsTitle"
           :icon="mapsIcon"
           bgColor="white"
@@ -38,14 +38,17 @@
           <p class="text-sm text-gray-700 leading-relaxed">
             {{ mapsDescription }}
           </p>
-        </BasePrivacyGridItem>
-      </BasePrivacyGrid>
-    </BasePrivacySection>
+        </ContentGridItem>
+      </ContentGrid>
+    </ContentSection>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import ContentSection from '~/components/design-system-ui-components/ContentSection.vue'
+import ContentGrid from '~/components/design-system-ui-components/ContentGrid.vue'
+import ContentGridItem from '~/components/design-system-ui-components/ContentGridItem.vue'
 interface Props {
   backgroundColor?: string
   sectionTitle?: string
