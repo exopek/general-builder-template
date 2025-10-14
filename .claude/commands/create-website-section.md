@@ -10,12 +10,14 @@ Before starting, analyze the requirements:
 
 1. **Component Type Decision**:
    - Is this a **Section Component** (complete, standalone section for Builder.io)?
-   - Or a **Base Component** (reusable building block used by sections)?
-   - **Rule**: Only Section Components get registered in Builder.io
+   - Or a **UI Component** (small, reusable building block used by sections)?
+   - Or a **Content Wrapper** (domain-specific implementation)?
+   - **Rule**: Only Section Components and Content Wrappers get registered in Builder.io
 
 2. **Existing Components Check**:
-   - Search `components/base/` for similar components
-   - Search `components/sections/` for similar patterns
+   - Search `components/design-system-ui-components/` for UI primitives
+   - Search `components/design-system-section-components/` for sections
+   - Search `components/[domain]/` for similar content wrappers
    - **Reuse before creating new**
 
 3. **Design Tokens Review**:
@@ -29,7 +31,9 @@ Before starting, analyze the requirements:
 
 ### Section Component Structure
 
-**Location**: `components/sections/[category]/[ComponentName].vue`
+**Location**: `components/design-system-section-components/[ComponentName].vue`
+
+**Naming**: WITHOUT "Base" prefix (e.g., `Hero.vue`, not `BaseHero.vue`)
 
 **Template Pattern** (with backgroundColor property):
 ```vue
@@ -37,12 +41,14 @@ Before starting, analyze the requirements:
   <div :style="{ backgroundColor }" class="py-8 md:py-12">
     <div class="container">
       <!-- Section Content -->
-      <BaseExampleComponent :prop="value" />
+      <Button variant="primary">Click me</Button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import Button from '~/components/design-system-ui-components/Button.vue'
+
 interface Props {
   backgroundColor?: string
   // ... other props
@@ -57,9 +63,11 @@ withDefaults(defineProps<Props>(), {
 
 **⚠️ Critical**: Two closing `</div>` tags required (outer backgroundColor + inner container)!
 
-### Base Component Structure
+### UI Component Structure
 
-**Location**: `components/base/Base[ComponentName].vue`
+**Location**: `components/design-system-ui-components/[ComponentName].vue`
+
+**Naming**: WITHOUT "Base" prefix (e.g., `Button.vue`, not `BaseButton.vue`)
 
 **Template Pattern**:
 ```vue
@@ -140,7 +148,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 ### Section Component Registration
 
-**Only register Section Components**, not Base Components!
+**Only register Section Components & Content Wrappers**, NOT UI Components!
 
 **In `plugins/custom-components.ts`**:
 ```typescript
@@ -262,11 +270,13 @@ const props = withDefaults(defineProps<Props>(), {
 
 Now create the component with all guidelines above in mind. Think carefully about:
 
-1. **Component architecture** (Base vs Section)
-2. **Template structure** (proper wrapper divs)
-3. **Styling** (tokens, Tailwind, no `.card` class)
-4. **Contrast** (text colors vs backgrounds)
-5. **Responsiveness** (mobile-first)
-6. **Builder.io integration** (only sections, proper inputs)
+1. **Component architecture** (UI vs Section vs Content Wrapper)
+2. **Location** (design-system-ui-components/ vs design-system-section-components/ vs domain/)
+3. **Naming** (NO "Base" prefix for new components)
+4. **Template structure** (proper wrapper divs)
+5. **Styling** (tokens, Tailwind, no `.card` class)
+6. **Contrast** (text colors vs backgrounds)
+7. **Responsiveness** (mobile-first)
+8. **Builder.io integration** (only sections & wrappers, proper inputs)
 
 Keep the implementation clean, reusable, and following all design system principles from CLAUDE.md.

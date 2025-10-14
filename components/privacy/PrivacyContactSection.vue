@@ -1,7 +1,7 @@
 <template>
   <div :style="{ backgroundColor }" class="py-8 md:py-12">
     <div class="container">
-    <BaseContactCard
+    <ContactCard
       :title="title"
       :description="description"
       :email="email"
@@ -29,6 +29,7 @@
 </template>
 
 <script setup lang="ts">
+import ContactCard from '~/components/design-system-ui-components/ContactCard.vue'
 interface Props {
   backgroundColor?: string
   title?: string

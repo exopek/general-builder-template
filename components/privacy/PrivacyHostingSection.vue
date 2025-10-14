@@ -1,8 +1,8 @@
 <template>
   <div :style="{ backgroundColor }" class="py-8 md:py-12">
     <div class="container">
-    <BasePrivacySection :title="sectionTitle">
-      <BaseInfoCard
+    <ContentSection :title="sectionTitle">
+      <InfoCard
         :title="cardTitle"
         borderPosition="left"
         borderColor="accent-blue"
@@ -25,13 +25,15 @@
             Website: <a :href="hosterWebsite" target="_blank" rel="noopener" class="text-primary hover:underline">{{ hosterWebsiteDisplay }}</a>
           </p>
         </div>
-      </BaseInfoCard>
-    </BasePrivacySection>
+      </InfoCard>
+    </ContentSection>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import ContentSection from '~/components/design-system-ui-components/ContentSection.vue'
+import InfoCard from '~/components/design-system-ui-components/InfoCard.vue'
 interface Props {
   backgroundColor?: string
   sectionTitle?: string

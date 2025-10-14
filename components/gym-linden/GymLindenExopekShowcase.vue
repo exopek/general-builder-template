@@ -1,5 +1,5 @@
 <template>
-  <BaseAlternatingFeatures
+  <AlternatingFeatures
     :tagline="tagline"
     :headline="headline"
     :subheadline="subheadline"
@@ -9,6 +9,8 @@
 </template>
 
 <script setup lang="ts">
+import AlternatingFeatures from '~/components/design-system-section-components/AlternatingFeatures.vue'
+
 interface Feature {
   number: string;
   heading: string;

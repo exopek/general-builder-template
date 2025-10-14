@@ -126,21 +126,21 @@
 
                   <!-- Achievement Stats -->
                   <div class="grid grid-cols-3 gap-4 pt-4">
-                    <BaseStatistic
+                    <Statistic
                       :value="testimonial.weightLoss"
                       label="Gewichtsverlust"
                       suffix="kg"
                       variant="highlight"
                       size="sm"
                     />
-                    <BaseStatistic
+                    <Statistic
                       :value="testimonial.durationWeeks"
                       label="Dauer"
                       suffix="Wochen"
                       variant="primary"
                       size="sm"
                     />
-                    <BaseStatistic
+                    <Statistic
                       :value="testimonial.satisfactionScore"
                       label="Zufriedenheit"
                       suffix="%"
@@ -211,7 +211,7 @@
       <div v-if="showSummaryStats" class="text-center">
         <h3 class="text-2xl font-bold text-gray-900 mb-8">{{ summaryStatsHeadline }}</h3>
 
-        <BaseStatisticGrid
+        <StatisticGrid
           :statistics="summaryStatsData"
           grid-type="fixed-4"
           gap="md"
@@ -249,6 +249,8 @@
 </template>
 
 <script setup lang="ts">
+import Statistic from '~/components/design-system-section-components/Statistic.vue'
+import StatisticGrid from '~/components/design-system-section-components/StatisticGrid.vue'
 interface Testimonial {
   name: string
   details: string

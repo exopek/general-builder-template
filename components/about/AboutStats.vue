@@ -29,7 +29,7 @@
       </div>
 
       <!-- Main Stats Grid -->
-      <BaseStatisticGrid
+      <StatisticGrid
         v-if="stats && stats.length > 0"
         :statistics="stats"
         grid-type="auto"
@@ -48,6 +48,7 @@
 </template>
 
 <script setup lang="ts">
+import StatisticGrid from '~/components/design-system-section-components/StatisticGrid.vue'
 interface Stat {
   label: string
   value: number

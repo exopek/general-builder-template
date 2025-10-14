@@ -1,11 +1,11 @@
 <template>
   <div :style="{ backgroundColor }" class="py-8 md:py-12">
     <div class="container">
-    <BasePrivacySection :title="sectionTitle">
-      <BasePrivacyGrid :columns="gridColumns">
+    <ContentSection :title="sectionTitle">
+      <ContentGrid :columns="gridColumns">
 
         <!-- Auskunft -->
-        <BasePrivacyGridItem
+        <ContentGridItem
           :title="right1Title"
           :description="right1Description"
           :icon="rightIcon"
@@ -14,7 +14,7 @@
         />
 
         <!-- Berichtigung -->
-        <BasePrivacyGridItem
+        <ContentGridItem
           :title="right2Title"
           :description="right2Description"
           :icon="rightIcon"
@@ -23,7 +23,7 @@
         />
 
         <!-- Löschung -->
-        <BasePrivacyGridItem
+        <ContentGridItem
           :title="right3Title"
           :description="right3Description"
           :icon="rightIcon"
@@ -32,20 +32,23 @@
         />
 
         <!-- Widerruf -->
-        <BasePrivacyGridItem
+        <ContentGridItem
           :title="right4Title"
           :description="right4Description"
           :icon="rightIcon"
           bgColor="gray"
           :hoverEffect="true"
         />
-      </BasePrivacyGrid>
-    </BasePrivacySection>
+      </ContentGrid>
+    </ContentSection>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import ContentSection from '~/components/design-system-ui-components/ContentSection.vue'
+import ContentGrid from '~/components/design-system-ui-components/ContentGrid.vue'
+import ContentGridItem from '~/components/design-system-ui-components/ContentGridItem.vue'
 interface Props {
   backgroundColor?: string
   sectionTitle?: string

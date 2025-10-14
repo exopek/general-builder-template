@@ -1,5 +1,5 @@
 <template>
-  <BaseScheduleSection
+  <ScheduleSection
     :tagline="tagline"
     :headline="headline"
     :subheadline="subheadline"
@@ -11,6 +11,8 @@
 </template>
 
 <script setup lang="ts">
+import ScheduleSection from '~/components/design-system-section-components/ScheduleSection.vue'
+
 interface TimeSlot {
   day: string;
   time: string;

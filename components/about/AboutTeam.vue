@@ -117,7 +117,7 @@
           </h3>
         </div>
 
-        <BaseStatisticGrid
+        <StatisticGrid
           :statistics="teamStatsData"
           grid-type="fixed-4"
           gap="lg"
@@ -236,6 +236,7 @@
 </template>
 
 <script setup lang="ts">
+import StatisticGrid from '~/components/design-system-section-components/StatisticGrid.vue'
 interface SocialLink {
   platform: string
   url: string

@@ -33,7 +33,7 @@
 
       <!-- Action Buttons -->
       <div v-if="hasActions" class="cta-actions" :class="actionsClasses">
-        <BaseButton
+        <Button
           v-if="primaryText"
           :text="primaryText"
           :href="primaryUrl"
@@ -43,7 +43,7 @@
           :disabled="primaryDisabled"
           class="cta-primary-button"
         />
-        <BaseButton
+        <Button
           v-if="secondaryText"
           :text="secondaryText"
           :href="secondaryUrl"
@@ -79,6 +79,7 @@
 </template>
 
 <script setup lang="ts">
+import Button from '~/components/design-system-ui-components/Button.vue'
 interface TrustIndicator {
   text?: string
   icon?: string

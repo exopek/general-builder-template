@@ -1,7 +1,7 @@
 <template>
   <section class="py-16 md:py-20 lg:py-24 bg-gray-900">
     <div class="container mx-auto px-4 md:px-6">
-      <BaseCTA
+      <CTA
         :title="title"
         :description="description"
         :primary-text="primaryText"
@@ -17,6 +17,8 @@
 </template>
 
 <script setup lang="ts">
+import CTA from '~/components/design-system-section-components/CTA.vue'
+
 const props = withDefaults(defineProps<{
   title?: string;
   description?: string;

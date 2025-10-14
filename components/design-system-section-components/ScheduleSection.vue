@@ -74,7 +74,7 @@
 
       <!-- CTA Button -->
       <div v-if="showCta" class="text-center">
-        <BaseButton
+        <Button
           :text="ctaText"
           :href="ctaUrl"
           variant="gradient"
@@ -86,6 +86,7 @@
 </template>
 
 <script setup lang="ts">
+import Button from '~/components/design-system-ui-components/Button.vue'
 interface TimeSlot {
   day: string
   time: string

@@ -63,14 +63,14 @@
 
             <!-- Buttons -->
             <div class="flex flex-wrap gap-3">
-              <BaseButton
+              <Button
                 v-if="feature.primaryButtonText"
                 :text="feature.primaryButtonText"
                 :href="feature.primaryButtonUrl"
                 variant="primary"
                 size="md"
               />
-              <BaseButton
+              <Button
                 v-if="feature.secondaryButtonText"
                 :text="feature.secondaryButtonText + ' →'"
                 :href="feature.secondaryButtonUrl"
@@ -86,6 +86,7 @@
 </template>
 
 <script setup lang="ts">
+import Button from '~/components/design-system-ui-components/Button.vue'
 interface Feature {
   number: string
   heading: string

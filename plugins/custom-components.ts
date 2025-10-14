@@ -36,42 +36,42 @@ import GymLindenCTA from '~/components/gym-linden/GymLindenCTA.vue';
 import GymLindenFAQ from '~/components/gym-linden/GymLindenFAQ.vue';
 
 // Base Components
-import BaseButton from '~/components/base/BaseButton.vue';
-import BaseHero from '~/components/base/BaseHero.vue';
-import BaseHeroImage from '~/components/base/BaseHeroImage.vue';
-import BaseFAQ from '~/components/base/BaseFAQ.vue';
-import BaseStatistic from '~/components/base/BaseStatistic.vue';
-import BaseStatisticGrid from '~/components/base/BaseStatisticGrid.vue';
-import BaseEventCard from '~/components/base/BaseEventCard.vue';
-import BaseTimeline from '~/components/base/BaseTimeline.vue';
-import BaseCTA from '~/components/base/BaseCTA.vue';
-import BaseModal from '~/components/base/BaseModal.vue';
-import BaseGallerySection from '~/components/base/BaseGallerySection.vue';
-import BaseGalleryGrid from '~/components/base/BaseGalleryGrid.vue';
+import Button from '~/components/design-system-ui-components/Button.vue';
+import Hero from '~/components/design-system-section-components/Hero.vue';
+import HeroImage from '~/components/design-system-section-components/HeroImage.vue';
+import FAQ from '~/components/design-system-section-components/FAQ.vue';
+import Statistic from '~/components/design-system-section-components/Statistic.vue';
+import StatisticGrid from '~/components/design-system-section-components/StatisticGrid.vue';
+import EventCard from '~/components/design-system-ui-components/EventCard.vue';
+import Timeline from '~/components/design-system-section-components/Timeline.vue';
+import CTA from '~/components/design-system-section-components/CTA.vue';
+import Modal from '~/components/design-system-ui-components/Modal.vue';
+import GallerySection from '~/components/design-system-section-components/GallerySection.vue';
+import GalleryGrid from '~/components/design-system-section-components/GalleryGrid.vue';
 
 // Privacy & Legal Sections (use Base components internally)
-import PrivacyHeroSection from '~/components/sections/privacy/PrivacyHeroSection.vue';
-import PrivacyOverviewSection from '~/components/sections/privacy/PrivacyOverviewSection.vue';
-import PrivacyResponsibleSection from '~/components/sections/privacy/PrivacyResponsibleSection.vue';
-import PrivacyHostingSection from '~/components/sections/privacy/PrivacyHostingSection.vue';
-import PrivacyDataCollectionSection from '~/components/sections/privacy/PrivacyDataCollectionSection.vue';
-import PrivacyNewsletterSection from '~/components/sections/privacy/PrivacyNewsletterSection.vue';
-import PrivacyPluginsSection from '~/components/sections/privacy/PrivacyPluginsSection.vue';
-import PrivacyRightsSection from '~/components/sections/privacy/PrivacyRightsSection.vue';
-import PrivacyContactSection from '~/components/sections/privacy/PrivacyContactSection.vue';
-import BaseAlternatingFeatures from '~/components/base/BaseAlternatingFeatures.vue';
-import BaseBentoGrid from '~/components/base/BaseBentoGrid.vue';
-import BaseFeatureShowcase from '~/components/base/BaseFeatureShowcase.vue';
-import BaseFeatureGrid from '~/components/base/BaseFeatureGrid.vue';
-import BaseUSPGrid from '~/components/base/BaseUSPGrid.vue';
-import BaseUSPCard from '~/components/base/BaseUSPCard.vue';
-import BaseScheduleSection from '~/components/base/BaseScheduleSection.vue';
-import BaseComparisonTable from '~/components/base/BaseComparisonTable.vue';
-import BaseContentImageGrid from '~/components/base/BaseContentImageGrid.vue';
-import BaseContentStatsGallery from '~/components/base/BaseContentStatsGallery.vue';
-import BaseStatsFeatureCards from '~/components/base/BaseStatsFeatureCards.vue';
-import BaseContentBentoGrid from '~/components/base/BaseContentBentoGrid.vue';
-import BaseContentSection48 from '~/components/base/BaseContentSection48.vue';
+import PrivacyHeroSection from '~/components/privacy/PrivacyHeroSection.vue';
+import PrivacyOverviewSection from '~/components/privacy/PrivacyOverviewSection.vue';
+import PrivacyResponsibleSection from '~/components/privacy/PrivacyResponsibleSection.vue';
+import PrivacyHostingSection from '~/components/privacy/PrivacyHostingSection.vue';
+import PrivacyDataCollectionSection from '~/components/privacy/PrivacyDataCollectionSection.vue';
+import PrivacyNewsletterSection from '~/components/privacy/PrivacyNewsletterSection.vue';
+import PrivacyPluginsSection from '~/components/privacy/PrivacyPluginsSection.vue';
+import PrivacyRightsSection from '~/components/privacy/PrivacyRightsSection.vue';
+import PrivacyContactSection from '~/components/privacy/PrivacyContactSection.vue';
+import AlternatingFeatures from '~/components/design-system-section-components/AlternatingFeatures.vue';
+import BentoGrid from '~/components/design-system-section-components/BentoGrid.vue';
+import FeatureShowcase from '~/components/design-system-section-components/FeatureShowcase.vue';
+import FeatureGrid from '~/components/design-system-section-components/FeatureGrid.vue';
+import USPGrid from '~/components/design-system-section-components/USPGrid.vue';
+import USPCard from '~/components/design-system-ui-components/USPCard.vue';
+import ScheduleSection from '~/components/design-system-section-components/ScheduleSection.vue';
+import ComparisonTable from '~/components/design-system-section-components/ComparisonTable.vue';
+import ContentImageGrid from '~/components/design-system-section-components/ContentImageGrid.vue';
+import ContentStatsGallery from '~/components/design-system-section-components/ContentStatsGallery.vue';
+import StatsFeatureCards from '~/components/design-system-section-components/StatsFeatureCards.vue';
+import ContentBentoGrid from '~/components/design-system-section-components/ContentBentoGrid.vue';
+import ContentSection48 from '~/components/design-system-section-components/ContentSection48.vue';
 
 // Composite Components
 import SevenWeekQuestionnaire from '~/components/composite/SevenWeekQuestionnaire.vue';
@@ -515,7 +515,7 @@ export const registeredComponents: RegisteredComponent[] = [
 
     // === BASE COMPONENTS ===
     {
-        component: BaseButton,
+        component: Button,
         name: 'BaseButton',
         inputs: [
             { name: 'text', type: 'string', defaultValue: 'Button Text' },
@@ -533,7 +533,7 @@ export const registeredComponents: RegisteredComponent[] = [
     },
 
     {
-        component: BaseHero,
+        component: Hero,
         name: 'BaseHero',
         inputs: [
             // Content
@@ -604,7 +604,7 @@ export const registeredComponents: RegisteredComponent[] = [
     },
 
     {
-        component: BaseHeroImage,
+        component: HeroImage,
         name: 'BaseHeroImage',
         inputs: [
             // Content
@@ -650,7 +650,7 @@ export const registeredComponents: RegisteredComponent[] = [
     },
 
     {
-        component: BaseFAQ,
+        component: FAQ,
         name: 'BaseFAQ',
         inputs: [
             // Content
@@ -732,7 +732,7 @@ export const registeredComponents: RegisteredComponent[] = [
     },
 
     {
-        component: BaseStatistic,
+        component: Statistic,
         name: 'BaseStatistic',
         inputs: [
             // Main data
@@ -770,7 +770,7 @@ export const registeredComponents: RegisteredComponent[] = [
     },
 
     {
-        component: BaseStatisticGrid,
+        component: StatisticGrid,
         name: 'BaseStatisticGrid',
         inputs: [
             // Statistics data
@@ -1268,7 +1268,7 @@ export const registeredComponents: RegisteredComponent[] = [
 
     // === BASE COMPONENTS (NEW) ===
     {
-        component: BaseEventCard,
+        component: EventCard,
         name: 'BaseEventCard',
         inputs: [
             // Content
@@ -1315,7 +1315,7 @@ export const registeredComponents: RegisteredComponent[] = [
     },
 
     {
-        component: BaseTimeline,
+        component: Timeline,
         name: 'BaseTimeline',
         inputs: [
             // Content
@@ -1385,7 +1385,7 @@ export const registeredComponents: RegisteredComponent[] = [
     },
 
     {
-        component: BaseCTA,
+        component: CTA,
         name: 'BaseCTA',
         inputs: [
             // Content
@@ -1715,7 +1715,7 @@ export const registeredComponents: RegisteredComponent[] = [
 
     // === BASE COMPONENTS ===
     {
-        component: BaseModal,
+        component: Modal,
         name: 'BaseModal',
         inputs: [
             { name: 'show', type: 'boolean', defaultValue: false },
@@ -1726,7 +1726,7 @@ export const registeredComponents: RegisteredComponent[] = [
         ]
     },
     {
-        component: BaseGallerySection,
+        component: GallerySection,
         name: 'BaseGallerySection',
         inputs: [
             // Content
@@ -1756,7 +1756,7 @@ export const registeredComponents: RegisteredComponent[] = [
     },
 
     {
-        component: BaseGalleryGrid,
+        component: GalleryGrid,
         name: 'BaseGalleryGrid',
         inputs: [
             // Content
@@ -1790,7 +1790,7 @@ export const registeredComponents: RegisteredComponent[] = [
     },
 
     {
-        component: BaseAlternatingFeatures,
+        component: AlternatingFeatures,
         name: 'BaseAlternatingFeatures',
         inputs: [
             // Section Header
@@ -1859,7 +1859,7 @@ export const registeredComponents: RegisteredComponent[] = [
     },
 
     {
-        component: BaseBentoGrid,
+        component: BentoGrid,
         name: 'BaseBentoGrid',
         inputs: [
             // Section Header
@@ -1929,7 +1929,7 @@ export const registeredComponents: RegisteredComponent[] = [
     },
 
     {
-        component: BaseFeatureShowcase,
+        component: FeatureShowcase,
         name: 'BaseFeatureShowcase',
         inputs: [
             // Section Header
@@ -1965,7 +1965,7 @@ export const registeredComponents: RegisteredComponent[] = [
     },
 
     {
-        component: BaseFeatureGrid,
+        component: FeatureGrid,
         name: 'BaseFeatureGrid',
         inputs: [
             // Section Header
@@ -2037,7 +2037,7 @@ export const registeredComponents: RegisteredComponent[] = [
     },
 
     {
-        component: BaseContentImageGrid,
+        component: ContentImageGrid,
         name: 'BaseContentImageGrid',
         inputs: [
             // Section Header
@@ -2081,7 +2081,7 @@ export const registeredComponents: RegisteredComponent[] = [
     },
 
     {
-        component: BaseContentStatsGallery,
+        component: ContentStatsGallery,
         name: 'BaseContentStatsGallery',
         inputs: [
             // Section Header
@@ -2132,7 +2132,7 @@ export const registeredComponents: RegisteredComponent[] = [
     },
 
     {
-        component: BaseStatsFeatureCards,
+        component: StatsFeatureCards,
         name: 'BaseStatsFeatureCards',
         inputs: [
             // Section Header
@@ -2192,7 +2192,7 @@ export const registeredComponents: RegisteredComponent[] = [
     },
 
     {
-        component: BaseContentBentoGrid,
+        component: ContentBentoGrid,
         name: 'BaseContentBentoGrid',
         inputs: [
             // Section Header
@@ -2237,7 +2237,7 @@ export const registeredComponents: RegisteredComponent[] = [
     },
 
     {
-        component: BaseContentSection48,
+        component: ContentSection48,
         name: 'BaseContentSection48',
         inputs: [
             // Header Section

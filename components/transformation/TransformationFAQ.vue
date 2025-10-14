@@ -1,5 +1,5 @@
 <template>
-  <BaseFAQ
+  <FAQ
     :headline="headline"
     :subheadline="subheadline"
     :badge-text="badgeText"
@@ -57,10 +57,11 @@
         class="w-3 h-3 filter brightness-0 invert"
       />
     </template>
-  </BaseFAQ>
+  </FAQ>
 </template>
 
 <script setup lang="ts">
+import FAQ from '~/components/design-system-section-components/FAQ.vue'
 interface FaqItem {
   question: string
   answer: string

@@ -108,7 +108,7 @@
             />
             <!-- Fallback: Values stats -->
             <div v-else class="grid grid-cols-2 gap-4">
-              <BaseStatistic
+              <Statistic
                 :value="98"
                 label="Mitgliederzufriedenheit"
                 suffix="%"
@@ -116,7 +116,7 @@
                 variant="primary"
                 size="sm"
               />
-              <BaseStatistic
+              <Statistic
                 :value="8"
                 label="Qualifizierte Trainer"
                 suffix=""
@@ -169,6 +169,7 @@
 </template>
 
 <script setup lang="ts">
+import Statistic from '~/components/design-system-section-components/Statistic.vue'
 interface Value {
   title: string
   description: string

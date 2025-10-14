@@ -13,7 +13,7 @@
 
       <div v-if="buttonText || hasButtonSlot" class="flex-shrink-0">
         <slot name="button">
-          <BaseButton
+          <Button
             v-if="buttonText"
             :text="buttonText"
             :href="buttonHref"
@@ -27,6 +27,7 @@
 </template>
 
 <script setup lang="ts">
+import Button from '~/components/design-system-ui-components/Button.vue'
 interface Props {
   title?: string
   description?: string

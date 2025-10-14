@@ -50,11 +50,36 @@ pages/
   [slug].vue       # Dynamic Builder.io pages
 
 components/
-  base/            # Primitives (Button, Input, Card, Icon)
-  layout/          # Header, Footer, Grid
-  composite/       # Combined elements (e.g. FormSections)
-  feature/         # Domain-specific features (e.g. GymOfferCard)
-  builder/         # Components prepared for Builder.io
+  design-system-ui-components/       # UI Primitives (NOT in Builder.io)
+    Button.vue                        # Button component
+    Modal.vue                         # Modal/Dialog
+    InfoCard.vue                      # Info cards
+    ContactCard.vue                   # Contact display
+    EventCard.vue                     # Event cards
+    USPCard.vue                       # USP cards
+
+  design-system-section-components/  # Complete Sections (YES in Builder.io)
+    Hero.vue                          # Hero sections
+    HeroImage.vue                     # Hero with image
+    FAQ.vue                           # FAQ sections
+    CTA.vue                           # Call-to-action
+    Timeline.vue                      # Timeline
+    GalleryGrid.vue                   # Gallery
+    ContentSection48.vue              # Content sections
+    ... (32 total section components)
+
+  [domain]/                          # Content Wrappers (domain-specific)
+    gym-linden/                       # Gym Linden content
+    transformation/                   # Transformation program
+    about/                            # About page content
+    levelup/                          # Level Up program
+
+  layout/                            # Layout components
+    Header.vue, Footer.vue
+
+  booking/                           # Booking features
+  admin/                             # Admin features
+  user/                              # User features
 
 config/
   nuxt.config.ts   # Nuxt + Cloudflare + Builder.io
@@ -91,12 +116,30 @@ config/
 
 **Goal:** Build a Design System with reusable components, consistent across all pages, dashboards, and Builder.io integrations.
 
-### Principles
+### Component Architecture
 
-**Atomic Design (lightweight)**
-- **Base** = primitives (Button, Input, Card, Icon)
-- **Composite** = combinations of Base/Layout
-- **Feature** = domain-specific, built on Base/Composite
+**3-Tier System:**
+
+1. **UI Components** (`design-system-ui-components/`)
+   - Small, reusable building blocks
+   - Buttons, Modals, Cards, Form elements
+   - **NOT registered in Builder.io**
+   - Used internally by Section Components
+
+2. **Section Components** (`design-system-section-components/`)
+   - Complete, standalone sections
+   - Hero, FAQ, Timeline, Gallery, etc.
+   - **REGISTERED in Builder.io**
+   - Generic, no domain-specific content
+   - Names WITHOUT "Base" prefix (e.g., `Hero.vue`, not `BaseHero.vue`)
+
+3. **Content Wrappers** (`components/[domain]/`)
+   - Domain-specific implementations
+   - Use Section Components internally
+   - Examples: `gym-linden/`, `transformation/`, `about/`
+   - **CAN be registered in Builder.io** with specific content
+
+### Principles
 
 **Reusability**
 - No single-use components
@@ -107,6 +150,7 @@ config/
 - No hardcoded values (#hex, px, etc.)
 
 **Builder.io Compatibility**
+- Only Section Components and Content Wrappers in Builder.io
 - Props must have defaults for visual editor
 - Always register in `custom-components.ts`
 
@@ -114,10 +158,12 @@ config/
 
 ## Component Rules
 
-- Always check `base/` before creating a new component
+- **UI Components**: Check `design-system-ui-components/` before creating new
+- **Sections**: Check `design-system-section-components/` for existing sections
 - Use props instead of variant-specific classes (`<Button variant="primary" />`)
 - Templates under 80 lines → split if larger
 - Document props with JSDoc/TS comments
+- Section component names WITHOUT "Base" prefix
 
 ---
 
@@ -125,11 +171,20 @@ config/
 
 ### Adding New Builder.io Components
 
-1. Create Vue component (`components/builder/`)
-2. Register in `plugins/custom-components.ts`
-3. Define input schema + props
-4. Test in Builder.io editor
-5. Document component props
+**For Section Components:**
+1. Create Vue component in `components/design-system-section-components/`
+2. Use descriptive name WITHOUT "Base" prefix (e.g., `ContactSection.vue`)
+3. Import UI Components from `design-system-ui-components/`
+4. Register in `plugins/custom-components.ts`
+5. Define input schema + props with meaningful defaults
+6. Test in Builder.io editor
+7. Document component props
+
+**For Content Wrappers:**
+1. Create in `components/[domain]/` (e.g., `gym-linden/`)
+2. Use Section Components internally
+3. Add domain-specific content and styling
+4. Register in `plugins/custom-components.ts` if needed in Builder.io
 
 ---
 
@@ -158,10 +213,16 @@ config/
 
 ## Component Development Rules
 
-- Reuse before creating new
-- Create base component before creating specific component, then reuse base component to create specific
+- **Reuse before creating new**
+- **Check design-system-ui-components/ first** for existing UI primitives
+- **Check design-system-section-components/** for existing sections
+- Create UI Component → then Section Component → then Content Wrapper
 - Props + slots for variations
 - Accessible markup (semantic HTML, ARIA)
+- Import paths:
+  - UI: `~/components/design-system-ui-components/[Name].vue`
+  - Sections: `~/components/design-system-section-components/[Name].vue`
+  - Domain: `~/components/[domain]/[Name].vue`
 
 ---
 
@@ -209,28 +270,19 @@ config/
 
 ---
 
-## Future Development Notes
-
-See `specs/plan.md` for planned features:
-- Authentication & roles
-- Course booking system
-- Admin panel
-- Pinia stores for API communication
-- Separate user & admin dashboards
-
----
-
 ## 🔑 Quick Reference / TL;DR
 
 ```
 ✅ Use design tokens from global.css
-✅ Structure components into base/composite/feature
+✅ 3-tier structure: UI Components → Section Components → Content Wrappers
 ✅ Props + slots for variations, no duplication
-✅ Always register Builder.io components in custom-components.ts
+✅ Register Section Components & Content Wrappers in Builder.io
 ✅ Reuse existing components before creating new ones
+✅ Section names WITHOUT "Base" prefix
 
 ❌ No inline styles or hardcoded colors (#hex)
 ❌ No oversized templates (>80 lines)
 ❌ No one-off components built only for a single page
+❌ Don't register UI Components in Builder.io
 ```
 ```

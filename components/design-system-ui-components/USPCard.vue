@@ -42,7 +42,7 @@
 
     <!-- Optional Link/Button -->
     <div v-if="linkText" class="mt-6">
-      <BaseButton
+      <Button
         :text="linkText"
         :href="linkUrl"
         variant="ghost"
@@ -54,6 +54,7 @@
 </template>
 
 <script setup lang="ts">
+import Button from '~/components/design-system-ui-components/Button.vue'
 interface Props {
   title: string
   description: string

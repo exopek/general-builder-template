@@ -96,7 +96,7 @@
 
       <!-- Bottom CTA (optional) -->
       <div v-if="showCta" class="text-center mt-12">
-        <BaseButton
+        <Button
           :text="ctaText"
           :href="ctaUrl"
           variant="gradient"
@@ -108,6 +108,7 @@
 </template>
 
 <script setup lang="ts">
+import Button from '~/components/design-system-ui-components/Button.vue'
 interface ComparisonRow {
   feature: string
   traditional: string
