@@ -2953,27 +2953,48 @@ export default defineNuxtPlugin(() => {
               value: 'var(--color-white, #FFFFFF)'
             },
             {
+              name: 'Gray 50',
+              value: 'var(--color-gray-50, #FAFAFA)'
+            },
+            {
               name: 'Gray 100',
               value: 'var(--color-gray-100, #F5F5F5)'
+            },
+            {
+              name: 'Gray 200',
+              value: 'var(--color-gray-200, #EEEEEE)'
             },
             {
               name: 'Gray 300',
               value: 'var(--color-gray-300, #E0E0E0)'
             },
             {
+              name: 'Gray 400',
+              value: 'var(--color-gray-400, #BDBDBD)'
+            },
+            {
               name: 'Gray 500',
               value: 'var(--color-gray-500, #9E9E9E)'
+            },
+            {
+              name: 'Gray 600',
+              value: 'var(--color-gray-600, #757575)'
             },
             {
               name: 'Gray 700',
               value: 'var(--color-gray-700, #616161)'
             },
             {
+              name: 'Gray 800',
+              value: 'var(--color-gray-800, #424242)'
+            },
+            {
               name: 'Gray 900',
               value: 'var(--color-gray-900, #212121)'
             },
-            { name: 'Primary Gradient',
-              value: 'var(--gradient-primary, linear-gradient(135deg, #FF6B35 0%, #1B365D 100%))'
+            {
+              name: 'Black',
+              value: 'var(--color-black, #000000)'
             }
           ],
           spacing: [
