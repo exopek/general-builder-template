@@ -53,7 +53,11 @@ watchEffect(() => {
         {
           property: 'og:title',
           content: `${content.value.data.title}`
-        }/* ,
+        },
+        ...(content.value.data.facebookDomainVerification ? [{
+          name: 'facebook-domain-verification',
+          content: content.value.data.facebookDomainVerification
+        }] : [])/* ,
         {
           property: 'og:description',
           content: article.excerpt || 'Entdecke wertvolle Tipps und Insights zu Fitness und Training.'
