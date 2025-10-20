@@ -275,13 +275,114 @@ export const registeredComponents: RegisteredComponent[] = [
             { name: 'badgeText', type: 'string', defaultValue: 'Bewährtes System' },
             { name: 'currentWeek', type: 'number', defaultValue: 3 },
             { name: 'progressPercentage', type: 'number', defaultValue: 45 },
+
+            // Timeline Weeks Configuration
+            {
+                name: 'timelineWeeks',
+                type: 'list',
+                subFields: [
+                    { name: 'title', type: 'string', defaultValue: 'Woche Titel' },
+                    { name: 'description', type: 'text', defaultValue: 'Beschreibung der Woche' },
+                    { name: 'emoji', type: 'string', defaultValue: '💪' },
+                    { name: 'goals', type: 'list', subFields: [
+                        { name: 'goal', type: 'string', defaultValue: 'Ziel' }
+                    ]},
+                    { name: 'results', type: 'string', defaultValue: '' }
+                ],
+                defaultValue: [
+                    {
+                        title: 'Fundament schaffen',
+                        description: 'Grundlagen des Trainings erlernen und Gewohnheiten etablieren',
+                        emoji: '🏗️',
+                        goals: [
+                            { goal: 'Trainingsroutine entwickeln' },
+                            { goal: 'Ernährungsplan einführen' },
+                            { goal: 'Ziele definieren' }
+                        ]
+                    },
+                    {
+                        title: 'Intensität steigern',
+                        description: 'Training intensivieren und erste Erfolge sehen',
+                        emoji: '💪',
+                        goals: [
+                            { goal: 'Gewichte erhöhen' },
+                            { goal: 'Cardio ausbauen' },
+                            { goal: 'Motivation aufrechterhalten' }
+                        ]
+                    },
+                    {
+                        title: 'Durchbruch erleben',
+                        description: 'Plateau überwinden und neue Kraftlevel erreichen',
+                        emoji: '🚀',
+                        goals: [
+                            { goal: 'Neue Übungen integrieren' },
+                            { goal: 'Ernährung optimieren' },
+                            { goal: 'Erholung verbessern' }
+                        ]
+                    },
+                    {
+                        title: 'Stabilität finden',
+                        description: 'Fortschritte konsolidieren und Technik verfeinern',
+                        emoji: '⚖️',
+                        goals: [
+                            { goal: 'Technik perfektionieren' },
+                            { goal: 'Routine festigen' },
+                            { goal: 'Kraftzuwachs messen' }
+                        ]
+                    },
+                    {
+                        title: 'Grenzen überwinden',
+                        description: 'Persönliche Bestleistungen erreichen und neue Ziele setzen',
+                        emoji: '🎯',
+                        goals: [
+                            { goal: 'Neue Rekorde aufstellen' },
+                            { goal: 'Schwächen ausmerzen' },
+                            { goal: 'Mentale Stärke' }
+                        ]
+                    },
+                    {
+                        title: 'Vollgas geben',
+                        description: 'Maximale Intensität für die letzten großen Fortschritte',
+                        emoji: '🔥',
+                        goals: [
+                            { goal: 'Alles geben' },
+                            { goal: 'Kondition maximieren' },
+                            { goal: 'Letzter Schliff' }
+                        ]
+                    },
+                    {
+                        title: 'Erfolg feiern',
+                        description: 'Transformation abschließen und Erfolg würdigen',
+                        emoji: '🏆',
+                        goals: [
+                            { goal: 'Erfolg messen' },
+                            { goal: 'Fotos vergleichen' },
+                            { goal: 'Zukunft planen' }
+                        ]
+                    }
+                ]
+            },
+
+            // Overall Stats
             { name: 'showOverallStats', type: 'boolean', defaultValue: true },
+            { name: 'totalCoursesPerWeek', type: 'number', defaultValue: 16 },
+            { name: 'averageWeightLoss', type: 'number', defaultValue: 8.2 },
+            { name: 'completionRate', type: 'number', defaultValue: 94 },
+            { name: 'satisfactionRate', type: 'number', defaultValue: 98 },
+
+            // CTA Section
             { name: 'showCta', type: 'boolean', defaultValue: true },
             { name: 'ctaHeadline', type: 'string', defaultValue: 'Starte deine eigene 7-Wochen Transformation' },
+            { name: 'ctaDescription', type: 'text', defaultValue: 'Schließe dich über 2.800 erfolgreichen Teilnehmern an und verwandle deinen Körper in nur 7 Wochen.' },
             { name: 'primaryCtaText', type: 'string', defaultValue: 'Jetzt anmelden' },
             { name: 'primaryCtaUrl', type: 'url', defaultValue: '#anmeldung' },
             { name: 'secondaryCtaText', type: 'string', defaultValue: 'Kostenloses Beratungsgespräch' },
-            { name: 'secondaryCtaUrl', type: 'url', defaultValue: '/kontakt' }
+            { name: 'secondaryCtaUrl', type: 'url', defaultValue: '/kontakt' },
+
+            // Styling
+            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'headlineColor', type: 'color', defaultValue: '#1f2937' },
+            { name: 'subheadlineColor', type: 'color', defaultValue: '#6b7280' }
         ]
     },
 
@@ -293,8 +394,137 @@ export const registeredComponents: RegisteredComponent[] = [
             { name: 'subheadline', type: 'text', defaultValue: 'Entdecke die wissenschaftlich fundierten Vorteile unseres Transformationsprogramms und erlebe selbst, warum über 94% unserer Teilnehmer ihre Ziele erreichen.' },
             { name: 'showBadge', type: 'boolean', defaultValue: true },
             { name: 'badgeText', type: 'string', defaultValue: 'Bewiesene Erfolge' },
+
+            // Benefits Configuration
+            {
+                name: 'benefits',
+                type: 'list',
+                subFields: [
+                    { name: 'title', type: 'string', defaultValue: 'Benefit Titel' },
+                    { name: 'description', type: 'text', defaultValue: 'Beschreibung des Benefits' },
+                    { name: 'icon', type: 'string', defaultValue: 'bullseye-arrow' },
+                    { name: 'iconVariant', type: 'text', enum: ['primary', 'secondary', 'accent', 'success', 'warning', 'neutral'], defaultValue: 'primary' },
+                    { name: 'features', type: 'list', subFields: [
+                        { name: 'feature', type: 'string', defaultValue: 'Feature' }
+                    ]},
+                    { name: 'highlight', type: 'string', defaultValue: '' }
+                ],
+                defaultValue: [
+                    {
+                        title: 'Personalisierte Trainingspläne',
+                        description: 'Maßgeschneiderte Workouts basierend auf deinem Fitnesslevel, deinen Zielen und verfügbarer Zeit.',
+                        icon: 'bullseye-arrow',
+                        iconVariant: 'primary',
+                        features: [
+                            { feature: 'Individueller Trainingsplan' },
+                            { feature: 'Wöchentliche Anpassungen' },
+                            { feature: 'Progressionstracking' },
+                            { feature: 'Technik-Coaching' }
+                        ],
+                        highlight: 'Bestseller'
+                    },
+                    {
+                        title: 'Ernährungsberatung',
+                        description: 'Professionelle Ernährungsstrategien für optimale Ergebnisse ohne Verzicht auf Lieblingsspeisen.',
+                        icon: 'recipe',
+                        iconVariant: 'success',
+                        features: [
+                            { feature: 'Flexible Meal Plans' },
+                            { feature: 'Makro-Berechnung' },
+                            { feature: 'Restaurant-Guide' },
+                            { feature: 'Rezept-Sammlung' }
+                        ]
+                    },
+                    {
+                        title: 'Community & Support',
+                        description: 'Eine motivierende Gemeinschaft und persönliche Betreuung durch zertifizierte Trainer.',
+                        icon: 'users-medical',
+                        iconVariant: 'secondary',
+                        features: [
+                            { feature: '24/7 Support Chat' },
+                            { feature: 'Wöchentliche Check-ins' },
+                            { feature: 'Motivationsgruppen' },
+                            { feature: 'Erfolgs-Tracking' }
+                        ]
+                    },
+                    {
+                        title: 'Mentale Stärke',
+                        description: 'Entwickle die richtige Mindset und überwinde mentale Barrieren für langanhaltenden Erfolg.',
+                        icon: 'brain-lightning',
+                        iconVariant: 'accent',
+                        features: [
+                            { feature: 'Mindset-Training' },
+                            { feature: 'Stress-Management' },
+                            { feature: 'Gewohnheits-Coaching' },
+                            { feature: 'Selbstvertrauen' }
+                        ]
+                    },
+                    {
+                        title: 'Flexibilität',
+                        description: 'Trainiere wann und wo du willst - im Studio, zu Hause oder unterwegs.',
+                        icon: 'calendar-clock',
+                        iconVariant: 'warning',
+                        features: [
+                            { feature: 'Home Workouts' },
+                            { feature: 'Studio Sessions' },
+                            { feature: 'Reise-Routinen' },
+                            { feature: 'Zeitsparende Optionen' }
+                        ]
+                    },
+                    {
+                        title: 'Messbare Ergebnisse',
+                        description: 'Verfolge deinen Fortschritt mit detaillierten Metriken und regelmäßigen Erfolgskontrollen.',
+                        icon: 'chart-pie-alt',
+                        iconVariant: 'neutral',
+                        features: [
+                            { feature: 'Body Composition' },
+                            { feature: 'Kraftmessungen' },
+                            { feature: 'Foto-Vergleiche' },
+                            { feature: 'Leistungsanalyse' }
+                        ],
+                        highlight: 'Datenbasiert'
+                    }
+                ]
+            },
+
+            // Comparison Section
             { name: 'showComparison', type: 'boolean', defaultValue: true },
             { name: 'comparisonHeadline', type: 'string', defaultValue: 'Der Unterschied ist deutlich sichtbar' },
+            { name: 'comparisonSubheadline', type: 'string', defaultValue: 'Vergleiche selbst: Mit und ohne professionelle Begleitung' },
+            { name: 'withoutProgramTitle', type: 'string', defaultValue: 'Alleine versuchen' },
+            {
+                name: 'withoutProgramItems',
+                type: 'list',
+                subFields: [
+                    { name: 'item', type: 'string', defaultValue: 'Nachteil' }
+                ],
+                defaultValue: [
+                    { item: 'Unstrukturiertes Training ohne Plan' },
+                    { item: 'Verwirrende und widersprüchliche Informationen' },
+                    { item: 'Mangelnde Motivation und Durchhaltevermögen' },
+                    { item: 'Plateaus ohne Lösungsansätze' },
+                    { item: 'Verletzungsrisiko durch falsche Technik' },
+                    { item: 'Langsamere oder ausbleibende Ergebnisse' }
+                ]
+            },
+            { name: 'withProgramTitle', type: 'string', defaultValue: 'Mit unserem Programm' },
+            {
+                name: 'withProgramItems',
+                type: 'list',
+                subFields: [
+                    { name: 'item', type: 'string', defaultValue: 'Vorteil' }
+                ],
+                defaultValue: [
+                    { item: 'Strukturierter 7-Wochen Trainingsplan' },
+                    { item: 'Wissenschaftlich fundierte Methoden' },
+                    { item: 'Tägliche Motivation und Community-Support' },
+                    { item: 'Professionelle Lösungen für alle Herausforderungen' },
+                    { item: 'Sichere Übungsausführung durch Expertenbetreuung' },
+                    { item: 'Garantierte Ergebnisse in nur 7 Wochen' }
+                ]
+            },
+
+            // Metrics Section
             { name: 'showMetrics', type: 'boolean', defaultValue: true },
             { name: 'metricsHeadline', type: 'string', defaultValue: 'Unsere Teilnehmer erreichen durchschnittlich' },
             {
@@ -313,13 +543,20 @@ export const registeredComponents: RegisteredComponent[] = [
                     { key: 'satisfactionRate', value: 94, label: 'Zufriedenheit', suffix: '%' }
                 ]
             },
+
+            // CTA Section
             { name: 'showCta', type: 'boolean', defaultValue: true },
             { name: 'ctaHeadline', type: 'string', defaultValue: 'Bereit für deine Transformation?' },
+            { name: 'ctaDescription', type: 'text', defaultValue: 'Schließe dich über 2.800 erfolgreichen Teilnehmern an und erlebe selbst die Vorteile unseres bewährten Systems.' },
             { name: 'primaryCtaText', type: 'string', defaultValue: 'Programm starten' },
             { name: 'primaryCtaUrl', type: 'url', defaultValue: '#anmeldung' },
-            { name: 'secondaryCtaText', type: 'string', defaultValue: 'Kostenloses Beratungsgespräch' },
-            { name: 'secondaryCtaUrl', type: 'url', defaultValue: '/kontakt' },
-            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' }
+            { name: 'secondaryCtaText', type: 'string', defaultValue: 'Kostenlose Beratung' },
+            { name: 'secondaryCtaUrl', type: 'url', defaultValue: '#beratung' },
+
+            // Styling
+            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'headlineColor', type: 'color', defaultValue: '#1f2937' },
+            { name: 'subheadlineColor', type: 'color', defaultValue: '#6b7280' }
         ]
     },
 

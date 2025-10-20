@@ -57,8 +57,8 @@
             <!-- Feature List -->
             <div v-if="benefit.features" class="space-y-3 pt-6">
               <div
-                v-for="(feature, featureIndex) in benefit.features"
-                :key="feature"
+                v-for="(feature, featureIndex) in normalizeFeatures(benefit.features)"
+                :key="featureIndex"
                 class="flex items-center gap-3 text-sm lg:text-base text-gray-700 transition-all duration-300 hover:translate-x-2 group/feature"
                 :style="{ animationDelay: `${(index * 0.1) + (featureIndex * 0.05)}s` }"
               >
@@ -94,8 +94,8 @@
 
             <div class="space-y-3">
               <div
-                v-for="item in withoutProgramItems"
-                :key="item"
+                v-for="(item, itemIndex) in normalizeItems(withoutProgramItems)"
+                :key="itemIndex"
                 class="flex items-start gap-3 text-gray-700"
               >
                 <svg class="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
@@ -119,8 +119,8 @@
 
             <div class="space-y-3">
               <div
-                v-for="item in withProgramItems"
-                :key="item"
+                v-for="(item, itemIndex) in normalizeItems(withProgramItems)"
+                :key="itemIndex"
                 class="flex items-start gap-3 text-gray-700"
               >
                 <svg class="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
@@ -182,7 +182,7 @@ interface Benefit {
   description: string
   icon: string
   iconVariant?: 'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'neutral'
-  features?: string[]
+  features?: string[] | { feature: string }[]  // Support both formats: direct strings or Builder.io format
   highlight?: string
 }
 
@@ -211,9 +211,9 @@ interface Props {
   comparisonHeadline?: string
   comparisonSubheadline?: string
   withoutProgramTitle?: string
-  withoutProgramItems?: string[]
+  withoutProgramItems?: string[] | { item: string }[]  // Support both formats
   withProgramTitle?: string
-  withProgramItems?: string[]
+  withProgramItems?: string[] | { item: string }[]  // Support both formats
 
   // Metrics
   showMetrics?: boolean
@@ -325,6 +325,32 @@ const props = withDefaults(defineProps<Props>(), {
   headlineColor: '#1f2937',
   subheadlineColor: '#6b7280'
 })
+
+// Helper function to normalize features format (supports both string[] and Builder.io { feature: string }[] format)
+const normalizeFeatures = (features: string[] | { feature: string }[] | undefined): string[] => {
+  if (!features || features.length === 0) return []
+
+  // Check if first item is an object with 'feature' property (Builder.io format)
+  if (typeof features[0] === 'object' && features[0] !== null && 'feature' in features[0]) {
+    return (features as { feature: string }[]).map(f => f.feature)
+  }
+
+  // Otherwise return as-is (string[] format)
+  return features as string[]
+}
+
+// Helper function to normalize items format (supports both string[] and Builder.io { item: string }[] format)
+const normalizeItems = (items: string[] | { item: string }[] | undefined): string[] => {
+  if (!items || items.length === 0) return []
+
+  // Check if first item is an object with 'item' property (Builder.io format)
+  if (typeof items[0] === 'object' && items[0] !== null && 'item' in items[0]) {
+    return (items as { item: string }[]).map(i => i.item)
+  }
+
+  // Otherwise return as-is (string[] format)
+  return items as string[]
+}
 
 // Icon color classes for different variants
 const getIconColorClass = (variant: string) => {

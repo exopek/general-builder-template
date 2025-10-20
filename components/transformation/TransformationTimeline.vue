@@ -60,8 +60,8 @@
                 <!-- Week Goals -->
                 <div class="space-y-3">
                   <div
-                    v-for="goal in week.goals"
-                    :key="goal"
+                    v-for="(goal, goalIndex) in normalizeGoals(week.goals)"
+                    :key="goalIndex"
                     class="flex items-center gap-3 text-xs lg:text-sm text-gray-700"
                   >
                     <div class="w-2 h-2 rounded-full bg-gradient-warm flex-shrink-0 shadow-sm"></div>
@@ -132,7 +132,7 @@ interface WeekData {
   title: string
   description: string
   emoji: string
-  goals: string[]
+  goals: string[] | { goal: string }[]  // Support both formats: direct strings or Builder.io format
   results?: string
 }
 
@@ -244,6 +244,19 @@ const props = withDefaults(defineProps<Props>(), {
   subheadlineColor: '#6b7280'
 })
 
+// Helper function to normalize goals format (supports both string[] and Builder.io { goal: string }[] format)
+const normalizeGoals = (goals: string[] | { goal: string }[] | undefined): string[] => {
+  if (!goals || goals.length === 0) return []
+
+  // Check if first item is an object with 'goal' property (Builder.io format)
+  if (typeof goals[0] === 'object' && goals[0] !== null && 'goal' in goals[0]) {
+    return (goals as { goal: string }[]).map(g => g.goal)
+  }
+
+  // Otherwise return as-is (string[] format)
+  return goals as string[]
+}
+
 // Transform overall stats into array format
 const overallStatsData = computed(() => [
   {
@@ -271,12 +284,6 @@ const overallStatsData = computed(() => [
     suffix: '%'
   }
 ])
-
-const getWeekVariant = (weekIndex: number) => {
-  if (weekIndex < props.currentWeek) return 'success'
-  if (weekIndex === props.currentWeek) return 'primary'
-  return 'neutral'
-}
 
 const getBadgeVariant = (weekIndex: number) => {
   if (weekIndex < currentWeekDisplay.value) return 'featured'
