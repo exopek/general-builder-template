@@ -75,8 +75,8 @@ const variantClasses = computed(() => {
     secondary: 'btn-secondary',
     secondaryFull: 'bg-secondary',
     ghost: 'btn-ghost',
-    gradient: 'bg-gradient-warm text-white hover:bg-gradient-primary hover:-translate-y-0.5',
-    outline: 'bg-transparent text-primary border-2 border-primary hover:bg-primary hover:text-white hover:-translate-y-0.5'
+    gradient: 'btn-gradient',
+    outline: 'btn-outline'
   }
   return variants[props.variant]
 })
@@ -84,7 +84,7 @@ const variantClasses = computed(() => {
 const sizeClasses = computed(() => {
   const sizes = {
     sm: 'text-sm gap-1 px-3 py-2 md:px-4',
-    md: 'gap-2',
+    md: 'text-base gap-2 px-4 py-2.5 md:px-6',
     lg: 'text-lg gap-3 px-6 py-4 md:px-8',
     xl: 'text-xl gap-3 px-8 py-5 md:px-10'
   }

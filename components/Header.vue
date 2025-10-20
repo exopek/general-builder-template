@@ -7,7 +7,7 @@
       'header-container'
     ]">
     <!-- Desktop Header -->
-    <div class="desktop-header container flex items-center justify-between transition-all py-2"
+    <div class="desktop-header container flex items-center justify-between py-3 transition-all"
       :class="[
         !isScrolled ? 'text-gray-900' : 'text-white'
       ]">
@@ -119,9 +119,13 @@
       </nav>
 
       <!-- CTA Button -->
-      <a href="/probetraining" class="btn btn-primary">
-        Probetraining
-      </a>
+      <Button
+        text='Probetraining'
+        href="/probetraining"
+        variant="gradient"
+        size="sm"
+        class="w-auto"
+      />
     </div>
 
     <!-- Mobile Header -->

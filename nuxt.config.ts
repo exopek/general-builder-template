@@ -13,6 +13,14 @@ export default defineNuxtConfig({
   ],
 
   css: ['~/assets/css/global.css'],
+
+  // Component Auto-Import Configuration
+  components: [
+    {
+      path: '~/components',
+      pathPrefix: false,
+    },
+  ],
   
   // SSR Settings für Hydration Fix
   ssr: true,
