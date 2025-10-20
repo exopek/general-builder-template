@@ -10,7 +10,7 @@
       <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
         <!-- Content Side -->
-        <div class="space-y-8 text-center lg:text-left relative z-10">
+        <div class="space-y-8 text-center relative z-10">
 
           <!-- Badge Slot / Default Badge -->
           <slot name="badge">
@@ -54,7 +54,7 @@
           />
 
           <!-- CTA Buttons -->
-          <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+          <div class="flex flex-col gap-4 justify-center">
             <Button
               v-if="primaryCtaText"
               :text="primaryCtaText"
@@ -77,7 +77,7 @@
           </div>
 
           <!-- Trust Indicators -->
-          <div v-if="showTrustIndicators && trustIndicators.length > 0" class="flex flex-wrap items-center justify-center lg:justify-start gap-6 pt-4">
+          <div v-if="showTrustIndicators && trustIndicators.length > 0" class="flex flex-wrap items-center justify-center gap-6 pt-4">
             <div v-for="(indicator, index) in trustIndicators" :key="index" class="flex items-center gap-2 text-sm text-gray-600">
               <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
@@ -334,14 +334,6 @@ const statisticsData = computed(() => {
 @media (max-width: 768px) {
   .max-w-48 {
     max-width: 10rem;
-  }
-
-  .text-6xl {
-    font-size: 3rem;
-  }
-
-  .text-5xl {
-    font-size: 2.5rem;
   }
 }
 </style>
