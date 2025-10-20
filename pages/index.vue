@@ -74,6 +74,17 @@ watchEffect(() => {
           name: 'twitter:card',
           content: 'summary_large_image'
         } */
+      ],
+      script: [
+        ...(content.value.data.facebookPixelScript ? [{
+          innerHTML: content.value.data.facebookPixelScript,
+          type: 'text/javascript'
+        }] : [])
+      ],
+      noscript: [
+        ...(content.value.data.facebookPixelNoScript ? [{
+          innerHTML: content.value.data.facebookPixelNoScript
+        }] : [])
       ]
     })
   }
