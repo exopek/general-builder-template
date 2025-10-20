@@ -18,7 +18,7 @@
       <ToastContainer />
 
       <!-- Cookie Consent Banner (GDPR compliant) -->
-      <BaseConsentBanner />
+      <ConsentBanner />
     </div>
   </template>
   
