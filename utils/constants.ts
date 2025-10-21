@@ -46,7 +46,8 @@ export const USER_ROLES = {
 
 export const STORAGE_KEYS = {
   TOKEN: 'gym_auth_token',
-  USER: 'gym_user'
+  USER: 'gym_user',
+  FB_CONSENT: 'fb_consent'
 } as const
 
 export const ERROR_MESSAGES = {
@@ -58,4 +59,27 @@ export const ERROR_MESSAGES = {
   BOOKING_FULL: 'Der Kurs ist bereits ausgebucht.',
   BOOKING_DEADLINE: 'Die Anmeldefrist ist abgelaufen.',
   CANCELLATION_DEADLINE: 'Die Stornierungsfrist ist abgelaufen.'
+} as const
+
+export const FACEBOOK_EVENTS = {
+  LEAD: 'Lead',
+  COMPLETE_REGISTRATION: 'CompleteRegistration',
+  CONTACT: 'Contact',
+  SCHEDULE: 'Schedule',
+  START_TRIAL: 'StartTrial',
+  SUBMIT_APPLICATION: 'SubmitApplication',
+  SUBSCRIBE: 'Subscribe',
+  VIEW_CONTENT: 'ViewContent',
+  SEARCH: 'Search'
+} as const
+
+export const LEAD_VALUES = {
+  CONTACT_FORM: 50,
+  TRIAL_BOOKING: 30,
+  NUTRITION_CONSULTATION: 40,
+  NEWSLETTER: 10,
+  LIVE_CHAT: 35,
+  CALLBACK: 30,
+  MEMBERSHIP_PREMIUM: 1200,
+  MEMBERSHIP_STANDARD: 600
 } as const

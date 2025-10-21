@@ -76,6 +76,24 @@ watchEffect(() => {
         } */
       ],
       script: [
+        // Strukturierte Daten (JSON-LD Schema.org)
+        ...(content.value.data.structuredData ? [{
+          type: 'application/ld+json',
+          innerHTML: content.value.data.structuredData
+        }] : []),
+        ...(content.value.data.organizationSchema ? [{
+          type: 'application/ld+json',
+          innerHTML: content.value.data.organizationSchema
+        }] : []),
+        ...(content.value.data.faqPageSchema ? [{
+          type: 'application/ld+json',
+          innerHTML: content.value.data.faqPageSchema
+        }] : []),
+        ...(content.value.data.articleSchema ? [{
+          type: 'application/ld+json',
+          innerHTML: content.value.data.articleSchema
+        }] : []),
+        // Facebook Pixel Tracking
         ...(content.value.data.facebookPixelScript ? [{
           innerHTML: content.value.data.facebookPixelScript,
           type: 'text/javascript'
