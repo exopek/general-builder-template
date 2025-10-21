@@ -320,19 +320,23 @@ async function handleSubmit() {
       console.warn('Facebook Lead tracking failed:', trackingResult.error)
     }
 
-    // TODO: Hier kannst du das Formular an deine API senden
-    // Beispiel:
-    // await $fetch('/api/leads', {
-    //   method: 'POST',
-    //   body: {
-    //     firstName: form.value.firstName,
-    //     lastName: form.value.lastName,
-    //     email: form.value.email
-    //   }
-    // })
+    // API Payload
+    const apiPayload = {
+      email: form.value.email,
+      name: form.value.firstName + ' ' + form.value.lastName,
+      subject: 'Neue Lead-Anfrage über Lead-Formular (7 Wochen Challenge)',
+      message: 'Bitte kontaktiere den Interessenten so schnell wie möglich.',
+      phoneNumber: null
+    }
 
-    // Simuliere API Call
-    await new Promise(resolve => setTimeout(resolve, 1000))
+    // API Call
+    await $fetch(API_BASE_URL + '/v1/email/contact-form', {
+      method: 'POST',
+      body: apiPayload,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
 
     // Show success
     showSuccess.value = true
