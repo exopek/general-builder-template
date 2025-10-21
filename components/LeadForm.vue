@@ -223,7 +223,6 @@ interface Props {
 
   // Facebook Tracking
   leadValue?: number
-  leadContentName?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -254,8 +253,7 @@ const props = withDefaults(defineProps<Props>(), {
   subheadlineColor: '#6b7280',
   labelColor: '#374151',
 
-  leadValue: LEAD_VALUES.CONTACT_FORM,
-  leadContentName: 'Lead Formular'
+  leadValue: 179// LEAD_VALUES.CONTACT_FORM could be set with builder.io
 })
 
 // Facebook Store
@@ -313,7 +311,6 @@ async function handleSubmit() {
   try {
     // Facebook Lead Event tracken
     const trackingResult = facebookStore.trackLead({
-      content_name: props.leadContentName,
       value: props.leadValue,
       currency: 'EUR'
     })
