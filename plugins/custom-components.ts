@@ -16,6 +16,7 @@ import TransformationFAQ from '~/components/transformation/TransformationFAQ.vue
 import TransformationResults from '~/components/transformation/TransformationResults.vue';
 import TransformationQuiz from '~/components/TransformationQuiz.vue';
 import ContactForm from '~/components/ContactForm.vue';
+import LeadForm from '~/components/LeadForm.vue';
 
 // About Components
 import AboutHero from '~/components/about/AboutHero.vue';
@@ -747,6 +748,51 @@ export const registeredComponents: RegisteredComponent[] = [
             { name: 'enableRouteTracking', type: 'boolean', defaultValue: true },
             { name: 'debugMode', type: 'boolean', defaultValue: false },
             { name: 'submitUrl', type: 'string', defaultValue: '/api/contact' }
+        ]
+    },
+
+    {
+        component: LeadForm,
+        name: 'LeadForm',
+        inputs: [
+            // === CONTENT SECTION ===
+            { name: 'headline', type: 'richText', defaultValue: 'Jetzt informieren' },
+            { name: 'subheadline', type: 'text', defaultValue: 'Hinterlasse uns deine Kontaktdaten und wir melden uns bei dir!' },
+
+            // Badge
+            { name: 'showBadge', type: 'boolean', defaultValue: true },
+            { name: 'badgeText', type: 'string', defaultValue: 'Kostenlose Beratung' },
+
+            // === FORM LABELS ===
+            { name: 'firstNameLabel', type: 'string', defaultValue: 'Vorname' },
+            { name: 'lastNameLabel', type: 'string', defaultValue: 'Nachname' },
+            { name: 'emailLabel', type: 'string', defaultValue: 'E-Mail-Adresse' },
+
+            // === FORM PLACEHOLDERS ===
+            { name: 'firstNamePlaceholder', type: 'string', defaultValue: 'Dein Vorname' },
+            { name: 'lastNamePlaceholder', type: 'string', defaultValue: 'Dein Nachname' },
+            { name: 'emailPlaceholder', type: 'string', defaultValue: 'deine@email.de' },
+
+            // === CONSENT TEXT ===
+            { name: 'privacyConsentText', type: 'text', defaultValue: 'Ich habe die Datenschutzerklärung gelesen und stimme der Verarbeitung meiner Daten zu.' },
+
+            // === BUTTON TEXT ===
+            { name: 'submitButtonText', type: 'string', defaultValue: 'Jetzt anfragen' },
+            { name: 'loadingText', type: 'string', defaultValue: 'Wird gesendet...' },
+
+            // === SUCCESS/ERROR MESSAGES ===
+            { name: 'successTitle', type: 'string', defaultValue: 'Anfrage erfolgreich!' },
+            { name: 'successMessage', type: 'text', defaultValue: 'Vielen Dank! Wir melden uns in Kürze bei dir.' },
+
+            // === STYLING ===
+            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'headlineColor', type: 'color', defaultValue: '#1f2937' },
+            { name: 'subheadlineColor', type: 'color', defaultValue: '#6b7280' },
+            { name: 'labelColor', type: 'color', defaultValue: '#374151' },
+
+            // === FACEBOOK TRACKING ===
+            { name: 'leadValue', type: 'number', defaultValue: 50 },
+            { name: 'leadContentName', type: 'string', defaultValue: 'Lead Formular' }
         ]
     },
 
