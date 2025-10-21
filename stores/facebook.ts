@@ -12,7 +12,9 @@ export const useFacebookStore = defineStore('facebook', {
     isLoading: false,
     error: null as string | null,
     events: [] as TrackedEvent[],
-    isPixelLoaded: false
+    isPixelLoaded: false,
+    pixelScriptCode: null as string | null,
+    pixelNoScriptCode: null as string | null
   }),
 
   getters: {
@@ -38,6 +40,71 @@ export const useFacebookStore = defineStore('facebook', {
   },
 
   actions: {
+    // Pixel-Script Codes speichern (wird von Pages aufgerufen)
+    setPixelScriptCodes(scriptCode: string | null, noScriptCode: string | null) {
+      this.pixelScriptCode = scriptCode
+      this.pixelNoScriptCode = noScriptCode
+    },
+
+    // Pixel-Script dynamisch laden (nur nach Consent!)
+    loadPixelScript() {
+      if (typeof window === 'undefined') return
+      if (!this.pixelScriptCode) {
+        console.warn('⚠ No Facebook Pixel script code configured')
+        return
+      }
+
+      // Prüfen ob schon geladen
+      if (window.fbq) {
+        console.log('✓ Facebook Pixel already loaded')
+        this.isPixelLoaded = true
+        return
+      }
+
+      try {
+        console.log('🚀 Loading Facebook Pixel dynamically...')
+
+        // Script-Tag im <head> einfügen (Facebook Pixel Init Code)
+        // Verwende textContent statt innerHTML damit der Code ausgeführt wird
+        const scriptElement = document.createElement('script')
+        scriptElement.type = 'text/javascript'
+        scriptElement.textContent = this.pixelScriptCode
+        document.head.appendChild(scriptElement)
+
+        console.log('✓ Facebook Pixel script injected into <head>')
+
+        // NoScript-Tag wenn vorhanden (für Image-Fallback)
+        if (this.pixelNoScriptCode) {
+          const noscriptElement = document.createElement('noscript')
+          noscriptElement.innerHTML = this.pixelNoScriptCode
+          document.head.appendChild(noscriptElement)
+          console.log('✓ Facebook Pixel noscript fallback added to <head>')
+        }
+
+        // Kurze Verzögerung und dann prüfen ob fbq verfügbar ist
+        setTimeout(() => {
+          if (window.fbq) {
+            this.isPixelLoaded = true
+            console.log('✅ Facebook Pixel loaded successfully! fbq() is available')
+            console.log('   → You can now track events with facebookStore.trackLead(), etc.')
+
+            // Consent grant an fbq senden
+            if (this.hasConsent) {
+              window.fbq('consent', 'grant')
+              console.log('✓ Consent granted to Facebook Pixel')
+            }
+          } else {
+            console.error('❌ Facebook Pixel failed to load!')
+            console.error('   → Make sure facebookPixelScript in Builder.io contains fbq initialization')
+            console.error('   → Expected format: fbq(\'init\', \'YOUR_PIXEL_ID\'); fbq(\'track\', \'PageView\');')
+          }
+        }, 500)
+
+      } catch (error) {
+        console.error('❌ Error loading Facebook Pixel:', error)
+      }
+    },
+
     // Consent aus localStorage laden
     initConsent() {
       if (typeof localStorage === 'undefined') return
@@ -45,21 +112,26 @@ export const useFacebookStore = defineStore('facebook', {
       const stored = localStorage.getItem(STORAGE_KEYS.FB_CONSENT)
       this.hasConsent = stored === 'true'
 
-      if (this.hasConsent && window.fbq) {
-        window.fbq('consent', 'grant', {})
+      // Wenn Consent bereits vorhanden, Pixel laden
+      if (this.hasConsent) {
+        this.loadPixelScript()
       }
     },
 
     // Consent gewähren
     grantConsent() {
+      console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
+      console.log('✅ grantConsent() called')
       this.hasConsent = true
       if (typeof localStorage !== 'undefined') {
         localStorage.setItem(STORAGE_KEYS.FB_CONSENT, 'true')
+        console.log('✓ Consent saved to localStorage')
       }
 
-      if (window.fbq) {
-        window.fbq('consent', 'grant', {})
-      }
+      // Pixel-Script jetzt laden (da Consent gegeben wurde)
+      console.log('→ Calling loadPixelScript()...')
+      this.loadPixelScript()
+      console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
     },
 
     // Consent widerrufen
@@ -84,10 +156,10 @@ export const useFacebookStore = defineStore('facebook', {
       event: FacebookPixelEvent,
       params: FacebookEventParams = {}
     ): { success: boolean; error?: string } {
+
       // Consent Check
       if (!this.canTrack) {
-        console.warn('Facebook tracking blocked: No consent or pixel not loaded')
-        return { success: false, error: 'No consent' }
+        return { success: false, error: 'No consent or pixel not loaded' }
       }
 
       try {
@@ -96,9 +168,11 @@ export const useFacebookStore = defineStore('facebook', {
 
         // Facebook Pixel aufrufen
         if (window.fbq) {
+          console.log('✅ Calling window.fbq(\'track\', \'' + event + '\', params)')
           window.fbq('track', event, params)
+          console.log('✅ fbq() call completed successfully')
         } else {
-          throw new Error('Facebook Pixel not loaded')
+          throw new Error('Facebook Pixel not loaded (window.fbq is undefined)')
         }
 
         // Event in History speichern
@@ -118,7 +192,6 @@ export const useFacebookStore = defineStore('facebook', {
 
         return { success: true }
       } catch (error: any) {
-        console.error('Facebook tracking error:', error)
         this.error = error?.message || 'Tracking failed'
 
         // Fehler in History

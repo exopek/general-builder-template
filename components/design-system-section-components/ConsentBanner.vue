@@ -160,6 +160,9 @@ const showBanner = ref(false)
 const showSettings = ref(false)
 const consentState = ref<Record<string, boolean>>({})
 
+// Facebook Store
+const facebookStore = useFacebookStore()
+
 // Cookie consent storage key
 const CONSENT_KEY = 'cookie-consent'
 const CONSENT_VERSION = '1.0'
@@ -216,6 +219,15 @@ const applyConsent = (consent: Record<string, boolean>) => {
   // Emit event for other parts of the app
   if (typeof window !== 'undefined') {
     window.dispatchEvent(new CustomEvent('cookie-consent-update', { detail: consent }))
+  }
+
+  // Facebook Pixel Consent
+  if (consent.marketing) {
+    console.log('✓ Marketing consent granted → Loading Facebook Pixel')
+    facebookStore.grantConsent() // Lädt automatisch den Pixel-Script
+  } else {
+    console.log('✗ Marketing consent denied → Facebook Pixel NOT loaded')
+    facebookStore.revokeConsent()
   }
 
   // Update Google Consent Mode if available

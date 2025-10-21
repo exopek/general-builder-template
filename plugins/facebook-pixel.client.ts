@@ -1,24 +1,10 @@
 export default defineNuxtPlugin(() => {
   const facebookStore = useFacebookStore()
 
-  // Check if fbq is loaded (nur im Browser)
+  // Nur Consent initialisieren
+  // Der Pixel-Script wird ERST geladen, wenn Consent gegeben wird (via grantConsent())
   if (typeof window !== 'undefined') {
-    // Wait for fbq to be available
-    const checkFbq = setInterval(() => {
-      if (window.fbq) {
-        facebookStore.setPixelLoaded(true)
-        facebookStore.initConsent()
-        clearInterval(checkFbq)
-        console.log('✓ Facebook Pixel loaded and ready')
-      }
-    }, 100)
-
-    // Timeout after 5 seconds
-    setTimeout(() => {
-      clearInterval(checkFbq)
-      if (!window.fbq) {
-        console.warn('⚠ Facebook Pixel not loaded after 5 seconds. Make sure the pixel script is configured in Builder.io')
-      }
-    }, 5000)
+    facebookStore.initConsent()
+    console.log('✓ Facebook Pixel plugin initialized (waiting for consent)')
   }
 })

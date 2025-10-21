@@ -47,9 +47,19 @@
   
   canShowContent.value = content.value ? true : isPreviewing(route.path);
 
+  // Facebook Pixel Store
+  const facebookStore = useFacebookStore()
+
   watchEffect(() => {
     console.log('Current route path:', content.value);
   if (content.value) {
+    // Facebook Pixel Codes an Store übergeben (werden NICHT automatisch geladen)
+    const pixelScript = content.value.data.facebookPixelScript || null
+    const pixelNoScript = content.value.data.facebookPixelNoScript || null
+    if (pixelScript) {
+      facebookStore.setPixelScriptCodes(pixelScript, pixelNoScript)
+    }
+
     useHead({
       title: `${content.value.data.title}`,
       meta: [
@@ -95,17 +105,8 @@
         ...(content.value.data.articleSchema ? [{
           type: 'application/ld+json',
           innerHTML: content.value.data.articleSchema
-        }] : []),
-        // Facebook Pixel Tracking (falls konfiguriert)
-        ...(content.value.data.facebookPixelScript ? [{
-          innerHTML: content.value.data.facebookPixelScript,
-          type: 'text/javascript'
         }] : [])
-      ],
-      noscript: [
-        ...(content.value.data.facebookPixelNoScript ? [{
-          innerHTML: content.value.data.facebookPixelNoScript
-        }] : [])
+        // Facebook Pixel wird NICHT mehr hier geladen, sondern dynamisch nach Consent
       ]
     })
   }
