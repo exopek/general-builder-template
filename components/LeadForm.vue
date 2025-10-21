@@ -1,5 +1,6 @@
 <template>
   <section
+    id="lead-form-section"
     class="py-16 md:py-20 overflow-hidden"
     :style="{ backgroundColor: backgroundColor }"
   >
