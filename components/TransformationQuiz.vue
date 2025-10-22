@@ -31,14 +31,14 @@
           <div v-if="showStepLabels" class="text-center mb-8 lg:mb-12">
             <TransformationBadge
               :text="step1Label"
-              variant="new"
+              :variant="step1BadgeVariant"
               size="md"
               class="mb-4"
             />
           </div>
 
           <div
-            v-for="(question, index) in step1Questions"
+            v-for="(item, index) in step1Questions"
             :key="index"
             class="quiz-question"
             :class="index % 2 === 0 ? 'slide-from-left' : 'slide-from-right'"
@@ -51,14 +51,14 @@
               :class="index % 2 === 0 ? 'mr-0 lg:mr-8' : 'ml-0 lg:ml-8'"
               :style="{ animationDelay: `${index * 0.1}s` }"
             >
-              <p class="text-lg md:text-xl font-medium text-gray-700 mb-6">{{ question }}</p>
-              <div class="flex items-center gap-3 text-lg font-semibold text-primary">
-                <div class="w-6 h-6 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <svg class="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20">
+              <p class="text-lg md:text-xl font-medium text-gray-700 mb-6">{{ item.question }}</p>
+              <div class="flex items-center gap-3 text-lg font-semibold" :class="`text-${step1AnswerColor}-600`">
+                <div class="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0" :class="`bg-${step1AnswerColor}-100`">
+                  <svg class="w-4 h-4" :class="`text-${step1AnswerColor}-600`" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                   </svg>
                 </div>
-                <span>Ja, auf jeden Fall!</span>
+                <span>{{ item.answer }}</span>
               </div>
             </TransformationCard>
           </div>
@@ -69,14 +69,14 @@
           <div v-if="showStepLabels" class="text-center mb-8 lg:mb-12">
             <TransformationBadge
               :text="step2Label"
-              variant="info"
+              :variant="step2BadgeVariant"
               size="md"
               class="mb-4"
             />
           </div>
 
           <div
-            v-for="(question, index) in step2Questions"
+            v-for="(item, index) in step2Questions"
             :key="index"
             class="quiz-question"
             :class="index % 2 === 0 ? 'slide-from-left' : 'slide-from-right'"
@@ -89,14 +89,14 @@
               :class="index % 2 === 0 ? 'mr-0 lg:mr-8' : 'ml-0 lg:ml-8'"
               :style="{ animationDelay: `${index * 0.1}s` }"
             >
-              <p class="text-lg md:text-xl font-medium text-gray-700 mb-6">{{ question }}</p>
-              <div class="flex items-center gap-3 text-lg font-semibold text-blue-600">
-                <div class="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+              <p class="text-lg md:text-xl font-medium text-gray-700 mb-6">{{ item.question }}</p>
+              <div class="flex items-center gap-3 text-lg font-semibold" :class="`text-${step2AnswerColor}-600`">
+                <div class="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0" :class="`bg-${step2AnswerColor}-100`">
+                  <svg class="w-4 h-4" :class="`text-${step2AnswerColor}-600`" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                   </svg>
                 </div>
-                <span>Ja, das wäre perfekt!</span>
+                <span>{{ item.answer }}</span>
               </div>
             </TransformationCard>
           </div>
@@ -107,14 +107,14 @@
           <div v-if="showStepLabels" class="text-center mb-8 lg:mb-12">
             <TransformationBadge
               :text="step3Label"
-              variant="success"
+              :variant="step3BadgeVariant"
               size="md"
               class="mb-4"
             />
           </div>
 
           <div
-            v-for="(question, index) in step3Questions"
+            v-for="(item, index) in step3Questions"
             :key="index"
             class="quiz-question"
             :class="index % 2 === 0 ? 'slide-from-left' : 'slide-from-right'"
@@ -127,14 +127,14 @@
               :class="index % 2 === 0 ? 'mr-0 lg:mr-8' : 'ml-0 lg:ml-8'"
               :style="{ animationDelay: `${index * 0.1}s` }"
             >
-              <p class="text-lg md:text-xl font-medium text-gray-700 mb-6">{{ question }}</p>
-              <div class="flex items-center gap-3 text-lg font-semibold text-green-600">
-                <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                  <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+              <p class="text-lg md:text-xl font-medium text-gray-700 mb-6">{{ item.question }}</p>
+              <div class="flex items-center gap-3 text-lg font-semibold" :class="`text-${step3AnswerColor}-600`">
+                <div class="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0" :class="`bg-${step3AnswerColor}-100`">
+                  <svg class="w-4 h-4" :class="`text-${step3AnswerColor}-600`" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                   </svg>
                 </div>
-                <span>Ja, ich bin bereit! 🚀</span>
+                <span>{{ item.answer }}</span>
               </div>
             </TransformationCard>
           </div>
@@ -178,6 +178,13 @@ import TransformationCard from '~/components/transformation/TransformationCard.v
 import TransformationButton from '~/components/transformation/TransformationButton.vue'
 import TransformationBadge from '~/components/transformation/TransformationBadge.vue'
 
+interface QuizQuestion {
+  question: string
+  answer: string
+}
+
+type BadgeVariant = 'new' | 'popular' | 'featured' | 'limited' | 'success' | 'warning' | 'info' | 'neutral'
+
 interface Props {
   headline?: string
   subheadline?: string
@@ -185,8 +192,17 @@ interface Props {
   badgeText?: string
   showStepLabels?: boolean
   step1Label?: string
+  step1Questions?: QuizQuestion[]
+  step1AnswerColor?: string
+  step1BadgeVariant?: BadgeVariant
   step2Label?: string
+  step2Questions?: QuizQuestion[]
+  step2AnswerColor?: string
+  step2BadgeVariant?: BadgeVariant
   step3Label?: string
+  step3Questions?: QuizQuestion[]
+  step3AnswerColor?: string
+  step3BadgeVariant?: BadgeVariant
   finalCtaHeadline?: string
   finalCtaSubtext?: string
   finalCtaText?: string
@@ -204,8 +220,26 @@ const props = withDefaults(defineProps<Props>(), {
   badgeText: 'Quiz',
   showStepLabels: true,
   step1Label: 'Schritt 1: Deine Ziele',
+  step1Questions: () => [{
+    question: "Willst du in den nächsten 7 Wochen sichtbar stärker, energiegeladener und fitter werden – mit einem Trainingsplan, der wirklich zu dir passt?",
+    answer: "Ja, auf jeden Fall!"
+  }],
+  step1AnswerColor: 'orange',
+  step1BadgeVariant: 'featured',
   step2Label: 'Schritt 2: Betreuung & Sicherheit',
+  step2Questions: () => [{
+    question: "Willst du mit einem Coach trainieren, der dich persönlich betreut, deinen Plan steuert und dich wirklich ans Ziel bringt?",
+    answer: "Ja, das wäre perfekt!"
+  }],
+  step2AnswerColor: 'blue',
+  step2BadgeVariant: 'info',
   step3Label: 'Schritt 3: Dein Start',
+  step3Questions: () => [{
+    question: "Das ist der Moment, an dem du entscheidest, ob du redest – oder fit wirst. Bist du bereit, deine 7 Wochen Transformation zu starten und deinen Schweinehund zu besiegen?",
+    answer: "Ja, ich bin bereit! 🚀"
+  }],
+  step3AnswerColor: 'green',
+  step3BadgeVariant: 'success',
   finalCtaHeadline: 'Perfekt! Du bist bereit für deine Transformation',
   finalCtaSubtext: 'Sichere dir jetzt deinen Platz und starte noch heute mit deiner 7-Wochen Transformation',
   finalCtaText: 'Jetzt starten - Nur 297€',
@@ -215,24 +249,6 @@ const props = withDefaults(defineProps<Props>(), {
   headlineColor: '#1f2937',
   subheadlineColor: '#6b7280'
 })
-
-const step1Questions = [
-  "Möchtest du in den nächsten 7 Wochen sichtbare Veränderungen an deinem Körper erreichen?",
-  "Würdest du dich besser fühlen, wenn du mehr Energie und Ausdauer hättest?",
-  "Willst du endlich einen Trainingsplan, der wirklich auf dich zugeschnitten ist?"
-]
-
-const step2Questions = [
-  "Wäre es für dich hilfreich, wenn ein Coach dich jede Woche persönlich betreut?",
-  "Würdest du schneller an dein Ziel kommen, wenn du einen klaren Ernährungsplan hast?",
-  "Fühlst du dich motivierter, wenn du mit einem Experten an deiner Seite trainierst?"
-]
-
-const step3Questions = [
-  "Klingt es für dich fair, wenn du nach erfolgreicher Teilnahme sogar 100€ Cashback zurückbekommst?",
-  "Möchtest du zusätzlich 297€ auf deine Mitgliedschaft angerechnet bekommen, falls du danach weitermachst?",
-  "Bist du bereit, jetzt mit deiner 7-Wochen Transformation zu starten?"
-]
 
 // Intersection Observer für Scroll-Animationen
 onMounted(() => {

@@ -41,7 +41,7 @@
       >
         {{ displayValue }}
       </span>
-      <span v-if="suffix" class="font-semibold opacity-80" :class="suffixSizeClass">{{ suffix }}</span>
+      <span v-if="suffix" class="font-semibold opacity-80 text-gray-600" :class="suffixSizeClass">{{ suffix }}</span>
     </div>
 
     <!-- Label (when positioned below number) -->
