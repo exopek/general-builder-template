@@ -7,23 +7,21 @@
         <TransformationBadge
           v-if="showBadge"
           :text="badgeText"
-          variant="success"
+          :variant="badgeVariant"
           class="mb-4"
         />
 
         <h2
           class="text-3xl md:text-4xl lg:text-5xl font-black mb-6"
           :style="{ color: headlineColor }"
-        >
-          {{ headline }}
-        </h2>
+          v-html="headline"
+        ></h2>
 
         <p
           class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto"
           :style="{ color: subheadlineColor }"
-        >
-          {{ subheadline }}
-        </p>
+          v-html="subheadline"
+        ></p>
       </div>
 
       <!-- Testimonials Slider -->
@@ -41,7 +39,7 @@
               <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
 
                 <!-- Before/After Images -->
-                <div class="relative">
+                <div class="relative px-4">
                   <div class="grid grid-cols-2 gap-4">
                     <!-- Before Image -->
                     <div class="relative">
@@ -109,18 +107,16 @@
                   </div>
 
                   <!-- Quote -->
-                  <blockquote class="text-lg md:text-xl text-gray-800 italic leading-relaxed">
-                    "{{ testimonial.quote }}"
-                  </blockquote>
+                  <blockquote class="text-lg md:text-xl text-gray-700 italic leading-relaxed" v-html="`&quot;${testimonial.quote}&quot;`"></blockquote>
 
                   <!-- Author Info -->
                   <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 rounded-full bg-gradient-primary flex items-center justify-center text-white font-bold">
+                    <div class="w-12 h-12 rounded-full bg-gradient-warm flex items-center justify-center text-white font-bold">
                       {{ testimonial.name.charAt(0) }}
                     </div>
                     <div>
-                      <div class="font-semibold text-gray-900">{{ testimonial.name }}</div>
-                      <div class="text-sm text-gray-600">{{ testimonial.details }}</div>
+                      <div class="font-semibold text-gray-900" v-html="testimonial.name"></div>
+                      <div class="text-sm text-gray-600" v-html="testimonial.details"></div>
                     </div>
                   </div>
 
@@ -130,7 +126,7 @@
                       :value="testimonial.weightLoss"
                       label="Gewichtsverlust"
                       suffix="kg"
-                      variant="highlight"
+                      variant="primary"
                       size="sm"
                     />
                     <Statistic
@@ -144,13 +140,13 @@
                       :value="testimonial.satisfactionScore"
                       label="Zufriedenheit"
                       suffix="%"
-                      variant="success"
+                      variant="primary"
                       size="sm"
                     />
                   </div>
 
                   <!-- Program Highlight -->
-                  <div v-if="testimonial.programHighlight" class="bg-gray-50 rounded-lg p-4">
+                  <div v-if="testimonial.programHighlight" class="bg-gray-200 rounded-lg p-4">
                     <div class="flex items-start gap-3">
                       <TransformationIcon
                         emoji="🎯"
@@ -158,8 +154,8 @@
                         size="sm"
                       />
                       <div>
-                        <div class="font-medium text-gray-900 mb-1">{{ testimonial.programHighlight.title }}</div>
-                        <div class="text-sm text-gray-600">{{ testimonial.programHighlight.description }}</div>
+                        <div class="font-medium text-gray-900 mb-1" v-html="testimonial.programHighlight.title"></div>
+                        <div class="text-sm text-gray-600" v-html="testimonial.programHighlight.description"></div>
                       </div>
                     </div>
                   </div>
@@ -209,7 +205,7 @@
 
       <!-- Summary Stats -->
       <div v-if="showSummaryStats" class="text-center">
-        <h3 class="text-2xl font-bold text-gray-900 mb-8">{{ summaryStatsHeadline }}</h3>
+        <h3 class="text-2xl font-bold text-gray-900 mb-8" v-html="summaryStatsHeadline"></h3>
 
         <StatisticGrid
           :statistics="summaryStatsData"
@@ -224,8 +220,8 @@
       <!-- CTA Section -->
       <div v-if="showCta" class="text-center mt-12 lg:mt-16">
         <div class="max-w-2xl mx-auto space-y-6">
-          <h3 class="text-2xl md:text-3xl font-bold text-gray-900">{{ ctaHeadline }}</h3>
-          <p class="text-lg text-gray-600">{{ ctaDescription }}</p>
+          <h3 class="text-2xl md:text-3xl font-bold text-gray-900" v-html="ctaHeadline"></h3>
+          <p class="text-lg text-gray-600" v-html="ctaDescription"></p>
 
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <TransformationButton
@@ -267,12 +263,15 @@ interface Testimonial {
   }
 }
 
-interface SummaryStats {
-  totalParticipants: number
-  averageRating: number
-  averageWeightLoss: number
-  recommendationRate: number
+interface StatisticItem {
+  value: number | string
+  label: string
+  suffix?: string
+  variant?: string
+  animated?: boolean
 }
+
+type BadgeVariant = 'new' | 'popular' | 'featured' | 'limited' | 'success' | 'warning' | 'info' | 'neutral'
 
 interface Props {
   // Content
@@ -280,6 +279,7 @@ interface Props {
   subheadline?: string
   badgeText?: string
   showBadge?: boolean
+  badgeVariant?: BadgeVariant
 
   // Testimonials
   testimonials?: Testimonial[]
@@ -287,7 +287,7 @@ interface Props {
   // Summary Stats
   showSummaryStats?: boolean
   summaryStatsHeadline?: string
-  summaryStats?: SummaryStats
+  summaryStatsData?: StatisticItem[]
 
   // CTA
   showCta?: boolean
@@ -309,6 +309,7 @@ const props = withDefaults(defineProps<Props>(), {
   subheadline: 'Überzeuge dich selbst von den beeindruckenden Transformationen. Diese Ergebnisse sprechen für sich und können auch deine Realität werden.',
   badgeText: 'Verifizierte Erfolge',
   showBadge: true,
+  badgeVariant: 'success',
 
   testimonials: () => [
     {
@@ -360,12 +361,12 @@ const props = withDefaults(defineProps<Props>(), {
 
   showSummaryStats: true,
   summaryStatsHeadline: 'Diese Erfolge sprechen für sich',
-  summaryStats: () => ({
-    totalParticipants: 2847,
-    averageRating: 4.8,
-    averageWeightLoss: 8.2,
-    recommendationRate: 96
-  }),
+  summaryStatsData: () => [
+    { value: 2847, label: 'Erfolgreiche Teilnehmer', suffix: '+', variant: 'primary', animated: true },
+    { value: 4.8, label: 'Durchschnittliche Bewertung', suffix: '/5', variant: 'primary', animated: true },
+    { value: 8.2, label: 'Durchschnittlicher Gewichtsverlust', suffix: 'kg', variant: 'primary', animated: true },
+    { value: 96, label: 'Weiterempfehlungsrate', suffix: '%', variant: 'primary', animated: true }
+  ],
 
   showCta: true,
   ctaHeadline: 'Deine Erfolgsgeschichte beginnt jetzt',
@@ -399,7 +400,7 @@ const goToSlide = (index: number) => {
 }
 
 // Auto-slide functionality
-let autoSlideInterval: NodeJS.Timeout | null = null
+let autoSlideInterval: ReturnType<typeof setInterval> | null = null
 
 const startAutoSlide = () => {
   autoSlideInterval = setInterval(() => {
@@ -453,4 +454,6 @@ button:disabled {
 .w-3.h-3:hover {
   transform: scale(1.2);
 }
+
+
 </style>

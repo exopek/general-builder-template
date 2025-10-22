@@ -565,16 +565,89 @@ export const registeredComponents: RegisteredComponent[] = [
         component: TransformationTestimonials,
         name: 'TransformationTestimonials',
         inputs: [
-            { name: 'headline', type: 'string', defaultValue: 'Echte Erfolgsgeschichten unserer Teilnehmer' },
-            { name: 'subheadline', type: 'text', defaultValue: 'Überzeuge dich selbst von den beeindruckenden Transformationen. Diese Ergebnisse sprechen für sich und können auch deine Realität werden.' },
+            // === HEADER ===
+            { name: 'headline', type: 'richText', defaultValue: 'Echte Erfolgsgeschichten unserer Teilnehmer' },
+            { name: 'subheadline', type: 'richText', defaultValue: 'Überzeuge dich selbst von den beeindruckenden Transformationen. Diese Ergebnisse sprechen für sich und können auch deine Realität werden.' },
             { name: 'showBadge', type: 'boolean', defaultValue: true },
             { name: 'badgeText', type: 'string', defaultValue: 'Verifizierte Erfolge' },
+            { name: 'badgeVariant', type: 'text', defaultValue: 'success', enum: ['new', 'popular', 'featured', 'limited', 'success', 'warning', 'info', 'neutral'] },
+
+            // === TESTIMONIALS ===
+            {
+                name: 'testimonials',
+                type: 'list',
+                defaultValue: [
+                    {
+                        name: 'Sarah Mueller',
+                        details: '29 Jahre, Bürokauffrau aus München',
+                        quote: 'Ich hatte schon so viele Diäten probiert, aber nie langfristige Erfolge erzielt. Das 7-Wochen Programm hat mein Leben verändert.',
+                        rating: 5,
+                        beforeImage: 'https://images.unsplash.com/photo-1494790108755-2616c20e2a7c?w=300&h=400&fit=crop&crop=center',
+                        afterImage: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&h=400&fit=crop&crop=center',
+                        weightLoss: 12,
+                        durationWeeks: 7,
+                        satisfactionScore: 98,
+                        programHighlight: {
+                            title: 'Ernährungsumstellung ohne Verzicht',
+                            description: 'Sarah lernte, wie sie ihre Lieblingsspeisen gesund zubereiten kann'
+                        }
+                    }
+                ],
+                subFields: [
+                    { name: 'name', type: 'richText', required: true, defaultValue: 'Max Mustermann' },
+                    { name: 'details', type: 'richText', required: true, defaultValue: '30 Jahre, Beruf aus Stadt' },
+                    { name: 'quote', type: 'richText', required: true, defaultValue: 'Deine Erfolgsgeschichte hier...' },
+                    { name: 'rating', type: 'number', required: true, defaultValue: 5 },
+                    { name: 'beforeImage', type: 'file', required: true, allowedFileTypes: ['jpeg', 'png', 'webp'] },
+                    { name: 'afterImage', type: 'file', required: true, allowedFileTypes: ['jpeg', 'png', 'webp'] },
+                    { name: 'weightLoss', type: 'number', required: true, defaultValue: 10 },
+                    { name: 'durationWeeks', type: 'number', required: true, defaultValue: 7 },
+                    { name: 'satisfactionScore', type: 'number', required: true, defaultValue: 95 },
+                    {
+                        name: 'programHighlight',
+                        type: 'object',
+                        subFields: [
+                            { name: 'title', type: 'richText', defaultValue: 'Programm-Highlight' },
+                            { name: 'description', type: 'richText', defaultValue: 'Beschreibung des Highlights' }
+                        ]
+                    }
+                ]
+            },
+
+            // === SUMMARY STATS ===
             { name: 'showSummaryStats', type: 'boolean', defaultValue: true },
-            { name: 'summaryStatsHeadline', type: 'string', defaultValue: 'Diese Erfolge sprechen für sich' },
+            { name: 'summaryStatsHeadline', type: 'richText', defaultValue: 'Diese Erfolge sprechen für sich' },
+            {
+                name: 'summaryStatsData',
+                type: 'list',
+                defaultValue: [
+                    { value: 2847, label: 'Erfolgreiche Teilnehmer', suffix: '+', variant: 'primary', animated: true },
+                    { value: 4.8, label: 'Durchschnittliche Bewertung', suffix: '/5', variant: 'highlight', animated: true },
+                    { value: 8.2, label: 'Durchschnittlicher Gewichtsverlust', suffix: 'kg', variant: 'gradient', animated: true },
+                    { value: 96, label: 'Weiterempfehlungsrate', suffix: '%', variant: 'secondary', animated: true }
+                ],
+                subFields: [
+                    { name: 'value', type: 'number', required: true, defaultValue: 100 },
+                    { name: 'label', type: 'string', required: true, defaultValue: 'Statistik Label' },
+                    { name: 'suffix', type: 'string', defaultValue: '' },
+                    { name: 'variant', type: 'text', defaultValue: 'primary', enum: ['default', 'primary', 'secondary', 'gradient', 'glass', 'minimal', 'highlight'] },
+                    { name: 'animated', type: 'boolean', defaultValue: true }
+                ]
+            },
+
+            // === CTA SECTION ===
             { name: 'showCta', type: 'boolean', defaultValue: true },
-            { name: 'ctaHeadline', type: 'string', defaultValue: 'Deine Erfolgsgeschichte beginnt jetzt' },
+            { name: 'ctaHeadline', type: 'richText', defaultValue: 'Deine Erfolgsgeschichte beginnt jetzt' },
+            { name: 'ctaDescription', type: 'richText', defaultValue: 'Schließe dich über 2.800 erfolgreichen Teilnehmern an und schreibe deine eigene Transformation.' },
             { name: 'primaryCtaText', type: 'string', defaultValue: 'Meine Transformation starten' },
-            { name: 'primaryCtaUrl', type: 'url', defaultValue: '#anmeldung' }
+            { name: 'primaryCtaUrl', type: 'url', defaultValue: '#anmeldung' },
+            { name: 'secondaryCtaText', type: 'string', defaultValue: 'Erfolgsgeschichten entdecken' },
+            { name: 'secondaryCtaUrl', type: 'url', defaultValue: '#galerie' },
+
+            // === STYLING ===
+            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'headlineColor', type: 'color', defaultValue: '#1f2937' },
+            { name: 'subheadlineColor', type: 'color', defaultValue: '#6b7280' }
         ]
     },
 
@@ -672,18 +745,66 @@ export const registeredComponents: RegisteredComponent[] = [
 
             // Step Labels
             { name: 'showStepLabels', type: 'boolean', defaultValue: true },
-            { name: 'step1Label', type: 'string', defaultValue: 'Schritt 1: Deine Ziele' },
-            { name: 'step2Label', type: 'string', defaultValue: 'Schritt 2: Betreuung & Sicherheit' },
-            { name: 'step3Label', type: 'string', defaultValue: 'Schritt 3: Dein Start' },
 
-            // Final CTA
+            // === STEP 1 ===
+            { name: 'step1Label', type: 'string', defaultValue: 'Schritt 1: Deine Ziele' },
+            {
+                name: 'step1Questions',
+                type: 'list',
+                defaultValue: [{
+                    question: 'Willst du in den nächsten 7 Wochen sichtbar stärker, energiegeladener und fitter werden – mit einem Trainingsplan, der wirklich zu dir passt?',
+                    answer: 'Ja, auf jeden Fall!'
+                }],
+                subFields: [
+                    { name: 'question', type: 'longText', defaultValue: 'Deine Frage hier...' },
+                    { name: 'answer', type: 'string', defaultValue: 'Deine Antwort hier...' }
+                ]
+            },
+            { name: 'step1AnswerColor', type: 'text', defaultValue: 'orange', enum: ['orange', 'blue', 'green', 'red', 'purple', 'yellow', 'pink', 'gray'] },
+            { name: 'step1BadgeVariant', type: 'text', defaultValue: 'featured', enum: ['new', 'popular', 'featured', 'limited', 'success', 'warning', 'info', 'neutral'] },
+
+            // === STEP 2 ===
+            { name: 'step2Label', type: 'string', defaultValue: 'Schritt 2: Betreuung & Sicherheit' },
+            {
+                name: 'step2Questions',
+                type: 'list',
+                defaultValue: [{
+                    question: 'Willst du mit einem Coach trainieren, der dich persönlich betreut, deinen Plan steuert und dich wirklich ans Ziel bringt?',
+                    answer: 'Ja, das wäre perfekt!'
+                }],
+                subFields: [
+                    { name: 'question', type: 'longText', defaultValue: 'Deine Frage hier...' },
+                    { name: 'answer', type: 'string', defaultValue: 'Deine Antwort hier...' }
+                ]
+            },
+            { name: 'step2AnswerColor', type: 'text', defaultValue: 'blue', enum: ['orange', 'blue', 'green', 'red', 'purple', 'yellow', 'pink', 'gray'] },
+            { name: 'step2BadgeVariant', type: 'text', defaultValue: 'info', enum: ['new', 'popular', 'featured', 'limited', 'success', 'warning', 'info', 'neutral'] },
+
+            // === STEP 3 ===
+            { name: 'step3Label', type: 'string', defaultValue: 'Schritt 3: Dein Start' },
+            {
+                name: 'step3Questions',
+                type: 'list',
+                defaultValue: [{
+                    question: 'Das ist der Moment, an dem du entscheidest, ob du redest – oder fit wirst. Bist du bereit, deine 7 Wochen Transformation zu starten und deinen Schweinehund zu besiegen?',
+                    answer: 'Ja, ich bin bereit! 🚀'
+                }],
+                subFields: [
+                    { name: 'question', type: 'longText', defaultValue: 'Deine Frage hier...' },
+                    { name: 'answer', type: 'string', defaultValue: 'Deine Antwort hier...' }
+                ]
+            },
+            { name: 'step3AnswerColor', type: 'text', defaultValue: 'green', enum: ['orange', 'blue', 'green', 'red', 'purple', 'yellow', 'pink', 'gray'] },
+            { name: 'step3BadgeVariant', type: 'text', defaultValue: 'success', enum: ['new', 'popular', 'featured', 'limited', 'success', 'warning', 'info', 'neutral'] },
+
+            // === FINAL CTA ===
             { name: 'finalCtaHeadline', type: 'string', defaultValue: 'Perfekt! Du bist bereit für deine Transformation' },
             { name: 'finalCtaSubtext', type: 'text', defaultValue: 'Sichere dir jetzt deinen Platz und starte noch heute mit deiner 7-Wochen Transformation' },
             { name: 'finalCtaText', type: 'string', defaultValue: 'Jetzt starten - Nur 297€' },
             { name: 'finalCtaUrl', type: 'url', defaultValue: '#anmeldung' },
             { name: 'cashbackText', type: 'string', defaultValue: '💰 100€ Cashback bei erfolgreichem Abschluss' },
 
-            // Styling
+            // === STYLING ===
             { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
             { name: 'headlineColor', type: 'color', defaultValue: '#1f2937' },
             { name: 'subheadlineColor', type: 'color', defaultValue: '#6b7280' }
