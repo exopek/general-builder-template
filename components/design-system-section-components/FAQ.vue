@@ -296,13 +296,6 @@ interface FaqItem {
   showContactCta?: boolean
 }
 
-interface Category {
-  id: string
-  name: string
-  emoji?: string
-  variant?: 'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'neutral'
-}
-
 interface Props {
   // Content
   headline?: string
@@ -315,7 +308,6 @@ interface Props {
   showSearch?: boolean
   searchPlaceholder?: string
   showCategories?: boolean
-  categories?: Category[]
   showCategoryIcons?: boolean
   showCategoryBadges?: boolean
 
@@ -365,7 +357,6 @@ const props = withDefaults(defineProps<Props>(), {
   showCategories: true,
   showCategoryIcons: true,
   showCategoryBadges: true,
-  categories: () => [],
 
   faqs: () => [],
 
@@ -397,6 +388,45 @@ const props = withDefaults(defineProps<Props>(), {
 const searchQuery = ref('')
 const selectedCategory = ref('all')
 const openItems = ref<number[]>([])
+
+// Dynamically extract categories from FAQ items (from Builder.io)
+const categories = computed(() => {
+  // Extract unique categories from FAQ items
+  const uniqueCategories = new Set<string>()
+  props.faqs.forEach(faq => {
+    if (faq.category) {
+      uniqueCategories.add(faq.category)
+    }
+  })
+
+  // Convert to category objects with automatic emoji assignment
+  const categoryEmojis: Record<string, string> = {
+    'allgemein': '📋',
+    'training': '💪',
+    'ernaehrung': '🥗',
+    'ernährung': '🥗',
+    'mitgliedschaft': '🎫',
+    'preise': '💰',
+    'kurse': '📅',
+    'oeffnungszeiten': '⏰',
+    'öffnungszeiten': '⏰',
+    'ausstattung': '🏋️',
+    'personal-training': '👤',
+    'vertrag': '📝',
+    'anfaenger': '🌱',
+    'anfänger': '🌱',
+    'fortgeschritten': '🔥',
+    'gesundheit': '❤️',
+    'sonstiges': '❓'
+  }
+
+  return Array.from(uniqueCategories).map(categoryId => ({
+    id: categoryId,
+    name: categoryId.charAt(0).toUpperCase() + categoryId.slice(1),
+    emoji: categoryEmojis[categoryId.toLowerCase()] || '📌',
+    variant: 'neutral' as const
+  }))
+})
 
 const filteredFaqs = computed(() => {
   let filtered = props.faqs
@@ -435,17 +465,17 @@ const toggleItem = (index: number) => {
 }
 
 const getCategoryEmoji = (categoryId: string) => {
-  const category = props.categories.find(cat => cat.id === categoryId)
+  const category = categories.value.find(cat => cat.id === categoryId)
   return category?.emoji || '❓'
 }
 
 const getCategoryVariant = (categoryId: string) => {
-  const category = props.categories.find(cat => cat.id === categoryId)
+  const category = categories.value.find(cat => cat.id === categoryId)
   return category?.variant || 'neutral'
 }
 
 const getCategoryName = (categoryId: string) => {
-  const category = props.categories.find(cat => cat.id === categoryId)
+  const category = categories.value.find(cat => cat.id === categoryId)
   return category?.name || 'Allgemein'
 }
 
