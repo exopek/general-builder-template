@@ -36,13 +36,26 @@
               :key="index"
               class="w-full flex-shrink-0"
             >
-              <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+              <div
+                :class="[
+                  'grid gap-8 lg:gap-12 items-center',
+                  testimonial.beforeImage || testimonial.afterImage ? 'lg:grid-cols-2' : ''
+                ]"
+              >
 
                 <!-- Before/After Images -->
-                <div class="relative px-4">
-                  <div class="grid grid-cols-2 gap-4">
+                <div
+                  v-if="testimonial.beforeImage || testimonial.afterImage"
+                  class="relative px-4"
+                >
+                  <div
+                    :class="[
+                      'grid gap-4',
+                      testimonial.beforeImage && testimonial.afterImage ? 'grid-cols-2' : 'grid-cols-1 max-w-sm mx-auto'
+                    ]"
+                  >
                     <!-- Before Image -->
-                    <div class="relative">
+                    <div v-if="testimonial.beforeImage" class="relative">
                       <img
                         :src="testimonial.beforeImage"
                         :alt="`${testimonial.name} vorher`"
@@ -50,6 +63,7 @@
                         style="aspect-ratio: 3/4;"
                       />
                       <TransformationBadge
+                        v-if="testimonial.showBeforeBadge !== false"
                         text="Vorher"
                         variant="neutral"
                         size="sm"
@@ -58,7 +72,7 @@
                     </div>
 
                     <!-- After Image -->
-                    <div class="relative">
+                    <div v-if="testimonial.afterImage" class="relative">
                       <img
                         :src="testimonial.afterImage"
                         :alt="`${testimonial.name} nachher`"
@@ -66,6 +80,7 @@
                         style="aspect-ratio: 3/4;"
                       />
                       <TransformationBadge
+                        v-if="testimonial.showAfterBadge !== false"
                         text="Nachher"
                         variant="success"
                         size="sm"
@@ -75,9 +90,12 @@
                   </div>
 
                   <!-- Results Badge -->
-                  <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                  <div
+                    v-if="testimonial.showResultsBadge !== false"
+                    class="absolute -top-4 left-1/2 transform -translate-x-1/2"
+                  >
                     <TransformationBadge
-                      :text="`${testimonial.weightLoss}kg verloren`"
+                      :text="testimonial.resultsBadgeText || `${testimonial.weightLoss}kg verloren`"
                       variant="new"
                       size="lg"
                       animated
@@ -252,8 +270,8 @@ interface Testimonial {
   details: string
   quote: string
   rating: number
-  beforeImage: string
-  afterImage: string
+  beforeImage?: string
+  afterImage?: string
   weightLoss: number
   durationWeeks: number
   satisfactionScore: number
@@ -261,6 +279,10 @@ interface Testimonial {
     title: string
     description: string
   }
+  showBeforeBadge?: boolean
+  showAfterBadge?: boolean
+  showResultsBadge?: boolean
+  resultsBadgeText?: string
 }
 
 interface StatisticItem {
