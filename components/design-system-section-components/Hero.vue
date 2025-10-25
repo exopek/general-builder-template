@@ -39,6 +39,31 @@
             </p>
           </div>
 
+          <!-- Mobile Image (shown only on mobile between subheadline and stats) -->
+          <div class="block lg:hidden relative max-w-md mx-auto w-full">
+            <div class="relative rounded-2xl overflow-hidden shadow-2xl">
+              <img
+                :src="heroImage"
+                :alt="heroImageAlt"
+                class="w-full h-auto object-cover"
+                style="aspect-ratio: 4/5;"
+              />
+
+              <!-- Image overlay for better text contrast -->
+              <div v-if="imageOverlay" class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+
+              <!-- Overlay Badge -->
+              <TransformationBadge
+                v-if="showImageBadge"
+                :text="imageBadgeText"
+                variant="new"
+                size="lg"
+                position="top-right"
+                animated
+              />
+            </div>
+          </div>
+
           <!-- Statistics Grid -->
           <StatisticGrid
             v-if="showStats && statisticsData.length > 0"
@@ -87,8 +112,8 @@
           </div>
         </div>
 
-        <!-- Visual Side -->
-        <div class="relative flex items-center justify-center">
+        <!-- Visual Side (hidden on mobile, shown on desktop) -->
+        <div class="relative hidden lg:flex items-center justify-center">
           <div class="relative max-w-md lg:max-w-lg w-full">
 
             <!-- Main Hero Image -->

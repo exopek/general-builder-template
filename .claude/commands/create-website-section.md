@@ -27,6 +27,56 @@ Before starting, analyze the requirements:
 
 ---
 
+## 🎨 Builder.io Konfigurierbarkeits-Philosophie
+
+**Prinzip**: "Konsistenz wo nötig, Flexibilität wo sinnvoll"
+
+### ❌ NICHT konfigurierbar machen
+
+Diese Werte sollten **fest in Tailwind** codiert sein, nicht als Props:
+
+- **Spacing** (padding, gap, margin)
+  - Grund: Konsistentes Design-System
+  - Beispiel: `py-12 md:py-16 lg:py-20` (nicht als `paddingTop` prop)
+
+- **Font Sizes**
+  - Grund: Responsive Typography sollte standardisiert sein
+  - Beispiel: `text-3xl md:text-4xl lg:text-5xl` (nicht als `fontSize` prop)
+
+- **Border Radius**
+  - Grund: Einheitliches visuelles Erscheinungsbild
+  - Beispiel: `rounded-2xl` (nicht als `borderRadius` prop)
+
+- **Max-Width**
+  - Grund: Konsistente Container-Breiten
+  - Beispiel: `max-w-6xl` (nicht als `maxWidth` prop)
+
+### ✅ Konfigurierbar machen
+
+Diese Werte **sollten als Props** verfügbar sein:
+
+- **Layout-Optionen**
+  - `layoutColumns`: '1-column' | '2-columns'
+  - `imagePosition`: 'left' | 'right'
+
+- **Visibility Toggles** (für jedes Haupt-Element)
+  - `showTagline`, `showHeadline`, `showDescription`, `showImage`
+
+- **Farben** (mit color picker)
+  - `backgroundColor`, `headlineColor`, `textColor`, etc.
+
+- **Content** (mit richText)
+  - `tagline`, `headline`, `description` (siehe Rich Text Best Practices)
+
+- **Image-Optionen**
+  - `image` (file upload)
+  - `imageAspectRatio` (string wie "4/3", "16/9")
+  - `showImageShadow` (boolean)
+
+**Ergebnis**: Einfachere Bedienung in Builder.io + konsistentes Design
+
+---
+
 ## 🏗️ Component Architecture
 
 ### Section Component Structure
@@ -89,6 +139,108 @@ const props = withDefaults(defineProps<Props>(), {
 })
 </script>
 ```
+
+---
+
+## 📐 Standardisierte Design Patterns
+
+### Pattern A: Standard für neue Sections (Empfohlen)
+
+**Verwendet in:** ContentSection71, FeatureGrid, ContentImageGrid, USPGrid
+
+```vue
+<template>
+  <!-- Section -->
+  <section
+    class="py-12 md:py-16 lg:py-20"
+    :style="{ backgroundColor }"
+  >
+    <div class="container mx-auto px-4 md:px-6">
+
+      <!-- Section Header -->
+      <div class="text-center mb-8 md:mb-12">
+        <!-- Tagline -->
+        <p
+          v-if="showTagline && tagline"
+          class="text-sm md:text-base font-semibold mb-3"
+          :style="{ color: taglineColor }"
+          v-html="tagline"
+        ></p>
+
+        <!-- Headline -->
+        <div
+          v-if="showHeadline && headline"
+          class="text-3xl md:text-4xl lg:text-5xl font-black mb-4"
+          :style="{ color: headlineColor }"
+          v-html="headline"
+        ></div>
+
+        <!-- Description -->
+        <div
+          v-if="showDescription && description"
+          class="text-base md:text-lg"
+          :style="{ color: descriptionColor }"
+          v-html="description"
+        ></div>
+      </div>
+
+      <!-- Content -->
+      <div class="space-y-6">
+        <!-- Grid example -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+          <!-- Cards -->
+          <div class="p-6 md:p-8 rounded-2xl shadow-lg">
+            <!-- Card content -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</template>
+```
+
+**Pattern A Werte:**
+- Section Padding: `py-12 md:py-16 lg:py-20`
+- Container: `container mx-auto px-4 md:px-6`
+- Header Margin: `mb-8 md:mb-12`
+- Content Gap: `space-y-6`
+- Grid Gap: `gap-4 md:gap-6` (oder `gap-6 md:gap-8` für größere Abstände)
+- Card Padding: `p-6 md:p-8`
+- Border Radius: `rounded-2xl`
+
+**Typography (responsive):**
+- Tagline: `text-sm md:text-base`
+- Headline: `text-3xl md:text-4xl lg:text-5xl`
+- Description: `text-base md:text-lg`
+- Large Value/Number: `text-4xl md:text-5xl`
+
+### Pattern B: Für Hero & FAQ Sections
+
+**Verwendet in:** Hero, FAQ
+
+```vue
+<section class="py-16 md:py-20" :style="{ backgroundColor }">
+  <div class="container mx-auto">
+    <!-- Größere Abstände -->
+    <div class="mb-12 lg:mb-16">
+      <!-- oder mb-16 lg:mb-20 -->
+    </div>
+  </div>
+</section>
+```
+
+**Pattern B Werte:**
+- Section Padding: `py-16 md:py-20` (größer für Impact)
+- Container: `container mx-auto` (Padding oft in Child-Elements)
+- Header Margin: `mb-12 lg:mb-16` (oder `mb-16 lg:mb-20`)
+- Content Gap: `space-y-8`
+- Grid Gap: `gap-12 lg:gap-16`
+
+**Wann verwenden:**
+- ✅ Hero Sections (brauchen mehr visuellen Impact)
+- ✅ FAQ Sections (brauchen mehr Luftraum für Lesbarkeit)
+- ❌ Standard Content Sections (verwende Pattern A)
 
 ---
 
@@ -183,12 +335,69 @@ const props = withDefaults(defineProps<Props>(), {
 ```
 
 **Input Types**:
-- `type: 'string'` - Text input
+- `type: 'richText'` - **EMPFOHLEN für alle Textfelder** (erlaubt HTML-Formatierung)
+- `type: 'string'` - Plain text input (nur für Labels/Namen)
 - `type: 'color'` - Color picker
 - `type: 'boolean'` - Toggle
 - `type: 'text', enum: [...]` - Dropdown (NOT `type: 'list'`!)
-- `type: 'longText'` - Textarea
+- `type: 'longText'` - Textarea (veraltet, nutze richText)
 - `type: 'number'` - Number input
+- `type: 'file'` - File upload (für Bilder)
+
+### Rich Text Best Practices
+
+**Verwende `type: 'richText'` für alle Content-Felder:**
+
+```typescript
+// ✅ RICHTIG - Rich Text für Content
+{ name: 'tagline', type: 'richText', defaultValue: 'Tagline' }
+{ name: 'headline', type: 'richText', defaultValue: 'Lorem ipsum' }
+{ name: 'description', type: 'richText', defaultValue: '' }
+
+// ❌ FALSCH - String für Content
+{ name: 'headline', type: 'string', defaultValue: 'Lorem ipsum' }
+```
+
+**Vorteile:**
+- ✅ HTML-Formatierung möglich (`<strong>`, `<em>`, etc.)
+- ✅ Keine headlineTag Props nötig (direkt `<h2>Text</h2>` im richText)
+- ✅ Konsistent über alle Components
+- ✅ Flexibler für Content-Editoren
+
+**Ausnahmen (verwende `type: 'string'`):**
+- Button Text / CTA Text
+- Labels / Namen
+- Alt-Texte für Bilder
+- URLs
+
+### Visibility Toggles Pattern
+
+**Für jedes Haupt-Element sollte ein Toggle existieren:**
+
+```typescript
+inputs: [
+  // Visibility Toggles (gruppiert)
+  { name: 'showTagline', type: 'boolean', defaultValue: true },
+  { name: 'showHeadline', type: 'boolean', defaultValue: true },
+  { name: 'showDescription', type: 'boolean', defaultValue: true },
+  { name: 'showImage', type: 'boolean', defaultValue: true },
+  { name: 'showStatistics', type: 'boolean', defaultValue: true },
+
+  // Content (richText)
+  { name: 'tagline', type: 'richText', defaultValue: 'Tagline' },
+  { name: 'headline', type: 'richText', defaultValue: 'Headline' },
+  // ...
+]
+```
+
+**Template Pattern:**
+```vue
+<p
+  v-if="showTagline && tagline"
+  class="text-sm md:text-base"
+  v-html="tagline"
+></p>
+```
 
 ---
 
@@ -206,11 +415,35 @@ const props = withDefaults(defineProps<Props>(), {
 
 ### Step 2: Styling
 
-1. **Check `global.css`** for existing utility classes
-2. **Use Tailwind utilities** (avoid custom CSS)
-3. **Avoid `.card` class** - use individual utilities
-4. **Test contrast** of all text elements
-5. **Add responsive classes** (mobile-first)
+1. **Wähle das richtige Pattern**:
+   - **Pattern A** (Standard): Für normale Content Sections
+   - **Pattern B** (Hero/FAQ): Nur für Hero oder FAQ Sections
+
+2. **Verwende Pattern A Template** (empfohlen):
+   ```vue
+   <section class="py-12 md:py-16 lg:py-20" :style="{ backgroundColor }">
+     <div class="container mx-auto px-4 md:px-6">
+       <!-- Content -->
+     </div>
+   </section>
+   ```
+
+3. **Typography als responsive Tailwind-Classes**:
+   - Tagline: `text-sm md:text-base`
+   - Headline: `text-3xl md:text-4xl lg:text-5xl`
+   - Description: `text-base md:text-lg`
+   - Large Values: `text-4xl md:text-5xl`
+
+4. **Spacing fest in Tailwind** (nicht als Props):
+   - Header Margin: `mb-8 md:mb-12`
+   - Content Gap: `space-y-6`
+   - Grid Gap: `gap-4 md:gap-6`
+   - Card Padding: `p-6 md:p-8`
+
+5. **Check `global.css`** for existing utility classes
+6. **Avoid `.card` class** - use individual utilities
+7. **Test contrast** of all text elements
+8. **Add responsive classes** (mobile-first)
 
 ### Step 3: Builder.io Registration (Section Components only)
 
@@ -239,30 +472,43 @@ const props = withDefaults(defineProps<Props>(), {
 - [ ] TypeScript interface complete with all props
 - [ ] Default values set for all props
 
+**Design Pattern** (NEU):
+- [ ] Verwendet Pattern A (Standard) oder Pattern B (Hero/FAQ)
+- [ ] Spacing fest in Tailwind (nicht als Props)
+- [ ] Font Sizes fest in Tailwind mit responsive classes
+- [ ] Border Radius fest in Tailwind (`rounded-2xl`)
+- [ ] Max-Width fest in Tailwind (z.B. `max-w-6xl`)
+
 **Template Structure** (for sections with backgroundColor):
-- [ ] Outer div with `:style="{ backgroundColor }"`
-- [ ] Inner div with `.container` class
-- [ ] TWO closing `</div>` tags present
+- [ ] Outer `<section>` mit `:style="{ backgroundColor }"`
+- [ ] Inner div mit `container mx-auto px-4 md:px-6`
+- [ ] Proper section padding: `py-12 md:py-16 lg:py-20` (Pattern A)
+- [ ] TWO closing tags present (`</div></section>`)
 - [ ] No unclosed tags
 
 **Builder.io** (Section Components only):
 - [ ] Component imported in `custom-components.ts`
 - [ ] Registration object added
-- [ ] All props have input definitions
-- [ ] Correct input types used (no `type: 'list'`)
+- [ ] All content fields use `type: 'richText'` (nicht string)
+- [ ] Visibility Toggles für alle Haupt-Elemente (`show*`)
+- [ ] Correct input types used (especially `type: 'text', enum: [...]` for dropdowns)
+- [ ] NO spacing/fontSize/borderRadius props (fest in Tailwind)
 - [ ] Meaningful default values set
 
 **Accessibility**:
-- [ ] Semantic HTML used (h1-h6, section, article, etc.)
+- [ ] Semantic HTML used (section, h1-h6, article, etc.)
 - [ ] Links have hover states
 - [ ] Buttons have proper text/aria-labels
 - [ ] Images have alt text (if applicable)
+- [ ] v-html only used for richText content
 
 **Testing**:
 - [ ] Component renders correctly
 - [ ] All props work as expected
+- [ ] Visibility toggles work correctly
 - [ ] Responsive on mobile/tablet/desktop
 - [ ] Works in Builder.io editor (if registered)
+- [ ] Rich text formatting works (bold, italic, etc.)
 
 ---
 
@@ -273,10 +519,55 @@ Now create the component with all guidelines above in mind. Think carefully abou
 1. **Component architecture** (UI vs Section vs Content Wrapper)
 2. **Location** (design-system-ui-components/ vs design-system-section-components/ vs domain/)
 3. **Naming** (NO "Base" prefix for new components)
-4. **Template structure** (proper wrapper divs)
-5. **Styling** (tokens, Tailwind, no `.card` class)
-6. **Contrast** (text colors vs backgrounds)
-7. **Responsiveness** (mobile-first)
-8. **Builder.io integration** (only sections & wrappers, proper inputs)
+4. **Design Pattern** (Pattern A für Standard, Pattern B für Hero/FAQ)
+5. **Template structure** (proper wrapper divs with backgroundColor)
+6. **Styling** (tokens, Tailwind, no `.card` class)
+7. **Typography** (responsive Tailwind classes, fest codiert)
+8. **Spacing** (fest in Tailwind, NICHT als Props)
+9. **Contrast** (text colors vs backgrounds)
+10. **Responsiveness** (mobile-first)
+11. **Builder.io integration**:
+    - Only sections & wrappers (NOT UI components)
+    - Use `type: 'richText'` for all content fields
+    - Add visibility toggles for all main elements
+    - NO spacing/fontSize/borderRadius props
+12. **Rich Text** (all content fields use richText, v-html in template)
+
+**Quick Start Template** (Pattern A):
+
+```vue
+<template>
+  <section class="py-12 md:py-16 lg:py-20" :style="{ backgroundColor }">
+    <div class="container mx-auto px-4 md:px-6">
+      <div class="text-center mb-8 md:mb-12">
+        <p v-if="showTagline && tagline" class="text-sm md:text-base font-semibold mb-3" v-html="tagline"></p>
+        <div v-if="showHeadline && headline" class="text-3xl md:text-4xl lg:text-5xl font-black mb-4" v-html="headline"></div>
+      </div>
+      <!-- Your content here -->
+    </div>
+  </section>
+</template>
+
+<script setup lang="ts">
+interface Props {
+  // Visibility
+  showTagline?: boolean
+  showHeadline?: boolean
+  // Content (richText!)
+  tagline?: string
+  headline?: string
+  // Colors
+  backgroundColor?: string
+}
+
+withDefaults(defineProps<Props>(), {
+  showTagline: true,
+  showHeadline: true,
+  tagline: 'Tagline',
+  headline: 'Headline',
+  backgroundColor: '#ffffff'
+})
+</script>
+```
 
 Keep the implementation clean, reusable, and following all design system principles from CLAUDE.md.
