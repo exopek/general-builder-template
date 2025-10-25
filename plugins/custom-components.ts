@@ -73,6 +73,7 @@ import ContentStatsGallery from '~/components/design-system-section-components/C
 import StatsFeatureCards from '~/components/design-system-section-components/StatsFeatureCards.vue';
 import ContentBentoGrid from '~/components/design-system-section-components/ContentBentoGrid.vue';
 import ContentSection48 from '~/components/design-system-section-components/ContentSection48.vue';
+import ContentSection71 from '~/components/design-system-section-components/ContentSection71.vue';
 
 // Composite Components
 import SevenWeekQuestionnaire from '~/components/composite/SevenWeekQuestionnaire.vue';
@@ -2670,6 +2671,65 @@ export const registeredComponents: RegisteredComponent[] = [
             { name: 'showPlayButton', type: 'boolean', defaultValue: true },
             { name: 'playButtonLabel', type: 'string', defaultValue: 'Play video' },
             { name: 'aspectRatio', type: 'string', defaultValue: '56.25%' }
+        ]
+    },
+
+    {
+        component: ContentSection71,
+        name: 'ContentSection71',
+        inputs: [
+            // === LAYOUT ===
+            { name: 'layoutColumns', type: 'text', enum: ['1-column', '2-columns'], defaultValue: '2-columns' },
+            { name: 'imagePosition', type: 'text', enum: ['left', 'right'], defaultValue: 'left' },
+
+            // === VISIBILITY TOGGLES ===
+            { name: 'showTagline', type: 'boolean', defaultValue: true },
+            { name: 'showHeadline', type: 'boolean', defaultValue: true },
+            { name: 'showDescription', type: 'boolean', defaultValue: true },
+            { name: 'showImage', type: 'boolean', defaultValue: true },
+            { name: 'showStatistics', type: 'boolean', defaultValue: true },
+
+            // === CONTENT ===
+            { name: 'tagline', type: 'richText', defaultValue: 'Tagline' },
+            { name: 'headline', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet consectetur adipiscing' },
+            { name: 'description', type: 'richText', defaultValue: '' },
+
+            // === IMAGE ===
+            { name: 'image', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'webp'], defaultValue: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&h=600&fit=crop' },
+            { name: 'imageAlt', type: 'string', defaultValue: 'Content Image' },
+            { name: 'imageAspectRatio', type: 'string', defaultValue: '4/3' },
+            { name: 'showImageShadow', type: 'boolean', defaultValue: true },
+
+            // === STATISTICS ===
+            {
+                name: 'statistics',
+                type: 'list',
+                defaultValue: [
+                    {
+                        value: 75,
+                        suffix: '%',
+                        description: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis.'
+                    },
+                    {
+                        value: 83,
+                        suffix: '%',
+                        description: 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi.'
+                    }
+                ],
+                subFields: [
+                    { name: 'value', type: 'number', required: true, defaultValue: 50 },
+                    { name: 'suffix', type: 'string', defaultValue: '%' },
+                    { name: 'description', type: 'richText', required: true, defaultValue: 'Statistic description' }
+                ]
+            },
+
+            // === COLORS ===
+            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'taglineColor', type: 'color', defaultValue: '#374151' },
+            { name: 'headlineColor', type: 'color', defaultValue: '#111827' },
+            { name: 'descriptionColor', type: 'color', defaultValue: '#4b5563' },
+            { name: 'statValueColor', type: 'color', defaultValue: '#111827' },
+            { name: 'statDescriptionColor', type: 'color', defaultValue: '#4b5563' }
         ]
     },
 
