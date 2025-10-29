@@ -1,21 +1,30 @@
 <template>
-  <div :style="{ backgroundColor }" class="py-12 md:py-16 lg:py-20">
-    <div class="container">
+  <section
+    class="py-12 md:py-16 lg:py-20"
+    :style="{ backgroundColor }"
+  >
+    <div class="container mx-auto px-4 md:px-6">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
         <!-- Left: Steps Content -->
         <div>
-          <p v-if="tagline" class="text-sm font-medium text-primary mb-3">
-            {{ tagline }}
-          </p>
-          <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-8 lg:mb-12">
-            {{ title }}
-          </h2>
+          <p
+            v-if="showTagline && tagline"
+            class="text-sm md:text-base font-medium mb-3"
+            :style="{ color: taglineColor }"
+            v-html="tagline"
+          ></p>
+          <div
+            v-if="showTitle && title"
+            class="text-3xl md:text-4xl lg:text-5xl font-black mb-8 md:mb-12 leading-tight"
+            :style="{ color: titleColor }"
+            v-html="title"
+          ></div>
 
           <div class="space-y-6">
             <div
               v-for="(step, index) in steps"
               :key="index"
-              class="p-5 md:p-6 rounded-xl border transition-all"
+              class="p-5 md:p-6 rounded-2xl border transition-all"
               :class="[
                 step.highlighted
                   ? 'bg-gray-900 border-gray-900 text-white'
@@ -94,7 +103,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">
@@ -106,20 +115,41 @@ interface Step {
 }
 
 interface Props {
-  backgroundColor?: string
+  // Visibility Toggles
+  showTagline?: boolean
+  showTitle?: boolean
+
+  // Content (richText)
   tagline?: string
   title?: string
+
+  // Steps
   steps?: Step[]
+
+  // Image
   image?: string
   imageAlt?: string
+
+  // CTA
   ctaText?: string
   ctaUrl?: string
+
+  // Colors
+  backgroundColor?: string
+  taglineColor?: string
+  titleColor?: string
 }
 
 withDefaults(defineProps<Props>(), {
-  backgroundColor: '#ffffff',
+  // Visibility
+  showTagline: true,
+  showTitle: true,
+
+  // Content
   tagline: 'Tagline',
   title: 'Lorem ipsum dolor sit amet consectetur adipiscing',
+
+  // Steps
   steps: () => [
     {
       label: 'Step 01',
@@ -138,9 +168,18 @@ withDefaults(defineProps<Props>(), {
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing viverra ornare, eros dolor nulla.'
     }
   ],
+
+  // Image
   image: '',
   imageAlt: '',
+
+  // CTA
   ctaText: 'Contact now',
-  ctaUrl: '#'
+  ctaUrl: '#',
+
+  // Colors
+  backgroundColor: '#ffffff',
+  taglineColor: '#ea580c',
+  titleColor: '#111827'
 })
 </script>

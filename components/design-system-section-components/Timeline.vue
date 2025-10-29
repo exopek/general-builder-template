@@ -1,117 +1,123 @@
 <template>
-  <div class="base-timeline" :class="timelineClasses">
-    <!-- Header Section -->
-    <div v-if="headline || subheadline" class="timeline-header text-center mb-12">
-      <h2 v-if="headline" class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-        {{ headline }}
-      </h2>
-      <p v-if="subheadline" class="text-lg text-gray-600 max-w-3xl mx-auto">
-        {{ subheadline }}
-      </p>
-    </div>
-
-    <!-- Progress Bar (for horizontal timeline) -->
-    <div
-      v-if="showProgress && orientation === 'horizontal'"
-      class="timeline-progress mb-8"
-    >
-      <div class="progress-bar">
+  <section
+    class="py-12 md:py-16 lg:py-20"
+    :style="{ backgroundColor }"
+    :class="timelineClasses"
+  >
+    <div class="container mx-auto px-4 md:px-6">
+      <!-- Header Section -->
+      <div v-if="showHeadline || showSubheadline" class="text-center mb-8 md:mb-12">
         <div
-          class="progress-fill"
-          :style="{ width: `${progressPercentage}%` }"
+          v-if="showHeadline && headline"
+          class="text-3xl md:text-4xl lg:text-5xl font-black mb-4 leading-tight"
+          :style="{ color: headlineColor }"
+          v-html="headline"
+        ></div>
+        <div
+          v-if="showSubheadline && subheadline"
+          class="text-base md:text-lg max-w-3xl mx-auto"
+          :style="{ color: subheadlineColor }"
+          v-html="subheadline"
         ></div>
       </div>
-      <div class="text-center mt-2 text-sm text-gray-600">
-        {{ currentStep }} von {{ totalSteps }} Schritten
-      </div>
-    </div>
 
-    <!-- Timeline Container -->
-    <div class="timeline-container" :class="containerClasses">
+      <!-- Progress Bar (for horizontal timeline) -->
       <div
-        v-for="(item, index) in processedItems"
-        :key="item.key || index"
-        class="timeline-item"
-        :class="[
-          getItemClasses(item, index),
-          { 'active': item.active, 'completed': item.completed }
-        ]"
-        @click="handleItemClick(item, index)"
+        v-if="showProgress && orientation === 'horizontal'"
+        class="timeline-progress mb-8"
       >
-        <!-- Timeline Connector (vertical only) -->
-        <div
-          v-if="orientation === 'vertical' && index < processedItems.length - 1"
-          class="timeline-connector"
-          :class="{ 'completed': item.completed }"
-        ></div>
-
-        <!-- Timeline Marker -->
-        <div class="timeline-marker" :class="getMarkerClasses(item)">
-          <component
-            v-if="item.icon"
-            :is="iconComponent"
-            :name="item.icon"
-            class="w-4 h-4"
-          />
-          <span v-else-if="showNumbers" class="marker-number">
-            {{ index + 1 }}
-          </span>
-          <div v-else class="marker-dot"></div>
+        <div class="progress-bar">
+          <div
+            class="progress-fill"
+            :style="{ width: `${progressPercentage}%` }"
+          ></div>
         </div>
-
-        <!-- Timeline Content -->
-        <div class="timeline-content" :class="getContentClasses(item)">
-          <!-- Date/Step Info -->
-          <div v-if="item.date || item.step" class="timeline-meta">
-            <span v-if="item.date" class="timeline-date">{{ formatDate(item.date) }}</span>
-            <span v-if="item.step" class="timeline-step">{{ item.step }}</span>
-          </div>
-
-          <!-- Main Content -->
-          <h3 v-if="item.title" class="timeline-title">{{ item.title }}</h3>
-          <p v-if="item.description" class="timeline-description">{{ item.description }}</p>
-
-          <!-- Features/Details -->
-          <div v-if="item.features && item.features.length > 0" class="timeline-features">
-            <ul class="feature-list">
-              <li v-for="(feature, featureIndex) in item.features" :key="featureIndex">
-                {{ getFeatureText(feature) }}
-              </li>
-            </ul>
-          </div>
-
-          <!-- Custom Content Slot -->
-          <slot :name="`item-${index}`" :item="item" :index="index" />
-
-          <!-- CTA Button -->
-          <Button
-            v-if="item.ctaText"
-            :text="item.ctaText"
-            :href="item.ctaUrl"
-            :variant="item.ctaVariant || 'outline'"
-            size="sm"
-            class="mt-4"
-          />
+        <div class="text-center mt-2 text-sm" :style="{ color: subheadlineColor }">
+          {{ currentStep }} von {{ totalSteps }} Schritten
         </div>
       </div>
-    </div>
 
-    <!-- Footer -->
-    <div v-if="hasFooter" class="timeline-footer mt-12 text-center">
-      <slot name="footer" />
+      <!-- Timeline Container -->
+      <div class="timeline-container" :class="containerClasses">
+        <div
+          v-for="(item, index) in processedItems"
+          :key="item.key || index"
+          class="timeline-item"
+          :class="[
+            getItemClasses(item, index),
+            { 'active': item.active, 'completed': item.completed }
+          ]"
+          @click="handleItemClick(item, index)"
+        >
+          <!-- Timeline Connector (vertical only) -->
+          <div
+            v-if="orientation === 'vertical' && index < processedItems.length - 1"
+            class="timeline-connector"
+            :class="{ 'completed': item.completed }"
+          ></div>
+
+          <!-- Timeline Marker -->
+          <div class="timeline-marker" :class="getMarkerClasses(item)">
+            <span v-if="showNumbers" class="marker-number">
+              {{ index + 1 }}
+            </span>
+            <div v-else class="marker-dot"></div>
+          </div>
+
+          <!-- Timeline Content -->
+          <div class="timeline-content" :class="getContentClasses(item)">
+            <!-- Date/Step Info -->
+            <div v-if="item.date || item.step" class="timeline-meta">
+              <span v-if="item.date" class="timeline-date">{{ formatDate(item.date) }}</span>
+              <span v-if="item.step" class="timeline-step">{{ item.step }}</span>
+            </div>
+
+            <!-- Main Content -->
+            <h3 v-if="item.title" class="timeline-title">{{ item.title }}</h3>
+            <p v-if="item.description" class="timeline-description">{{ item.description }}</p>
+
+            <!-- Features/Details -->
+            <div v-if="item.features && item.features.length > 0" class="timeline-features">
+              <ul class="feature-list">
+                <li v-for="(feature, featureIndex) in item.features" :key="featureIndex">
+                  {{ getFeatureText(feature) }}
+                </li>
+              </ul>
+            </div>
+
+            <!-- Custom Content Slot -->
+            <slot :name="`item-${index}`" :item="item" :index="index" />
+
+            <!-- CTA Button -->
+            <Button
+              v-if="item.ctaText"
+              :text="item.ctaText"
+              :href="item.ctaUrl"
+              :variant="item.ctaVariant || 'outline'"
+              size="sm"
+              class="mt-4"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div v-if="hasFooter" class="timeline-footer mt-8 md:mt-12 text-center">
+        <slot name="footer" />
+      </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">
 import Button from '~/components/design-system-ui-components/Button.vue'
+
 interface TimelineItem {
   key?: string
   title: string
   description?: string
   date?: string | Date
   step?: string
-  icon?: string
   features?: (string | { feature?: string; text?: string })[]
   active?: boolean
   completed?: boolean
@@ -122,9 +128,15 @@ interface TimelineItem {
 }
 
 interface Props {
-  // Content
+  // Visibility Toggles
+  showHeadline?: boolean
+  showSubheadline?: boolean
+
+  // Content (richText)
   headline?: string
   subheadline?: string
+
+  // Timeline Items
   items: TimelineItem[]
 
   // Layout
@@ -137,24 +149,41 @@ interface Props {
   currentStep?: number
   showNumbers?: boolean
 
-  // Styling
-  iconComponent?: string
-  colorScheme?: 'primary' | 'secondary' | 'gradient'
-
   // Behavior
   interactive?: boolean
+
+  // Colors
+  backgroundColor?: string
+  headlineColor?: string
+  subheadlineColor?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  // Visibility
+  showHeadline: true,
+  showSubheadline: true,
+
+  // Content
+  headline: 'Timeline',
+  subheadline: 'Follow our journey',
+
+  // Layout
   orientation: 'vertical',
   variant: 'default',
   size: 'md',
+
+  // Progress
   showProgress: false,
   currentStep: 1,
   showNumbers: true,
-  iconComponent: 'Icon',
-  colorScheme: 'primary',
-  interactive: false
+
+  // Behavior
+  interactive: false,
+
+  // Colors
+  backgroundColor: '#ffffff',
+  headlineColor: '#111827',
+  subheadlineColor: '#4b5563'
 })
 
 const slots = useSlots()
@@ -193,7 +222,7 @@ const timelineClasses = computed(() => {
 const containerClasses = computed(() => {
   const orientationClasses = {
     vertical: 'timeline-vertical',
-    horizontal: 'timeline-horizontal grid gap-6'
+    horizontal: 'timeline-horizontal grid gap-4 md:gap-6'
   }
 
   const responsiveClasses = props.orientation === 'horizontal'
@@ -233,7 +262,7 @@ const getContentClasses = (item: TimelineItem) => {
   const variantClasses = {
     default: '',
     minimal: 'minimal-content',
-    cards: 'card bg-white p-6 shadow-md rounded-xl',
+    cards: 'card bg-white p-6 shadow-md rounded-2xl',
     connected: 'connected-content'
   }
 
@@ -268,16 +297,16 @@ const handleItemClick = (item: TimelineItem, index: number) => {
 /* Progress Bar */
 .progress-bar {
   height: 0.5rem;
-  background-color: var(--color-gray-200);
-  border-radius: var(--border-radius-full);
+  background-color: #e5e7eb;
+  border-radius: 9999px;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  background: var(--gradient-primary);
-  border-radius: var(--border-radius-full);
-  transition: all var(--transition-slow);
+  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+  border-radius: 9999px;
+  transition: width 0.5s ease;
 }
 
 /* Vertical Timeline */
@@ -293,7 +322,7 @@ const handleItemClick = (item: TimelineItem, index: number) => {
   top: 0;
   bottom: 0;
   width: 2px;
-  background: var(--color-gray-300);
+  background: #d1d5db;
   transform: translateX(-50%);
 }
 
@@ -312,12 +341,12 @@ const handleItemClick = (item: TimelineItem, index: number) => {
   top: 3rem;
   width: 2px;
   height: calc(100% - 1rem);
-  background: var(--color-gray-300);
-  transition: background-color var(--transition-normal);
+  background: #d1d5db;
+  transition: background-color 0.3s ease;
 }
 
 .timeline-connector.completed {
-  background: var(--color-primary);
+  background: #ea580c;
 }
 
 /* Horizontal Timeline */
@@ -338,7 +367,7 @@ const handleItemClick = (item: TimelineItem, index: number) => {
   justify-content: center;
   font-size: 0.875rem;
   font-weight: 600;
-  transition: all var(--transition-normal);
+  transition: all 0.3s ease;
   z-index: 10;
 }
 
@@ -351,22 +380,22 @@ const handleItemClick = (item: TimelineItem, index: number) => {
 
 /* Marker States */
 .marker-pending {
-  background: var(--color-gray-200);
-  color: var(--color-gray-500);
-  border: 2px solid var(--color-gray-300);
+  background: #e5e7eb;
+  color: #6b7280;
+  border: 2px solid #d1d5db;
 }
 
 .marker-active {
-  background: var(--color-primary);
+  background: #ea580c;
   color: white;
-  border: 2px solid var(--color-primary);
-  box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.2);
+  border: 2px solid #ea580c;
+  box-shadow: 0 0 0 4px rgba(234, 88, 12, 0.2);
 }
 
 .marker-completed {
-  background: var(--color-primary);
+  background: #ea580c;
   color: white;
-  border: 2px solid var(--color-primary);
+  border: 2px solid #ea580c;
 }
 
 .marker-dot {
@@ -398,30 +427,30 @@ const handleItemClick = (item: TimelineItem, index: number) => {
 }
 
 .timeline-date {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-primary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #ea580c;
 }
 
 .timeline-step {
-  font-size: var(--font-size-xs);
+  font-size: 0.75rem;
   padding: 0.25rem 0.5rem;
-  background-color: var(--color-gray-100);
-  color: var(--color-gray-600);
-  border-radius: var(--border-radius-full);
+  background-color: #f3f4f6;
+  color: #6b7280;
+  border-radius: 9999px;
 }
 
 .timeline-title {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-gray-900);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
   margin-bottom: 0.5rem;
 }
 
 .timeline-description {
-  color: var(--color-gray-600);
+  color: #6b7280;
   margin-bottom: 0.75rem;
-  line-height: var(--line-height-relaxed);
+  line-height: 1.625;
 }
 
 .timeline-features {
@@ -435,8 +464,8 @@ const handleItemClick = (item: TimelineItem, index: number) => {
 }
 
 .feature-list li {
-  font-size: var(--font-size-sm);
-  color: var(--color-gray-600);
+  font-size: 0.875rem;
+  color: #6b7280;
   display: flex;
   align-items: center;
   margin-bottom: 0.25rem;
@@ -444,9 +473,9 @@ const handleItemClick = (item: TimelineItem, index: number) => {
 
 .feature-list li::before {
   content: '✓';
-  color: var(--color-primary);
+  color: #ea580c;
   margin-right: 0.5rem;
-  font-weight: var(--font-weight-semibold);
+  font-weight: 600;
 }
 
 /* Variants */
@@ -474,19 +503,19 @@ const handleItemClick = (item: TimelineItem, index: number) => {
 
 /* Size variations */
 .timeline-sm .timeline-title {
-  font-size: var(--font-size-base);
+  font-size: 1rem;
 }
 
 .timeline-sm .timeline-description {
-  font-size: var(--font-size-sm);
+  font-size: 0.875rem;
 }
 
 .timeline-lg .timeline-title {
-  font-size: var(--font-size-xl);
+  font-size: 1.25rem;
 }
 
 .timeline-lg .timeline-description {
-  font-size: var(--font-size-lg);
+  font-size: 1.125rem;
 }
 
 .timeline-lg .timeline-marker {
@@ -501,9 +530,9 @@ const handleItemClick = (item: TimelineItem, index: number) => {
 
 /* Active/Hover states */
 .timeline-item.active .timeline-content {
-  background-color: rgba(255, 107, 53, 0.05);
-  padding: var(--spacing-md);
-  border-radius: var(--border-radius-lg);
+  background-color: rgba(234, 88, 12, 0.05);
+  padding: 1rem;
+  border-radius: 0.5rem;
 }
 
 .timeline-item:hover .timeline-marker {
@@ -523,11 +552,11 @@ const handleItemClick = (item: TimelineItem, index: number) => {
   }
 
   .timeline-title {
-    font-size: var(--font-size-base);
+    font-size: 1rem;
   }
 
   .timeline-description {
-    font-size: var(--font-size-sm);
+    font-size: 0.875rem;
   }
 }
 </style>

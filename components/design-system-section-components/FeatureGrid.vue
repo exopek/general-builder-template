@@ -1,38 +1,30 @@
 <template>
   <section
     class="py-12 md:py-16 lg:py-20"
-    :style="{ backgroundColor: sectionBackgroundColor }"
+    :style="{ backgroundColor }"
   >
     <div class="container mx-auto px-4 md:px-6">
       <!-- Section Header -->
       <div class="mb-8 md:mb-12">
         <p
-          v-if="tagline"
+          v-if="showTagline && tagline"
           class="text-sm md:text-base font-semibold mb-3 uppercase tracking-wide"
-          :style="{ color: 'var(--color-gray-600)' }"
-        >
-          {{ tagline }}
-        </p>
-        <h2
+          :style="{ color: taglineColor }"
+          v-html="tagline"
+        ></p>
+        <div
+          v-if="showHeadline && headline"
           class="text-3xl md:text-4xl lg:text-5xl font-black mb-4"
-          :style="{
-            color: 'var(--color-gray-900)',
-            lineHeight: 'var(--line-height-tight)'
-          }"
-        >
-          {{ headline }}
-        </h2>
+          :style="{ color: headlineColor }"
+          v-html="headline"
+        ></div>
         <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4 md:gap-6">
-          <p
-            v-if="description"
+          <div
+            v-if="showDescription && description"
             class="text-base md:text-lg md:max-w-2xl"
-            :style="{
-              color: 'var(--color-gray-600)',
-              lineHeight: 'var(--line-height-relaxed)'
-            }"
-          >
-            {{ description }}
-          </p>
+            :style="{ color: descriptionColor }"
+            v-html="description"
+          ></div>
           <Button
             v-if="showButton && buttonText"
             :text="buttonText"
@@ -49,48 +41,35 @@
         <div
           v-for="(feature, index) in features"
           :key="index"
-          class="rounded-xl p-6 md:p-8 transition-all"
+          class="rounded-2xl p-6 md:p-8 transition-all"
           :class="{
             'lg:col-span-2': index === 0 || index === 2,
             'lg:col-start-2': index === 2
           }"
           :style="{
-            backgroundColor: feature.backgroundColor || 'var(--color-gray-100)',
-            borderRadius: 'var(--border-radius-xl)'
+            backgroundColor: feature.backgroundColor || '#f3f4f6'
           }"
         >
           <!-- Number -->
           <div
             class="text-5xl md:text-6xl font-black mb-4 md:mb-6"
-            :style="{
-              color: feature.numberColor || 'var(--color-gray-400)',
-              lineHeight: 'var(--line-height-none)'
-            }"
-          >
-            {{ feature.number }}
-          </div>
+            :style="{ color: feature.numberColor || '#9ca3af' }"
+            v-html="feature.number"
+          ></div>
 
           <!-- Heading -->
           <h3
             class="text-xl md:text-2xl font-bold mb-3"
-            :style="{
-              color: feature.headingColor || 'var(--color-gray-900)',
-              lineHeight: 'var(--line-height-tight)'
-            }"
-          >
-            {{ feature.heading }}
-          </h3>
+            :style="{ color: feature.headingColor || '#111827' }"
+            v-html="feature.heading"
+          ></h3>
 
           <!-- Description -->
-          <p
+          <div
             class="text-sm md:text-base"
-            :style="{
-              color: feature.descriptionColor || 'var(--color-gray-600)',
-              lineHeight: 'var(--line-height-relaxed)'
-            }"
-          >
-            {{ feature.description }}
-          </p>
+            :style="{ color: feature.descriptionColor || '#4b5563' }"
+            v-html="feature.description"
+          ></div>
         </div>
       </div>
     </div>
@@ -99,6 +78,7 @@
 
 <script setup lang="ts">
 import Button from '~/components/design-system-ui-components/Button.vue'
+
 interface Feature {
   number: string
   heading: string
@@ -110,61 +90,87 @@ interface Feature {
 }
 
 interface Props {
+  // Visibility Toggles
+  showTagline?: boolean
+  showHeadline?: boolean
+  showDescription?: boolean
+  showButton?: boolean
+
+  // Content (richText)
   tagline?: string
   headline?: string
   description?: string
-  showButton?: boolean
   buttonText?: string
   buttonUrl?: string
+
+  // Features
   features?: Feature[]
-  sectionBackgroundColor?: string
+
+  // Colors
+  backgroundColor?: string
+  taglineColor?: string
+  headlineColor?: string
+  descriptionColor?: string
 }
 
 withDefaults(defineProps<Props>(), {
+  // Visibility Toggles
+  showTagline: true,
+  showHeadline: true,
+  showDescription: true,
+  showButton: true,
+
+  // Content
   tagline: 'Tagline',
   headline: 'Lorem ipsum dolor sit amet',
   description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
-  showButton: true,
   buttonText: 'View all',
   buttonUrl: '#',
+
+  // Features
   features: () => [
     {
       number: '01',
       heading: 'Lorem ipsum dolor sit amet',
       description: 'Aliqua id fugiat nostrud lorem est dolus sit amet. Duis exercitation dolor sed tempor incididunt ut labore et dolore minim lorem anim and more lorem.',
-      backgroundColor: 'var(--color-gray-900)',
-      numberColor: 'var(--color-gray-700)',
-      headingColor: 'var(--color-white)',
-      descriptionColor: 'var(--color-gray-300)'
+      backgroundColor: '#111827',
+      numberColor: '#374151',
+      headingColor: '#ffffff',
+      descriptionColor: '#d1d5db'
     },
     {
       number: '02',
       heading: 'Lorem ipsum dolor sit amet',
       description: 'Aliqua id fugiat nostrud lorem est dolus sit amet. Duis exercitation dolor sed tempor incididunt ut labore et dolore minim lorem anim.',
-      backgroundColor: 'var(--color-gray-100)',
-      numberColor: 'var(--color-gray-400)',
-      headingColor: 'var(--color-gray-900)',
-      descriptionColor: 'var(--color-gray-600)'
+      backgroundColor: '#f3f4f6',
+      numberColor: '#9ca3af',
+      headingColor: '#111827',
+      descriptionColor: '#4b5563'
     },
     {
       number: '03',
       heading: 'Lorem ipsum dolor sit amet',
       description: 'Aliqua id fugiat nostrud lorem est dolus sit amet. Duis exercitation dolor sed tempor incididunt ut labore et dolore minim lorem anim.',
-      backgroundColor: 'var(--color-gray-100)',
-      numberColor: 'var(--color-gray-400)',
-      headingColor: 'var(--color-gray-900)',
-      descriptionColor: 'var(--color-gray-600)'
+      backgroundColor: '#f3f4f6',
+      numberColor: '#9ca3af',
+      headingColor: '#111827',
+      descriptionColor: '#4b5563'
     },
     {
       number: '04',
       heading: 'Lorem ipsum dolor sit amet',
       description: 'Aliqua id fugiat nostrud lorem est dolus sit amet. Duis exercitation dolor sed tempor incididunt ut labore et dolore minim lorem anim.',
-      backgroundColor: 'var(--color-gray-100)',
-      numberColor: 'var(--color-gray-400)',
-      headingColor: 'var(--color-gray-900)',
-      descriptionColor: 'var(--color-gray-600)'
+      backgroundColor: '#f3f4f6',
+      numberColor: '#9ca3af',
+      headingColor: '#111827',
+      descriptionColor: '#4b5563'
     }
   ],
-  sectionBackgroundColor: 'var(--color-white)'
+
+  // Colors
+  backgroundColor: '#ffffff',
+  taglineColor: '#4b5563',
+  headlineColor: '#111827',
+  descriptionColor: '#4b5563'
 })
 </script>

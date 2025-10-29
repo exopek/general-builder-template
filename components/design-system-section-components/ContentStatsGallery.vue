@@ -1,7 +1,7 @@
 <template>
   <section
     class="py-12 md:py-16 lg:py-20"
-    :style="{ backgroundColor: sectionBackgroundColor }"
+    :style="{ backgroundColor }"
   >
     <div class="container mx-auto px-4 md:px-6">
       <!-- Top Section: Content + Statistics -->
@@ -9,31 +9,23 @@
         <!-- Left: Content (2/5 on desktop) -->
         <div class="lg:col-span-2">
           <p
-            v-if="tagline"
+            v-if="showTagline && tagline"
             class="text-sm md:text-base font-semibold mb-3"
-            :style="{ color: 'var(--color-gray-600)' }"
-          >
-            {{ tagline }}
-          </p>
-          <h2
+            :style="{ color: taglineColor }"
+            v-html="tagline"
+          ></p>
+          <div
+            v-if="showHeadline && headline"
             class="text-3xl md:text-4xl lg:text-5xl font-black mb-4"
-            :style="{
-              color: 'var(--color-gray-900)',
-              lineHeight: 'var(--line-height-tight)'
-            }"
-          >
-            {{ headline }}
-          </h2>
-          <p
-            v-if="description"
+            :style="{ color: headlineColor }"
+            v-html="headline"
+          ></div>
+          <div
+            v-if="showDescription && description"
             class="text-base md:text-lg"
-            :style="{
-              color: 'var(--color-gray-600)',
-              lineHeight: 'var(--line-height-relaxed)'
-            }"
-          >
-            {{ description }}
-          </p>
+            :style="{ color: descriptionColor }"
+            v-html="description"
+          ></div>
         </div>
 
         <!-- Right: Statistics Grid (3/5 on desktop) -->
@@ -46,22 +38,11 @@
             >
               <!-- Large Number -->
               <div
-                class="text-4xl md:text-5xl lg:text-6xl font-black mb-2"
-                :style="{
-                  color: 'var(--color-gray-900)',
-                  lineHeight: 'var(--line-height-none)'
-                }"
-              >
-                {{ formatStatValue(stat.value, stat.suffix) }}
-              </div>
+                class="text-4xl md:text-5xl lg:text-6xl font-black mb-2 text-gray-900"
+                v-html="formatStatValue(stat.value, stat.suffix)"
+              ></div>
               <!-- Label -->
-              <p
-                class="text-sm md:text-base"
-                :style="{
-                  color: 'var(--color-gray-600)',
-                  lineHeight: 'var(--line-height-normal)'
-                }"
-              >
+              <p class="text-sm md:text-base text-gray-600">
                 {{ stat.label }}
               </p>
             </div>
@@ -79,12 +60,10 @@
           <div
             v-for="(image, index) in galleryImages"
             :key="index"
-            class="flex-shrink-0 rounded-xl overflow-hidden"
+            class="flex-shrink-0 rounded-2xl overflow-hidden bg-gray-200"
             :style="{
-              width: getImageWidth(),
-              aspectRatio: imageAspectRatio,
-              backgroundColor: 'var(--color-gray-200)',
-              borderRadius: 'var(--border-radius-xl)'
+              width: imageWidth,
+              aspectRatio: imageAspectRatio
             }"
           >
             <img
@@ -96,12 +75,7 @@
             />
             <!-- Placeholder icon if no image -->
             <div v-else class="w-full h-full flex items-center justify-center">
-              <svg
-                class="w-12 h-12 md:w-16 md:h-16"
-                :style="{ color: 'var(--color-gray-400)' }"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
+              <svg class="w-12 h-12 md:w-16 md:h-16 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"/>
               </svg>
             </div>
@@ -117,12 +91,8 @@
         <div
           v-for="(image, index) in galleryImages"
           :key="index"
-          class="rounded-xl overflow-hidden"
-          :style="{
-            aspectRatio: imageAspectRatio,
-            backgroundColor: 'var(--color-gray-200)',
-            borderRadius: 'var(--border-radius-xl)'
-          }"
+          class="rounded-2xl overflow-hidden bg-gray-200"
+          :style="{ aspectRatio: imageAspectRatio }"
         >
           <img
             v-if="image.src"
@@ -133,12 +103,7 @@
           />
           <!-- Placeholder icon if no image -->
           <div v-else class="w-full h-full flex items-center justify-center">
-            <svg
-              class="w-12 h-12 md:w-16 md:h-16"
-              :style="{ color: 'var(--color-gray-400)' }"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
+            <svg class="w-12 h-12 md:w-16 md:h-16 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"/>
             </svg>
           </div>
@@ -161,11 +126,15 @@ interface GalleryImage {
 }
 
 interface Props {
-  // Section Header
+  // Visibility Toggles
+  showTagline?: boolean
+  showHeadline?: boolean
+  showDescription?: boolean
+
+  // Content (richText)
   tagline?: string
   headline?: string
   description?: string
-  sectionBackgroundColor?: string
 
   // Statistics
   statistics?: Statistic[]
@@ -175,14 +144,26 @@ interface Props {
   galleryLayout?: 'scroll' | 'grid'
   imageAspectRatio?: string
   imageWidth?: string
+
+  // Colors
+  backgroundColor?: string
+  taglineColor?: string
+  headlineColor?: string
+  descriptionColor?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  // Visibility Toggles
+  showTagline: true,
+  showHeadline: true,
+  showDescription: true,
+
+  // Content
   tagline: 'Tagline',
   headline: 'Lorem ipsum dolor sit amet',
   description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.',
-  sectionBackgroundColor: 'var(--color-white)',
 
+  // Statistics
   statistics: () => [
     { value: 100, suffix: '+', label: 'Lorem ipsum' },
     { value: 50, suffix: 'k', label: 'Class aptent' },
@@ -190,6 +171,7 @@ const props = withDefaults(defineProps<Props>(), {
     { value: 10, suffix: 'M+', label: 'Vestibulum' }
   ],
 
+  // Gallery
   galleryImages: () => [
     { src: '', alt: 'Gallery image 1' },
     { src: '', alt: 'Gallery image 2' },
@@ -197,20 +179,20 @@ const props = withDefaults(defineProps<Props>(), {
     { src: '', alt: 'Gallery image 4' },
     { src: '', alt: 'Gallery image 5' }
   ],
-
   galleryLayout: 'scroll',
   imageAspectRatio: '4/3',
-  imageWidth: '280px'
+  imageWidth: '280px',
+
+  // Colors
+  backgroundColor: '#ffffff',
+  taglineColor: '#4b5563',
+  headlineColor: '#111827',
+  descriptionColor: '#4b5563'
 })
 
 // Format statistic value with suffix
 const formatStatValue = (value: number | string, suffix?: string): string => {
   return `${value}${suffix || ''}`
-}
-
-// Get image width for scroll layout
-const getImageWidth = (): string => {
-  return props.imageWidth
 }
 </script>
 

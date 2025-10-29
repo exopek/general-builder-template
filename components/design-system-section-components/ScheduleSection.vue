@@ -1,21 +1,33 @@
 <template>
-  <section class="py-12 md:py-16 lg:py-20 bg-gray-50">
+  <section
+    class="py-12 md:py-16 lg:py-20"
+    :style="{ backgroundColor }"
+  >
     <div class="container mx-auto px-4 md:px-6">
       <!-- Section Header -->
-      <div class="text-center mb-12 md:mb-16">
-        <p v-if="tagline" class="text-sm md:text-base font-semibold text-orange-600 mb-3 uppercase tracking-wide">
-          {{ tagline }}
-        </p>
-        <h2 class="text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 mb-4 leading-tight">
-          {{ headline }}
-        </h2>
-        <p v-if="subheadline" class="text-base md:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-          {{ subheadline }}
-        </p>
+      <div v-if="showTagline || showHeadline || showSubheadline" class="text-center mb-8 md:mb-12">
+        <p
+          v-if="showTagline && tagline"
+          class="text-sm md:text-base font-semibold mb-3 uppercase tracking-wide"
+          :style="{ color: taglineColor }"
+          v-html="tagline"
+        ></p>
+        <div
+          v-if="showHeadline && headline"
+          class="text-3xl md:text-4xl lg:text-5xl font-black mb-4 leading-tight"
+          :style="{ color: headlineColor }"
+          v-html="headline"
+        ></div>
+        <div
+          v-if="showSubheadline && subheadline"
+          class="text-base md:text-lg max-w-2xl mx-auto leading-relaxed"
+          :style="{ color: subheadlineColor }"
+          v-html="subheadline"
+        ></div>
       </div>
 
       <!-- Schedule Grid -->
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-12">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-12">
         <div
           v-for="(slot, index) in timeSlots"
           :key="index"
@@ -87,6 +99,7 @@
 
 <script setup lang="ts">
 import Button from '~/components/design-system-ui-components/Button.vue'
+
 interface TimeSlot {
   day: string
   time: string
@@ -98,19 +111,43 @@ interface TimeSlot {
 }
 
 interface Props {
+  // Visibility Toggles
+  showTagline?: boolean
+  showHeadline?: boolean
+  showSubheadline?: boolean
+
+  // Content (richText)
   tagline?: string
   headline?: string
   subheadline?: string
+
+  // Schedule Data
   timeSlots?: TimeSlot[]
+
+  // CTA
   showCta?: boolean
   ctaText?: string
   ctaUrl?: string
+
+  // Colors
+  backgroundColor?: string
+  taglineColor?: string
+  headlineColor?: string
+  subheadlineColor?: string
 }
 
 withDefaults(defineProps<Props>(), {
+  // Visibility
+  showTagline: true,
+  showHeadline: true,
+  showSubheadline: true,
+
+  // Content
   tagline: 'Dein Trainingsplan',
   headline: 'Morgens trainieren, gestärkt in den Tag',
   subheadline: 'Starte deinen Tag mit Energie und Fokus. Unsere morgendlichen Kurse bringen dich fit und konzentriert zur Arbeit.',
+
+  // Schedule
   timeSlots: () => [
     {
       day: 'Montag',
@@ -138,9 +175,17 @@ withDefaults(defineProps<Props>(), {
       spotsAvailable: 6
     }
   ],
+
+  // CTA
   showCta: true,
   ctaText: 'Jetzt Probetraining buchen',
-  ctaUrl: '#kontakt'
+  ctaUrl: '#kontakt',
+
+  // Colors
+  backgroundColor: '#f9fafb',
+  taglineColor: '#ea580c',
+  headlineColor: '#111827',
+  subheadlineColor: '#4b5563'
 })
 </script>
 
