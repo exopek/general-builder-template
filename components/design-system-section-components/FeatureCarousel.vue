@@ -1,17 +1,29 @@
 <template>
-  <div :style="{ backgroundColor }" class="py-12 md:py-16">
-    <div class="container">
-      <div class="flex items-start justify-between mb-8">
+  <section
+    class="py-12 md:py-16 lg:py-20"
+    :style="{ backgroundColor }"
+  >
+    <div class="container mx-auto px-4 md:px-6">
+      <div class="flex items-start justify-between mb-8 md:mb-12">
         <div class="flex-1">
-          <p v-if="tagline" class="text-sm font-medium text-primary mb-3">
-            {{ tagline }}
-          </p>
-          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
-            {{ title }}
-          </h2>
-          <p v-if="description" class="text-base md:text-lg text-gray-600 max-w-2xl">
-            {{ description }}
-          </p>
+          <p
+            v-if="showTagline && tagline"
+            class="text-sm md:text-base font-medium mb-3"
+            :style="{ color: taglineColor }"
+            v-html="tagline"
+          ></p>
+          <div
+            v-if="showTitle && title"
+            class="text-3xl md:text-4xl lg:text-5xl font-black mb-3 leading-tight"
+            :style="{ color: titleColor }"
+            v-html="title"
+          ></div>
+          <div
+            v-if="showDescription && description"
+            class="text-base md:text-lg max-w-2xl"
+            :style="{ color: descriptionColor }"
+            v-html="description"
+          ></div>
         </div>
 
         <div v-if="showNavigation" class="flex gap-2 ml-4">
@@ -65,7 +77,7 @@
             class="flex-shrink-0 px-3"
             :style="{ width: `${slideWidth}%` }"
           >
-            <div class="bg-white rounded-xl overflow-hidden shadow-md transition-all hover:shadow-lg group">
+            <div class="bg-white rounded-2xl overflow-hidden shadow-md transition-all hover:shadow-lg group">
               <div class="relative aspect-video bg-gray-300 overflow-hidden">
                 <img
                   v-if="item.image"
@@ -132,7 +144,7 @@
         />
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">
@@ -145,23 +157,45 @@ interface CarouselItem {
 }
 
 interface Props {
-  backgroundColor?: string
+  // Visibility Toggles
+  showTagline?: boolean
+  showTitle?: boolean
+  showDescription?: boolean
+
+  // Content (richText)
   tagline?: string
   title?: string
   description?: string
+
+  // Carousel Items
   items?: CarouselItem[]
+
+  // Carousel Settings
   slidesToShow?: number
   showNavigation?: boolean
   showDots?: boolean
   autoplay?: boolean
   autoplayInterval?: number
+
+  // Colors
+  backgroundColor?: string
+  taglineColor?: string
+  titleColor?: string
+  descriptionColor?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  backgroundColor: '#ffffff',
+  // Visibility
+  showTagline: false,
+  showTitle: true,
+  showDescription: true,
+
+  // Content
   tagline: '',
   title: 'Lorem ipsum dolor sit amet',
   description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
+
+  // Items
   items: () => [
     {
       title: 'Lorem ipsum',
@@ -180,11 +214,19 @@ const props = withDefaults(defineProps<Props>(), {
       category: 'Taxonomy'
     }
   ],
+
+  // Settings
   slidesToShow: 3,
   showNavigation: true,
   showDots: false,
   autoplay: false,
-  autoplayInterval: 5000
+  autoplayInterval: 5000,
+
+  // Colors
+  backgroundColor: '#ffffff',
+  taglineColor: '#ea580c',
+  titleColor: '#111827',
+  descriptionColor: '#4b5563'
 })
 
 const currentSlide = ref(0)

@@ -1,6 +1,6 @@
 <template>
-  <section id="faq" class="py-16 md:py-20" :style="{ backgroundColor: backgroundColor }">
-    <div class="container mx-auto">
+  <section id="faq" class="py-16 md:py-20" :style="{ backgroundColor }">
+    <div class="container mx-auto px-4 md:px-6">
 
       <!-- Section Header -->
       <div class="text-center mb-16 lg:mb-20">
@@ -13,19 +13,19 @@
           />
         </slot>
 
-        <h2
+        <div
+          v-if="showHeadline && headline"
           class="text-3xl md:text-4xl lg:text-5xl font-black mb-6"
           :style="{ color: headlineColor }"
-        >
-          {{ headline }}
-        </h2>
+          v-html="headline"
+        ></div>
 
-        <p
+        <div
+          v-if="showSubheadline && subheadline"
           class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto"
           :style="{ color: subheadlineColor }"
-        >
-          {{ subheadline }}
-        </p>
+          v-html="subheadline"
+        ></div>
       </div>
 
       <!-- Search & Categories -->
@@ -297,12 +297,16 @@ interface FaqItem {
 }
 
 interface Props {
-  // Content
+  // Visibility Toggles
+  showBadge?: boolean
+  showHeadline?: boolean
+  showSubheadline?: boolean
+
+  // Content (richText)
   headline?: string
   subheadline?: string
   badgeText?: string
   badgeVariant?: 'new' | 'popular' | 'featured' | 'limited' | 'info' | 'neutral'
-  showBadge?: boolean
 
   // Search & Filter
   showSearch?: boolean
@@ -346,11 +350,16 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  // Visibility Toggles
+  showBadge: true,
+  showHeadline: true,
+  showSubheadline: true,
+
+  // Content
   headline: 'Häufig gestellte Fragen',
   subheadline: 'Hier finden Sie Antworten auf die wichtigsten Fragen.',
   badgeText: 'FAQ',
   badgeVariant: 'info',
-  showBadge: true,
 
   showSearch: true,
   searchPlaceholder: 'Suche nach Stichworten...',

@@ -1,7 +1,5 @@
 <template>
-  <section
-    class="relative overflow-hidden min-h-screen flex items-center"
-  >
+  <section class="relative overflow-hidden min-h-screen flex items-center py-16 md:py-20">
     <!-- Background Image -->
     <div class="absolute inset-0 z-0">
       <img
@@ -11,10 +9,7 @@
         class="w-full h-full object-cover"
         :class="imagePositionClass"
       />
-      <div
-        v-else
-        class="w-full h-full bg-gray-800"
-      ></div>
+      <div v-else class="w-full h-full bg-gray-800"></div>
     </div>
 
     <!-- Overlay -->
@@ -31,7 +26,7 @@
     ></div>
 
     <!-- Content -->
-    <div class="container mx-auto relative z-10 text-center py-12">
+    <div class="container mx-auto px-4 md:px-6 relative z-10 text-center py-12">
       <div class="w-full max-w-4xl mx-auto">
         <!-- Badge Slot -->
         <slot name="badge">
@@ -45,20 +40,20 @@
         </slot>
 
         <!-- Headline -->
-        <h1
+        <div
+          v-if="showHeadline && headline"
           class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-tight mb-6"
           :style="{ color: headlineColor }"
           v-html="headline"
-        ></h1>
+        ></div>
 
         <!-- Subheadline -->
-        <p
-          v-if="subheadline"
+        <div
+          v-if="showSubheadline && subheadline"
           class="text-lg md:text-xl lg:text-2xl mb-8 max-w-2xl mx-auto"
           :style="{ color: subheadlineColor }"
-        >
-          {{ subheadline }}
-        </p>
+          v-html="subheadline"
+        ></div>
 
         <!-- CTA Buttons -->
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
@@ -95,11 +90,7 @@
             :style="{ color: subheadlineColor }"
           >
             <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
-              <path
-                fill-rule="evenodd"
-                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                clip-rule="evenodd"
-              />
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
             </svg>
             {{ indicator }}
           </div>
@@ -111,13 +102,20 @@
 
 <script setup lang="ts">
 import Button from '~/components/design-system-ui-components/Button.vue'
+
 interface Props {
-  // Content
+  // Visibility Toggles
+  showBadge?: boolean
+  showHeadline?: boolean
+  showSubheadline?: boolean
+  showGradientOverlay?: boolean
+  showTrustIndicators?: boolean
+
+  // Content (richText)
   headline?: string
   subheadline?: string
   badgeText?: string
   badgeVariant?: 'new' | 'popular' | 'featured' | 'limited'
-  showBadge?: boolean
 
   // CTAs
   primaryCtaText?: string
@@ -135,11 +133,9 @@ interface Props {
   // Overlay
   overlayColor?: string
   overlayOpacity?: number
-  showGradientOverlay?: boolean
   gradientDirection?: 'to-r' | 'to-l' | 'to-t' | 'to-b' | 'to-br' | 'to-bl'
 
   // Trust Indicators
-  showTrustIndicators?: boolean
   trustIndicators?: string[]
 
   // Colors
@@ -148,12 +144,20 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  // Visibility
+  showBadge: false,
+  showHeadline: true,
+  showSubheadline: true,
+  showGradientOverlay: true,
+  showTrustIndicators: false,
+
+  // Content
   headline: 'Lorem ipsum dolor sit amet consectetur',
-  subheadline: 'Congue mauris rhoncus aenean vel elit scelerisque mauris pellentesque pulvinar. Aliquam faucibus purus in massa tempor nec feugiat nisl.',
+  subheadline: 'Congue mauris rhoncus aenean vel elit scelerisque mauris pellentesque pulvinar.',
   badgeText: 'New',
   badgeVariant: 'featured',
-  showBadge: false,
 
+  // CTAs
   primaryCtaText: 'Contact now',
   primaryCtaUrl: '#',
   primaryCtaExternal: false,
@@ -161,23 +165,24 @@ const props = withDefaults(defineProps<Props>(), {
   secondaryCtaUrl: '#',
   secondaryCtaExternal: false,
 
+  // Background
   backgroundImage: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&h=1000&fit=crop',
   backgroundImageAlt: 'Hero Background',
   imagePosition: 'center',
 
+  // Overlay
   overlayColor: '#000000',
   overlayOpacity: 0.5,
-  showGradientOverlay: true,
   gradientDirection: 'to-r',
 
-  showTrustIndicators: false,
+  // Trust
   trustIndicators: () => [],
 
+  // Colors
   headlineColor: '#ffffff',
   subheadlineColor: '#e5e7eb'
 })
 
-// Computed classes
 const imagePositionClass = computed(() => {
   const positions = {
     center: 'object-center',
@@ -200,38 +205,10 @@ const gradientOverlayClass = computed(() => {
   }
   return gradients[props.gradientDirection]
 })
-
 </script>
 
 <style scoped>
-/* Parallax effect on scroll (optional enhancement) */
-section:hover .absolute img {
-  transform: scale(1.05);
-  transition: transform 8s ease-out;
-}
-
-/* Content fade-in animation */
-.container > div {
-  animation: fadeInUp 0.8s ease-out;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Responsive text shadows for better readability */
-h1 {
+h1, div {
   text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
-}
-
-p {
-  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
 }
 </style>

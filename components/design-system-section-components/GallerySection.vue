@@ -1,13 +1,13 @@
 <template>
   <section
     class="py-12 md:py-16 lg:py-20"
-    :style="{ backgroundColor: backgroundColor }"
+    :style="{ backgroundColor }"
   >
-    <div class="container mx-auto px-4">
+    <div class="container mx-auto px-4 md:px-6">
       <!-- Header -->
-      <div class="text-center mb-8 md:mb-12">
+      <div v-if="showTagline || showHeadline || showDescription" class="text-center mb-8 md:mb-12">
         <!-- Badge -->
-        <div v-if="tagline" class="mb-6">
+        <div v-if="showTagline && tagline" class="mb-6">
           <TransformationBadge
             :text="tagline"
             :variant="badgeVariant"
@@ -17,21 +17,20 @@
         </div>
 
         <!-- Headline -->
-        <h2
+        <div
+          v-if="showHeadline && headline"
           class="text-3xl md:text-4xl lg:text-5xl font-black leading-tight mb-4"
           :style="{ color: headlineColor }"
-        >
-          {{ headline }}
-        </h2>
+          v-html="headline"
+        ></div>
 
         <!-- Description -->
-        <p
-          v-if="description"
+        <div
+          v-if="showDescription && description"
           class="text-base md:text-lg leading-relaxed max-w-2xl mx-auto"
           :style="{ color: descriptionColor }"
-        >
-          {{ description }}
-        </p>
+          v-html="description"
+        ></div>
       </div>
 
       <!-- Gallery Grid -->
@@ -42,7 +41,7 @@
         <div
           v-for="(image, index) in displayImages"
           :key="index"
-          class="gallery-item rounded-xl overflow-hidden relative cursor-pointer transition-all"
+          class="gallery-item rounded-2xl overflow-hidden relative cursor-pointer transition-all"
           @click="handleImageClick(index)"
         >
           <!-- Image -->
@@ -85,7 +84,12 @@ interface ImageItem {
 }
 
 interface Props {
-  // Content
+  // Visibility Toggles
+  showTagline?: boolean
+  showHeadline?: boolean
+  showDescription?: boolean
+
+  // Content (richText)
   tagline?: string
   headline?: string
   description?: string
@@ -96,23 +100,35 @@ interface Props {
   // Styling
   gap?: 'sm' | 'md' | 'lg'
   badgeVariant?: 'new' | 'popular' | 'featured' | 'limited' | 'success' | 'warning' | 'info' | 'neutral'
+  showOverlay?: boolean
+
+  // Colors
   backgroundColor?: string
   headlineColor?: string
   descriptionColor?: string
-  showOverlay?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  // Visibility
+  showTagline: true,
+  showHeadline: true,
+  showDescription: true,
+
+  // Content
   tagline: 'Tagline',
   headline: 'Lorem ipsum dolor sit amet',
   description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+
+  // Images
   images: () => [],
   gap: 'md',
   badgeVariant: 'featured',
-  backgroundColor: 'var(--color-gray-50)',
-  headlineColor: 'var(--color-gray-900)',
-  descriptionColor: 'var(--color-gray-700)',
-  showOverlay: true
+  showOverlay: true,
+
+  // Colors
+  backgroundColor: '#f9fafb',
+  headlineColor: '#111827',
+  descriptionColor: '#4b5563'
 })
 
 const emit = defineEmits<{
@@ -188,7 +204,7 @@ const handleImageClick = (index: number) => {
 
 /* Gallery Item Styles */
 .gallery-item {
-  background-color: var(--color-gray-200);
+  background-color: #e5e7eb;
   position: relative;
   width: 100%;
   height: 100%;

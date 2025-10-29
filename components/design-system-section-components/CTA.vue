@@ -1,97 +1,101 @@
 <template>
-  <div class="base-cta" :class="sectionClasses">
-    <div class="cta-container" :class="containerClasses">
-      <!-- Header Section -->
-      <div v-if="hasHeader" class="cta-header" :class="headerAlignment">
+  <section class="py-12 md:py-16 lg:py-20" :style="{ backgroundColor }">
+    <div class="container mx-auto px-4 md:px-6">
+      <div class="max-w-4xl mx-auto text-center">
+        <!-- Badge -->
         <TransformationBadge
-          v-if="showBadge"
+          v-if="showBadge && badgeText"
           :text="badgeText"
           :variant="badgeVariant"
-          :class="badgeAlignment"
+          class="mx-auto mb-6"
         />
-        <h3
-          v-if="title"
-          class="cta-title"
-          :class="titleClasses"
+
+        <!-- Title -->
+        <div
+          v-if="showTitle && title"
+          class="text-3xl md:text-4xl lg:text-5xl font-black mb-4"
           :style="{ color: titleColor }"
           v-html="title"
-        ></h3>
-        <p
-          v-if="description"
-          class="cta-description"
-          :class="descriptionClasses"
+        ></div>
+
+        <!-- Description -->
+        <div
+          v-if="showDescription && description"
+          class="text-base md:text-lg mb-8"
           :style="{ color: descriptionColor }"
-        >
-          {{ description }}
-        </p>
-      </div>
+          v-html="description"
+        ></div>
 
-      <!-- Custom Content Slot -->
-      <div v-if="hasContent" class="cta-content" :class="contentAlignment">
-        <slot />
-      </div>
+        <!-- Custom Content Slot -->
+        <div v-if="$slots.default" class="mb-8">
+          <slot />
+        </div>
 
-      <!-- Action Buttons -->
-      <div v-if="hasActions" class="cta-actions" :class="actionsClasses">
-        <Button
-          v-if="primaryText"
-          :text="primaryText"
-          :href="primaryUrl"
-          :variant="primaryVariant"
-          :size="buttonSize"
-          :external="primaryExternal"
-          :disabled="primaryDisabled"
-          class="cta-primary-button"
-        />
-        <Button
-          v-if="secondaryText"
-          :text="secondaryText"
-          :href="secondaryUrl"
-          :variant="secondaryVariant"
-          :size="buttonSize"
-          :external="secondaryExternal"
-          :disabled="secondaryDisabled"
-          class="cta-secondary-button"
-        />
+        <!-- Action Buttons -->
+        <div v-if="primaryText || secondaryText || $slots.actions" class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <Button
+            v-if="primaryText"
+            :text="primaryText"
+            :href="primaryUrl"
+            :variant="primaryVariant"
+            size="lg"
+            :external="primaryExternal"
+            :disabled="primaryDisabled"
+          />
+          <Button
+            v-if="secondaryText"
+            :text="secondaryText"
+            :href="secondaryUrl"
+            :variant="secondaryVariant"
+            size="lg"
+            :external="secondaryExternal"
+            :disabled="secondaryDisabled"
+          />
 
-        <!-- Additional actions slot -->
-        <slot name="actions" />
-      </div>
+          <!-- Additional actions slot -->
+          <slot name="actions" />
+        </div>
 
-      <!-- Footer Content -->
-      <div v-if="hasFooter" class="cta-footer" :class="footerAlignment">
-        <slot name="footer" />
+        <!-- Footer Content -->
+        <div v-if="$slots.footer || (trustIndicators && trustIndicators.length > 0)" class="mt-8">
+          <slot name="footer" />
 
-        <!-- Trust indicators -->
-        <div v-if="trustIndicators && trustIndicators.length > 0" class="trust-indicators">
-          <div
-            v-for="(indicator, index) in trustIndicators"
-            :key="index"
-            class="trust-indicator"
-          >
-            <component v-if="indicator.icon" :is="iconComponent" :name="indicator.icon" class="w-4 h-4" />
-            <span>{{ indicator.text || indicator }}</span>
+          <!-- Trust indicators -->
+          <div v-if="trustIndicators && trustIndicators.length > 0" class="flex flex-wrap gap-4 justify-center mt-6 pt-6 border-t border-gray-200">
+            <div
+              v-for="(indicator, index) in trustIndicators"
+              :key="index"
+              class="flex items-center gap-2 text-sm"
+              :style="{ color: trustIndicatorColor }"
+            >
+              <span>{{ typeof indicator === 'string' ? indicator : indicator.text }}</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">
 import Button from '~/components/design-system-ui-components/Button.vue'
+
 interface TrustIndicator {
   text?: string
   icon?: string
 }
 
 interface Props {
-  // Content
+  // Visibility Toggles
+  showBadge?: boolean
+  showTitle?: boolean
+  showDescription?: boolean
+
+  // Content (richText)
   title?: string
   description?: string
   badgeText?: string
   badgeVariant?: 'new' | 'popular' | 'featured' | 'limited' | 'info'
-  showBadge?: boolean
 
   // Primary Action
   primaryText?: string
@@ -110,279 +114,38 @@ interface Props {
   // Trust Indicators
   trustIndicators?: (string | TrustIndicator)[]
 
-  // Styling
-  variant?: 'default' | 'elevated' | 'glass' | 'gradient' | 'outline' | 'minimal'
-  size?: 'sm' | 'md' | 'lg' | 'xl'
-  buttonSize?: 'sm' | 'md' | 'lg' | 'xl'
-  alignment?: 'left' | 'center' | 'right'
-
   // Colors
+  backgroundColor?: string
   titleColor?: string
   descriptionColor?: string
-  backgroundColor?: string
-  borderColor?: string
-
-  // Layout
-  fullWidth?: boolean
-  spacing?: 'tight' | 'normal' | 'relaxed'
-
-  // Components
-  iconComponent?: string
+  trustIndicatorColor?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  variant: 'default',
-  size: 'md',
-  buttonSize: 'lg',
-  alignment: 'center',
-  badgeVariant: 'featured',
+withDefaults(defineProps<Props>(), {
+  // Visibility Toggles
   showBadge: false,
+  showTitle: true,
+  showDescription: true,
+
+  // Content
+  title: 'Ready to get started?',
+  description: 'Join thousands of satisfied customers today.',
+  badgeVariant: 'featured',
+
+  // Primary Button
   primaryVariant: 'gradient',
-  secondaryVariant: 'outline',
   primaryExternal: false,
-  secondaryExternal: false,
   primaryDisabled: false,
+
+  // Secondary Button
+  secondaryVariant: 'outline',
+  secondaryExternal: false,
   secondaryDisabled: false,
-  fullWidth: false,
-  spacing: 'normal',
-  iconComponent: 'Icon'
-})
 
-const slots = useSlots()
-
-// Computed properties
-const hasHeader = computed(() => props.showBadge || props.title || props.description)
-const hasContent = computed(() => !!slots.default)
-const hasActions = computed(() => props.primaryText || props.secondaryText || !!slots.actions)
-const hasFooter = computed(() => !!slots.footer || (props.trustIndicators && props.trustIndicators.length > 0))
-
-const sectionClasses = computed(() => {
-  const base = 'base-cta'
-  const fullWidth = props.fullWidth ? 'w-full' : ''
-  return `${base} ${fullWidth}`.trim()
-})
-
-const containerClasses = computed(() => {
-  const variants = {
-    default: 'bg-white rounded-2xl shadow-xl border border-gray-100',
-    elevated: 'bg-white rounded-2xl shadow-2xl border-0',
-    glass: 'bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20',
-    gradient: 'bg-gradient-primary rounded-2xl border-0 text-white',
-    outline: 'bg-transparent rounded-2xl border-2 border-primary',
-    minimal: 'bg-gray-50 rounded-2xl border-0'
-  }
-
-  const sizes = {
-    sm: 'p-6',
-    md: 'p-8',
-    lg: 'p-8 md:p-12',
-    xl: 'p-12 md:p-16'
-  }
-
-  const spacing = {
-    tight: 'space-y-4',
-    normal: 'space-y-6',
-    relaxed: 'space-y-8'
-  }
-
-  return `${variants[props.variant]} ${sizes[props.size]} ${spacing[props.spacing]}`
-})
-
-const headerAlignment = computed(() => {
-  const alignments = {
-    left: 'text-left',
-    center: 'text-center',
-    right: 'text-right'
-  }
-  return alignments[props.alignment]
-})
-
-const badgeAlignment = computed(() => {
-  const alignments = {
-    left: '',
-    center: 'mx-auto',
-    right: 'ml-auto'
-  }
-  return alignments[props.alignment]
-})
-
-const contentAlignment = computed(() => {
-  return headerAlignment.value
-})
-
-const footerAlignment = computed(() => {
-  return headerAlignment.value
-})
-
-const actionsClasses = computed(() => {
-  const base = 'flex gap-4'
-  const responsive = 'flex-col sm:flex-row'
-
-  const alignments = {
-    left: 'justify-start',
-    center: 'justify-center',
-    right: 'justify-end'
-  }
-
-  return `${base} ${responsive} ${alignments[props.alignment]}`
-})
-
-const titleClasses = computed(() => {
-  const base = 'font-bold mb-4'
-  const sizes = {
-    sm: 'text-xl md:text-2xl',
-    md: 'text-2xl md:text-3xl',
-    lg: 'text-3xl md:text-4xl',
-    xl: 'text-4xl md:text-5xl'
-  }
-
-  const colors = props.variant === 'gradient' ? 'text-white' : 'text-gray-900'
-
-  return `${base} ${sizes[props.size]} ${colors}`
-})
-
-const descriptionClasses = computed(() => {
-  const base = 'mb-8'
-  const sizes = {
-    sm: 'text-base',
-    md: 'text-lg',
-    lg: 'text-xl',
-    xl: 'text-2xl'
-  }
-
-  const colors = props.variant === 'gradient' ? 'text-white/90' : 'text-gray-600'
-
-  return `${base} ${sizes[props.size]} ${colors}`
+  // Colors
+  backgroundColor: '#ffffff',
+  titleColor: '#111827',
+  descriptionColor: '#4b5563',
+  trustIndicatorColor: '#6b7280'
 })
 </script>
-
-<style scoped>
-.base-cta {
-  position: relative;
-}
-
-.cta-container {
-  position: relative;
-  transition: all var(--transition-normal);
-}
-
-.cta-container:hover {
-  transform: translateY(-2px);
-}
-
-.cta-title {
-  line-height: var(--line-height-tight);
-}
-
-.cta-description {
-  line-height: var(--line-height-relaxed);
-  max-width: 42rem;
-}
-
-.text-center .cta-description {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.cta-actions {
-  align-items: center;
-}
-
-.cta-primary-button,
-.cta-secondary-button {
-  flex: 1;
-  max-width: 16rem;
-}
-
-@media (min-width: 640px) {
-  .cta-primary-button,
-  .cta-secondary-button {
-    flex: 0 0 auto;
-    max-width: none;
-  }
-}
-
-/* Trust indicators */
-.trust-indicators {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-top: 1.5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--color-gray-200);
-}
-
-.trust-indicator {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: var(--font-size-sm);
-  color: var(--color-gray-600);
-}
-
-.bg-gradient-primary .trust-indicators {
-  border-top-color: rgba(255, 255, 255, 0.2);
-}
-
-.bg-gradient-primary .trust-indicator {
-  color: rgba(255, 255, 255, 0.9);
-}
-
-/* Variant-specific adjustments */
-.bg-gradient-primary .cta-header,
-.bg-gradient-primary .cta-content,
-.bg-gradient-primary .cta-footer {
-  color: white;
-}
-
-.bg-white\/10 {
-  backdrop-filter: blur(16px);
-}
-
-/* Size-specific spacing adjustments */
-.space-y-4 > * + * {
-  margin-top: 1rem;
-}
-
-.space-y-6 > * + * {
-  margin-top: 1.5rem;
-}
-
-.space-y-8 > * + * {
-  margin-top: 2rem;
-}
-
-/* Responsive adjustments */
-@media (max-width: 640px) {
-  .cta-actions {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .cta-primary-button,
-  .cta-secondary-button {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-/* Animation for glass variant */
-.bg-white\/10 {
-  animation: glassShimmer 3s ease-in-out infinite alternate;
-}
-
-@keyframes glassShimmer {
-  0% {
-    background: rgba(255, 255, 255, 0.1);
-  }
-  100% {
-    background: rgba(255, 255, 255, 0.15);
-  }
-}
-
-/* Focus states */
-.cta-container:focus-within {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 4px;
-}
-</style>
