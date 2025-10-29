@@ -40,6 +40,9 @@ import GymLindenFAQ from '~/components/gym-linden/GymLindenFAQ.vue';
 import Button from '~/components/design-system-ui-components/Button.vue';
 import Hero from '~/components/design-system-section-components/Hero.vue';
 import HeroImage from '~/components/design-system-section-components/HeroImage.vue';
+import HeroEmailCapture from '~/components/design-system-section-components/HeroEmailCapture.vue';
+import HeroEmailCaptureImage from '~/components/design-system-section-components/HeroEmailCaptureImage.vue';
+import HeroEmailCaptureVideo from '~/components/design-system-section-components/HeroEmailCaptureVideo.vue';
 import FAQ from '~/components/design-system-section-components/FAQ.vue';
 import Statistic from '~/components/design-system-section-components/Statistic.vue';
 import StatisticGrid from '~/components/design-system-section-components/StatisticGrid.vue';
@@ -1055,6 +1058,133 @@ export const registeredComponents: RegisteredComponent[] = [
             // Colors
             { name: 'headlineColor', type: 'color', defaultValue: '#ffffff' },
             { name: 'subheadlineColor', type: 'color', defaultValue: '#e5e7eb' }
+        ]
+    },
+
+    {
+        component: HeroEmailCapture,
+        name: 'HeroEmailCapture',
+        inputs: [
+            // Visibility Toggles
+            { name: 'showHeadline', type: 'boolean', defaultValue: true },
+            { name: 'showDescription', type: 'boolean', defaultValue: true },
+            { name: 'showEmailForm', type: 'boolean', defaultValue: true },
+            { name: 'showTerms', type: 'boolean', defaultValue: true },
+
+            // Content (richText)
+            { name: 'headline', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet <strong>consectetur adipiscing</strong>' },
+            { name: 'description', type: 'richText', defaultValue: 'Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolor.' },
+            { name: 'termsText', type: 'richText', defaultValue: 'By clicking Register, you acknowledge that you have read and accepted our <a href="#" class="underline hover:no-underline">Terms and Conditions</a>.' },
+
+            // Form Configuration
+            { name: 'emailPlaceholder', type: 'string', defaultValue: 'Your email' },
+            { name: 'buttonText', type: 'string', defaultValue: 'Register' },
+            { name: 'submitUrl', type: 'url', defaultValue: '' },
+
+            // Success/Error Messages
+            { name: 'successTitle', type: 'string', defaultValue: 'Success!' },
+            { name: 'successMessage', type: 'text', defaultValue: 'Thank you! We will contact you shortly.' },
+
+            // Facebook Tracking
+            { name: 'leadValue', type: 'number', defaultValue: 179 },
+
+            // Colors
+            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'headlineColor', type: 'color', defaultValue: '#111827' },
+            { name: 'descriptionColor', type: 'color', defaultValue: '#4b5563' },
+            { name: 'termsColor', type: 'color', defaultValue: '#6b7280' },
+            { name: 'inputBorderColor', type: 'color', defaultValue: '#d1d5db' }
+        ]
+    },
+
+    {
+        component: HeroEmailCaptureImage,
+        name: 'HeroEmailCaptureImage',
+        inputs: [
+            // Visibility Toggles
+            { name: 'showHeadline', type: 'boolean', defaultValue: true },
+            { name: 'showDescription', type: 'boolean', defaultValue: true },
+            { name: 'showEmailForm', type: 'boolean', defaultValue: true },
+            { name: 'showTerms', type: 'boolean', defaultValue: true },
+            { name: 'showImage', type: 'boolean', defaultValue: true },
+
+            // Content (richText)
+            { name: 'headline', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet <strong>consectetur adipiscing</strong>' },
+            { name: 'description', type: 'richText', defaultValue: 'Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolor.' },
+            { name: 'termsText', type: 'richText', defaultValue: 'By clicking Register, you acknowledge that you have read and accepted our <a href="#" class="underline hover:no-underline">Terms and Conditions</a>.' },
+
+            // Form Configuration
+            { name: 'emailPlaceholder', type: 'string', defaultValue: 'Your email' },
+            { name: 'buttonText', type: 'string', defaultValue: 'Register' },
+            { name: 'submitUrl', type: 'url', defaultValue: '' },
+
+            // Success/Error Messages
+            { name: 'successTitle', type: 'string', defaultValue: 'Success!' },
+            { name: 'successMessage', type: 'text', defaultValue: 'Thank you! We will contact you shortly.' },
+
+            // Facebook Tracking
+            { name: 'leadValue', type: 'number', defaultValue: 179 },
+
+            // Image Configuration
+            { name: 'image', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'svg', 'webp'], defaultValue: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1200&h=675&fit=crop' },
+            { name: 'imageAlt', type: 'string', defaultValue: 'Hero Image' },
+            { name: 'imageAspectRatio', type: 'string', defaultValue: '16/9' },
+            { name: 'showImageShadow', type: 'boolean', defaultValue: true },
+
+            // Colors
+            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'headlineColor', type: 'color', defaultValue: '#111827' },
+            { name: 'descriptionColor', type: 'color', defaultValue: '#4b5563' },
+            { name: 'termsColor', type: 'color', defaultValue: '#6b7280' },
+            { name: 'inputBorderColor', type: 'color', defaultValue: '#d1d5db' }
+        ]
+    },
+
+    {
+        component: HeroEmailCaptureVideo,
+        name: 'HeroEmailCaptureVideo',
+        inputs: [
+            // Visibility Toggles
+            { name: 'showHeadline', type: 'boolean', defaultValue: true },
+            { name: 'showDescription', type: 'boolean', defaultValue: true },
+            { name: 'showEmailForm', type: 'boolean', defaultValue: true },
+            { name: 'showTerms', type: 'boolean', defaultValue: true },
+            { name: 'showVideo', type: 'boolean', defaultValue: true },
+
+            // Content (richText)
+            { name: 'headline', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet <strong>consectetur adipiscing</strong>' },
+            { name: 'description', type: 'richText', defaultValue: 'Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolor.' },
+            { name: 'termsText', type: 'richText', defaultValue: 'By clicking Register, you acknowledge that you have read and accepted our <a href="#" class="underline hover:no-underline">Terms and Conditions</a>.' },
+
+            // Form Configuration
+            { name: 'emailPlaceholder', type: 'string', defaultValue: 'Your email' },
+            { name: 'buttonText', type: 'string', defaultValue: 'Register' },
+            { name: 'submitUrl', type: 'url', defaultValue: '' },
+
+            // Success/Error Messages
+            { name: 'successTitle', type: 'string', defaultValue: 'Success!' },
+            { name: 'successMessage', type: 'text', defaultValue: 'Thank you! We will contact you shortly.' },
+
+            // Facebook Tracking
+            { name: 'leadValue', type: 'number', defaultValue: 179 },
+
+            // Video Configuration
+            { name: 'videoUrl', type: 'url', defaultValue: '' },
+            { name: 'videoThumbnail', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'svg', 'webp'], defaultValue: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1200&h=675&fit=crop' },
+            { name: 'videoThumbnailAlt', type: 'string', defaultValue: 'Video Thumbnail' },
+            { name: 'videoAspectRatio', type: 'string', defaultValue: '16/9' },
+            { name: 'showVideoShadow', type: 'boolean', defaultValue: true },
+            { name: 'showControls', type: 'boolean', defaultValue: true },
+            { name: 'autoplay', type: 'boolean', defaultValue: false },
+            { name: 'loop', type: 'boolean', defaultValue: false },
+            { name: 'muted', type: 'boolean', defaultValue: false },
+
+            // Colors
+            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'headlineColor', type: 'color', defaultValue: '#111827' },
+            { name: 'descriptionColor', type: 'color', defaultValue: '#4b5563' },
+            { name: 'termsColor', type: 'color', defaultValue: '#6b7280' },
+            { name: 'inputBorderColor', type: 'color', defaultValue: '#d1d5db' }
         ]
     },
 
