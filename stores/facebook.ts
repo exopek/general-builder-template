@@ -169,7 +169,7 @@ export const useFacebookStore = defineStore('facebook', {
         // Facebook Pixel aufrufen
         if (window.fbq) {
           console.log('✅ Calling window.fbq(\'track\', \'' + event + '\', params)')
-          window.fbq('track', event, params)
+          window.fbq('track', event)
           console.log('✅ fbq() call completed successfully')
         } else {
           throw new Error('Facebook Pixel not loaded (window.fbq is undefined)')

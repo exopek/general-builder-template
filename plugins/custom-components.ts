@@ -77,6 +77,18 @@ import StatsFeatureCards from '~/components/design-system-section-components/Sta
 import ContentBentoGrid from '~/components/design-system-section-components/ContentBentoGrid.vue';
 import ContentSection48 from '~/components/design-system-section-components/ContentSection48.vue';
 import ContentSection71 from '~/components/design-system-section-components/ContentSection71.vue';
+import ContentSection68 from '~/components/design-system-section-components/ContentSection68.vue';
+import ContentSection82 from '~/components/design-system-section-components/ContentSection82.vue';
+import CTASection11 from '~/components/design-system-section-components/CTASection11.vue';
+import FeatureSection76 from '~/components/design-system-section-components/FeatureSection76.vue';
+import IntroSection4 from '~/components/design-system-section-components/IntroSection4.vue';
+import IntroSection10 from '~/components/design-system-section-components/IntroSection10.vue';
+import IntroSection11 from '~/components/design-system-section-components/IntroSection11.vue';
+import IntroSection6 from '~/components/design-system-section-components/IntroSection6.vue';
+import IntroSection3 from '~/components/design-system-section-components/IntroSection3.vue';
+import PricingSection12 from '~/components/design-system-section-components/PricingSection12.vue';
+import PricingSection13 from '~/components/design-system-section-components/PricingSection13.vue';
+import TestimonialSection28 from '~/components/design-system-section-components/TestimonialSection28.vue';
 
 // Composite Components
 import SevenWeekQuestionnaire from '~/components/composite/SevenWeekQuestionnaire.vue';
@@ -2860,6 +2872,772 @@ export const registeredComponents: RegisteredComponent[] = [
             { name: 'descriptionColor', type: 'color', defaultValue: '#4b5563' },
             { name: 'statValueColor', type: 'color', defaultValue: '#111827' },
             { name: 'statDescriptionColor', type: 'color', defaultValue: '#4b5563' }
+        ]
+    },
+
+    {
+        component: ContentSection68,
+        name: 'ContentSection68',
+        inputs: [
+            // === VISIBILITY TOGGLES ===
+            { name: 'showTagline', type: 'boolean', defaultValue: true },
+            { name: 'showHeadline', type: 'boolean', defaultValue: true },
+            { name: 'showDescription', type: 'boolean', defaultValue: true },
+            { name: 'showIconCard', type: 'boolean', defaultValue: true },
+            { name: 'showIcon', type: 'boolean', defaultValue: true },
+            { name: 'showImage1', type: 'boolean', defaultValue: true },
+            { name: 'showImage2', type: 'boolean', defaultValue: true },
+            { name: 'showImage3', type: 'boolean', defaultValue: true },
+            { name: 'showImage4', type: 'boolean', defaultValue: true },
+            { name: 'showTextCard', type: 'boolean', defaultValue: true },
+            { name: 'showCta', type: 'boolean', defaultValue: true },
+
+            // === SECTION HEADER ===
+            { name: 'tagline', type: 'richText', defaultValue: 'Tagline' },
+            { name: 'headline', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'description', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.' },
+
+            // === SECTION COLORS ===
+            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'taglineColor', type: 'color', defaultValue: '#6366f1' },
+            { name: 'headlineColor', type: 'color', defaultValue: '#111827' },
+            { name: 'descriptionColor', type: 'color', defaultValue: '#6b7280' },
+
+            // === ICON CARD ===
+            { name: 'icon', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'svg', 'webp'], defaultValue: '' },
+            { name: 'iconAlt', type: 'string', defaultValue: 'Icon' },
+            { name: 'iconCardTitle', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'iconCardDescription', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet consectetur adipiscin.' },
+            { name: 'iconCardBackgroundColor', type: 'color', defaultValue: '#f9fafb' },
+            { name: 'iconCardTitleColor', type: 'color', defaultValue: '#111827' },
+            { name: 'iconCardDescriptionColor', type: 'color', defaultValue: '#6b7280' },
+
+            // === IMAGE 1 ===
+            { name: 'image1', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'webp'], defaultValue: '' },
+            { name: 'image1Alt', type: 'string', defaultValue: 'Image 1' },
+            { name: 'image1AspectRatio', type: 'string', defaultValue: '4/3' },
+            { name: 'image1PlaceholderColor', type: 'color', defaultValue: '#d1d5db' },
+
+            // === IMAGE 2 ===
+            { name: 'image2', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'webp'], defaultValue: '' },
+            { name: 'image2Alt', type: 'string', defaultValue: 'Image 2' },
+            { name: 'image2AspectRatio', type: 'string', defaultValue: '4/3' },
+            { name: 'image2PlaceholderColor', type: 'color', defaultValue: '#d1d5db' },
+
+            // === IMAGE 3 ===
+            { name: 'image3', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'webp'], defaultValue: '' },
+            { name: 'image3Alt', type: 'string', defaultValue: 'Image 3' },
+            { name: 'image3AspectRatio', type: 'string', defaultValue: '4/3' },
+            { name: 'image3PlaceholderColor', type: 'color', defaultValue: '#d1d5db' },
+
+            // === IMAGE 4 ===
+            { name: 'image4', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'webp'], defaultValue: '' },
+            { name: 'image4Alt', type: 'string', defaultValue: 'Image 4' },
+            { name: 'image4AspectRatio', type: 'string', defaultValue: '4/3' },
+            { name: 'image4PlaceholderColor', type: 'color', defaultValue: '#d1d5db' },
+
+            // === TEXT CARD ===
+            { name: 'textCardTitle', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'textCardDescription', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet consectetur adipiscing elit lectus dapibus natoque viverra in lectus mauris est elementum in lectus curabitur vivamus sit eget.' },
+            { name: 'textCardBackgroundColor', type: 'color', defaultValue: '#f9fafb' },
+            { name: 'textCardTitleColor', type: 'color', defaultValue: '#111827' },
+            { name: 'textCardDescriptionColor', type: 'color', defaultValue: '#6b7280' },
+
+            // === CTA ===
+            { name: 'ctaText', type: 'string', defaultValue: 'Contact Us' },
+            { name: 'ctaUrl', type: 'url', defaultValue: '' },
+            { name: 'ctaBackgroundColor', type: 'color', defaultValue: '#000000' }
+        ]
+    },
+
+    {
+        component: ContentSection82,
+        name: 'ContentSection82',
+        inputs: [
+            // === VISIBILITY TOGGLES ===
+            { name: 'showTagline', type: 'boolean', defaultValue: true },
+            { name: 'showHeadline', type: 'boolean', defaultValue: true },
+            { name: 'showDescription', type: 'boolean', defaultValue: true },
+            { name: 'showContentBlock', type: 'boolean', defaultValue: true },
+            { name: 'showCta', type: 'boolean', defaultValue: true },
+            { name: 'showFeatureItems', type: 'boolean', defaultValue: true },
+            { name: 'showFeaturedImage', type: 'boolean', defaultValue: true },
+            { name: 'showBottomImages', type: 'boolean', defaultValue: true },
+            { name: 'showBottomImage1', type: 'boolean', defaultValue: true },
+            { name: 'showBottomImage2', type: 'boolean', defaultValue: true },
+
+            // === LAYOUT ===
+            { name: 'contentPosition', type: 'text', enum: ['left', 'right'], defaultValue: 'left' },
+
+            // === SECTION HEADER ===
+            { name: 'tagline', type: 'richText', defaultValue: 'Tagline' },
+            { name: 'headline', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'description', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.' },
+
+            // === SECTION COLORS ===
+            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'taglineColor', type: 'color', defaultValue: '#6b7280' },
+            { name: 'headlineColor', type: 'color', defaultValue: '#111827' },
+            { name: 'descriptionColor', type: 'color', defaultValue: '#6b7280' },
+
+            // === CONTENT BLOCK ===
+            { name: 'contentBlockHeadline', type: 'richText', defaultValue: 'Lorem ipsum dolor sit' },
+            { name: 'contentBlockDescription', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit lobortis arcu enim urna adipiscing praesent velit viverra sit semper lorem eu cursus vel hendrerit elementum morbi curabitur etiam nibh justo.' },
+            { name: 'contentBlockHeadlineColor', type: 'color', defaultValue: '#111827' },
+            { name: 'contentBlockDescriptionColor', type: 'color', defaultValue: '#6b7280' },
+
+            // === CTA ===
+            { name: 'ctaText', type: 'string', defaultValue: 'Contact now' },
+            { name: 'ctaUrl', type: 'url', defaultValue: '' },
+            { name: 'ctaColor', type: 'color', defaultValue: '#111827' },
+
+            // === FEATURE ITEMS ===
+            {
+                name: 'featureItems',
+                type: 'list',
+                defaultValue: [
+                    { text: 'Feature item' },
+                    { text: 'Feature item' },
+                    { text: 'Feature item' },
+                    { text: 'Feature item' }
+                ],
+                subFields: [
+                    { name: 'text', type: 'string', required: true, defaultValue: 'Feature item' }
+                ]
+            },
+            { name: 'featureItemBackgroundColor', type: 'color', defaultValue: '#f3f4f6' },
+            { name: 'featureItemTextColor', type: 'color', defaultValue: '#111827' },
+
+            // === FEATURED IMAGE ===
+            { name: 'featuredImage', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'webp'], defaultValue: '' },
+            { name: 'featuredImageAlt', type: 'string', defaultValue: 'Featured Image' },
+            { name: 'featuredImageAspectRatio', type: 'string', defaultValue: '4/3' },
+            { name: 'featuredImagePlaceholderColor', type: 'color', defaultValue: '#d1d5db' },
+
+            // === BOTTOM IMAGE 1 ===
+            { name: 'bottomImage1', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'webp'], defaultValue: '' },
+            { name: 'bottomImage1Alt', type: 'string', defaultValue: 'Bottom Image 1' },
+            { name: 'bottomImage1AspectRatio', type: 'string', defaultValue: '16/9' },
+            { name: 'bottomImage1PlaceholderColor', type: 'color', defaultValue: '#d1d5db' },
+
+            // === BOTTOM IMAGE 2 ===
+            { name: 'bottomImage2', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'webp'], defaultValue: '' },
+            { name: 'bottomImage2Alt', type: 'string', defaultValue: 'Bottom Image 2' },
+            { name: 'bottomImage2AspectRatio', type: 'string', defaultValue: '16/9' },
+            { name: 'bottomImage2PlaceholderColor', type: 'color', defaultValue: '#d1d5db' }
+        ]
+    },
+
+    {
+        component: CTASection11,
+        name: 'CTASection11',
+        inputs: [
+            // === VISIBILITY TOGGLES ===
+            { name: 'showHeadline', type: 'boolean', defaultValue: true },
+            { name: 'showDescription', type: 'boolean', defaultValue: true },
+            { name: 'showForm', type: 'boolean', defaultValue: true },
+            { name: 'showDisclaimer', type: 'boolean', defaultValue: true },
+
+            // === CONTENT ===
+            { name: 'headline', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'description', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
+
+            // === FORM ===
+            { name: 'inputPlaceholder', type: 'string', defaultValue: 'Your email' },
+            { name: 'buttonText', type: 'string', defaultValue: 'Register' },
+            { name: 'formAction', type: 'url', defaultValue: '' },
+
+            // === DISCLAIMER ===
+            { name: 'disclaimerPrefix', type: 'string', defaultValue: 'By clicking Register, you acknowledge that you have read and accepted our ' },
+            { name: 'termsLinkText', type: 'string', defaultValue: 'Terms and Conditions' },
+            { name: 'termsUrl', type: 'url', defaultValue: '' },
+
+            // === COLORS ===
+            { name: 'backgroundColor', type: 'color', defaultValue: '#6b7280' },
+            { name: 'headlineColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'descriptionColor', type: 'color', defaultValue: '#f3f4f6' },
+            { name: 'inputBackgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'inputTextColor', type: 'color', defaultValue: '#111827' },
+            { name: 'buttonBackgroundColor', type: 'color', defaultValue: '#111827' },
+            { name: 'buttonTextColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'disclaimerColor', type: 'color', defaultValue: '#d1d5db' },
+            { name: 'disclaimerLinkColor', type: 'color', defaultValue: '#ffffff' }
+        ]
+    },
+
+    {
+        component: FeatureSection76,
+        name: 'FeatureSection76',
+        inputs: [
+            // === VISIBILITY TOGGLES ===
+            { name: 'showCard1', type: 'boolean', defaultValue: true },
+            { name: 'showCard1Icon', type: 'boolean', defaultValue: true },
+            { name: 'showCard1Cta', type: 'boolean', defaultValue: true },
+            { name: 'showCard2', type: 'boolean', defaultValue: true },
+            { name: 'showCard2Icon', type: 'boolean', defaultValue: true },
+            { name: 'showCard2Cta', type: 'boolean', defaultValue: true },
+            { name: 'showCard3', type: 'boolean', defaultValue: true },
+            { name: 'showCard3Icon', type: 'boolean', defaultValue: true },
+            { name: 'showCard3Cta', type: 'boolean', defaultValue: true },
+            { name: 'showBackgroundOverlay', type: 'boolean', defaultValue: false },
+
+            // === SECTION BACKGROUND ===
+            { name: 'backgroundColor', type: 'color', defaultValue: '#8b8b8b' },
+            { name: 'backgroundImage', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'webp'], defaultValue: '' },
+            { name: 'backgroundOverlayColor', type: 'color', defaultValue: '#000000' },
+            { name: 'backgroundOverlayOpacity', type: 'number', defaultValue: 40 },
+
+            // === CARD 1 ===
+            { name: 'card1BackgroundColor', type: 'color', defaultValue: 'rgba(139, 139, 139, 0.5)' },
+            { name: 'card1Icon', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'svg', 'webp'], defaultValue: '' },
+            { name: 'card1IconAlt', type: 'string', defaultValue: 'Feature icon' },
+            { name: 'card1IconBackgroundColor', type: 'color', defaultValue: 'rgba(255, 255, 255, 0.1)' },
+            { name: 'card1IconColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'card1Headline', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'card1HeadlineColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'card1Description', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.' },
+            { name: 'card1DescriptionColor', type: 'color', defaultValue: '#f3f4f6' },
+            { name: 'card1CtaText', type: 'string', defaultValue: 'See more' },
+            { name: 'card1CtaUrl', type: 'url', defaultValue: '' },
+            { name: 'card1CtaColor', type: 'color', defaultValue: '#ffffff' },
+
+            // === CARD 2 (Center - Highlighted) ===
+            { name: 'card2BackgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'card2Icon', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'svg', 'webp'], defaultValue: '' },
+            { name: 'card2IconAlt', type: 'string', defaultValue: 'Feature icon' },
+            { name: 'card2IconBackgroundColor', type: 'color', defaultValue: '#f3f4f6' },
+            { name: 'card2IconColor', type: 'color', defaultValue: '#6b7280' },
+            { name: 'card2Headline', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'card2HeadlineColor', type: 'color', defaultValue: '#111827' },
+            { name: 'card2Description', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.' },
+            { name: 'card2DescriptionColor', type: 'color', defaultValue: '#6b7280' },
+            { name: 'card2CtaText', type: 'string', defaultValue: 'See more' },
+            { name: 'card2CtaUrl', type: 'url', defaultValue: '' },
+            { name: 'card2CtaColor', type: 'color', defaultValue: '#111827' },
+
+            // === CARD 3 ===
+            { name: 'card3BackgroundColor', type: 'color', defaultValue: 'rgba(139, 139, 139, 0.5)' },
+            { name: 'card3Icon', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'svg', 'webp'], defaultValue: '' },
+            { name: 'card3IconAlt', type: 'string', defaultValue: 'Feature icon' },
+            { name: 'card3IconBackgroundColor', type: 'color', defaultValue: 'rgba(255, 255, 255, 0.1)' },
+            { name: 'card3IconColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'card3Headline', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'card3HeadlineColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'card3Description', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.' },
+            { name: 'card3DescriptionColor', type: 'color', defaultValue: '#f3f4f6' },
+            { name: 'card3CtaText', type: 'string', defaultValue: 'See more' },
+            { name: 'card3CtaUrl', type: 'url', defaultValue: '' },
+            { name: 'card3CtaColor', type: 'color', defaultValue: '#ffffff' }
+        ]
+    },
+
+    {
+        component: IntroSection4,
+        name: 'IntroSection4',
+        inputs: [
+            // === VISIBILITY TOGGLES ===
+            { name: 'showTagline', type: 'boolean', defaultValue: true },
+            { name: 'showHeadline', type: 'boolean', defaultValue: true },
+            { name: 'showDescription', type: 'boolean', defaultValue: true },
+            { name: 'showIcon', type: 'boolean', defaultValue: true },
+            { name: 'showCtaButtons', type: 'boolean', defaultValue: true },
+            { name: 'showPrimaryCta', type: 'boolean', defaultValue: true },
+            { name: 'showSecondaryCta', type: 'boolean', defaultValue: true },
+            { name: 'showBackgroundOverlay', type: 'boolean', defaultValue: false },
+
+            // === CONTENT ===
+            { name: 'tagline', type: 'richText', defaultValue: 'Tagline' },
+            { name: 'headline', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet consectetur' },
+            { name: 'description', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.' },
+
+            // === COLORS ===
+            { name: 'backgroundColor', type: 'color', defaultValue: '#8b8b8b' },
+            { name: 'backgroundImage', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'svg', 'webp'], defaultValue: '' },
+            { name: 'backgroundOverlayColor', type: 'color', defaultValue: '#000000' },
+            { name: 'backgroundOverlayOpacity', type: 'number', defaultValue: 40 },
+            { name: 'taglineColor', type: 'color', defaultValue: '#f3f4f6' },
+            { name: 'headlineColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'descriptionColor', type: 'color', defaultValue: '#d1d5db' },
+
+            // === ICON ===
+            { name: 'icon', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'svg', 'webp'], defaultValue: '' },
+            { name: 'iconAlt', type: 'string', defaultValue: 'Icon' },
+            { name: 'iconColor', type: 'color', defaultValue: '#ffffff' },
+
+            // === PRIMARY CTA ===
+            { name: 'primaryCtaText', type: 'string', defaultValue: 'Contact now' },
+            { name: 'primaryCtaUrl', type: 'string', defaultValue: '' },
+            { name: 'primaryCtaBackgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'primaryCtaTextColor', type: 'color', defaultValue: '#111827' },
+
+            // === SECONDARY CTA ===
+            { name: 'secondaryCtaText', type: 'string', defaultValue: 'See more' },
+            { name: 'secondaryCtaUrl', type: 'string', defaultValue: '' },
+            { name: 'secondaryCtaBorderColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'secondaryCtaTextColor', type: 'color', defaultValue: '#ffffff' }
+        ]
+    },
+
+    {
+        component: IntroSection10,
+        name: 'IntroSection10',
+        inputs: [
+            // === VISIBILITY TOGGLES ===
+            { name: 'showTagline', type: 'boolean', defaultValue: true },
+            { name: 'showHeadline', type: 'boolean', defaultValue: true },
+            { name: 'showDescription', type: 'boolean', defaultValue: true },
+            { name: 'showContentBlock', type: 'boolean', defaultValue: true },
+            { name: 'showImage', type: 'boolean', defaultValue: true },
+
+            // === LAYOUT ===
+            { name: 'imagePosition', type: 'text', enum: ['left', 'right'], defaultValue: 'right' },
+
+            // === CONTENT ===
+            { name: 'tagline', type: 'richText', defaultValue: 'Tagline' },
+            { name: 'headline', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet consectetur' },
+            { name: 'description', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.' },
+
+            // === COLORS ===
+            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'taglineColor', type: 'color', defaultValue: '#6b7280' },
+            { name: 'headlineColor', type: 'color', defaultValue: '#111827' },
+            { name: 'descriptionColor', type: 'color', defaultValue: '#6b7280' },
+
+            // === IMAGE ===
+            { name: 'image', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'svg', 'webp'], defaultValue: '' },
+            { name: 'imageAlt', type: 'string', defaultValue: 'Image' },
+            { name: 'imageAspectRatio', type: 'string', defaultValue: '4/3' },
+            { name: 'imagePlaceholderColor', type: 'color', defaultValue: '#d1d5db' }
+        ]
+    },
+
+    {
+        component: IntroSection6,
+        name: 'IntroSection6',
+        inputs: [
+            // === VISIBILITY TOGGLES ===
+            { name: 'showTagline', type: 'boolean', defaultValue: true },
+            { name: 'showHeadline', type: 'boolean', defaultValue: true },
+            { name: 'showDescription', type: 'boolean', defaultValue: true },
+            { name: 'showCtaButtons', type: 'boolean', defaultValue: true },
+            { name: 'showPrimaryCta', type: 'boolean', defaultValue: true },
+            { name: 'showSecondaryCta', type: 'boolean', defaultValue: true },
+            { name: 'showBackgroundOverlay', type: 'boolean', defaultValue: false },
+
+            // === CONTENT ===
+            { name: 'tagline', type: 'richText', defaultValue: 'Tagline' },
+            { name: 'headline', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet consectetur' },
+            { name: 'description', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.' },
+
+            // === COLORS ===
+            { name: 'backgroundColor', type: 'color', defaultValue: '#8b8b8b' },
+            { name: 'backgroundImage', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'svg', 'webp'], defaultValue: '' },
+            { name: 'backgroundOverlayColor', type: 'color', defaultValue: '#000000' },
+            { name: 'backgroundOverlayOpacity', type: 'number', defaultValue: 40 },
+            { name: 'taglineColor', type: 'color', defaultValue: '#f3f4f6' },
+            { name: 'headlineColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'descriptionColor', type: 'color', defaultValue: '#d1d5db' },
+
+            // === PRIMARY CTA ===
+            { name: 'primaryCtaText', type: 'string', defaultValue: 'Contact now' },
+            { name: 'primaryCtaUrl', type: 'string', defaultValue: '' },
+            { name: 'primaryCtaBackgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'primaryCtaTextColor', type: 'color', defaultValue: '#111827' },
+
+            // === SECONDARY CTA ===
+            { name: 'secondaryCtaText', type: 'string', defaultValue: 'See more' },
+            { name: 'secondaryCtaUrl', type: 'string', defaultValue: '' },
+            { name: 'secondaryCtaBorderColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'secondaryCtaTextColor', type: 'color', defaultValue: '#ffffff' }
+        ]
+    },
+
+    {
+        component: IntroSection3,
+        name: 'IntroSection3',
+        inputs: [
+            // === VISIBILITY TOGGLES ===
+            { name: 'showTagline', type: 'boolean', defaultValue: true },
+            { name: 'showHeadline', type: 'boolean', defaultValue: true },
+            { name: 'showDescription', type: 'boolean', defaultValue: true },
+            { name: 'showCtaButtons', type: 'boolean', defaultValue: true },
+            { name: 'showPrimaryCta', type: 'boolean', defaultValue: true },
+            { name: 'showSecondaryCta', type: 'boolean', defaultValue: true },
+            { name: 'showBackgroundOverlay', type: 'boolean', defaultValue: false },
+
+            // === CONTENT ===
+            { name: 'tagline', type: 'richText', defaultValue: 'Tagline' },
+            { name: 'headline', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet consectetur' },
+            { name: 'description', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.' },
+
+            // === COLORS ===
+            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'backgroundImage', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'svg', 'webp'], defaultValue: '' },
+            { name: 'backgroundOverlayColor', type: 'color', defaultValue: '#000000' },
+            { name: 'backgroundOverlayOpacity', type: 'number', defaultValue: 40 },
+            { name: 'taglineColor', type: 'color', defaultValue: '#6b7280' },
+            { name: 'headlineColor', type: 'color', defaultValue: '#111827' },
+            { name: 'descriptionColor', type: 'color', defaultValue: '#6b7280' },
+
+            // === PRIMARY CTA ===
+            { name: 'primaryCtaText', type: 'string', defaultValue: 'Contact now' },
+            { name: 'primaryCtaUrl', type: 'string', defaultValue: '' },
+            { name: 'primaryCtaBackgroundColor', type: 'color', defaultValue: '#111827' },
+            { name: 'primaryCtaTextColor', type: 'color', defaultValue: '#ffffff' },
+
+            // === SECONDARY CTA ===
+            { name: 'secondaryCtaText', type: 'string', defaultValue: 'See more' },
+            { name: 'secondaryCtaUrl', type: 'string', defaultValue: '' },
+            { name: 'secondaryCtaBorderColor', type: 'color', defaultValue: '#111827' },
+            { name: 'secondaryCtaTextColor', type: 'color', defaultValue: '#111827' }
+        ]
+    },
+
+    {
+        component: IntroSection11,
+        name: 'IntroSection11',
+        inputs: [
+            // === VISIBILITY TOGGLES ===
+            { name: 'showTagline', type: 'boolean', defaultValue: true },
+            { name: 'showHeadline', type: 'boolean', defaultValue: true },
+            { name: 'showDescription', type: 'boolean', defaultValue: true },
+            { name: 'showContentBlock', type: 'boolean', defaultValue: true },
+            { name: 'showImage', type: 'boolean', defaultValue: true },
+            { name: 'showCtaButtons', type: 'boolean', defaultValue: true },
+            { name: 'showPrimaryCta', type: 'boolean', defaultValue: true },
+            { name: 'showSecondaryCta', type: 'boolean', defaultValue: true },
+
+            // === LAYOUT ===
+            { name: 'imagePosition', type: 'text', enum: ['left', 'right'], defaultValue: 'right' },
+
+            // === CONTENT ===
+            { name: 'tagline', type: 'richText', defaultValue: 'Tagline' },
+            { name: 'headline', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet consectetur' },
+            { name: 'description', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.' },
+
+            // === COLORS ===
+            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'taglineColor', type: 'color', defaultValue: '#6b7280' },
+            { name: 'headlineColor', type: 'color', defaultValue: '#111827' },
+            { name: 'descriptionColor', type: 'color', defaultValue: '#6b7280' },
+
+            // === IMAGE ===
+            { name: 'image', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'svg', 'webp'], defaultValue: '' },
+            { name: 'imageAlt', type: 'string', defaultValue: 'Image' },
+            { name: 'imageAspectRatio', type: 'string', defaultValue: '4/3' },
+            { name: 'imagePlaceholderColor', type: 'color', defaultValue: '#d1d5db' },
+
+            // === PRIMARY CTA ===
+            { name: 'primaryCtaText', type: 'string', defaultValue: 'Contact now' },
+            { name: 'primaryCtaUrl', type: 'string', defaultValue: '' },
+            { name: 'primaryCtaBackgroundColor', type: 'color', defaultValue: '#111827' },
+            { name: 'primaryCtaTextColor', type: 'color', defaultValue: '#ffffff' },
+
+            // === SECONDARY CTA ===
+            { name: 'secondaryCtaText', type: 'string', defaultValue: 'See more' },
+            { name: 'secondaryCtaUrl', type: 'string', defaultValue: '' },
+            { name: 'secondaryCtaBorderColor', type: 'color', defaultValue: '#111827' },
+            { name: 'secondaryCtaTextColor', type: 'color', defaultValue: '#111827' }
+        ]
+    },
+
+    {
+        component: PricingSection12,
+        name: 'PricingSection12',
+        inputs: [
+            // === VISIBILITY TOGGLES ===
+            { name: 'showTagline', type: 'boolean', defaultValue: true },
+            { name: 'showHeadline', type: 'boolean', defaultValue: true },
+            { name: 'showDescription', type: 'boolean', defaultValue: true },
+            { name: 'showHeaderBlock', type: 'boolean', defaultValue: true },
+            { name: 'showFeatureBox', type: 'boolean', defaultValue: true },
+            { name: 'showFeature1', type: 'boolean', defaultValue: true },
+            { name: 'showFeature2', type: 'boolean', defaultValue: true },
+            { name: 'showFeature3', type: 'boolean', defaultValue: true },
+            { name: 'showFeature4', type: 'boolean', defaultValue: true },
+            { name: 'showFeature5', type: 'boolean', defaultValue: true },
+            { name: 'showCard1', type: 'boolean', defaultValue: true },
+            { name: 'showCard1Cta', type: 'boolean', defaultValue: true },
+            { name: 'showCard2', type: 'boolean', defaultValue: true },
+            { name: 'showCard2Cta', type: 'boolean', defaultValue: true },
+            { name: 'showCard3', type: 'boolean', defaultValue: true },
+            { name: 'showCard3Cta', type: 'boolean', defaultValue: true },
+
+            // === HEADER CONTENT ===
+            { name: 'tagline', type: 'richText', defaultValue: 'Tagline' },
+            { name: 'headline', type: 'richText', defaultValue: 'Ut tempus dui non enim accumsan, eu rutrum' },
+            { name: 'description', type: 'richText', defaultValue: 'Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore minim.' },
+
+            // === FEATURE BOX ===
+            { name: 'featureBoxHeadline', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet consect adipisicing elit.' },
+            { name: 'feature1Text', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'feature2Text', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'feature3Text', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'feature4Text', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'feature5Text', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet' },
+
+            // === COLORS ===
+            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'taglineColor', type: 'color', defaultValue: '#6b7280' },
+            { name: 'headlineColor', type: 'color', defaultValue: '#111827' },
+            { name: 'descriptionColor', type: 'color', defaultValue: '#6b7280' },
+            { name: 'featureBoxBackgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'featureBoxBorderColor', type: 'color', defaultValue: '#e5e7eb' },
+            { name: 'featureBoxHeadlineColor', type: 'color', defaultValue: '#111827' },
+            { name: 'featureCheckmarkColor', type: 'color', defaultValue: '#111827' },
+            { name: 'featureTextColor', type: 'color', defaultValue: '#111827' },
+
+            // === CARD 1 (FREE) ===
+            { name: 'card1Title', type: 'string', defaultValue: 'Free' },
+            { name: 'card1Description', type: 'richText', defaultValue: 'Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum.' },
+            { name: 'card1Price', type: 'string', defaultValue: '$00' },
+            { name: 'card1PriceInterval', type: 'string', defaultValue: '/month' },
+            { name: 'card1PriceSubtext', type: 'string', defaultValue: 'Lorem ipsum dolor sit' },
+            { name: 'card1CtaText', type: 'string', defaultValue: 'Buy now' },
+            { name: 'card1CtaUrl', type: 'string', defaultValue: '' },
+            { name: 'card1BackgroundColor', type: 'color', defaultValue: '#f3f4f6' },
+            { name: 'card1TitleColor', type: 'color', defaultValue: '#111827' },
+            { name: 'card1DescriptionColor', type: 'color', defaultValue: '#6b7280' },
+            { name: 'card1PriceColor', type: 'color', defaultValue: '#111827' },
+            { name: 'card1PriceIntervalColor', type: 'color', defaultValue: '#6b7280' },
+            { name: 'card1PriceSubtextColor', type: 'color', defaultValue: '#6b7280' },
+            { name: 'card1CtaBackgroundColor', type: 'color', defaultValue: '#111827' },
+            { name: 'card1CtaTextColor', type: 'color', defaultValue: '#ffffff' },
+
+            // === CARD 2 (PRO) ===
+            { name: 'card2Title', type: 'string', defaultValue: 'Pro' },
+            { name: 'card2Description', type: 'richText', defaultValue: 'Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim elit aute irure tempor.' },
+            { name: 'card2Price', type: 'string', defaultValue: '$29' },
+            { name: 'card2PriceInterval', type: 'string', defaultValue: '/month' },
+            { name: 'card2PriceSubtext', type: 'string', defaultValue: 'Lorem ipsum dolor sit' },
+            { name: 'card2CtaText', type: 'string', defaultValue: 'Buy now' },
+            { name: 'card2CtaUrl', type: 'string', defaultValue: '' },
+            { name: 'card2BackgroundColor', type: 'color', defaultValue: '#f3f4f6' },
+            { name: 'card2TitleColor', type: 'color', defaultValue: '#111827' },
+            { name: 'card2DescriptionColor', type: 'color', defaultValue: '#6b7280' },
+            { name: 'card2PriceColor', type: 'color', defaultValue: '#111827' },
+            { name: 'card2PriceIntervalColor', type: 'color', defaultValue: '#6b7280' },
+            { name: 'card2PriceSubtextColor', type: 'color', defaultValue: '#6b7280' },
+            { name: 'card2CtaBackgroundColor', type: 'color', defaultValue: '#111827' },
+            { name: 'card2CtaTextColor', type: 'color', defaultValue: '#ffffff' },
+
+            // === CARD 3 (ENTERPRISE) ===
+            { name: 'card3Title', type: 'string', defaultValue: 'Enterprise' },
+            { name: 'card3Description', type: 'richText', defaultValue: 'Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum.' },
+            { name: 'card3Price', type: 'string', defaultValue: 'Custom' },
+            { name: 'card3PriceSubtext', type: 'string', defaultValue: 'Lorem ipsum dolor sit' },
+            { name: 'card3CtaText', type: 'string', defaultValue: 'Contact Sales' },
+            { name: 'card3CtaUrl', type: 'string', defaultValue: '' },
+            { name: 'card3BackgroundColor', type: 'color', defaultValue: '#111827' },
+            { name: 'card3TitleColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'card3DescriptionColor', type: 'color', defaultValue: '#d1d5db' },
+            { name: 'card3PriceColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'card3PriceSubtextColor', type: 'color', defaultValue: '#d1d5db' },
+            { name: 'card3CtaBackgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'card3CtaTextColor', type: 'color', defaultValue: '#111827' }
+        ]
+    },
+
+    {
+        component: PricingSection13,
+        name: 'PricingSection13',
+        inputs: [
+            // === VISIBILITY TOGGLES ===
+            { name: 'showHeader', type: 'boolean', defaultValue: true },
+            { name: 'showTagline', type: 'boolean', defaultValue: true },
+            { name: 'showHeadline', type: 'boolean', defaultValue: true },
+            { name: 'showDescription', type: 'boolean', defaultValue: true },
+            { name: 'showCard1', type: 'boolean', defaultValue: true },
+            { name: 'showCard1Icon', type: 'boolean', defaultValue: true },
+            { name: 'showCard1Feature1', type: 'boolean', defaultValue: true },
+            { name: 'showCard1Feature2', type: 'boolean', defaultValue: true },
+            { name: 'showCard1Feature3', type: 'boolean', defaultValue: true },
+            { name: 'showCard1Cta', type: 'boolean', defaultValue: true },
+            { name: 'showCard2', type: 'boolean', defaultValue: true },
+            { name: 'showCard2Icon', type: 'boolean', defaultValue: true },
+            { name: 'showCard2Feature1', type: 'boolean', defaultValue: true },
+            { name: 'showCard2Feature2', type: 'boolean', defaultValue: true },
+            { name: 'showCard2Feature3', type: 'boolean', defaultValue: true },
+            { name: 'showCard2Feature4', type: 'boolean', defaultValue: true },
+            { name: 'showCard2Feature5', type: 'boolean', defaultValue: true },
+            { name: 'showCard2Feature6', type: 'boolean', defaultValue: true },
+            { name: 'showCard2Cta', type: 'boolean', defaultValue: true },
+
+            // === HEADER CONTENT ===
+            { name: 'tagline', type: 'richText', defaultValue: 'Tagline' },
+            { name: 'headline', type: 'richText', defaultValue: 'Lorem ipsum dolor' },
+            { name: 'description', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet consect adipisicing elit.' },
+
+            // === COLORS ===
+            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'taglineColor', type: 'color', defaultValue: '#6b7280' },
+            { name: 'headlineColor', type: 'color', defaultValue: '#111827' },
+            { name: 'descriptionColor', type: 'color', defaultValue: '#6b7280' },
+
+            // === CARD 1 (BASIC) ===
+            { name: 'card1Title', type: 'string', defaultValue: 'Basic' },
+            { name: 'card1Description', type: 'richText', defaultValue: 'Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt mollit dolore cillum minim tempor enim elit aute irure tempor.' },
+            { name: 'card1Price', type: 'string', defaultValue: '$29' },
+            { name: 'card1PriceInterval', type: 'string', defaultValue: '/month' },
+            { name: 'card1Feature1Text', type: 'string', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'card1Feature1Active', type: 'boolean', defaultValue: true },
+            { name: 'card1Feature2Text', type: 'string', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'card1Feature2Active', type: 'boolean', defaultValue: true },
+            { name: 'card1Feature3Text', type: 'string', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'card1Feature3Active', type: 'boolean', defaultValue: false },
+            { name: 'card1CtaText', type: 'string', defaultValue: 'Buy now' },
+            { name: 'card1CtaUrl', type: 'string', defaultValue: '' },
+            { name: 'card1BackgroundColor', type: 'color', defaultValue: '#f3f4f6' },
+            { name: 'card1IconColor', type: 'color', defaultValue: '#111827' },
+            { name: 'card1TitleColor', type: 'color', defaultValue: '#111827' },
+            { name: 'card1DescriptionColor', type: 'color', defaultValue: '#6b7280' },
+            { name: 'card1PriceColor', type: 'color', defaultValue: '#111827' },
+            { name: 'card1PriceIntervalColor', type: 'color', defaultValue: '#6b7280' },
+            { name: 'card1FeatureActiveColor', type: 'color', defaultValue: '#111827' },
+            { name: 'card1FeatureInactiveColor', type: 'color', defaultValue: '#9ca3af' },
+            { name: 'card1FeatureTextActiveColor', type: 'color', defaultValue: '#111827' },
+            { name: 'card1FeatureTextInactiveColor', type: 'color', defaultValue: '#9ca3af' },
+            { name: 'card1CtaBackgroundColor', type: 'color', defaultValue: '#111827' },
+            { name: 'card1CtaTextColor', type: 'color', defaultValue: '#ffffff' },
+
+            // === CARD 2 (PROFESSIONAL) ===
+            { name: 'card2Title', type: 'string', defaultValue: 'Professional' },
+            { name: 'card2Description', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.' },
+            { name: 'card2Price', type: 'string', defaultValue: '$199' },
+            { name: 'card2PriceInterval', type: 'string', defaultValue: '/month' },
+            { name: 'card2Feature1Text', type: 'string', defaultValue: 'Lorem ipsum dolor sit' },
+            { name: 'card2Feature1Active', type: 'boolean', defaultValue: true },
+            { name: 'card2Feature2Text', type: 'string', defaultValue: 'Lorem ipsum dolor sit' },
+            { name: 'card2Feature2Active', type: 'boolean', defaultValue: false },
+            { name: 'card2Feature3Text', type: 'string', defaultValue: 'Lorem ipsum dolor sit' },
+            { name: 'card2Feature3Active', type: 'boolean', defaultValue: true },
+            { name: 'card2Feature4Text', type: 'string', defaultValue: 'Lorem ipsum dolor sit' },
+            { name: 'card2Feature4Active', type: 'boolean', defaultValue: false },
+            { name: 'card2Feature5Text', type: 'string', defaultValue: 'Lorem ipsum dolor sit' },
+            { name: 'card2Feature5Active', type: 'boolean', defaultValue: true },
+            { name: 'card2Feature6Text', type: 'string', defaultValue: 'Lorem ipsum dolor sit' },
+            { name: 'card2Feature6Active', type: 'boolean', defaultValue: false },
+            { name: 'card2CtaText', type: 'string', defaultValue: 'Buy now' },
+            { name: 'card2CtaUrl', type: 'string', defaultValue: '' },
+            { name: 'card2BackgroundColor', type: 'color', defaultValue: '#111827' },
+            { name: 'card2IconColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'card2TitleColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'card2DescriptionColor', type: 'color', defaultValue: '#d1d5db' },
+            { name: 'card2PriceColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'card2PriceIntervalColor', type: 'color', defaultValue: '#d1d5db' },
+            { name: 'card2FeatureActiveColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'card2FeatureInactiveColor', type: 'color', defaultValue: '#6b7280' },
+            { name: 'card2FeatureTextActiveColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'card2FeatureTextInactiveColor', type: 'color', defaultValue: '#6b7280' },
+            { name: 'card2CtaBackgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'card2CtaTextColor', type: 'color', defaultValue: '#111827' }
+        ]
+    },
+
+    {
+        component: TestimonialSection28,
+        name: 'TestimonialSection28',
+        inputs: [
+            // === VISIBILITY TOGGLES ===
+            { name: 'showHeader', type: 'boolean', defaultValue: true },
+            { name: 'showTagline', type: 'boolean', defaultValue: true },
+            { name: 'showHeadline', type: 'boolean', defaultValue: true },
+            { name: 'showDescription', type: 'boolean', defaultValue: true },
+            { name: 'showTestimonial1', type: 'boolean', defaultValue: true },
+            { name: 'showTestimonial1Avatar', type: 'boolean', defaultValue: true },
+            { name: 'showTestimonial2', type: 'boolean', defaultValue: true },
+            { name: 'showTestimonial2Avatar', type: 'boolean', defaultValue: true },
+            { name: 'showTestimonial3', type: 'boolean', defaultValue: true },
+            { name: 'showTestimonial3Avatar', type: 'boolean', defaultValue: true },
+            { name: 'showTestimonial4', type: 'boolean', defaultValue: true },
+            { name: 'showTestimonial4Avatar', type: 'boolean', defaultValue: true },
+            { name: 'showTestimonial5', type: 'boolean', defaultValue: true },
+            { name: 'showTestimonial5Avatar', type: 'boolean', defaultValue: true },
+            { name: 'showTestimonial6', type: 'boolean', defaultValue: true },
+            { name: 'showTestimonial6Avatar', type: 'boolean', defaultValue: true },
+
+            // === HEADER CONTENT ===
+            { name: 'tagline', type: 'richText', defaultValue: 'Tagline' },
+            { name: 'headline', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet' },
+            { name: 'description', type: 'richText', defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.' },
+
+            // === COLORS ===
+            { name: 'backgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'taglineColor', type: 'color', defaultValue: '#6b7280' },
+            { name: 'headlineColor', type: 'color', defaultValue: '#111827' },
+            { name: 'descriptionColor', type: 'color', defaultValue: '#6b7280' },
+
+            // === TESTIMONIAL 1 ===
+            { name: 'testimonial1Quote', type: 'richText', defaultValue: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."' },
+            { name: 'testimonial1Name', type: 'string', defaultValue: 'Adam Smith' },
+            { name: 'testimonial1Role', type: 'string', defaultValue: 'CEO, Company' },
+            { name: 'testimonial1Avatar', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'svg', 'webp'], defaultValue: '' },
+            { name: 'testimonial1BackgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'testimonial1BorderColor', type: 'color', defaultValue: '#e5e7eb' },
+            { name: 'testimonial1QuoteColor', type: 'color', defaultValue: '#6b7280' },
+            { name: 'testimonial1NameColor', type: 'color', defaultValue: '#111827' },
+            { name: 'testimonial1RoleColor', type: 'color', defaultValue: '#9ca3af' },
+            { name: 'testimonial1AvatarPlaceholderColor', type: 'color', defaultValue: '#d1d5db' },
+
+            // === TESTIMONIAL 2 ===
+            { name: 'testimonial2Quote', type: 'richText', defaultValue: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."' },
+            { name: 'testimonial2Name', type: 'string', defaultValue: 'Adam Smith' },
+            { name: 'testimonial2Role', type: 'string', defaultValue: 'CEO, Company' },
+            { name: 'testimonial2Avatar', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'svg', 'webp'], defaultValue: '' },
+            { name: 'testimonial2BackgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'testimonial2BorderColor', type: 'color', defaultValue: '#e5e7eb' },
+            { name: 'testimonial2QuoteColor', type: 'color', defaultValue: '#6b7280' },
+            { name: 'testimonial2NameColor', type: 'color', defaultValue: '#111827' },
+            { name: 'testimonial2RoleColor', type: 'color', defaultValue: '#9ca3af' },
+            { name: 'testimonial2AvatarPlaceholderColor', type: 'color', defaultValue: '#d1d5db' },
+
+            // === TESTIMONIAL 3 ===
+            { name: 'testimonial3Quote', type: 'richText', defaultValue: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."' },
+            { name: 'testimonial3Name', type: 'string', defaultValue: 'Adam Smith' },
+            { name: 'testimonial3Role', type: 'string', defaultValue: 'CEO, Company' },
+            { name: 'testimonial3Avatar', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'svg', 'webp'], defaultValue: '' },
+            { name: 'testimonial3BackgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'testimonial3BorderColor', type: 'color', defaultValue: '#e5e7eb' },
+            { name: 'testimonial3QuoteColor', type: 'color', defaultValue: '#6b7280' },
+            { name: 'testimonial3NameColor', type: 'color', defaultValue: '#111827' },
+            { name: 'testimonial3RoleColor', type: 'color', defaultValue: '#9ca3af' },
+            { name: 'testimonial3AvatarPlaceholderColor', type: 'color', defaultValue: '#d1d5db' },
+
+            // === TESTIMONIAL 4 ===
+            { name: 'testimonial4Quote', type: 'richText', defaultValue: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."' },
+            { name: 'testimonial4Name', type: 'string', defaultValue: 'Adam Smith' },
+            { name: 'testimonial4Role', type: 'string', defaultValue: 'CEO, Company' },
+            { name: 'testimonial4Avatar', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'svg', 'webp'], defaultValue: '' },
+            { name: 'testimonial4BackgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'testimonial4BorderColor', type: 'color', defaultValue: '#e5e7eb' },
+            { name: 'testimonial4QuoteColor', type: 'color', defaultValue: '#6b7280' },
+            { name: 'testimonial4NameColor', type: 'color', defaultValue: '#111827' },
+            { name: 'testimonial4RoleColor', type: 'color', defaultValue: '#9ca3af' },
+            { name: 'testimonial4AvatarPlaceholderColor', type: 'color', defaultValue: '#d1d5db' },
+
+            // === TESTIMONIAL 5 ===
+            { name: 'testimonial5Quote', type: 'richText', defaultValue: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."' },
+            { name: 'testimonial5Name', type: 'string', defaultValue: 'Adam Smith' },
+            { name: 'testimonial5Role', type: 'string', defaultValue: 'CEO, Company' },
+            { name: 'testimonial5Avatar', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'svg', 'webp'], defaultValue: '' },
+            { name: 'testimonial5BackgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'testimonial5BorderColor', type: 'color', defaultValue: '#e5e7eb' },
+            { name: 'testimonial5QuoteColor', type: 'color', defaultValue: '#6b7280' },
+            { name: 'testimonial5NameColor', type: 'color', defaultValue: '#111827' },
+            { name: 'testimonial5RoleColor', type: 'color', defaultValue: '#9ca3af' },
+            { name: 'testimonial5AvatarPlaceholderColor', type: 'color', defaultValue: '#d1d5db' },
+
+            // === TESTIMONIAL 6 ===
+            { name: 'testimonial6Quote', type: 'richText', defaultValue: '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."' },
+            { name: 'testimonial6Name', type: 'string', defaultValue: 'Adam Smith' },
+            { name: 'testimonial6Role', type: 'string', defaultValue: 'CEO, Company' },
+            { name: 'testimonial6Avatar', type: 'file', allowedFileTypes: ['jpeg', 'jpg', 'png', 'svg', 'webp'], defaultValue: '' },
+            { name: 'testimonial6BackgroundColor', type: 'color', defaultValue: '#ffffff' },
+            { name: 'testimonial6BorderColor', type: 'color', defaultValue: '#e5e7eb' },
+            { name: 'testimonial6QuoteColor', type: 'color', defaultValue: '#6b7280' },
+            { name: 'testimonial6NameColor', type: 'color', defaultValue: '#111827' },
+            { name: 'testimonial6RoleColor', type: 'color', defaultValue: '#9ca3af' },
+            { name: 'testimonial6AvatarPlaceholderColor', type: 'color', defaultValue: '#d1d5db' }
         ]
     },
 
