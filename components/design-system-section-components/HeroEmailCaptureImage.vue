@@ -33,7 +33,7 @@
               type="email"
               :placeholder="emailPlaceholder"
               required
-              class="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-gray-900 placeholder-gray-500"
+              class="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-gray-200 placeholder-gray-500"
               :style="{ borderColor: inputBorderColor }"
             />
 
